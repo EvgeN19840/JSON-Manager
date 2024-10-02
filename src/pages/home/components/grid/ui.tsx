@@ -1,16 +1,18 @@
 // ** Types
+import { ITypeJSON } from "../../const/types";
 
 // ** Styles
 import { StylesgridProps } from "./styles/gridProps";
-import { DataGrid, DataGridProps } from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
 
 // ** Components
-import { IRows } from "./types";
+import { columns } from "./columns";
+import { rows } from "./rows";
 
-export const MyGrid: React.FC<DataGridProps<IRows>> = ( {...props}) => (
+export const MyGrid: React.FC<{ data: ITypeJSON | null }> = ({ data }) => (
   <DataGrid
-    rows={props.rows}
-    columns={props.columns}
+    rows={data?.employee ?? rows}
+    columns={columns}
     initialState={{
       pagination: {
         paginationModel: {
