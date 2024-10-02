@@ -11,7 +11,7 @@ import { rows } from "./rows";
 
 export const MyGrid: React.FC<{ data: ITypeJSON | null }> = ({ data }) => (
   <DataGrid
-    rows={data?.employee ?? rows}
+    rows={data?.employees ?? rows}
     columns={columns}
     initialState={{
       pagination: {
