@@ -1,11 +1,11 @@
 export interface ITypeJSON {
-  employee: Employee[];
-  employeeDetails: EmployeeDetails[];
+  employees: Employee[];
+  employeeDetails: EmployeeDetails;
+  benefits: SystemBenefit[];
 }
 
 export interface Employee {
   eId: number;
-  id: number;
   number: string;
   firstName: string;
   middleName: string | null;
@@ -24,7 +24,7 @@ export interface Employee {
   reimbursements: Reimbursement[];
   loansAndSalaryAdvances: LoanOrSalaryAdvance[];
   otherDeductions: OtherDeduction[];
-  benefit: EmployeeBenefit[];
+  benefits: EmployeeBenefit[];
   salary: Salary[];
   jobInfo: JobInfo[];
   employmentStatus: EmploymentStatus[];
@@ -131,7 +131,7 @@ export interface SystemBenefit {
 }
 
 export interface EmployeeDetails {
-  benefits: SystemBenefit[];
+
   lastDepositAccountId: number;
   lastReimbursementId: number;
   lastLoanAndSalaryAdvanceId: number;

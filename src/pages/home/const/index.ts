@@ -1,7 +1,6 @@
 export const employeeData = {
   "employees": [
     {
-      
       "eId": 115,
       "number": "1",
       "firstName": "Heather",
@@ -809,4 +808,52 @@ export const employeeData = {
       "bonuses": []
     }
   ],
+  "benefits": [
+    {
+      "name": "Britcay Premier Health Insurance",
+      "id": "4558"
+    },
+    {
+      "name": "Britcay Provident Health Plan",
+      "id": "4559"
+    },
+    {
+      "name": "Chamber Pension",
+      "id": "4556"
+    },
+    {
+      "name": "Group Life",
+      "id": "4557"
+    },
+    {
+      "name": "Property 1% Pension",
+      "id": "4578"
+    },
+    {
+      "name": "Property 3% Pension",
+      "id": "4577"
+    },
+    {
+      "name": "Silver Thatch Pension - 1% AVC",
+      "id": "4555"
+    },
+    {
+      "name": "Silver Thatch Pension",
+      "id": "4549"
+    },
+    {
+      "name": "Silver Thatch Pension Property Plan",
+      "id": "4579"
+    }
+  ],
+  "lastDepositAccountId": 170,
+  "lastReimbursementId": 176,
+  "lastLoanAndSalaryAdvanceId": 173,
+  "lastOtherDeductionId": 147,
+  "lastBenefitId": 4579,
+  "lastSalaryId": 18287,
+  "lastJobInfoId": 38792,
+  "lastEmploymentStatusId": 27427,
+  "lastBonusId": 6,
+  "lastEID": 120
 }
