@@ -1,7 +1,7 @@
 import { GridColDef } from "@mui/x-data-grid";
-import { IRows } from "../types";
+import { Employee } from "../../../const/types";
 
-export const columns: GridColDef<IRows>[] = [
+export const columns: GridColDef<Employee>[] = [
   {
     field: "firstName",
     headerName: "First name",

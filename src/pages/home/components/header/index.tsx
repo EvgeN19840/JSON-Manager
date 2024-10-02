@@ -1,6 +1,5 @@
 import { Typography, Box } from "@mui/material";
 import { FC, memo } from "react";
-import { MyDialog } from "../dialog";
 import { theme } from "../../../../customTheme";
 
 export const Header: FC<{ title: string }> = memo((props) => (
@@ -18,6 +17,6 @@ export const Header: FC<{ title: string }> = memo((props) => (
     <Typography variant="h6" sx={{ color: theme.palette.text.primary }}>
       {props.title}
     </Typography>
-    <MyDialog />
+  
   </Box>
 ));

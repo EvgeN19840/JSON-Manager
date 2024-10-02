@@ -6,11 +6,10 @@ import { HomeProps } from "./types";
 import { ITypeJSON } from "./const/types";
 
 // ** Componets
-import { Header,  MyGrid } from "./components";
+import { Header, ImportData, MyGrid } from "./components";
+import { Box } from "@mui/material";
 
 export const Home: FC<HomeProps> = (props) => {
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [data, setData] = useState<ITypeJSON | null>(null);
 
   // const handleClose = (
@@ -27,8 +26,10 @@ export const Home: FC<HomeProps> = (props) => {
   return (
     <>
       <Header {...props} />
-      <MyGrid data={data} />
-
+      <Box>
+        <ImportData setData={setData}/>
+        <MyGrid data={data} />
+      </Box>
     </>
   );
 };

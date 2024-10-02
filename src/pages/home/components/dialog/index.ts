@@ -1,1 +1,0 @@
-export { MyDialog } from './ui'
