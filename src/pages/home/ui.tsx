@@ -11,18 +11,6 @@ import { Box } from "@mui/material";
 
 export const Home: FC<HomeProps> = (props) => {
   const [data, setData] = useState<ITypeJSON | null>(null);
-
-  // const handleClose = (
-  //   _: React.SyntheticEvent | Event,
-  //   reason?: SnackbarCloseReason
-  // ) => {
-  //   if (reason === "clickaway") {
-  //     return;
-  //   }
-
-  //   changeState(setOpen, false);
-  // };
-
   return (
     <>
       <Header {...props} />

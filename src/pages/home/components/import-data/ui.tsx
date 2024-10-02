@@ -8,21 +8,22 @@ export const ImportData = ({
   setData: (value: ITypeJSON) => void;
 }) => {
   const [open, setOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState("");
+  const [inputValue, setInputValue] = useState("");
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = (value: string) => {
     setOpen(false);
-    setSelectedValue(value);
+    setInputValue(value);
   };
 
-  const saveData = () => {
+  const sendData = () => {
     try {
-      const parsedData: ITypeJSON = JSON.parse(selectedValue);
+      const parsedData: ITypeJSON = JSON.parse(inputValue);
       setData(parsedData);
       setOpen(false);
+      setInputValue("");
     } catch (e) {
       console.error("Invalid JSON format", e);
       alert("Invalid JSON data. Please correct and try again.");
@@ -30,7 +31,7 @@ export const ImportData = ({
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedValue(event.target.value);
+    setInputValue(event.target.value);
   };
 
   return (
@@ -62,11 +63,12 @@ export const ImportData = ({
             sx={{ flexGrow: 1 }}
             placeholder="Paste your JSON data here"
             onChange={handleInputChange}
-            value={selectedValue}
+            value={inputValue}
           />
 
-          <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 1 }}>
-            <Button variant="contained" onClick={saveData}>
+          <Box sx={{ display: "flex", justifyContent: "space-between", mt: 1 }}>
+            <Button variant="contained">Import</Button>
+            <Button variant="contained" onClick={sendData}>
               Save
             </Button>
           </Box>
