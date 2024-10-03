@@ -1,29 +1,27 @@
-import { Box, Button, Dialog, TextField, Typography } from "@mui/material";
+import { Box, Dialog, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { ITypeJSON } from "../../const/types";
+import { ImportButton } from "./buttons/importButton";
+import { SaveDataButton } from "./buttons/saveData";
 
 export const ImportData = ({
   setData,
-  
+  open,
+  onClose,
+  fromGrid = false,
 }: {
   setData: (value: ITypeJSON) => void;
+  open: boolean;
+  onClose: () => void;
+  fromGrid?: boolean;
 }) => {
-  const [open, setOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-    setInputValue("");
-  };
 
   const handleImport = () => {
     try {
       const parsedData: ITypeJSON = JSON.parse(inputValue);
       setData(parsedData);
-      setOpen(false);
+      onClose();
       setInputValue("");
     } catch (e) {
       console.error("Invalid JSON format", e);
@@ -36,43 +34,33 @@ export const ImportData = ({
   };
 
   return (
-    <>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        employee data
-      </Button>
-      <Dialog
-        fullWidth
-        sx={{ height: "80vh" }}
-        open={open}
-        onClose={handleClose}
+    <Dialog fullWidth sx={{ height: "80vh" }} open={open} onClose={onClose}>
+      <Box
+        sx={{
+          p: "1rem",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          height: "100%",
+        }}
       >
-        <Box
-          sx={{
-            p: "1rem",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            height: "100%",
-          }}
-        >
-          <Typography variant="h6" sx={{ textAlign: "center" }}>
-            Import Data
-          </Typography>
-          <TextField
-            multiline
-            rows={20}
-            sx={{ flexGrow: 1 }}
-            placeholder="Paste your JSON data here"
-            onChange={handleInputChange}
-            value={inputValue}
-          />
-          <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 1 }}>
-            <Button variant="contained" onClick={handleImport}>
-              Import
-            </Button>
-          </Box>
-        </Box>
-      </Dialog>
-    </>
+        <Typography variant="h6" sx={{ textAlign: "center" }}>
+          {fromGrid ? "Save Data" : "Import Data"}
+        </Typography>
+        <TextField
+          multiline
+          rows={20}
+          sx={{ flexGrow: 1 }}
+          placeholder="Paste your JSON data here"
+          onChange={handleInputChange}
+          value={inputValue}
+        />
+        {fromGrid ? (
+          <SaveDataButton onClick={handleImport} />
+        ) : (
+          <ImportButton onClick={handleImport} />
+        )}
+      </Box>
+    </Dialog>
   );
 };
