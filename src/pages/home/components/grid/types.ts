@@ -1,5 +1,10 @@
 
 export interface IRows {
-    id: number 
     firstName: string;
-    lastName: string;}
+    lastName: string;
+    email: string
+    middleName?: string
+
+
+
+}
