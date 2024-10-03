@@ -4,6 +4,7 @@ import { ITypeJSON } from "../../const/types";
 
 export const ImportData = ({
   setData,
+  
 }: {
   setData: (value: ITypeJSON) => void;
 }) => {
@@ -18,7 +19,7 @@ export const ImportData = ({
     setInputValue("");
   };
 
-  const sendData = () => {
+  const handleImport = () => {
     try {
       const parsedData: ITypeJSON = JSON.parse(inputValue);
       setData(parsedData);
@@ -65,10 +66,9 @@ export const ImportData = ({
             onChange={handleInputChange}
             value={inputValue}
           />
-          <Box sx={{ display: "flex", justifyContent: "space-between", mt: 1 }}>
-            <Button variant="contained">Import</Button>
-            <Button variant="contained" onClick={sendData}>
-              Save
+          <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 1 }}>
+            <Button variant="contained" onClick={handleImport}>
+              Import
             </Button>
           </Box>
         </Box>

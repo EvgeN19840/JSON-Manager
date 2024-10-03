@@ -13,18 +13,5 @@ export const columns: GridColDef<Employee>[] = [
     headerName: "Last name",
     flex: 1,
     editable: true,
-  },
-  {
-    field: "middleName",
-    headerName: "Middle name",
-    flex: 1,
-    editable: true,
-  },
-  {
-    field: "email",
-    headerName: "E-mail",
-    flex: 0.5,
-    editable: true,
-  },
- 
+  }, 
 ];
