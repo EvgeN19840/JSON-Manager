@@ -13,9 +13,9 @@ export const ImportData = ({
     setOpen(true);
   };
 
-  const handleClose = (value: string | null) => {
+  const handleClose = () => {
     setOpen(false);
-    setInputValue(value || "");
+    setInputValue("");
   };
 
   const sendData = () => {
@@ -43,7 +43,7 @@ export const ImportData = ({
         fullWidth
         sx={{ height: "80vh" }}
         open={open}
-        onClose={() => handleClose(null)}
+        onClose={handleClose}
       >
         <Box
           sx={{
