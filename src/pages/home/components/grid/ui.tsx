@@ -5,8 +5,8 @@ import { Opendialog } from "../import-data/openDialog";
 import { columns } from "./columns";
 import { Box } from "@mui/material";
 import { useState } from "react";
-import { EmployeeDataButton } from "../import-data/buttons/emploeeData";
-import { ExportButtons } from "../import-data/buttons/exportButton";
+import { EmployeeDataButton } from "../buttons/emploeeData";
+import { ExportButtons } from "../buttons/exportButton";
 
 export const MyGrid: React.FC<{
   data: ITypeJSON | null;

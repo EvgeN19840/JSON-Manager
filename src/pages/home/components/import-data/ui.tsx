@@ -1,21 +1,23 @@
 import { Box, Dialog, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { ITypeJSON } from "../../const/types";
-import { ImportButton } from "./buttons/importButton";
-import { DownloadButton } from "./buttons/downloadButton";
-import { CopyButton } from "./buttons/copyButton";
-import { CloseButton } from "./buttons/closeButton";
+import { ImportButton } from "../buttons/importButton";
+import { DownloadButton } from "../buttons/downloadButton";
+import { CopyButton } from "../buttons/copyButton";
+import { CloseButton } from "../buttons/closeButton";
 
-export const ImportData = ({
-  setData,
-  open,
-  onClose,
-  fromGrid = false,
-}: {
+interface IImportDataProps {
   setData: (value: ITypeJSON) => void;
   open: boolean;
   onClose: () => void;
   fromGrid?: boolean;
+}
+
+export const ImportData: React.FC<IImportDataProps> = ({
+  setData,
+  open,
+  onClose,
+  fromGrid = false,
 }) => {
   const [inputValue, setInputValue] = useState("");
   const [parsedData, setParsedData] = useState<string | null>(null);
@@ -31,7 +33,7 @@ export const ImportData = ({
       alert("Invalid JSON data. Please correct and try again.");
     }
   };
-  const HandleClose = () => {
+  const handleClose = () => {
     onClose();
     setInputValue("");
   };
@@ -41,7 +43,7 @@ export const ImportData = ({
   };
 
   return (
-    <Dialog fullWidth sx={{ height: "80vh" }} open={open} onClose={onClose}>
+    <Dialog fullWidth sx={{ height: "90vh" }} open={open} onClose={onClose}>
       <Box
         sx={{
           p: "1rem",
@@ -54,6 +56,12 @@ export const ImportData = ({
         <Typography variant="h6" sx={{ textAlign: "center" }}>
           {fromGrid ? "Save Data" : "Import Data"}
         </Typography>
+        {!fromGrid && (
+          <Box sx={{ display: "flex", justifyContent: "flex-start", mb: 2 }}>
+            <ImportButton onClick={handleImport} />
+          </Box>
+        )}
+
         {fromGrid && (
           <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
             <DownloadButton onClick={handleImport} />
@@ -74,12 +82,9 @@ export const ImportData = ({
             },
           }}
         />
-        {!fromGrid && (
-          <Box sx={{ mt: 2, display: "flex", justifyContent: "space-between" }}>
-            <ImportButton onClick={handleImport} />
-            <CloseButton onClick={HandleClose} />
-          </Box>
-        )}
+        <Box sx={{ mt: 2, display: "flex", justifyContent: "flex-end" }}>
+          <CloseButton onClick={handleClose} />
+        </Box>
       </Box>
     </Dialog>
   );
