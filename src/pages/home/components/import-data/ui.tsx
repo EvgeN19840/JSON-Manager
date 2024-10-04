@@ -4,6 +4,7 @@ import { ITypeJSON } from "../../const/types";
 import { ImportButton } from "./buttons/importButton";
 import { DownloadButton } from "./buttons/downloadButton";
 import { CopyButton } from "./buttons/copyButton";
+import { CloseButton } from "./buttons/closeButton";
 
 export const ImportData = ({
   setData,
@@ -56,14 +57,17 @@ export const ImportData = ({
           placeholder={fromGrid ? "Viewing data" : "Paste your JSON data here"}
           onChange={handleInputChange}
           value={fromGrid && parsedData ? parsedData : inputValue}
-          InputProps={{
-            readOnly: fromGrid,
+          slotProps={{
+            input: {
+              readOnly: fromGrid,
+            },
           }}
         />
         {fromGrid ? (
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <DownloadButton onClick={handleImport} />
             <CopyButton textToCopy={parsedData} />
+            <CloseButton onClick={onClose}/>
           </Box>
         ) : (
           <ImportButton onClick={handleImport} />

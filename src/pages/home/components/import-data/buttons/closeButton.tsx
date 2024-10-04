@@ -1,16 +1,16 @@
 import { Box, Button } from "@mui/material";
 
-interface IEmployeeDataButtonProps {
+interface ICloseButtonProps {
   onClick: () => void;
 }
 
-export const DownloadButton: React.FC<IEmployeeDataButtonProps> = ({
+export const CloseButton: React.FC<ICloseButtonProps> = ({
   onClick,
 }) => {
   return (
     <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 1 }}>
       <Button variant="outlined" onClick={onClick}>
-        Download
+       Close
       </Button>
     </Box>
   );

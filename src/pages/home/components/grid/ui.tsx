@@ -35,16 +35,19 @@ export const MyGrid: React.FC<{
         getRowId={(row) => row.eId}
         columns={columns}
         slots={{
-          toolbar: () => (
-            <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
-              <Button
-                onClick={handleClickOpenFromGrid}
-                sx={{ m: 1, border: "1px solid #ccc" }}
-              >
-                Export
-              </Button>
-            </Box>
-          ),
+          toolbar: () =>
+            data ? (
+              <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
+                <Button
+                  onClick={handleClickOpenFromGrid}
+                  sx={{ m: 1, border: "1px solid #ccc" }}
+                >
+                  Export
+                </Button>
+              </Box>
+            ) : (
+              <Box sx={{ minHeight: "50px" }}></Box>
+            ),
         }}
         initialState={{
           pagination: {
