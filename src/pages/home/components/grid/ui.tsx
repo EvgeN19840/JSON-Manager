@@ -9,8 +9,16 @@ import { EmployeeDataButton } from "../import-data/buttons/emploeeData";
 
 export const MyGrid: React.FC<{ data: ITypeJSON | null }> = ({ data }) => {
   const [openDialog, setOpenDialog] = useState(false);
-  const handleClickOpen = () => {
+  const [fromGrid, setFromGrid] = useState(false);
+
+  const handleClickOpenFromGrid = () => {
     setOpenDialog(true);
+    setFromGrid(true);
+  };
+
+  const handleClickOpenNotFromGrid = () => {
+    setOpenDialog(true);
+    setFromGrid(false);
   };
 
   const handleClose = () => {
@@ -26,7 +34,7 @@ export const MyGrid: React.FC<{ data: ITypeJSON | null }> = ({ data }) => {
           toolbar: () => (
             <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
               <Button
-                onClick={handleClickOpen}
+                onClick={handleClickOpenFromGrid}
                 sx={{ m: 1, border: "1px solid #ccc" }}
               >
                 Export
@@ -44,9 +52,9 @@ export const MyGrid: React.FC<{ data: ITypeJSON | null }> = ({ data }) => {
         pageSizeOptions={[3, 5, 10, 20, 100]}
         sx={{ ...StylesgridProps }}
       />
-      <EmployeeDataButton  onClick={handleClickOpen} />
+      <EmployeeDataButton onClick={handleClickOpenNotFromGrid} />
 
-      <Opendialog open={openDialog} onClose={handleClose}  />
+      <Opendialog open={openDialog} onClose={handleClose} fromGrid={fromGrid} />
     </>
   );
 };

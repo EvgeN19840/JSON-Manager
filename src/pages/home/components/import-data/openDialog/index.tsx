@@ -19,7 +19,7 @@ export const Opendialog: React.FC<OpendialogProps> = ({
         onClose={onClose} 
         fromGrid={fromGrid}
         setData={(data) => console.log("Data imported:", data)}
-      />
+   />
     </>
   );
 };
