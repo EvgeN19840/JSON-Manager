@@ -3,9 +3,10 @@ import { StylesgridProps } from "./styles/gridProps";
 import { DataGrid } from "@mui/x-data-grid";
 import { Opendialog } from "../import-data/openDialog";
 import { columns } from "./columns";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import { useState } from "react";
 import { EmployeeDataButton } from "../import-data/buttons/emploeeData";
+import { ExportButtons } from "../import-data/buttons/exportButton";
 
 export const MyGrid: React.FC<{
   data: ITypeJSON | null;
@@ -38,12 +39,7 @@ export const MyGrid: React.FC<{
           toolbar: () =>
             data ? (
               <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
-                <Button
-                  onClick={handleClickOpenFromGrid}
-                  sx={{ m: 1, border: "1px solid #ccc" }}
-                >
-                  Export
-                </Button>
+                <ExportButtons onClick={handleClickOpenFromGrid} />
               </Box>
             ) : (
               <Box sx={{ minHeight: "50px" }}></Box>

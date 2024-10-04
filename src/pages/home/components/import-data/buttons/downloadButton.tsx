@@ -1,15 +1,15 @@
 import { Box, Button } from "@mui/material";
 
-interface IEmployeeDataButtonProps {
+interface IDownloadButtonProps {
   onClick: () => void;
 }
 
-export const DownloadButton: React.FC<IEmployeeDataButtonProps> = ({
+export const DownloadButton: React.FC<IDownloadButtonProps> = ({
   onClick,
 }) => {
   return (
     <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 1 }}>
-      <Button variant="outlined" onClick={onClick}>
+      <Button variant="contained" onClick={onClick}>
         Download
       </Button>
     </Box>

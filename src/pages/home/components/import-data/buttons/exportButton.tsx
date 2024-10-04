@@ -1,15 +1,15 @@
 import { Button } from "@mui/material";
 
-interface IEmployeeDataButtonProps {
+interface IExportButtonsProps {
   onClick: () => void;
 }
 
-export const EmployeeDataButton: React.FC<IEmployeeDataButtonProps> = ({
+export const ExportButtons: React.FC<IExportButtonsProps> = ({
   onClick,
 }) => {
   return (
     <Button variant="contained" onClick={onClick} sx={{ m: 1 }}>
-      Employee Data
+      Export
     </Button>
   );
 };

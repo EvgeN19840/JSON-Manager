@@ -1,11 +1,11 @@
 import { Box, Button } from "@mui/material";
 import React from "react";
 
-interface CopyButtonProps {
+interface ICopyButtonProps {
   textToCopy: string | null;
 }
 
-export const CopyButton: React.FC<CopyButtonProps> = ({ textToCopy }) => {
+export const CopyButton: React.FC<ICopyButtonProps> = ({ textToCopy }) => {
   const onClick = async () => {
     if (!textToCopy) {
       alert("Nothing to copy!");
@@ -22,7 +22,7 @@ export const CopyButton: React.FC<CopyButtonProps> = ({ textToCopy }) => {
 
   return (
     <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 1 }}>
-      <Button variant="outlined" onClick={onClick}>
+      <Button variant="contained" onClick={onClick}>
         Copy
       </Button>
     </Box>

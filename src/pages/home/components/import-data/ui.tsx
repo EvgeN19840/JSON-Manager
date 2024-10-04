@@ -31,6 +31,10 @@ export const ImportData = ({
       alert("Invalid JSON data. Please correct and try again.");
     }
   };
+  const HandleClose = () => {
+    onClose();
+    setInputValue("");
+  };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -50,6 +54,13 @@ export const ImportData = ({
         <Typography variant="h6" sx={{ textAlign: "center" }}>
           {fromGrid ? "Save Data" : "Import Data"}
         </Typography>
+        {fromGrid && (
+          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
+            <DownloadButton onClick={handleImport} />
+            <CopyButton textToCopy={parsedData} />
+          </Box>
+        )}
+
         <TextField
           multiline
           rows={20}
@@ -63,14 +74,11 @@ export const ImportData = ({
             },
           }}
         />
-        {fromGrid ? (
-          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <DownloadButton onClick={handleImport} />
-            <CopyButton textToCopy={parsedData} />
-            <CloseButton onClick={onClose}/>
+        {!fromGrid && (
+          <Box sx={{ mt: 2, display: "flex", justifyContent: "space-between" }}>
+            <ImportButton onClick={handleImport} />
+            <CloseButton onClick={HandleClose} />
           </Box>
-        ) : (
-          <ImportButton onClick={handleImport} />
         )}
       </Box>
     </Dialog>
