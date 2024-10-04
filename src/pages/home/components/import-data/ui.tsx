@@ -5,6 +5,7 @@ import { ImportButton } from "../buttons/importButton";
 import { DownloadButton } from "../buttons/downloadButton";
 import { CopyButton } from "../buttons/copyButton";
 import { CloseButton } from "../buttons/closeButton";
+import { DownloadJSONFileAsTXT } from "../download-data";
 
 interface IImportDataProps {
   setData: (value: ITypeJSON) => void;
@@ -20,7 +21,20 @@ export const ImportData: React.FC<IImportDataProps> = ({
   fromGrid = false,
 }) => {
   const [inputValue, setInputValue] = useState("");
+  const [inputNameFile, setInputNameFile] = useState("");
   const [parsedData, setParsedData] = useState<string | null>(null);
+
+    const downloadFile = () => {
+      if (inputNameFile && parsedData) {
+        const jsonData: ITypeJSON = JSON.parse(parsedData);
+        DownloadJSONFileAsTXT(inputNameFile, jsonData);
+        setInputNameFile("");
+        onClose();
+      } else {
+        alert("Please enter name.");
+      }
+    };
+
   const handleImport = () => {
     try {
       const parsedData: ITypeJSON = JSON.parse(inputValue);
@@ -36,10 +50,15 @@ export const ImportData: React.FC<IImportDataProps> = ({
   const handleClose = () => {
     onClose();
     setInputValue("");
+    setInputNameFile("");
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
+  };
+
+  const handleNameFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputNameFile(event.target.value);
   };
 
   return (
@@ -63,9 +82,19 @@ export const ImportData: React.FC<IImportDataProps> = ({
         )}
 
         {fromGrid && (
-          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
-            <DownloadButton onClick={handleImport} />
-            <CopyButton textToCopy={parsedData} />
+          <Box>
+            <Box
+              sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}
+            >
+              <DownloadButton onClick={downloadFile} />
+              <CopyButton textToCopy={parsedData} />
+            </Box>
+            <TextField
+              value={inputNameFile}
+              placeholder="Enter file name"
+              onChange={handleNameFileChange}
+              sx={{ display: "flex", mb: 1 }}
+            />
           </Box>
         )}
 
@@ -82,7 +111,7 @@ export const ImportData: React.FC<IImportDataProps> = ({
             },
           }}
         />
-        <Box sx={{ mt: 2, display: "flex", justifyContent: "flex-end" }}>
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           <CloseButton onClick={handleClose} />
         </Box>
       </Box>

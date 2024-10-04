@@ -8,7 +8,7 @@ export const ExportButtons: React.FC<IExportButtonsProps> = ({
   onClick,
 }) => {
   return (
-    <Button variant="contained" onClick={onClick} sx={{ m: 1 }}>
+    <Button variant="contained" onClick={onClick} sx={{ mb: 1 }}>
       Export
     </Button>
   );

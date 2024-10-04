@@ -20,7 +20,7 @@ export const MyGrid: React.FC<{
     setFromGrid(true);
   };
 
-  const handleClickOpenNotFromGrid = () => {
+  const handleOpenForm = () => {
     setOpenDialog(true);
     setFromGrid(false);
   };
@@ -55,7 +55,7 @@ export const MyGrid: React.FC<{
         pageSizeOptions={[3, 5, 10, 20, 100]}
         sx={{ ...StylesgridProps }}
       />
-      <EmployeeDataButton onClick={handleClickOpenNotFromGrid} />
+      <EmployeeDataButton onClick={handleOpenForm} />
 
       <Opendialog
         open={openDialog}

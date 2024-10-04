@@ -5,7 +5,7 @@ export const StylesgridProps = {
   marginTop: 20,
   minHeight: "250px",
   width: "70vw",
-  bgcolor: () => "#E0F7FA", 
+  bgcolor:  "#8cc8d1", 
   borderRadius: "12px", 
   boxShadow: theme.shadows[4],  
   padding: "16px", 

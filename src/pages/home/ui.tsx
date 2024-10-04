@@ -15,7 +15,7 @@ export const Home: FC<HomeProps> = (props) => {
     <>
       <Header {...props} />
       <Box>
-         <MyGrid data={data} setData={setData} />
+        <MyGrid data={data} setData={setData} />
       </Box>
     </>
   );
