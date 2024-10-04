@@ -9,7 +9,7 @@ export const EmployeeDataButton: React.FC<IEmployeeDataButtonProps> = ({
 }) => {
   return (
     <Button variant="contained" onClick={onClick} sx={{ m: 1 }}>
-     Import Employee Data
+      Import Employee Data
     </Button>
   );
 };
