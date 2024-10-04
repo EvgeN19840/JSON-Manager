@@ -7,7 +7,10 @@ import { Box, Button } from "@mui/material";
 import { useState } from "react";
 import { EmployeeDataButton } from "../import-data/buttons/emploeeData";
 
-export const MyGrid: React.FC<{ data: ITypeJSON | null }> = ({ data }) => {
+export const MyGrid: React.FC<{
+  data: ITypeJSON | null;
+  setData: (value: ITypeJSON) => void;
+}> = ({ data, setData }) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [fromGrid, setFromGrid] = useState(false);
 
@@ -24,6 +27,7 @@ export const MyGrid: React.FC<{ data: ITypeJSON | null }> = ({ data }) => {
   const handleClose = () => {
     setOpenDialog(false);
   };
+
   return (
     <>
       <DataGrid
@@ -54,7 +58,12 @@ export const MyGrid: React.FC<{ data: ITypeJSON | null }> = ({ data }) => {
       />
       <EmployeeDataButton onClick={handleClickOpenNotFromGrid} />
 
-      <Opendialog open={openDialog} onClose={handleClose} fromGrid={fromGrid} />
+      <Opendialog
+        open={openDialog}
+        onClose={handleClose}
+        fromGrid={fromGrid}
+        setData={setData}
+      />
     </>
   );
 };

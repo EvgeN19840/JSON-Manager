@@ -2,7 +2,8 @@ import { Box, Dialog, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { ITypeJSON } from "../../const/types";
 import { ImportButton } from "./buttons/importButton";
-import { SaveDataButton } from "./buttons/saveData";
+import { DownloadButton } from "./buttons/downloadButton";
+import { CopyButton } from "./buttons/copyButton";
 
 export const ImportData = ({
   setData,
@@ -34,7 +35,6 @@ export const ImportData = ({
     setInputValue(event.target.value);
   };
 
-
   return (
     <Dialog fullWidth sx={{ height: "80vh" }} open={open} onClose={onClose}>
       <Box
@@ -53,15 +53,18 @@ export const ImportData = ({
           multiline
           rows={20}
           sx={{ flexGrow: 1 }}
-          placeholder={fromGrid ? "Viewing data" : "Paste your JSON data here"} 
+          placeholder={fromGrid ? "Viewing data" : "Paste your JSON data here"}
           onChange={handleInputChange}
-          value={fromGrid && parsedData ? parsedData : inputValue} 
+          value={fromGrid && parsedData ? parsedData : inputValue}
           InputProps={{
-            readOnly: fromGrid, 
+            readOnly: fromGrid,
           }}
         />
         {fromGrid ? (
-          <SaveDataButton onClick={handleImport} />
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <DownloadButton onClick={handleImport} />
+            <CopyButton textToCopy={parsedData} />
+          </Box>
         ) : (
           <ImportButton onClick={handleImport} />
         )}
