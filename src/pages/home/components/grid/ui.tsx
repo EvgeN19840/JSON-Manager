@@ -7,23 +7,12 @@ import { ToolbarWithExportAndImport } from "./toolbar";
 interface MyGridProps {
   handleClickOpenFromGrid: () => void;
   data: ITypeJSON | null;
-  setData: (data: ITypeJSON) => void;
-  openDialog: boolean;
-  handleClickOpenFromEmployeeData: () => void;
-  handleCloseDialog: () => void;
-  source: string;
-  parsedData: string | null;
+
 }
 
 export const MyGrid: React.FC<MyGridProps> = ({
   data,
   handleClickOpenFromGrid,
-  setData,
-  openDialog,
-  handleClickOpenFromEmployeeData,
-  handleCloseDialog,
-  source,
-  parsedData,
 }) => {
   return (
     <DataGrid
@@ -34,12 +23,6 @@ export const MyGrid: React.FC<MyGridProps> = ({
         toolbar: () => (
           <ToolbarWithExportAndImport
             handleClickOpenFromGrid={handleClickOpenFromGrid}
-            setData={setData}
-            openDialog={openDialog}
-            handleClickOpenFromEmployeeData={handleClickOpenFromEmployeeData}
-            handleCloseDialog={handleCloseDialog}
-            source={source}
-            parsedData={parsedData}
             hasData={data ? true : false}
           />
         ),

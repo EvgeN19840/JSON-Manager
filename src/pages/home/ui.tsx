@@ -1,6 +1,7 @@
 import { FC, useState } from "react";
 import { ITypeJSON } from "./const/types";
 import { Header, MyGrid } from "./components";
+import { OpenDialog } from "./components/import-data/openDialog";
 
 export const Home: FC = () => {
   const [data, setData] = useState<ITypeJSON | null>(null);
@@ -25,14 +26,13 @@ export const Home: FC = () => {
 
   return (
     <>
-      <Header  />
-      <MyGrid
-        data={data}
-        handleClickOpenFromGrid={handleClickOpenFromGrid}
+      <Header />
+      <MyGrid data={data} handleClickOpenFromGrid={handleClickOpenFromGrid} />
+      <OpenDialog
         setData={setData}
-        openDialog={openDialog}
-        handleClickOpenFromEmployeeData={handleClickOpenFromEmployeeData}
-        handleCloseDialog={handleCloseDialog}
+        open={openDialog}
+        onOpen={handleClickOpenFromEmployeeData}
+        onClose={handleCloseDialog}
         source={source}
         parsedData={parsedData}
       />
