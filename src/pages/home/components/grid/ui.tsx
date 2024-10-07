@@ -4,8 +4,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { columns } from "./columns";
 import { ToolbarWithExportAndImport } from "./toolbar";
 
-
-export const MyGrid: React.FC<{
+interface MyGridProps {
   handleClickOpenFromGrid: () => void;
   data: ITypeJSON | null;
   setData: (data: ITypeJSON) => void;
@@ -14,7 +13,9 @@ export const MyGrid: React.FC<{
   handleCloseDialog: () => void;
   source: string;
   parsedData: string | null;
-}> = ({
+}
+
+export const MyGrid: React.FC<MyGridProps> = ({
   data,
   handleClickOpenFromGrid,
   setData,
@@ -39,7 +40,7 @@ export const MyGrid: React.FC<{
             handleCloseDialog={handleCloseDialog}
             source={source}
             parsedData={parsedData}
-            hasData={!!data} 
+            hasData={data ? true : false}
           />
         ),
       }}

@@ -2,6 +2,6 @@ import "./App.css";
 import { Home } from './pages'
 
 function App() {
-  return (<Home title="CayPay JSON Manager" />);
+  return (<Home />);
 }
 export default App;

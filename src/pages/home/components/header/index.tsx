@@ -1,7 +1,7 @@
 import { Typography, Box } from "@mui/material";
 import { FC } from "react";
 
-export const Header: FC<{ title: string }> = (props) => (
+export const Header: FC = () => (
   <Box
     sx={{
       position: "fixed",
@@ -14,7 +14,7 @@ export const Header: FC<{ title: string }> = (props) => (
     }}
   >
     <Typography variant="h6" sx={{ color: "#8cc8d1" }}>
-      {props.title}
+      CayPay JSON Manager
     </Typography>
   </Box>
 );

@@ -1,9 +1,8 @@
 import { FC, useState } from "react";
-import { HomeProps } from "./types";
 import { ITypeJSON } from "./const/types";
 import { Header, MyGrid } from "./components";
 
-export const Home: FC<HomeProps> = (props) => {
+export const Home: FC = () => {
   const [data, setData] = useState<ITypeJSON | null>(null);
   const [openDialog, setOpenDialog] = useState(false);
   const [source, setSource] = useState("");
@@ -26,7 +25,7 @@ export const Home: FC<HomeProps> = (props) => {
 
   return (
     <>
-      <Header {...props} />
+      <Header  />
       <MyGrid
         data={data}
         handleClickOpenFromGrid={handleClickOpenFromGrid}

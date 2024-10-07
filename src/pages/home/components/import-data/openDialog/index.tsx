@@ -21,7 +21,7 @@ export const OpenDialog: React.FC<IOpenDialog> = ({
 }) => {
   return (
     <>
-      <Button variant="contained" onClick={onOpen} sx={{ mb: 1 }}>
+      <Button variant="contained" onClick={onOpen} >
         Import Employee Data
       </Button>
       {open && (
