@@ -1,1 +1,1 @@
-export { ImportData } from './ui'
+export { ImportExportDialog } from './ui'

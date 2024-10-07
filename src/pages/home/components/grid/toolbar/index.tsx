@@ -1,19 +1,13 @@
-import { Box } from "@mui/material";
-
-
-import { ExportButton } from "../../buttons/exportButton";
+import { Box, Button } from "@mui/material";
 
 interface IToolbarWithExportAndImportProps {
-  handleClickOpenFromGrid: () => void;
+  handleClickOpenFromGrid: (actionType: string) => void;
   hasData: boolean;
 }
 
 export const ToolbarWithExportAndImport: React.FC<
   IToolbarWithExportAndImportProps
-> = ({
-  handleClickOpenFromGrid,
-  hasData,
-}) => {
+> = ({ handleClickOpenFromGrid, hasData }) => {
   return (
     <Box
       sx={{
@@ -24,12 +18,20 @@ export const ToolbarWithExportAndImport: React.FC<
         mb: 1,
       }}
     >
-      <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
-        {hasData && <ExportButton onClick={handleClickOpenFromGrid} />}
-      </Box>
-      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-    
-      </Box>
+      <Button
+        variant="contained"
+        onClick={() => handleClickOpenFromGrid("import")}
+      >
+        Import Employee Data
+      </Button>
+      {hasData && (
+        <Button
+          variant="contained"
+          onClick={() => handleClickOpenFromGrid("export")}
+        >
+          Export
+        </Button>
+      )}
     </Box>
   );
 };

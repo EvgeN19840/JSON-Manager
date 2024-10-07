@@ -5,9 +5,8 @@ import { columns } from "./columns";
 import { ToolbarWithExportAndImport } from "./toolbar";
 
 interface MyGridProps {
-  handleClickOpenFromGrid: () => void;
-  data: ITypeJSON | null;
-
+  handleClickOpenFromGrid?: (actionType: string) => void;
+  data?: ITypeJSON | null;
 }
 
 export const MyGrid: React.FC<MyGridProps> = ({
@@ -20,12 +19,14 @@ export const MyGrid: React.FC<MyGridProps> = ({
       getRowId={(row) => row.eId}
       columns={columns}
       slots={{
-        toolbar: () => (
-          <ToolbarWithExportAndImport
-            handleClickOpenFromGrid={handleClickOpenFromGrid}
-            hasData={data ? true : false}
-          />
-        ),
+        toolbar: handleClickOpenFromGrid
+          ? () => (
+              <ToolbarWithExportAndImport
+                handleClickOpenFromGrid={handleClickOpenFromGrid}
+                hasData={!!data}
+              />
+            )
+          : null,
       }}
       initialState={{
         pagination: {

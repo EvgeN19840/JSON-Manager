@@ -1,8 +1,6 @@
 import { Box, Button, TextField, Typography, Snackbar } from "@mui/material";
 import { useState } from "react";
 import { ITypeJSON } from "../../../const/types";
-import { CloseButton } from "../../buttons/closeButton";
-import { ImportButton } from "../../buttons/importButton";
 
 interface IImportDataComponentProps {
   setData: (value: ITypeJSON) => void;
@@ -43,17 +41,6 @@ export const ImportDataComponent: React.FC<IImportDataComponentProps> = ({
       <Typography variant="h6" sx={{ textAlign: "center" }}>
         Import Data
       </Typography>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          mb: 1,
-        }}
-      >
-        <CloseButton onClick={onClose} />
-        <ImportButton onClick={handleImport} />
-      </Box>
       <TextField
         multiline
         rows={20}
@@ -62,6 +49,22 @@ export const ImportDataComponent: React.FC<IImportDataComponentProps> = ({
         onChange={handleInputChange}
         value={inputValue || ""}
       />
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mt: 1,
+        }}
+      >
+        <Button variant="contained" onClick={onClose}>
+          Close
+        </Button>
+        <Button variant="contained" onClick={handleImport}>
+          Import
+        </Button>
+      </Box>
+
       {errorMessage && (
         <Snackbar
           open={!!errorMessage}

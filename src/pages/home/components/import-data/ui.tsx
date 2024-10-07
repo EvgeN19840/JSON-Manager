@@ -3,7 +3,7 @@ import { ITypeJSON } from "../../const/types";
 import { ImportDataComponent } from "./importDataComponent";
 import { ExportDataComponent } from "./exportDataComponent";
 
-interface IImportDataProps {
+interface IImportExportDialog {
   setData: (value: ITypeJSON) => void;
   open: boolean;
   onClose: () => void;
@@ -11,15 +11,28 @@ interface IImportDataProps {
   parsedData: string | null;
 }
 
-export const ImportData: React.FC<IImportDataProps> = ({
+export const ImportExportDialog: React.FC<IImportExportDialog> = ({
   setData,
   open,
   onClose,
   source,
   parsedData,
 }) => {
+  const renderContent = () => {
+    switch (source) {
+      case "Export data":
+        return (
+          <ExportDataComponent parsedData={parsedData} onClose={onClose} />
+        );
+      case "Import data":
+        return <ImportDataComponent setData={setData} onClose={onClose} />;
+      default:
+        return null;
+    }
+  };
+
   return (
-    <Dialog fullWidth sx={{ height: "90vh" }} open={open} onClose={onClose}>
+    <Dialog fullWidth sx={{ height: "100vh" }} open={open} onClose={onClose}>
       <Box
         sx={{
           p: "1rem",
@@ -29,12 +42,7 @@ export const ImportData: React.FC<IImportDataProps> = ({
           height: "100%",
         }}
       >
-        {source === "Export data" && (
-          <ExportDataComponent parsedData={parsedData} onClose={onClose} />
-        )}
-        {source === "Import data" && (
-          <ImportDataComponent setData={setData} onClose={onClose} />
-        )}
+        {renderContent()}
       </Box>
     </Dialog>
   );

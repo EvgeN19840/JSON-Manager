@@ -1,7 +1,8 @@
 import { FC, useState } from "react";
 import { ITypeJSON } from "./const/types";
 import { Header, MyGrid } from "./components";
-import { OpenDialog } from "./components/import-data/openDialog";
+
+import { ImportExportDialog } from "./components/import-data/ui";
 
 export const Home: FC = () => {
   const [data, setData] = useState<ITypeJSON | null>(null);
@@ -9,14 +10,13 @@ export const Home: FC = () => {
   const [source, setSource] = useState("");
   const [parsedData, setParsedData] = useState<string | null>(null);
 
-  const handleClickOpenFromGrid = () => {
-    setSource("Export data");
-    setParsedData(JSON.stringify(data, null, 2));
-    setOpenDialog(true);
-  };
-
-  const handleClickOpenFromEmployeeData = () => {
-    setSource("Import data");
+  const handleClickOpenFromGrid = (actionType: string) => {
+    if (actionType === "export") {
+      setSource("Export data");
+      setParsedData(JSON.stringify(data, null, 2));
+    } else {
+      setSource("Import data");
+    }
     setOpenDialog(true);
   };
 
@@ -28,10 +28,9 @@ export const Home: FC = () => {
     <>
       <Header />
       <MyGrid data={data} handleClickOpenFromGrid={handleClickOpenFromGrid} />
-      <OpenDialog
+      <ImportExportDialog
         setData={setData}
         open={openDialog}
-        onOpen={handleClickOpenFromEmployeeData}
         onClose={handleCloseDialog}
         source={source}
         parsedData={parsedData}
