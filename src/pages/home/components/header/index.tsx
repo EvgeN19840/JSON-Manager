@@ -1,5 +1,5 @@
-import { Typography, Box } from "@mui/material";
 import { FC } from "react";
+import { Typography, Box } from "@mui/material";
 
 export const Header: FC = () => (
   <Box

@@ -29,8 +29,7 @@ export const CopyButton: React.FC<ICopyButtonProps> = ({ textToCopy }) => {
   );
   return (
     <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 1 }}>
-       <Button variant="contained" onClick={onClick}>
-      
+      <Button variant="contained" onClick={onClick}>
         Copy
       </Button>
       {message && (

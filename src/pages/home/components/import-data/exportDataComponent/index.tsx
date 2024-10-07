@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
     Box,
     Button,
@@ -5,7 +6,6 @@ import {
     Typography,
     Snackbar,
   } from "@mui/material";
-  import { useState } from "react";
 import { DownloadJSONFileAsTXT } from "../../download-data";
 import { ITypeJSON } from "../../../const/types";
 import { CloseButton } from "../../buttons/closeButton";
@@ -33,7 +33,7 @@ import { CopyButton } from "../../buttons/copyButton";
           setInputNameFile("");
           onClose();
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        } catch (err) {
+        } catch (e) {
           setErrorMessage("Failed to parse the data for download.");
         }
       } else {
@@ -73,11 +73,7 @@ import { CopyButton } from "../../buttons/copyButton";
           onChange={handleNameFileChange}
           sx={{ display: "flex", mb: 1 }}
         />
-        {parsedData ? (
-          <CopyButton textToCopy={parsedData} />
-        ) : (
-          <Button disabled>Copy</Button>
-        )}
+        <CopyButton textToCopy={parsedData} />
         <TextField
           multiline
           rows={20}
