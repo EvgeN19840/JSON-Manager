@@ -4,11 +4,11 @@ interface IExportButtonsProps {
   onClick: () => void;
 }
 
-export const ExportButtons: React.FC<IExportButtonsProps> = ({
+export const ExportButton: React.FC<IExportButtonsProps> = ({
   onClick,
 }) => {
   return (
-    <Button variant="contained" onClick={onClick} sx={{ mb: 1 }}>
+    <Button variant="contained" onClick={onClick} >
       Export
     </Button>
   );

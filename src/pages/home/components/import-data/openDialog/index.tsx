@@ -1,27 +1,38 @@
+import { Button } from "@mui/material";
 import { ITypeJSON } from "../../../const/types";
 import { ImportData } from "../ui";
 
-interface OpendialogProps {
-  open: boolean;
-  onClose: () => void;
-  fromGrid?: boolean;
+interface IOpenDialog {
   setData: (value: ITypeJSON) => void;
+  open: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+  source: string;
+  parsedData: string | null;
 }
 
-export const Opendialog: React.FC<OpendialogProps> = ({
-  open,
-  onClose,
-  fromGrid = false,
+export const OpenDialog: React.FC<IOpenDialog> = ({
   setData,
+  open,
+  onOpen,
+  onClose,
+  source,
+  parsedData,
 }) => {
   return (
     <>
-      <ImportData
-        open={open}
-        onClose={onClose}
-        fromGrid={fromGrid}
-        setData={setData}
-      />
+      <Button variant="contained" onClick={onOpen} sx={{ mb: 1 }}>
+        Import Employee Data
+      </Button>
+      {open && (
+        <ImportData
+          open={open}
+          onClose={onClose}
+          setData={setData}
+          source={source}
+          parsedData={parsedData}  
+        />
+      )}
     </>
   );
 };

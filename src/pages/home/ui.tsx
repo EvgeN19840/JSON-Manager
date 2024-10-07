@@ -1,47 +1,41 @@
-// ** React
 import { FC, useState } from "react";
-
-// ** Types
 import { HomeProps } from "./types";
 import { ITypeJSON } from "./const/types";
-
-// ** Componets
 import { Header, MyGrid } from "./components";
-import { Box } from "@mui/material";
-import { EmployeeDataButton } from "./components/buttons/emploeeData";
-import { Opendialog } from "./components/import-data/openDialog";
 
 export const Home: FC<HomeProps> = (props) => {
   const [data, setData] = useState<ITypeJSON | null>(null);
   const [openDialog, setOpenDialog] = useState(false);
-  const [fromGrid, setFromGrid] = useState(false);
+  const [source, setSource] = useState("");
+  const [parsedData, setParsedData] = useState<string | null>(null);
 
   const handleClickOpenFromGrid = () => {
+    setSource("Export data");
+    setParsedData(JSON.stringify(data, null, 2));
     setOpenDialog(true);
-    setFromGrid(true);
   };
 
-  const handleOpenForm = () => {
+  const handleClickOpenFromEmployeeData = () => {
+    setSource("Import data");
     setOpenDialog(true);
-    setFromGrid(false);
   };
 
-  const handleClose = () => {
+  const handleCloseDialog = () => {
     setOpenDialog(false);
   };
 
   return (
     <>
       <Header {...props} />
-      <Box>
-        <MyGrid data={data} handleClickOpenFromGrid={handleClickOpenFromGrid} />
-      </Box>
-      <EmployeeDataButton onClick={handleOpenForm} />
-      <Opendialog
-        open={openDialog}
-        onClose={handleClose}
-        fromGrid={fromGrid}
+      <MyGrid
+        data={data}
+        handleClickOpenFromGrid={handleClickOpenFromGrid}
         setData={setData}
+        openDialog={openDialog}
+        handleClickOpenFromEmployeeData={handleClickOpenFromEmployeeData}
+        handleCloseDialog={handleCloseDialog}
+        source={source}
+        parsedData={parsedData}
       />
     </>
   );

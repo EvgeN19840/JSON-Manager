@@ -1,4 +1,11 @@
-import { Box, Dialog, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Dialog,
+  Snackbar,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
 import { ITypeJSON } from "../../const/types";
 import { ImportButton } from "../buttons/importButton";
@@ -11,42 +18,44 @@ interface IImportDataProps {
   setData: (value: ITypeJSON) => void;
   open: boolean;
   onClose: () => void;
-  fromGrid?: boolean;
+  source: string;
+  parsedData: string | null;
 }
 
 export const ImportData: React.FC<IImportDataProps> = ({
   setData,
   open,
   onClose,
-  fromGrid = false,
+  source,
+  parsedData,
 }) => {
   const [inputValue, setInputValue] = useState("");
   const [inputNameFile, setInputNameFile] = useState("");
-  const [parsedData, setParsedData] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-    const downloadFile = () => {
-      if (inputNameFile && parsedData) {
-        const jsonData: ITypeJSON = JSON.parse(parsedData);
-        DownloadJSONFileAsTXT(inputNameFile, jsonData);
-        setInputNameFile("");
-        onClose();
-      } else {
-        alert("Please enter name.");
-      }
-    };
+  const downloadFile = () => {
+    if (inputNameFile && parsedData) {
+      const jsonData: ITypeJSON = JSON.parse(parsedData);
+      DownloadJSONFileAsTXT(inputNameFile, jsonData);
+      setInputNameFile("");
+      onClose();
+    } else {
+      setErrorMessage("Please enter a file name.");
+    }
+  };
 
   const handleImport = () => {
     try {
       const parsedData: ITypeJSON = JSON.parse(inputValue);
       setData(parsedData);
-      setParsedData(JSON.stringify(parsedData, null, 2));
       onClose();
       setInputValue("");
     } catch (e) {
       console.error("Invalid JSON format", e);
-      alert("Invalid JSON data. Please correct and try again.");
+      setErrorMessage("Invalid JSON data. Please correct and try again.");
     }
   };
+
   const handleClose = () => {
     onClose();
     setInputValue("");
@@ -61,6 +70,12 @@ export const ImportData: React.FC<IImportDataProps> = ({
     setInputNameFile(event.target.value);
   };
 
+  const action = errorMessage && (
+    <Button color="inherit" size="small" onClick={() => setErrorMessage(null)}>
+      Close
+    </Button>
+  );
+
   return (
     <Dialog fullWidth sx={{ height: "90vh" }} open={open} onClose={onClose}>
       <Box
@@ -72,48 +87,90 @@ export const ImportData: React.FC<IImportDataProps> = ({
           height: "100%",
         }}
       >
-        <Typography variant="h6" sx={{ textAlign: "center" }}>
-          {fromGrid ? "Save Data" : "Import Data"}
-        </Typography>
-        {!fromGrid && (
-          <Box sx={{ display: "flex", justifyContent: "flex-start", mb: 2 }}>
-            <ImportButton onClick={handleImport} />
-          </Box>
-        )}
-
-        {fromGrid && (
+        {source === "Import data" && (
           <Box>
+            <Typography variant="h6" sx={{ textAlign: "center" }}>
+              Import Data
+            </Typography>
             <Box
-              sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                mb: 1,
+              }}
             >
-              <DownloadButton onClick={downloadFile} />
-              <CopyButton textToCopy={parsedData} />
+              <Box>
+                <CloseButton onClick={handleClose} />
+              </Box>
+              <Box>
+                <ImportButton onClick={handleImport} />
+              </Box>
             </Box>
             <TextField
-              value={inputNameFile}
-              placeholder="Enter file name"
-              onChange={handleNameFileChange}
-              sx={{ display: "flex", mb: 1 }}
+              multiline
+              rows={20}
+              sx={{ width: "100%" }}
+              placeholder="Paste your JSON data here"
+              onChange={handleInputChange}
+              value={inputValue || ""}
             />
           </Box>
         )}
+        {source === "Export data" && (
+          <Box>
+            <Typography variant="h6" sx={{ textAlign: "center" }}>
+              Export Data
+            </Typography>
+            <Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  mb: 1,
+                }}
+              >
+                <Box>
+                  <CloseButton onClick={handleClose} />
+                </Box>
+                <Box>
+                  <DownloadButton onClick={downloadFile} />
+                </Box>
+              </Box>
 
-        <TextField
-          multiline
-          rows={20}
-          sx={{ flexGrow: 1 }}
-          placeholder={fromGrid ? "Viewing data" : "Paste your JSON data here"}
-          onChange={handleInputChange}
-          value={fromGrid && parsedData ? parsedData : inputValue}
-          slotProps={{
-            input: {
-              readOnly: fromGrid,
-            },
-          }}
-        />
-        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-          <CloseButton onClick={handleClose} />
-        </Box>
+              <TextField
+                value={inputNameFile}
+                placeholder="Enter file name"
+                onChange={handleNameFileChange}
+                sx={{ display: "flex", mb: 1 }}
+              />
+            </Box>
+            <CopyButton textToCopy={parsedData} />
+            <TextField
+              multiline
+              rows={20}
+              sx={{ width: "100%" }}
+              placeholder="Viewing data"
+              value={parsedData || ""}
+              slotProps={{
+                input: {
+                  readOnly: true,
+                },
+              }}
+            />
+           
+          </Box>
+        )}
+        {errorMessage && (
+          <Snackbar
+            open={!!errorMessage}
+            autoHideDuration={1000}
+            onClose={() => setErrorMessage(null)}
+            message={errorMessage}
+            action={action}
+          />
+        )}
       </Box>
     </Dialog>
   );
