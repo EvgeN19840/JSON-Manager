@@ -82,7 +82,7 @@ export const ExportDataComponent: React.FC<IExportDataComponentProps> = ({
             },
           }}
         />
-        <Box sx={{ position: "absolute", top: 8, right: 8, zIndex: 1 }}>
+        <Box sx={{ position: "absolute", top: 8, right: 8, zIndex: 1, pr:4}}>
           <CopyButton textToCopy={parsedData} />
         </Box>
       </Box>
