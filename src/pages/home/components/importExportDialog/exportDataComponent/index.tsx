@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Box, Button, TextField, Typography, Snackbar } from "@mui/material";
-import { DownloadJSONFileAsTXT } from "../../download-data";
+import { DownloadJSONFileAsTXT } from "../../../../../utils/download-data";
 import { ITypeJSON } from "../../../const/types";
 
-import { CopyButton } from "../../buttons/copyButton";
+import { CopyButton } from "./buttons/copyButton";
 
 interface IExportDataComponentProps {
   parsedData: string | null;

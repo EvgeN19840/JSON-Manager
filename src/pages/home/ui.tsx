@@ -1,9 +1,12 @@
 import { FC, useState } from "react";
 import { ITypeJSON } from "./const/types";
-import { Header, MyGrid } from "./components";
-import { ImportExportDialog } from "./components/import-data/ui";
-import { ToolbarWithExportAndImport } from "./components/grid";
-import { columns } from "./components/grid/columns";
+import {
+  Header,
+  ImportExportDialog,
+  MyGrid,
+  ToolbarWithExportAndImport,
+  columns,
+} from "./components";
 
 export const Home: FC = () => {
   const [data, setData] = useState<ITypeJSON | null>(null);

@@ -1,7 +1,6 @@
-import { Dialog, Box } from "@mui/material";
 import { ITypeJSON } from "../../const/types";
-import { ImportDataComponent } from "./importDataComponent";
-import { ExportDataComponent } from "./exportDataComponent";
+import { ImportDataComponent,ExportDataComponent } from "./";
+import { CustomDialog } from "../customDialog";
 
 interface IImportExportDialog {
   setData: (value: ITypeJSON) => void;
@@ -32,18 +31,6 @@ export const ImportExportDialog: React.FC<IImportExportDialog> = ({
   };
 
   return (
-    <Dialog fullWidth sx={{ height: "100vh" }} open={open} onClose={onClose}>
-      <Box
-        sx={{
-          p: "1rem",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          height: "100%",
-        }}
-      >
-        {renderContent()}
-      </Box>
-    </Dialog>
+    <CustomDialog open={open} onClose={onClose} children={renderContent()} />
   );
 };
