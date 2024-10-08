@@ -1,8 +1,9 @@
 import { FC, useState } from "react";
 import { ITypeJSON } from "./const/types";
 import { Header, MyGrid } from "./components";
-
 import { ImportExportDialog } from "./components/import-data/ui";
+import { ToolbarWithExportAndImport } from "./components/grid";
+import { columns } from "./components/grid/columns";
 
 export const Home: FC = () => {
   const [data, setData] = useState<ITypeJSON | null>(null);
@@ -27,7 +28,18 @@ export const Home: FC = () => {
   return (
     <>
       <Header />
-      <MyGrid data={data} handleClickOpenFromGrid={handleClickOpenFromGrid} />
+      <MyGrid
+        data={data?.employees}
+        columns={columns}
+        slots={{
+          toolbar: () => (
+            <ToolbarWithExportAndImport
+              handleClickOpenFromGrid={handleClickOpenFromGrid}
+              hasData={!!data}
+            />
+          ),
+        }}
+      />
       <ImportExportDialog
         setData={setData}
         open={openDialog}

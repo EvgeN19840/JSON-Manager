@@ -1,33 +1,28 @@
-import { ITypeJSON } from "../../const/types";
+import {
+  DataGrid,
+  GridSlotsComponent,
+  GridColDef,
+  GridValidRowModel,
+} from "@mui/x-data-grid";
 import { StylesgridProps } from "./styles/gridProps";
-import { DataGrid } from "@mui/x-data-grid";
-import { columns } from "./columns";
-import { ToolbarWithExportAndImport } from "./toolbar";
 
-interface MyGridProps {
-  handleClickOpenFromGrid?: (actionType: string) => void;
-  data?: ITypeJSON | null;
+interface MyGridProps<T extends GridValidRowModel> {
+  columns: GridColDef<T>[];
+  data?: T[];
+  slots?: Partial<GridSlotsComponent>;
 }
 
-export const MyGrid: React.FC<MyGridProps> = ({
+export const MyGrid = <T extends { eId: number }>({
   data,
-  handleClickOpenFromGrid,
-}) => {
+  columns,
+  slots,
+}: MyGridProps<T>) => {
   return (
     <DataGrid
-      rows={data?.employees ?? []}
+      rows={data ?? []}
       getRowId={(row) => row.eId}
       columns={columns}
-      slots={{
-        toolbar: handleClickOpenFromGrid
-          ? () => (
-              <ToolbarWithExportAndImport
-                handleClickOpenFromGrid={handleClickOpenFromGrid}
-                hasData={!!data}
-              />
-            )
-          : null,
-      }}
+      slots={slots}
       initialState={{
         pagination: {
           paginationModel: {
