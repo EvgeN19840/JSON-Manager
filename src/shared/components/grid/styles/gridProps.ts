@@ -1,5 +1,4 @@
-
-import { theme } from "../../../../../customTheme";
+import { theme } from "../../../../customTheme";
 
 export const StylesgridProps = {
   marginTop: 20,

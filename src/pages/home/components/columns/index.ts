@@ -1,5 +1,6 @@
 import { GridColDef } from "@mui/x-data-grid";
-import { Employee } from "../../const/types";
+import { Employee } from "../../../../const/types";
+
 
 export const columns: GridColDef<Employee>[] = [
   {

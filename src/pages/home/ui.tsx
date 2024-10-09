@@ -1,5 +1,4 @@
 import { FC, useState } from "react";
-import { ITypeJSON } from "./const/types";
 import {
   Header,
   ImportExportDialog,
@@ -7,6 +6,8 @@ import {
   ToolbarWithExportAndImport,
   columns,
 } from "./components";
+import { ITypeJSON } from "../../const/types";
+
 
 export const Home: FC = () => {
   const [data, setData] = useState<ITypeJSON | null>(null);
