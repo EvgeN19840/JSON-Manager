@@ -1,6 +1,7 @@
-import { ITypeJSON } from "@/const/types";
-import { Box, Button, Snackbar, TextField, Typography } from "@mui/material";
 import { useState } from "react";
+import { ITypeJSON } from "@/const/types";
+import { useSnackbar } from "@/context";
+import { Box, Button,  TextField, Typography } from "@mui/material";
 
 
 
@@ -14,7 +15,7 @@ export const ImportDataComponent: React.FC<IImportDataComponentProps> = ({
   onClose,
 }) => {
   const [inputValue, setInputValue] = useState("");
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const { showSnackbar } = useSnackbar();
 
   const handleImport = () => {
     try {
@@ -24,19 +25,13 @@ export const ImportDataComponent: React.FC<IImportDataComponentProps> = ({
       setInputValue("");
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
-      setErrorMessage("Invalid JSON data. Please correct and try again.");
+      showSnackbar("Invalid JSON data. Please correct and try again.", 'error');
     }
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
-
-  const action = errorMessage && (
-    <Button color="inherit" size="small" onClick={() => setErrorMessage(null)}>
-      Close
-    </Button>
-  );
 
   return (
     <Box>
@@ -66,16 +61,6 @@ export const ImportDataComponent: React.FC<IImportDataComponentProps> = ({
           Import
         </Button>
       </Box>
-
-      {errorMessage && (
-        <Snackbar
-          open={!!errorMessage}
-          autoHideDuration={1000}
-          onClose={() => setErrorMessage(null)}
-          message={errorMessage}
-          action={action}
-        />
-      )}
     </Box>
   );
 };

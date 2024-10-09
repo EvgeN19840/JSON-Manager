@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Box, Button, TextField, Typography, Snackbar } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import { CopyButton } from "./buttons";
+import { useSnackbar } from "@/context";
 import { DownloadJSONFileAsTXT } from "@/shared/utils";
 import { ITypeJSON } from "@/const/types";
-
 
 interface IExportDataComponentProps {
   parsedData: string | null;
@@ -15,7 +15,7 @@ export const ExportDataComponent: React.FC<IExportDataComponentProps> = ({
   onClose,
 }) => {
   const [inputNameFile, setInputNameFile] = useState("");
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const { showSnackbar } = useSnackbar();
 
   const downloadFile = () => {
     if (inputNameFile && parsedData) {
@@ -26,22 +26,16 @@ export const ExportDataComponent: React.FC<IExportDataComponentProps> = ({
         onClose();
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (e) {
-        setErrorMessage("Failed to parse the data for download.");
+        showSnackbar("Failed to parse the data for download.", 'error');
       }
     } else {
-      setErrorMessage("Please enter a valid file name.");
+      showSnackbar("Please enter a valid file name.", 'error');
     }
   };
 
   const handleNameFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputNameFile(event.target.value);
   };
-
-  const action = errorMessage && (
-    <Button color="inherit" size="small" onClick={() => setErrorMessage(null)}>
-      Close
-    </Button>
-  );
 
   return (
     <Box>
@@ -86,15 +80,6 @@ export const ExportDataComponent: React.FC<IExportDataComponentProps> = ({
           <CopyButton textToCopy={parsedData} />
         </Box>
       </Box>
-      {errorMessage && (
-        <Snackbar
-          open={!!errorMessage}
-          autoHideDuration={1000}
-          onClose={() => setErrorMessage(null)}
-          message={errorMessage}
-          action={action}
-        />
-      )}
     </Box>
   );
 };
