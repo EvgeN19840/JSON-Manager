@@ -1,7 +1,6 @@
-
-import { ImportDataComponent,ExportDataComponent } from "./";
-import { ITypeJSON } from "../../../../const/types";
-import { CustomDialog } from "../../../../shared/components/customDialog";
+import { ImportDataComponent, ExportDataComponent } from "./";
+import { ITypeJSON } from "@/const/types";
+import { CustomDialog } from "@/shared/components/customDialog";
 
 interface IImportExportDialog {
   setData: (value: ITypeJSON) => void;

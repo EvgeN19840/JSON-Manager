@@ -6,7 +6,7 @@ import {
   ToolbarWithExportAndImport,
   columns,
 } from "./components";
-import { ITypeJSON } from "../../const/types";
+import { ITypeJSON } from "@/const/types";
 
 
 export const Home: FC = () => {
