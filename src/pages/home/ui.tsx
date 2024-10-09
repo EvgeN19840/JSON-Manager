@@ -1,28 +1,34 @@
+// ** React
 import { FC, useState } from "react";
+
+// ** Components
 import {
   Header,
   ImportExportDialog,
   MyGrid,
   ToolbarWithExportAndImport,
-  columns,
 } from "./components";
-import { ITypeJSON } from "@/const/types";
+
+// ** Types
+import { ITypeJSON } from "../../const/types";
+import { IDialog } from "./types";
+
+// ** Const
+import { columns } from "./const";
 
 
 export const Home: FC = () => {
+  const [source, setSource] = useState<IDialog>(null);
   const [data, setData] = useState<ITypeJSON | null>(null);
-  const [openDialog, setOpenDialog] = useState(false);
-  const [source, setSource] = useState("");
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [parsedData, setParsedData] = useState<string | null>(null);
 
-  const handleClickOpenFromGrid = (actionType: string) => {
-    if (actionType === "export") {
-      setSource("Export data");
+  const handleClickOpenFromGrid = (actionType: IDialog) => {
+    if (actionType === "Export data") {
       setParsedData(JSON.stringify(data, null, 2));
-    } else {
-      setSource("Import data");
-    }
+    } 
     setOpenDialog(true);
+    setSource(actionType);
   };
 
   const handleCloseDialog = () => {

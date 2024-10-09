@@ -1,7 +1,5 @@
 import { useState } from "react";
-import { ITypeJSON } from "@/const/types";
-import { Box, Button, TextField, Typography, Snackbar } from "@mui/material";
-
+import { ITypeJSON } from "../../../../../../const/types";
 
 
 interface IImportDataComponentProps {
