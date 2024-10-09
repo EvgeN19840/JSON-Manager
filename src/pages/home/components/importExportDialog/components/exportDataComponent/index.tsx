@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Box, Button, TextField, Typography, Snackbar } from "@mui/material";
-import { CopyButton } from "./buttons/copyButton";
-import { DownloadJSONFileAsTXT } from "../../../../../shared/utils/downloadJSONFileAsTXT";
-import { ITypeJSON } from "../../../../../const/types";
+import { CopyButton } from "./buttons";
+import { DownloadJSONFileAsTXT } from "../../../../../../shared/utils";
+import { ITypeJSON } from "../../../../../../const/types";
 
 
 interface IExportDataComponentProps {
@@ -82,7 +82,7 @@ export const ExportDataComponent: React.FC<IExportDataComponentProps> = ({
             },
           }}
         />
-        <Box sx={{ position: "absolute", top: 8, right: 8, zIndex: 1, pr:4}}>
+        <Box sx={{ position: "absolute", top: 8, right: 8, zIndex: 1, pr: 4 }}>
           <CopyButton textToCopy={parsedData} />
         </Box>
       </Box>

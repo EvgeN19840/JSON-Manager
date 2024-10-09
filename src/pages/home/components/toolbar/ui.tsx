@@ -1,7 +1,8 @@
 import { Box, Button } from "@mui/material";
+import { IDialog } from "../../types";
 
 interface IToolbarWithExportAndImportProps {
-  handleClickOpenFromGrid: (actionType: string) => void;
+  handleClickOpenFromGrid: (actionType: IDialog) => void;
   hasData: boolean;
 }
 
@@ -20,14 +21,14 @@ export const ToolbarWithExportAndImport: React.FC<
     >
       <Button
         variant="contained"
-        onClick={() => handleClickOpenFromGrid("import")}
+        onClick={() => handleClickOpenFromGrid("Import data")}
       >
         Import Employee Data
       </Button>
       {hasData && (
         <Button
           variant="contained"
-          onClick={() => handleClickOpenFromGrid("export")}
+          onClick={() => handleClickOpenFromGrid("Export data")}
         >
           Export
         </Button>

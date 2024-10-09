@@ -22,7 +22,6 @@ export const CustomDialog: React.FC<ICustomDialog> = ({
           height: "100%",
         }}
       >
-        {" "}
         {children}
       </Box>
     </Dialog>

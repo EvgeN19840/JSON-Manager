@@ -1,6 +1,6 @@
 import { Box, Button, TextField, Typography, Snackbar } from "@mui/material";
 import { useState } from "react";
-import { ITypeJSON } from "../../../../../const/types";
+import { ITypeJSON } from "../../../../../../const/types";
 
 
 interface IImportDataComponentProps {
