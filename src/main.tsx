@@ -4,14 +4,14 @@ import App from "./App";
 import "./index.css";
 import { theme } from "./customTheme";
 import { ThemeProvider } from "@mui/material";
-import { SnackbarProvider } from "./context";
+import { NotificationProvider } from "./shared/context/provider";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <SnackbarProvider>
+      <NotificationProvider>
         <App />
-      </SnackbarProvider>
+      </NotificationProvider>
     </ThemeProvider>
   </React.StrictMode>
 );

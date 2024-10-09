@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ITypeJSON } from "@/const/types";
-import { useSnackbar } from "@/context";
 import { Box, Button,  TextField, Typography } from "@mui/material";
+import { useNotification } from "@/shared/context/useNotification";
 
 
 
@@ -15,7 +15,7 @@ export const ImportDataComponent: React.FC<IImportDataComponentProps> = ({
   onClose,
 }) => {
   const [inputValue, setInputValue] = useState("");
-  const { showSnackbar } = useSnackbar();
+  const { showNotification } = useNotification();
 
   const handleImport = () => {
     try {
@@ -25,7 +25,7 @@ export const ImportDataComponent: React.FC<IImportDataComponentProps> = ({
       setInputValue("");
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
-      showSnackbar("Invalid JSON data. Please correct and try again.", 'error');
+      showNotification("Invalid JSON data. Please correct and try again.", 'error');
     }
   };
 

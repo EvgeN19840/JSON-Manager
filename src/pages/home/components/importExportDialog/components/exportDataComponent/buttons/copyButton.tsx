@@ -1,4 +1,5 @@
-import { useSnackbar } from "@/context";
+
+import { useNotification } from "@/shared/context/useNotification";
 import { Box, Button } from "@mui/material";
 import React from "react";
 
@@ -7,13 +8,13 @@ interface ICopyButtonProps {
 }
 
 export const CopyButton: React.FC<ICopyButtonProps> = ({ textToCopy }) => {
-  const { showSnackbar } = useSnackbar();
+  const { showNotification } = useNotification();
 
   const onClick = async () => {
     if (textToCopy) {
       try {
         await navigator.clipboard.writeText(textToCopy);
-        showSnackbar("Text successfully copied to clipboard!", 'success')
+        showNotification("Text successfully copied to clipboard!", 'success')
       } catch (err) {
         console.error(err);
       }

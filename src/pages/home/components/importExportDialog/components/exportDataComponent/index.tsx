@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { CopyButton } from "./buttons";
-import { useSnackbar } from "@/context";
 import { DownloadJSONFileAsTXT } from "@/shared/utils";
 import { ITypeJSON } from "@/const/types";
+import { useNotification } from "@/shared/context/useNotification";
 
 interface IExportDataComponentProps {
   parsedData: string | null;
@@ -15,7 +15,7 @@ export const ExportDataComponent: React.FC<IExportDataComponentProps> = ({
   onClose,
 }) => {
   const [inputNameFile, setInputNameFile] = useState("");
-  const { showSnackbar } = useSnackbar();
+  const { showNotification  } = useNotification();
 
   const downloadFile = () => {
     if (inputNameFile && parsedData) {
@@ -26,10 +26,10 @@ export const ExportDataComponent: React.FC<IExportDataComponentProps> = ({
         onClose();
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (e) {
-        showSnackbar("Failed to parse the data for download.", 'error');
+        showNotification ("Failed to parse the data for download.", 'error');
       }
     } else {
-      showSnackbar("Please enter a valid file name.", 'error');
+      showNotification ("Please enter a valid file name.", 'error');
     }
   };
 
