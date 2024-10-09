@@ -2,7 +2,6 @@ import { Employee } from "@/const/types";
 import { GridColDef } from "@mui/x-data-grid";
 
 
-
 export const columns: GridColDef<Employee>[] = [
   {
     field: "firstName",
@@ -15,5 +14,5 @@ export const columns: GridColDef<Employee>[] = [
     headerName: "Last name",
     flex: 1,
     editable: true,
-  },
+  }, 
 ];

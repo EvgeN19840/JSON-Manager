@@ -10,8 +10,8 @@ import {
 } from "./components";
 
 // ** Types
-import { ITypeJSON } from "../../const/types";
 import { IDialog } from "./types";
+import { ITypeJSON } from "@/const/types";
 
 // ** Const
 import { columns } from "./const";
