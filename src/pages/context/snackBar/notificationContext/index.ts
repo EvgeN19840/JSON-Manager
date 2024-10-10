@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { NotificationType } from "../types";
+import { NotificationType } from "../../../types";
 
 
 interface NotificationContextProps {

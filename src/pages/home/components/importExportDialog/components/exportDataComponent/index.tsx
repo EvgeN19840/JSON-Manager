@@ -15,7 +15,7 @@ export const ExportDataComponent: React.FC<IExportDataComponentProps> = ({
   onClose,
 }) => {
   const [inputNameFile, setInputNameFile] = useState("");
-  const { showNotification  } = useNotification();
+  const { showNotification } = useNotification();
 
   const downloadFile = () => {
     if (inputNameFile && parsedData) {
@@ -26,10 +26,10 @@ export const ExportDataComponent: React.FC<IExportDataComponentProps> = ({
         onClose();
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (e) {
-        showNotification ("Failed to parse the data for download.", 'error');
+        showNotification("Failed to parse the data for download.", "error");
       }
     } else {
-      showNotification ("Please enter a valid file name.", 'error');
+      showNotification("Please enter a valid file name.", "error");
     }
   };
 
@@ -42,21 +42,7 @@ export const ExportDataComponent: React.FC<IExportDataComponentProps> = ({
       <Typography variant="h6" sx={{ textAlign: "center" }}>
         Export Data
       </Typography>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          mb: 1,
-        }}
-      >
-        <Button variant="contained" onClick={onClose}>
-          Close
-        </Button>
-        <Button variant="contained" onClick={downloadFile}>
-          Download
-        </Button>
-      </Box>
+
       <TextField
         value={inputNameFile}
         placeholder="Enter file name"
@@ -76,9 +62,24 @@ export const ExportDataComponent: React.FC<IExportDataComponentProps> = ({
             },
           }}
         />
-        <Box sx={{ position: "absolute", top: 8, right: 8, zIndex: 1, pr: 4 }}>
+        <Box sx={{ position: "absolute", top: 9, right: 8, zIndex: 1, pr: 4 }}>
           <CopyButton textToCopy={parsedData} />
         </Box>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mt: 1,
+        }}
+      >
+        <Button variant="contained" onClick={onClose}>
+          Close
+        </Button>
+        <Button variant="contained" onClick={downloadFile}>
+          Download
+        </Button>
       </Box>
     </Box>
   );
