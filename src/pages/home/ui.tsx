@@ -11,11 +11,11 @@ import {
 
 // ** Types
 import { IDialog } from "./types";
-import { ITypeJSON } from "@/const/types";
+import { Employee, ITypeJSON } from "@/const/types";
 
 // ** Const
 import { columns } from "@/const/columns";
-
+import { EditDialog } from "./components/editDialog";
 
 
 export const Home: FC = () => {
@@ -23,11 +23,29 @@ export const Home: FC = () => {
   const [data, setData] = useState<ITypeJSON | null>(null);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [parsedData, setParsedData] = useState<string | null>(null);
+  const [isDialogOpen, setDialogOpen] = useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
+
+  const handleEditClick = (employee: Employee) => {
+    setSelectedEmployee(employee);
+    setDialogOpen(true);
+  };
+
+  const handleSave = (updatedEmployee: Employee) => {
+    setData((prevData) => prevData && ({
+      ...prevData,
+      employees: prevData.employees.map((emp) =>
+        emp.eId === updatedEmployee.eId ? updatedEmployee : emp
+      ),
+    }));
+  };
+  
+  
 
   const handleClickOpenFromGrid = (actionType: IDialog) => {
     if (actionType === "Export data") {
       setParsedData(JSON.stringify(data, null, 2));
-    } 
+    }
     setOpenDialog(true);
     setSource(actionType);
   };
@@ -41,7 +59,7 @@ export const Home: FC = () => {
       <Header />
       <MyGrid
         data={data?.employees}
-        columns={columns}
+        columns={columns(handleEditClick)}
         slots={{
           toolbar: () => (
             <ToolbarWithExportAndImport
@@ -51,6 +69,14 @@ export const Home: FC = () => {
           ),
         }}
       />
+      {selectedEmployee && (
+        <EditDialog
+          open={isDialogOpen}
+          onClose={() => setDialogOpen(false)}
+          employee={selectedEmployee}
+          onSave={handleSave}
+        />
+      )}
       <ImportExportDialog
         setData={setData}
         open={openDialog}

@@ -1,10 +1,7 @@
 import { useState } from "react";
 import { ITypeJSON } from "@/const/types";
-import { Box, Button,  TextField, Typography } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import { useNotification } from "@/hooks/useNotification";
-
-
-
 
 interface IImportDataComponentProps {
   setData: (value: ITypeJSON) => void;
@@ -58,9 +55,12 @@ export const ImportDataComponent: React.FC<IImportDataComponentProps> = ({
         <Button variant="contained" onClick={onClose}>
           Close
         </Button>
-        <Button variant="contained" onClick={handleImport}>
-          Import
-        </Button>
+
+        {inputValue ? (
+          <Button variant="contained" onClick={handleImport}>
+            Import
+          </Button>
+        ) : null}
       </Box>
     </Box>
   );
