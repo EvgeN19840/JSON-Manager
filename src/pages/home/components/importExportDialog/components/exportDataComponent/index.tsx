@@ -3,7 +3,7 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import { CopyButton } from "./buttons";
 import { DownloadJSONFileAsTXT } from "@/shared/utils";
 import { ITypeJSON } from "@/const/types";
-import { useNotification } from "@/pages/hooks/useNotification";
+import { useNotification } from "@/hooks/useNotification";
 
 
 interface IExportDataComponentProps {

@@ -1,5 +1,5 @@
 
-import { useNotification } from "@/pages/hooks/useNotification";
+import { useNotification } from "@/hooks/useNotification";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 import React from "react";

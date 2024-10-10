@@ -14,7 +14,8 @@ import { IDialog } from "./types";
 import { ITypeJSON } from "@/const/types";
 
 // ** Const
-import { columns } from "./const";
+import { columns } from "@/const/columns";
+
 
 
 export const Home: FC = () => {

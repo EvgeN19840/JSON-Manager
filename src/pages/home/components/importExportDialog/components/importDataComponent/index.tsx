@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ITypeJSON } from "@/const/types";
 import { Box, Button,  TextField, Typography } from "@mui/material";
-import { useNotification } from "@/pages/hooks/useNotification";
+import { useNotification } from "@/hooks/useNotification";
 
 
 

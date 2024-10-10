@@ -1,5 +1,5 @@
 
-import { NotificationContext } from "@/pages/context/snackBar/notificationContext";
+import { NotificationContext } from "@/context/snackBar/notificationContext";
 import { useContext } from "react";
 
 export const useNotification = () => {

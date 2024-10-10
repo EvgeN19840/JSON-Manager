@@ -4,7 +4,7 @@ import App from "./App";
 import "./index.css";
 import { theme } from "./customTheme";
 import { ThemeProvider } from "@mui/material";
-import { NotificationProvider } from "./pages/context/snackBar/provider";
+import { NotificationProvider } from "./context/snackBar/provider";
 
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
