@@ -1,4 +1,5 @@
-import { useNotification } from "@/shared/context/useNotification";
+
+import { useNotification } from "@/pages/hooks/useNotification";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 import React from "react";

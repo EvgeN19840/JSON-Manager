@@ -31,6 +31,7 @@ export const MyGrid = <T extends { eId: number }>({
         },
       }}
       pageSizeOptions={[3, 5, 10, 20, 100]}
+      disableRowSelectionOnClick
       sx={{ ...StylesgridProps }}
     />
   );
