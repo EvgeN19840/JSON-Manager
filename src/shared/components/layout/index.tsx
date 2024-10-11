@@ -1,4 +1,3 @@
-// components/Layout.tsx
 import { FC, ReactNode } from "react";
 import { Box, AppBar, Toolbar, Container, CssBaseline } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
