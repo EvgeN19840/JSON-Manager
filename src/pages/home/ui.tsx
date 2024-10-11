@@ -3,11 +3,12 @@ import { FC, useState } from "react";
 
 // ** Components
 import {
-  Header,
   ImportExportDialog,
   MyGrid,
   ToolbarWithExportAndImport,
 } from "./components";
+import { EditDialog } from "./components/editDialog";
+
 
 // ** Types
 import { IDialog } from "./types";
@@ -15,8 +16,6 @@ import { Employee, ITypeJSON } from "@/const/types";
 
 // ** Const
 import { columns } from "@/const/columns";
-import { EditDialog } from "./components/editDialog";
-
 
 export const Home: FC = () => {
   const [source, setSource] = useState<IDialog>(null);
@@ -24,7 +23,9 @@ export const Home: FC = () => {
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [parsedData, setParsedData] = useState<string | null>(null);
   const [isDialogOpen, setDialogOpen] = useState(false);
-  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
+  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(
+    null
+  );
 
   const handleEditClick = (employee: Employee) => {
     setSelectedEmployee(employee);
@@ -32,15 +33,16 @@ export const Home: FC = () => {
   };
 
   const handleSave = (updatedEmployee: Employee) => {
-    setData((prevData) => prevData && ({
-      ...prevData,
-      employees: prevData.employees.map((emp) =>
-        emp.eId === updatedEmployee.eId ? updatedEmployee : emp
-      ),
-    }));
+    setData(
+      (prevData) =>
+        prevData && {
+          ...prevData,
+          employees: prevData.employees.map((emp) =>
+            emp.eId === updatedEmployee.eId ? updatedEmployee : emp
+          ),
+        }
+    );
   };
-  
-  
 
   const handleClickOpenFromGrid = (actionType: IDialog) => {
     if (actionType === "Export data") {
@@ -56,7 +58,6 @@ export const Home: FC = () => {
 
   return (
     <>
-      <Header />
       <MyGrid
         data={data?.employees}
         columns={columns(handleEditClick)}
