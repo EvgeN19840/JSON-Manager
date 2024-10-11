@@ -1,4 +1,3 @@
-
 import { useNotification } from "@/hooks/useNotification";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
@@ -21,5 +20,16 @@ export const CopyButton: React.FC<ICopyButtonProps> = ({ textToCopy }) => {
       }
     }
   };
-  return <ContentCopyIcon onClick={onClick} />;
+  return (
+    <ContentCopyIcon
+      onClick={onClick}
+      sx={{
+        cursor: "pointer",
+        "&:hover": {
+          transform: "scale(1.1)",
+        },
+        transition: "transform 0.2s ease-in-out",
+      }}
+    />
+  );
 };

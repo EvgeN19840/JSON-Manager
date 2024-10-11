@@ -845,15 +845,5 @@ export const employeeData = {
       "name": "Silver Thatch Pension Property Plan",
       "id": "4579"
     }
-  ],
-  "lastDepositAccountId": 170,
-  "lastReimbursementId": 176,
-  "lastLoanAndSalaryAdvanceId": 173,
-  "lastOtherDeductionId": 147,
-  "lastBenefitId": 4579,
-  "lastSalaryId": 18287,
-  "lastJobInfoId": 38792,
-  "lastEmploymentStatusId": 27427,
-  "lastBonusId": 6,
-  "lastEID": 120
+  ]
 }

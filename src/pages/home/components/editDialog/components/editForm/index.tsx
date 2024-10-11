@@ -25,7 +25,7 @@ export const EditForm: React.FC<EditFormProps> = ({
       </Typography>
       <Box
         sx={{
-          gap: 1,
+          gap: '1rem',
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",

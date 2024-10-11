@@ -1,6 +1,5 @@
 export interface ITypeJSON {
   employees: Employee[];
-  employeeDetails: EmployeeDetails;
   benefits: SystemBenefit[];
 }
 
@@ -128,18 +127,4 @@ export interface Bonus {
 export interface SystemBenefit {
   name: string;
   id: string;
-}
-
-export interface EmployeeDetails {
-
-  lastDepositAccountId: number;
-  lastReimbursementId: number;
-  lastLoanAndSalaryAdvanceId: number;
-  lastOtherDeductionId: number;
-  lastBenefitId: number;
-  lastSalaryId: number;
-  lastJobInfoId: number;
-  lastEmploymentStatusId: number;
-  lastBonusId: number;
-  lastEID: number;
 }

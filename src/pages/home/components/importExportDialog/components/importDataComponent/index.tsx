@@ -18,12 +18,19 @@ export const ImportDataComponent: React.FC<IImportDataComponentProps> = ({
   const handleImport = () => {
     try {
       const parsedData: ITypeJSON = JSON.parse(inputValue);
-      setData(parsedData);
+      setData({
+        employees: parsedData.employees,
+        benefits: parsedData.benefits,
+      });
+
       onClose();
       setInputValue("");
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
-      showNotification("Invalid JSON data. Please correct and try again.", 'error');
+      console.log(e);
+      showNotification(
+        "Invalid JSON data. Please correct and try again.",
+        "error"
+      );
     }
   };
 
