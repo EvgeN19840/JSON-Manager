@@ -12,11 +12,13 @@ export const Home: FC = () => {
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [source, setSource] = useState<IDialog>(null);
   const [parsedData, setParsedData] = useState<string | null>(null);
-  
-  const [isDialogOpen, setDialogOpen] = useState(false);
-  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
 
-  const hasData = !!data; 
+  const [isDialogOpen, setDialogOpen] = useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(
+    null
+  );
+
+  const hasData = data ? true : false;
 
   const handleEditClick = (employee: Employee) => {
     setSelectedEmployee(employee);
@@ -24,16 +26,19 @@ export const Home: FC = () => {
   };
 
   const handleSave = (updatedEmployee: Employee) => {
-    setData((prevData: ITypeJSON) =>
+    setData((prevData) =>
       prevData
         ? {
             ...prevData,
-            employees: prevData.employees.map((emp: Employee) =>
+            employees: prevData.employees.map((emp) =>
               emp.eId === updatedEmployee.eId ? updatedEmployee : emp
             ),
             benefits: prevData.benefits,
           }
-        : null
+        : {
+            employees: [updatedEmployee],
+            benefits: [],
+          }
     );
   };
 
@@ -51,7 +56,10 @@ export const Home: FC = () => {
 
   return (
     <>
-      <TabComponent handleClickOpenFromGrid={handleClickOpenFromGrid} hasData={hasData} />
+      <TabComponent
+        handleClickOpenFromGrid={handleClickOpenFromGrid}
+        hasData={hasData}
+      />
 
       <MyGrid data={data?.employees} columns={columns(handleEditClick)} />
 
