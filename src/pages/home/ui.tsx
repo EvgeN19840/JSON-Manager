@@ -1,19 +1,16 @@
-import { FC, useContext, useState } from "react";
+import { FC, useState } from "react";
 import { MyGrid } from "./components";
 import { EditDialog } from "./components/editDialog";
 import { ImportExportDialog } from "./components/importExportDialog";
 import { Employee, ITypeJSON } from "@/const/types";
 import { columns } from "@/const/columns";
 import { TabComponent } from "@/context/tabs/tabComponent";
-import { DataStateContext } from "@/context/dataState/dataStateContext";
+
 import { IDialog } from "./types";
+import { useDataStateContext } from "@/hooks/useDataStateContext";
+import { TabsComponent2 } from "./components/tabs";
 
 export const Home: FC = () => {
-  const context = useContext(DataStateContext);
-  if (!context) {
-    throw new Error("DataStateContext must be used within a DataStateProvider");
-  }
-
   const {
     data,
     setData,
@@ -21,7 +18,7 @@ export const Home: FC = () => {
     setOpenDialog,
     parsedData,
     setParsedData,
-  } = context;
+  } = useDataStateContext();
 
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(
@@ -71,6 +68,7 @@ export const Home: FC = () => {
 
   return (
     <>
+    <TabsComponent2/>
       <TabComponent
         handleClickOpenFromGrid={handleClickOpenFromGrid}
         hasData={hasData}
