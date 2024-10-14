@@ -1,31 +1,31 @@
 import { useState } from "react";
 import { Button, TextField, Typography, Box } from "@mui/material";
 import { EditFormProps } from "../../types";
-
+import { useDataStateContext } from "@/hooks/useDataStateContext";
 
 export const EditForm: React.FC<EditFormProps> = ({
   onClose,
   employee,
-  onSave,
 }) => {
   const [firstName, setFirstName] = useState(employee?.firstName || "");
   const [lastName, setLastName] = useState(employee?.lastName || "");
+  const { handleSave } = useDataStateContext();
 
-  const handleSave = () => {
+  const saveEmployee = () => {
     if (employee) {
-      onSave({ ...employee, firstName, lastName });
+      handleSave({ ...employee, firstName, lastName });
       onClose();
     }
   };
 
   return (
     <Box>
-      <Typography variant="h6" sx={{ textAlign: "center"}}>
+      <Typography variant="h6" sx={{ textAlign: "center" }}>
         Edit Employee
       </Typography>
       <Box
         sx={{
-          gap: '1rem',
+          gap: "1rem",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
@@ -54,9 +54,9 @@ export const EditForm: React.FC<EditFormProps> = ({
         }}
       >
         <Button onClick={onClose} variant="contained">
-          close
+          Close
         </Button>
-        <Button onClick={handleSave} variant="contained">
+        <Button onClick={saveEmployee} variant="contained">
           Save
         </Button>
       </Box>

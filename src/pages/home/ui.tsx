@@ -4,14 +4,14 @@ import { EditDialog } from "./components/editDialog";
 import { ImportExportDialog } from "./components/importExportDialog";
 import { Employee } from "@/const/types";
 import { columns } from "@/const/columns";
-import { TabComponent } from "@/context/tabs/tabComponent";
+import { ButtonComponent } from "@/context/buttons/buttonComponent";
 
 import { IDialog } from "./types";
 import { useDataStateContext } from "@/hooks/useDataStateContext";
 import { TabsComponent } from "../../shared/components/tabs";
 
 export const Home: FC = () => {
-  const { data, openDialog, setOpenDialog, setParsedData, handleSave } =
+  const { data, openDialog, setOpenDialog, setParsedData } =
     useDataStateContext();
 
   const [isDialogOpen, setDialogOpen] = useState(false);
@@ -42,7 +42,7 @@ export const Home: FC = () => {
   return (
     <>
       <TabsComponent />
-      <TabComponent
+      <ButtonComponent
         handleClickOpenFromGrid={handleClickOpenFromGrid}
         hasData={hasData}
       />
@@ -53,7 +53,7 @@ export const Home: FC = () => {
           open={isDialogOpen}
           onClose={() => setDialogOpen(false)}
           employee={selectedEmployee}
-          onSave={handleSave}
+
         />
       )}
 

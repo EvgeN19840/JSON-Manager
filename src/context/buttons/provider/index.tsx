@@ -1,13 +1,13 @@
 import { ReactNode, useState } from "react";
-import { TabContext } from "../tabContext";
-import { ITabs } from "../types";
+import { ButtonContext } from "../buttonContext";
+import { IButtons } from "../types";
 
-export const TabProvider: React.FC<{ children: ReactNode }> = ({
+export const ButtonProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [openDialog, setOpenDialog] = useState<boolean>(false);
-  const [source, setSource] = useState<ITabs | null>(null);
-  const handleClickOpenFromGrid = (actionType: ITabs) => {
+  const [source, setSource] = useState<IButtons | null>(null);
+  const handleClickOpenFromGrid = (actionType: IButtons) => {
 
     setSource(actionType);
 
@@ -17,7 +17,7 @@ export const TabProvider: React.FC<{ children: ReactNode }> = ({
   const hasData = false;
 
   return (
-    <TabContext.Provider
+    <ButtonContext.Provider
       value={{
         handleClickOpenFromGrid,
         openDialog,
@@ -27,6 +27,6 @@ export const TabProvider: React.FC<{ children: ReactNode }> = ({
       }}
     >
       {children}
-    </TabContext.Provider>
+    </ButtonContext.Provider>
   );
 };

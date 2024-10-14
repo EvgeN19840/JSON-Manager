@@ -1,8 +1,8 @@
 import { createContext } from "react";
-import { ITabContext } from "../types";
+import { IButtonContext } from "../types";
 
 
-export const TabContext = createContext<ITabContext>({
+export const ButtonContext = createContext<IButtonContext>({
   handleClickOpenFromGrid: () => {},
   openDialog: false,
   setOpenDialog: () => {},

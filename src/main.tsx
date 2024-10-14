@@ -5,7 +5,7 @@ import "./index.css";
 import { theme } from "./customTheme";
 import { ThemeProvider } from "@mui/material";
 import { NotificationProvider } from "./context/snackBar/provider";
-import { TabProvider } from "./context/tabs/provider";
+import { ButtonProvider } from "./context/buttons/provider";
 import { DataStateProvider } from "./context/dataState/provider";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -13,9 +13,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <ThemeProvider theme={theme}>
       <NotificationProvider>
         <DataStateProvider>
-          <TabProvider>
+          <ButtonProvider>
             <App />
-          </TabProvider>
+          </ButtonProvider>
         </DataStateProvider>
       </NotificationProvider>
     </ThemeProvider>

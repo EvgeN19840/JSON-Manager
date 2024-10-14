@@ -2,12 +2,12 @@ import { IDialog } from "@/pages/home/types";
 import { Box, Button } from "@mui/material";
 
 
-interface TabComponentProps {
+interface ButtonComponentProps {
   handleClickOpenFromGrid: (actionType: IDialog) => void;
   hasData: boolean;
 }
 
-export const TabComponent: React.FC<TabComponentProps> = ({
+export const ButtonComponent: React.FC<ButtonComponentProps> = ({
   handleClickOpenFromGrid,
   hasData,
 }) => {
