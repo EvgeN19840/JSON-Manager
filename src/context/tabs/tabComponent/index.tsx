@@ -1,14 +1,16 @@
+import { IDialog } from "@/pages/home/types";
 import { Box, Button } from "@mui/material";
-import { IDialog } from "../../types";
 
-interface IToolbarWithExportAndImportProps {
+
+interface TabComponentProps {
   handleClickOpenFromGrid: (actionType: IDialog) => void;
   hasData: boolean;
 }
 
-export const ToolbarWithExportAndImport: React.FC<
-  IToolbarWithExportAndImportProps
-> = ({ handleClickOpenFromGrid, hasData }) => {
+export const TabComponent: React.FC<TabComponentProps> = ({
+  handleClickOpenFromGrid,
+  hasData,
+}) => {
   return (
     <Box
       sx={{
@@ -22,6 +24,7 @@ export const ToolbarWithExportAndImport: React.FC<
       <Button
         variant="contained"
         onClick={() => handleClickOpenFromGrid("Import data")}
+        sx={{ width: "50%" }}
       >
         Import Employee Data
       </Button>
@@ -29,6 +32,7 @@ export const ToolbarWithExportAndImport: React.FC<
         <Button
           variant="contained"
           onClick={() => handleClickOpenFromGrid("Export data")}
+          sx={{ width: "50%" }}
         >
           Export
         </Button>

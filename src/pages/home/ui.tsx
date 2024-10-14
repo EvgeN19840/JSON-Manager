@@ -1,31 +1,22 @@
-// ** React
 import { FC, useState } from "react";
-
-// ** Components
-import {
-  ImportExportDialog,
-  MyGrid,
-  ToolbarWithExportAndImport,
-} from "./components";
+import { MyGrid } from "./components";
 import { EditDialog } from "./components/editDialog";
-
-
-// ** Types
-import { IDialog } from "./types";
+import { ImportExportDialog } from "./components/importExportDialog";
 import { Employee, ITypeJSON } from "@/const/types";
-
-// ** Const
 import { columns } from "@/const/columns";
+import { TabComponent } from "@/context/tabs/tabComponent";
+import { IDialog } from "./types";
 
 export const Home: FC = () => {
-  const [source, setSource] = useState<IDialog>(null);
   const [data, setData] = useState<ITypeJSON | null>(null);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [source, setSource] = useState<IDialog>(null);
   const [parsedData, setParsedData] = useState<string | null>(null);
+  
   const [isDialogOpen, setDialogOpen] = useState(false);
-  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(
-    null
-  );
+  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
+
+  const hasData = !!data; 
 
   const handleEditClick = (employee: Employee) => {
     setSelectedEmployee(employee);
@@ -33,19 +24,21 @@ export const Home: FC = () => {
   };
 
   const handleSave = (updatedEmployee: Employee) => {
-    setData(
-      (prevData) =>
-        prevData && {
-          ...prevData,
-          employees: prevData.employees.map((emp) =>
-            emp.eId === updatedEmployee.eId ? updatedEmployee : emp
-          ),
-        }
+    setData((prevData: ITypeJSON) =>
+      prevData
+        ? {
+            ...prevData,
+            employees: prevData.employees.map((emp: Employee) =>
+              emp.eId === updatedEmployee.eId ? updatedEmployee : emp
+            ),
+            benefits: prevData.benefits,
+          }
+        : null
     );
   };
 
   const handleClickOpenFromGrid = (actionType: IDialog) => {
-    if (actionType === "Export data") {
+    if (actionType === "Export data" && data) {
       setParsedData(JSON.stringify(data, null, 2));
     }
     setOpenDialog(true);
@@ -58,18 +51,10 @@ export const Home: FC = () => {
 
   return (
     <>
-      <MyGrid
-        data={data?.employees}
-        columns={columns(handleEditClick)}
-        slots={{
-          toolbar: () => (
-            <ToolbarWithExportAndImport
-              handleClickOpenFromGrid={handleClickOpenFromGrid}
-              hasData={!!data}
-            />
-          ),
-        }}
-      />
+      <TabComponent handleClickOpenFromGrid={handleClickOpenFromGrid} hasData={hasData} />
+
+      <MyGrid data={data?.employees} columns={columns(handleEditClick)} />
+
       {selectedEmployee && (
         <EditDialog
           open={isDialogOpen}
@@ -78,6 +63,7 @@ export const Home: FC = () => {
           onSave={handleSave}
         />
       )}
+
       <ImportExportDialog
         setData={setData}
         open={openDialog}
