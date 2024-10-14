@@ -25,7 +25,13 @@ export const Layout: FC<{ children: ReactNode }> = ({ children }) => {
           bgcolor: theme.palette.background.default,
         }}
       >
-        <Container sx={{ flexGrow: 1 }}>{children}</Container>
+        <Container
+          sx={{ flexGrow: 1, width: "100%" }}
+          disableGutters 
+          maxWidth={false} 
+        >
+          {children}
+        </Container>
       </Box>
     </>
   );

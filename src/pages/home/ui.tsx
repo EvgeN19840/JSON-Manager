@@ -8,7 +8,7 @@ import { TabComponent } from "@/context/tabs/tabComponent";
 
 import { IDialog } from "./types";
 import { useDataStateContext } from "@/hooks/useDataStateContext";
-import { TabsComponent2 } from "./components/tabs";
+import { TabsComponent } from "../../shared/components/tabs";
 
 export const Home: FC = () => {
   const {
@@ -68,7 +68,7 @@ export const Home: FC = () => {
 
   return (
     <>
-    <TabsComponent2/>
+    <TabsComponent/>
       <TabComponent
         handleClickOpenFromGrid={handleClickOpenFromGrid}
         hasData={hasData}
