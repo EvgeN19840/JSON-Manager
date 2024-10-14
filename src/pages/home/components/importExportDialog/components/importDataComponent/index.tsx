@@ -2,19 +2,18 @@ import { useState } from "react";
 import { ITypeJSON } from "@/const/types";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { useNotification } from "@/hooks/useNotification";
+import { useDataStateContext } from "@/hooks/useDataStateContext";
 
 interface IImportDataComponentProps {
-  setData: (value: ITypeJSON) => void;
   onClose: () => void;
 }
 
 export const ImportDataComponent: React.FC<IImportDataComponentProps> = ({
-  setData,
   onClose,
 }) => {
   const [inputValue, setInputValue] = useState("");
   const { showNotification } = useNotification();
-
+  const { setData } = useDataStateContext();
   const handleImport = () => {
     try {
       const parsedData: ITypeJSON = JSON.parse(inputValue);

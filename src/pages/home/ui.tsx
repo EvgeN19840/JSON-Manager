@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { MyGrid } from "./components";
 import { EditDialog } from "./components/editDialog";
 import { ImportExportDialog } from "./components/importExportDialog";
-import { Employee, ITypeJSON } from "@/const/types";
+import { Employee } from "@/const/types";
 import { columns } from "@/const/columns";
 import { TabComponent } from "@/context/tabs/tabComponent";
 
@@ -11,14 +11,8 @@ import { useDataStateContext } from "@/hooks/useDataStateContext";
 import { TabsComponent } from "../../shared/components/tabs";
 
 export const Home: FC = () => {
-  const {
-    data,
-    setData,
-    openDialog,
-    setOpenDialog,
-    parsedData,
-    setParsedData,
-  } = useDataStateContext();
+  const { data, openDialog, setOpenDialog, setParsedData, handleSave } =
+    useDataStateContext();
 
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(
@@ -31,27 +25,6 @@ export const Home: FC = () => {
   const handleEditClick = (employee: Employee) => {
     setSelectedEmployee(employee);
     setDialogOpen(true);
-  };
-
-  const handleSave = (updatedEmployee: Employee) => {
-    if (data) {
-      const updatedData: ITypeJSON = {
-        ...data,
-        employees: data.employees.map((emp: Employee) =>
-          emp.eId === updatedEmployee.eId ? updatedEmployee : emp
-        ),
-        benefits: data.benefits,
-      };
-
-      setData(updatedData);
-    } else {
-      const newData: ITypeJSON = {
-        employees: [updatedEmployee],
-        benefits: [],
-      };
-
-      setData(newData);
-    }
   };
 
   const handleClickOpenFromGrid = (actionType: IDialog) => {
@@ -68,14 +41,13 @@ export const Home: FC = () => {
 
   return (
     <>
-    <TabsComponent/>
+      <TabsComponent />
       <TabComponent
         handleClickOpenFromGrid={handleClickOpenFromGrid}
         hasData={hasData}
       />
 
       <MyGrid data={data?.employees} columns={columns(handleEditClick)} />
-
       {selectedEmployee && (
         <EditDialog
           open={isDialogOpen}
@@ -86,11 +58,9 @@ export const Home: FC = () => {
       )}
 
       <ImportExportDialog
-        setData={setData}
         open={openDialog}
         onClose={handleCloseDialog}
         source={source}
-        parsedData={parsedData}
       />
     </>
   );

@@ -4,17 +4,19 @@ import { CopyButton } from "./buttons";
 import { DownloadJSONFileAsTXT } from "@/shared/utils";
 import { ITypeJSON } from "@/const/types";
 import { useNotification } from "@/hooks/useNotification";
+import { useDataStateContext } from "@/hooks/useDataStateContext";
 
 
 interface IExportDataComponentProps {
-  parsedData: string | null;
   onClose: () => void;
 }
 
 export const ExportDataComponent: React.FC<IExportDataComponentProps> = ({
-  parsedData,
   onClose,
 }) => {
+
+  const { parsedData } = useDataStateContext();
+  
   const [inputNameFile, setInputNameFile] = useState("");
   const { showNotification } = useNotification();
 
