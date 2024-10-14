@@ -19,6 +19,7 @@ export const TabComponent: React.FC<TabComponentProps> = ({
         alignItems: "center",
         height: "100%",
         mb: 1,
+        gap: '1rem'
       }}
     >
       <Button

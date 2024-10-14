@@ -6,14 +6,17 @@ import { theme } from "./customTheme";
 import { ThemeProvider } from "@mui/material";
 import { NotificationProvider } from "./context/snackBar/provider";
 import { TabProvider } from "./context/tabs/provider";
+import { DataStateProvider } from "./context/dataState/provider";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <NotificationProvider>
-        <TabProvider>
-          <App />
-        </TabProvider>
+        <DataStateProvider>
+          <TabProvider>
+            <App />
+          </TabProvider>
+        </DataStateProvider>
       </NotificationProvider>
     </ThemeProvider>
   </React.StrictMode>
