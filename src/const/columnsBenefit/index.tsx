@@ -8,7 +8,7 @@ export const ColumnsBenefit = (
 ): GridColDef<Employee>[] => [
   {
     field: "name",
-    headerName: "Name",
+    headerName: "Benefit Name",
     flex: 1,
     editable: true,
     minWidth:250,
@@ -16,7 +16,7 @@ export const ColumnsBenefit = (
   },
   {
     field: "id",
-    headerName: "id",
+    headerName: "Id",
     flex: 1,
     editable: true,
     resizable: false,

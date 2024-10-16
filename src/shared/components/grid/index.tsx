@@ -19,7 +19,7 @@ export const MyGrid = <T extends GridValidRowModel>({
       initialState={{
         pagination: {
           paginationModel: {
-            pageSize: 5,
+            pageSize: 20,
           },
         },
       }}

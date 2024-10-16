@@ -1,5 +1,5 @@
 import { ReactNode, useState } from "react";
-import { Employee, ITypeJSON } from "@/const/types";
+import { Employee, ITypeJSON, SystemBenefit } from "@/const/types";
 import { DataStateContext } from "../dataStateContext";
 
 export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
@@ -7,9 +7,13 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [data, setData] = useState<ITypeJSON | null>(null);
   const [parsedData, setParsedData] = useState<string | null>(null);
-  const handleSave = (updatedEmployee: Employee) => {
-    if (!data || data.benefits.length === 0 || data.employees.length === 0) {
-      console.log("Data empty.");
+
+  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
+  const [selectedBenefit, setSelectedBenefit] = useState<SystemBenefit | null>(null);
+
+  const handleSaveEmployee = (updatedEmployee: Employee) => {
+    if (!data || !data.employees.length) {
+      console.log("Employee data is empty.");
       return;
     }
     const employeeIndex = data.employees.findIndex(
@@ -23,12 +27,33 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
       updatedEmployees.push(updatedEmployee);
     }
 
-    const updatedData: ITypeJSON = {
+    setData({
       ...data,
       employees: updatedEmployees,
-    };
+    });
+  };
 
-    setData(updatedData);
+  const handleSaveBenefit = (updatedBenefit: SystemBenefit) => {
+    if (!data || !data.benefits.length) {
+      console.log("Benefit data is empty.");
+      return;
+    }
+
+    const benefitIndex = data.benefits.findIndex(
+      (ben: SystemBenefit) => ben.id === updatedBenefit.id
+    );
+
+    const updatedBenefits = [...data.benefits];
+    if (benefitIndex >= 0) {
+      updatedBenefits[benefitIndex] = updatedBenefit;
+    } else {
+      updatedBenefits.push(updatedBenefit);
+    }
+
+    setData({
+      ...data,
+      benefits: updatedBenefits,
+    });
   };
   const hasData = !!(data?.benefits?.length || data?.employees?.length);
   return (
@@ -38,7 +63,12 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
         setData,
         parsedData,
         setParsedData,
-        handleSave,
+        selectedEmployee,
+        setSelectedEmployee,
+        selectedBenefit,
+        setSelectedBenefit,
+        handleSaveEmployee,
+        handleSaveBenefit,
         hasData,
       }}
     >

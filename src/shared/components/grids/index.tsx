@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from "react";
+import { FC, useEffect } from "react";
 import { Employee, SystemBenefit } from "@/const/types";
 import { ColumnsEmployee } from "@/const/columnsEmployee";
 import { ColumnsBenefit } from "@/const/columnsBenefit";
@@ -10,15 +10,18 @@ import { GridColDef } from "@mui/x-data-grid";
 import { useTabs } from "@/hooks/useTabs";
 
 export const Grids: FC = () => {
-  const { data } = useDataStateContext();
-  const { setEditDialogOpen } = useModal(); // Используем отдельное состояние для открытия EditDialog
+  const { data, setSelectedEmployee, setSelectedBenefit } =
+    useDataStateContext();
+  const { setEditDialogOpen } = useModal();
   const { activeTab, handleTabChange } = useTabs();
 
-  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
-
-  const handleEditClick = (employee: Employee) => {
-    setSelectedEmployee(employee);
-    setEditDialogOpen(true); // Открытие EditDialog
+  const handleEditClick = (item: Employee | SystemBenefit) => {
+    if (activeTab === "1") {
+      setSelectedEmployee(item as Employee);
+    } else {
+      setSelectedBenefit(item as SystemBenefit);
+    }
+    setEditDialogOpen(true);
   };
 
   useEffect(() => {
@@ -53,7 +56,7 @@ export const Grids: FC = () => {
         />
       )}
 
-      {selectedEmployee && <EditDialog employee={selectedEmployee} />}
+      <EditDialog />
     </>
   );
 };
