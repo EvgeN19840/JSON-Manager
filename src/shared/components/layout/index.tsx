@@ -1,5 +1,5 @@
 import { FC, ReactNode } from "react";
-import { Box, AppBar, Toolbar, Container, CssBaseline } from "@mui/material";
+import { Box, AppBar, Toolbar, Container } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { HeaderTitle } from "../headerTitle";
 
@@ -8,7 +8,6 @@ export const Layout: FC<{ children: ReactNode }> = ({ children }) => {
 
   return (
     <>
-      <CssBaseline />
       <AppBar position="fixed" sx={{ bgcolor: theme.palette.primary.main }}>
         <Toolbar>
           <HeaderTitle />
@@ -21,7 +20,6 @@ export const Layout: FC<{ children: ReactNode }> = ({ children }) => {
           mt: 8,
           display: "flex",
           flexDirection: "column",
-          minHeight: "100vh",
           bgcolor: theme.palette.background.default,
         }}
       >

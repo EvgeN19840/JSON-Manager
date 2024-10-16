@@ -1,18 +1,16 @@
+import { useModal } from "@/hooks/useModal";
 import { Dialog, Box } from "@mui/material";
 
 interface ICustomDialog {
-  open: boolean;
-  onClose: () => void;
   children: React.ReactNode;
 }
 
 export const CustomDialog: React.FC<ICustomDialog> = ({
-  open,
-  onClose,
   children,
 }) => {
+  const { isDialogOpen, setDialogOpen } = useModal()
   return (
-    <Dialog fullWidth sx={{ height: "100vh" }} open={open} onClose={onClose}>
+    <Dialog fullWidth sx={{ height: "100vh" }} open={isDialogOpen} onClose={() => setDialogOpen(false)}>
       <Box
         sx={{
           p: "1rem",

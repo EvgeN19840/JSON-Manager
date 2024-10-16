@@ -1,21 +1,17 @@
 
 import { CustomDialog } from "@/shared/components/customDialog";
 import { EditForm } from "./components/editForm";
-import { EditDialogProps } from "./types";
+import { EditDialogProps } from "./components/editForm/types";
 
 
 export const EditDialog: React.FC<EditDialogProps> = ({
-  open,
-  onClose,
   employee,
-
 }) => {
 
   
   const renderContent = () => {
     return (
       <EditForm
-        onClose={onClose}
         employee={employee}
  
       />
@@ -23,7 +19,7 @@ export const EditDialog: React.FC<EditDialogProps> = ({
   };
 
   return (
-    <CustomDialog open={open} onClose={onClose}>
+    <CustomDialog  >
       {renderContent()}
     </CustomDialog>
   );

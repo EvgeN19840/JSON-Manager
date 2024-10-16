@@ -1,20 +1,20 @@
 import { useState } from "react";
 import { Button, TextField, Typography, Box } from "@mui/material";
-import { EditFormProps } from "../../types";
-import { useDataStateContext } from "@/hooks/useDataStateContext";
 
-export const EditForm: React.FC<EditFormProps> = ({
-  onClose,
-  employee,
-}) => {
+import { useDataStateContext } from "@/hooks/useDataStateContext";
+import { EditFormProps } from "./types";
+import { useModal } from "@/hooks/useModal";
+
+export const EditForm: React.FC<EditFormProps> = ({ employee }) => {
   const [firstName, setFirstName] = useState(employee?.firstName || "");
   const [lastName, setLastName] = useState(employee?.lastName || "");
   const { handleSave } = useDataStateContext();
+  const { setDialogOpen } = useModal();
 
   const saveEmployee = () => {
     if (employee) {
       handleSave({ ...employee, firstName, lastName });
-      onClose();
+      setDialogOpen(false);
     }
   };
 
@@ -53,7 +53,7 @@ export const EditForm: React.FC<EditFormProps> = ({
           mt: 1,
         }}
       >
-        <Button onClick={onClose} variant="contained">
+        <Button onClick={() => setDialogOpen(false)} variant="outlined">
           Close
         </Button>
         <Button onClick={saveEmployee} variant="contained">

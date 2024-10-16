@@ -4,31 +4,24 @@ import { CustomDialog } from "@/shared/components/customDialog";
 
 // ** Types
 
-import { IDialog } from "../../types";
+import { useModal } from "@/hooks/useModal";
 
-interface IImportExportDialog {
-  open: boolean;
-  onClose: () => void;
-  source: IDialog;
-}
 
-export const ImportExportDialog: React.FC<IImportExportDialog> = ({
-  open,
-  onClose,
-  source,
-}) => {
+
+export const ImportExportDialog: React.FC = () => {
+  const { source } = useModal()
   const renderContent = () => {
     switch (source) {
       case "Export data":
-        return <ExportDataComponent onClose={onClose} />;
+        return <ExportDataComponent/>;
       case "Import data":
-        return <ImportDataComponent onClose={onClose} />;
+        return <ImportDataComponent />;
       default:
         return null;
     }
   };
 
   return (
-    <CustomDialog open={open} onClose={onClose} children={renderContent()} />
+    <CustomDialog   children={renderContent()} />
   );
 };

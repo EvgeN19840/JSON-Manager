@@ -3,17 +3,13 @@ import { ITypeJSON } from "@/const/types";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { useNotification } from "@/hooks/useNotification";
 import { useDataStateContext } from "@/hooks/useDataStateContext";
+import { useModal } from "@/hooks/useModal";
 
-interface IImportDataComponentProps {
-  onClose: () => void;
-}
-
-export const ImportDataComponent: React.FC<IImportDataComponentProps> = ({
-  onClose,
-}) => {
+export const ImportDataComponent: React.FC = () => {
   const [inputValue, setInputValue] = useState("");
   const { showNotification } = useNotification();
   const { setData } = useDataStateContext();
+  const { setDialogOpen } = useModal();
   const handleImport = () => {
     try {
       const parsedData: ITypeJSON = JSON.parse(inputValue);
@@ -21,8 +17,7 @@ export const ImportDataComponent: React.FC<IImportDataComponentProps> = ({
         employees: parsedData.employees,
         benefits: parsedData.benefits,
       });
-
-      onClose();
+      setDialogOpen(false);
       setInputValue("");
     } catch (e) {
       console.log(e);
@@ -58,7 +53,7 @@ export const ImportDataComponent: React.FC<IImportDataComponentProps> = ({
           mt: 1,
         }}
       >
-        <Button variant="contained" onClick={onClose}>
+        <Button variant="outlined" onClick={() => setDialogOpen(false)}>
           Close
         </Button>
 

@@ -4,23 +4,19 @@ import { EditDialog } from "./components/editDialog";
 import { ImportExportDialog } from "./components/importExportDialog";
 import { Employee } from "@/const/types";
 import { columns } from "@/const/columns";
-import { ButtonComponent } from "@/context/buttons/buttonComponent";
-
-import { IDialog } from "./types";
+import { ImportExportButtons } from "@/pages/home/components/importExportButtons";
+import { IDialog } from "./components/importExportButtons/types";
 import { useDataStateContext } from "@/hooks/useDataStateContext";
-import { TabsComponent } from "../../shared/components/tabs";
+import { TabsComponent } from "@/shared/components/tabs";
+import { useModal } from "@/hooks/useModal";
 
 export const Home: FC = () => {
-  const { data, openDialog, setOpenDialog, setParsedData } =
-    useDataStateContext();
+  const { data, setParsedData } = useDataStateContext();
+  const { setDialogOpen, setSource } = useModal();
 
-  const [isDialogOpen, setDialogOpen] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(
     null
   );
-  const [source, setSource] = useState<IDialog>(null);
-
-  const hasData = data ? true : false;
 
   const handleEditClick = (employee: Employee) => {
     setSelectedEmployee(employee);
@@ -31,37 +27,18 @@ export const Home: FC = () => {
     if (actionType === "Export data" && data) {
       setParsedData(JSON.stringify(data, null, 2));
     }
-    setOpenDialog(true);
+    setDialogOpen(true);
     setSource(actionType);
-  };
-
-  const handleCloseDialog = () => {
-    setOpenDialog(false);
   };
 
   return (
     <>
       <TabsComponent />
-      <ButtonComponent
-        handleClickOpenFromGrid={handleClickOpenFromGrid}
-        hasData={hasData}
-      />
+      <ImportExportButtons handleClickOpenFromGrid={handleClickOpenFromGrid} />
 
       <MyGrid data={data?.employees} columns={columns(handleEditClick)} />
-      {selectedEmployee && (
-        <EditDialog
-          open={isDialogOpen}
-          onClose={() => setDialogOpen(false)}
-          employee={selectedEmployee}
-
-        />
-      )}
-
-      <ImportExportDialog
-        open={openDialog}
-        onClose={handleCloseDialog}
-        source={source}
-      />
+      {selectedEmployee && <EditDialog employee={selectedEmployee} />}
+      <ImportExportDialog />
     </>
   );
 };

@@ -1,16 +1,16 @@
-import { IDialog } from "@/pages/home/types";
+import { useDataStateContext } from "@/hooks/useDataStateContext";
+import { IDialog } from "@/pages/home/components/importExportButtons/types";
 import { Box, Button } from "@mui/material";
 
-
-interface ButtonComponentProps {
+interface ImportExportButtonsProps {
   handleClickOpenFromGrid: (actionType: IDialog) => void;
-  hasData: boolean;
 }
 
-export const ButtonComponent: React.FC<ButtonComponentProps> = ({
+export const ImportExportButtons: React.FC<ImportExportButtonsProps> = ({
   handleClickOpenFromGrid,
-  hasData,
 }) => {
+  const { hasData } = useDataStateContext();
+
   return (
     <Box
       sx={{
@@ -19,7 +19,7 @@ export const ButtonComponent: React.FC<ButtonComponentProps> = ({
         alignItems: "center",
         height: "100%",
         mb: 1,
-        gap: '1rem'
+        gap: "1rem",
       }}
     >
       <Button

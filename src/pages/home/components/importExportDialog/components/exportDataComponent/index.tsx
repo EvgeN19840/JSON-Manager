@@ -5,20 +5,13 @@ import { DownloadJSONFileAsTXT } from "@/shared/utils";
 import { ITypeJSON } from "@/const/types";
 import { useNotification } from "@/hooks/useNotification";
 import { useDataStateContext } from "@/hooks/useDataStateContext";
+import { useModal } from "@/hooks/useModal";
 
-
-interface IExportDataComponentProps {
-  onClose: () => void;
-}
-
-export const ExportDataComponent: React.FC<IExportDataComponentProps> = ({
-  onClose,
-}) => {
-
+export const ExportDataComponent: React.FC = () => {
   const { parsedData } = useDataStateContext();
-  
-  const [inputNameFile, setInputNameFile] = useState("");
   const { showNotification } = useNotification();
+  const { setDialogOpen } = useModal();
+  const [inputNameFile, setInputNameFile] = useState("");
 
   const downloadFile = () => {
     if (inputNameFile && parsedData) {
@@ -26,9 +19,9 @@ export const ExportDataComponent: React.FC<IExportDataComponentProps> = ({
         const jsonData: ITypeJSON = JSON.parse(parsedData);
         DownloadJSONFileAsTXT(inputNameFile, jsonData);
         setInputNameFile("");
-        onClose();
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        setDialogOpen(false);
       } catch (e) {
+        console.log(e);
         showNotification("Failed to parse the data for download.", "error");
       }
     } else {
@@ -77,7 +70,7 @@ export const ExportDataComponent: React.FC<IExportDataComponentProps> = ({
           mt: 1,
         }}
       >
-        <Button variant="contained" onClick={onClose}>
+        <Button variant="outlined" onClick={() => setDialogOpen(false)}>
           Close
         </Button>
         <Button variant="contained" onClick={downloadFile}>
