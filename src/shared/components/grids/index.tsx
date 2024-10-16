@@ -25,9 +25,9 @@ export const Grids: FC = () => {
   };
 
   useEffect(() => {
-    if (data?.employees && data.employees.length > 0) {
+    if (data?.employees?.length) {
       handleTabChange(null, "1");
-    } else if (data?.benefits && data.benefits.length > 0) {
+    } else if (data?.benefits?.length) {
       handleTabChange(null, "2");
     }
   }, [data, handleTabChange]);

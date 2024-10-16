@@ -1,35 +1,30 @@
-import { useState } from "react";
-import { Button, TextField, Typography, Box } from "@mui/material";
-
+import { Box, Button, TextField, Typography } from "@mui/material";
 import { useDataStateContext } from "@/hooks/useDataStateContext";
 import { useModal } from "@/hooks/useModal";
 import { useTabs } from "@/hooks/useTabs";
-import { SystemBenefit } from "@/const/types";
 
 export const EditForm: React.FC = () => {
-  const { selectedEmployee,  selectedBenefit, handleSaveEmployee, handleSaveBenefit } = useDataStateContext();
-  const [firstName, setFirstName] = useState(selectedEmployee?.firstName || "");
-  const [lastName, setLastName] = useState(selectedEmployee?.lastName || "");
-  const [benefitName, setBenefitName] = useState(selectedBenefit?.name || "");
-  const [benefitID, setBenefitID] = useState(selectedBenefit?.id || "");
+  const {
+    firstName,
+    lastName,
+    benefitName,
+    benefitID,
+    setFirstName,
+    setLastName,
+    setBenefitName,
+    setBenefitID,
+    handleSaveEmployee,
+    handleSaveBenefit,
+  } = useDataStateContext();
 
   const { setEditDialogOpen } = useModal();
   const { activeTab } = useTabs();
 
   const saveData = () => {
     if (activeTab === "1") {
-      if (selectedEmployee?.eId) {
-        handleSaveEmployee({ ...selectedEmployee, firstName, lastName });
-      } else {
-        console.error("Employee ID (eId) is missing.");
-      }
+      handleSaveEmployee();
     } else {
-      const updatedBenefit: SystemBenefit = {
-        ...selectedBenefit,
-        name: benefitName,
-        id: benefitID,
-      };
-      handleSaveBenefit(updatedBenefit);
+      handleSaveBenefit();
     }
     setEditDialogOpen(false);
   };
