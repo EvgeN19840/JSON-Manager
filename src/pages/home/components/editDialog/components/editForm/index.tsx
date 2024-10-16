@@ -9,12 +9,12 @@ export const EditForm: React.FC<EditFormProps> = ({ employee }) => {
   const [firstName, setFirstName] = useState(employee?.firstName || "");
   const [lastName, setLastName] = useState(employee?.lastName || "");
   const { handleSave } = useDataStateContext();
-  const { setDialogOpen } = useModal();
+  const { setEditDialogOpen } = useModal();
 
   const saveEmployee = () => {
     if (employee) {
       handleSave({ ...employee, firstName, lastName });
-      setDialogOpen(false);
+      setEditDialogOpen(false);
     }
   };
 
@@ -53,7 +53,7 @@ export const EditForm: React.FC<EditFormProps> = ({ employee }) => {
           mt: 1,
         }}
       >
-        <Button onClick={() => setDialogOpen(false)} variant="outlined">
+        <Button onClick={() => setEditDialogOpen(false)} variant="outlined">
           Close
         </Button>
         <Button onClick={saveEmployee} variant="contained">

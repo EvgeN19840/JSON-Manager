@@ -1,4 +1,4 @@
 import { createContext } from "react";
-import { ModalType } from "../types";
+import { IModalType } from "../types";
 
-export const ModalContext = createContext<ModalType | null>(null);
+export const ModalContext = createContext<IModalType | null>(null);

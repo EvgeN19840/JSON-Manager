@@ -1,16 +1,16 @@
 import React from "react";
 import { Snackbar, Button } from "@mui/material";
 import { theme } from "@/customTheme";
-import { NotificationType } from "../types";
+import { INotificationType } from "../types";
 
-interface SnackbarComponentProps {
+interface ISnackbarComponentProps {
   open: boolean;
   message: string;
-  type: NotificationType;
+  type: INotificationType;
   onClose: () => void;
 }
 
-export const SnackbarComponent: React.FC<SnackbarComponentProps> = ({
+export const SnackbarComponent: React.FC<ISnackbarComponentProps> = ({
   open,
   message,
   type,

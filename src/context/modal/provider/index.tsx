@@ -8,7 +8,7 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [source, setSource] = useState<IDialog>(null);
   const [isDialogOpen, setDialogOpen] = useState(false);
-
+  const [isEditDialogOpen, setEditDialogOpen] = useState(false);
   
   return (
     <ModalContext.Provider
@@ -17,6 +17,8 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
         setSource,
         isDialogOpen,
         setDialogOpen,
+        isEditDialogOpen,
+        setEditDialogOpen
       }}
     >
       {children}

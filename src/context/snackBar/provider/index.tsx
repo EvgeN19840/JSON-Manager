@@ -1,5 +1,5 @@
 import React, { useState, ReactNode } from "react";
-import { NotificationType } from "../types";
+import { INotificationType } from "../types";
 import { NotificationContext } from "../notificationContext";
 import { SnackbarComponent } from "../snackbarComponent";
 
@@ -9,9 +9,9 @@ export const NotificationProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
-  const [notificationType, setNotificationType] = useState<NotificationType | undefined>();
+  const [notificationType, setNotificationType] = useState<INotificationType | undefined>();
 
-  const showNotification = (message: string, type: NotificationType) => {
+  const showNotification = (message: string, type: INotificationType) => {
     setMessage(message);
     setNotificationType(type);
     setOpen(true);

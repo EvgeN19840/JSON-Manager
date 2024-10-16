@@ -1,25 +1,20 @@
-import {
-  DataGrid,
-  GridSlotsComponent,
-  GridColDef,
-  GridValidRowModel,
-} from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridValidRowModel } from "@mui/x-data-grid";
 import { StylesgridProps } from "./styles/gridProps";
 
-interface MyGridProps<T extends GridValidRowModel> {
+interface IMyGridProps<T extends GridValidRowModel> {
   columns: GridColDef<T>[];
   data?: T[];
-  slots?: Partial<GridSlotsComponent>;
 }
 
-export const MyGrid = <T extends { eId: number }>({
+export const MyGrid = <T extends GridValidRowModel>({
   data,
   columns,
-}: MyGridProps<T>) => {
+}: IMyGridProps<T>) => {
   return (
     <DataGrid
       rows={data ?? []}
-      getRowId={(row) => row.eId}
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      getRowId={(row) => (row as any).eId || (row as any).id}
       columns={columns}
       initialState={{
         pagination: {

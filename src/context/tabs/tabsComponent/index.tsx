@@ -1,17 +1,13 @@
-import { useState } from "react";
-
 // ** MUI Components
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import TabList from "@mui/lab/TabList";
 import TabContext from "@mui/lab/TabContext";
+import { useTabs } from "@/hooks/useTabs";
 
 export const TabsComponent = () => {
-  const [activeTab, setActiveTab] = useState<string>("1");
 
-  const handleTabChange = (_: React.SyntheticEvent, newValue: string) => {
-    setActiveTab(newValue);
-  };
+const {activeTab, handleTabChange}=useTabs()
 
   return (
     <TabContext value={activeTab}>

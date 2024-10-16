@@ -30,7 +30,7 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
 
     setData(updatedData);
   };
-  const hasData = !!(data?.benefits?.length && data?.employees?.length);
+  const hasData = !!(data?.benefits?.length || data?.employees?.length);
   return (
     <DataStateContext.Provider
       value={{
@@ -39,7 +39,7 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
         parsedData,
         setParsedData,
         handleSave,
-        hasData
+        hasData,
       }}
     >
       {children}

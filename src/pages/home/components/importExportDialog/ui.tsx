@@ -6,14 +6,12 @@ import { CustomDialog } from "@/shared/components/customDialog";
 
 import { useModal } from "@/hooks/useModal";
 
-
-
 export const ImportExportDialog: React.FC = () => {
-  const { source } = useModal()
+  const { source, isDialogOpen } = useModal();
   const renderContent = () => {
     switch (source) {
       case "Export data":
-        return <ExportDataComponent/>;
+        return <ExportDataComponent />;
       case "Import data":
         return <ImportDataComponent />;
       default:
@@ -21,7 +19,5 @@ export const ImportExportDialog: React.FC = () => {
     }
   };
 
-  return (
-    <CustomDialog   children={renderContent()} />
-  );
+  return <CustomDialog open={isDialogOpen} children={renderContent()} />;
 };

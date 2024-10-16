@@ -3,20 +3,20 @@ import { IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { GridColDef } from "@mui/x-data-grid";
 
-export const columns = (
+export const ColumnsBenefit = (
   handleEditClick: (employee: Employee) => void
 ): GridColDef<Employee>[] => [
   {
-    field: "firstName",
-    headerName: "First name",
+    field: "name",
+    headerName: "Name",
     flex: 1,
     editable: true,
     minWidth:250,
     resizable: false,
   },
   {
-    field: "lastName",
-    headerName: "Last name",
+    field: "id",
+    headerName: "id",
     flex: 1,
     editable: true,
     resizable: false,
