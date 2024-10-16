@@ -1,14 +1,9 @@
 import { useDataStateContext } from "@/hooks/useDataStateContext";
-import { IDialog } from "@/pages/home/components/importExportButtons/types";
+import { useModal } from "@/hooks/useModal";
 import { Box, Button } from "@mui/material";
 
-interface ImportExportButtonsProps {
-  handleClickOpenFromGrid: (actionType: IDialog) => void;
-}
-
-export const ImportExportButtons: React.FC<ImportExportButtonsProps> = ({
-  handleClickOpenFromGrid,
-}) => {
+export const ImportExportButtons: React.FC = () => {
+  const { handleClickOpenFromGrid } = useModal();
   const { hasData } = useDataStateContext();
 
   return (

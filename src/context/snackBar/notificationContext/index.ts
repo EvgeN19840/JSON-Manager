@@ -1,12 +1,6 @@
 import { createContext } from "react";
-import { INotificationType } from "../types";
+import { INotificationContextProps } from "../types";
 
-
-
-interface NotificationContextProps {
-    showNotification: (message: string, type: INotificationType) => void;
-}
-
-export const NotificationContext = createContext<NotificationContextProps>({
+export const NotificationContext = createContext<INotificationContextProps>({
     showNotification: () => { },
 });

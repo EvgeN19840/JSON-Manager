@@ -12,16 +12,16 @@ import { TabsProvider } from "./context/tabs/provider";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <NotificationProvider>
-        <ModalProvider>
-          <TabsProvider>
-            <DataStateProvider>
+    <DataStateProvider>
+      <ThemeProvider theme={theme}>
+        <NotificationProvider>
+          <ModalProvider>
+            <TabsProvider>
               <App />
-            </DataStateProvider>
-          </TabsProvider>
-        </ModalProvider>
-      </NotificationProvider>
-    </ThemeProvider>
+            </TabsProvider>
+          </ModalProvider>
+        </NotificationProvider>
+      </ThemeProvider>
+    </DataStateProvider>
   </React.StrictMode>
 );

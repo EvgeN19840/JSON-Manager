@@ -1,12 +1,14 @@
+import { IDialog } from "@/pages/home/components/importExportButtons/types";
 
 
 export interface IModalType {
-  source: "Export data" | "Import data" | null;
-  setSource: (data: "Export data" | "Import data" | null) => void;
+  source: IDialog
+  setSource: (data: IDialog) => void;
   isDialogOpen: boolean;
   setDialogOpen: (data: boolean) => void;
   isEditDialogOpen: boolean;
   setEditDialogOpen: (open: boolean) => void;
+  handleClickOpenFromGrid: (actionType: IDialog) => void;
 
 
 }

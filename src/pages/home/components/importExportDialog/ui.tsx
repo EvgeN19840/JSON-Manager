@@ -2,8 +2,7 @@
 import { ExportDataComponent, ImportDataComponent } from "./components";
 import { CustomDialog } from "@/shared/components/customDialog";
 
-// ** Types
-
+// ** Hooks
 import { useModal } from "@/hooks/useModal";
 
 export const ImportExportDialog: React.FC = () => {
