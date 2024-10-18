@@ -4,6 +4,7 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import { useNotification } from "@/hooks/useNotification";
 import { useDataStateContext } from "@/hooks/useDataStateContext";
 import { useModal } from "@/hooks/useModal";
+import { assignMissingIds } from "@/shared/utils";
 
 export const ImportDataComponent: React.FC = () => {
   const [inputValue, setInputValue] = useState("");
@@ -13,6 +14,8 @@ export const ImportDataComponent: React.FC = () => {
   const handleImport = () => {
     try {
       const parsedData: ITypeJSON = JSON.parse(inputValue);
+
+      assignMissingIds(parsedData);
       setData({
         employees: parsedData.employees,
         benefits: parsedData.benefits,

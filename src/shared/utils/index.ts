@@ -1,1 +1,2 @@
-export { DownloadJSONFileAsTXT } from './downloadJSONFileAsTXT'
+export { downloadJSONFileAsTXT } from './downloadJSONFileAsTXT'
+export { assignMissingIds } from './assignMissingIds'

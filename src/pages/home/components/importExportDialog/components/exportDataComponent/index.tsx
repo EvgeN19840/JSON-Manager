@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { CopyButton } from "./buttons";
-import { DownloadJSONFileAsTXT } from "@/shared/utils";
 import { ITypeJSON } from "@/const/types";
 import { useNotification } from "@/hooks/useNotification";
 import { useDataStateContext } from "@/hooks/useDataStateContext";
 import { useModal } from "@/hooks/useModal";
+import { downloadJSONFileAsTXT } from "@/shared/utils";
 
 export const ExportDataComponent: React.FC = () => {
   const { parsedData } = useDataStateContext();
@@ -17,7 +17,7 @@ export const ExportDataComponent: React.FC = () => {
     if (inputNameFile && parsedData) {
       try {
         const jsonData: ITypeJSON = JSON.parse(parsedData);
-        DownloadJSONFileAsTXT(inputNameFile, jsonData);
+        downloadJSONFileAsTXT(inputNameFile, jsonData);
         setInputNameFile("");
         setDialogOpen(false);
       } catch (e) {

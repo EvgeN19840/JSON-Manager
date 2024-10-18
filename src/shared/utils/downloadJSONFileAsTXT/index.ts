@@ -1,6 +1,6 @@
 import { ITypeJSON } from "@/const/types";
 
-export const DownloadJSONFileAsTXT = (filename: string, data: ITypeJSON) => {
+export const downloadJSONFileAsTXT = (filename: string, data: ITypeJSON) => {
     const jsonStr = JSON.stringify(data);
 
     const blob = new Blob([jsonStr], { type: "application/json" });
