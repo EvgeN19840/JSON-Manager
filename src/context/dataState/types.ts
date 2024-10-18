@@ -9,15 +9,7 @@ export interface DataContextType {
   setSelectedEmployee: (employee: Employee | null) => void;
   selectedBenefit: SystemBenefit | null;
   setSelectedBenefit: (benefit: SystemBenefit | null) => void;
-  firstName: string;
-  setFirstName: (name: string) => void;
-  lastName: string;
-  setLastName: (name: string) => void;
-    benefitName: string;
-  setBenefitName: (name: string) => void;
-  benefitID: string;
-  setBenefitID: (id: string) => void;
-  handleSaveEmployee: () => void;
-  handleSaveBenefit: () => void;
+  handleSaveEmployee: (firstName: string, lastName: string) => void;
+  handleSaveBenefit: (benefitName: string, benefitID: string) => void;
   hasData: boolean;
 }

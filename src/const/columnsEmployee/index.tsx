@@ -11,7 +11,7 @@ export const ColumnsEmployee = (
     headerName: "First name",
     flex: 1,
     editable: true,
-    minWidth:250,
+    minWidth: 250,
     resizable: false,
   },
   {
@@ -20,7 +20,7 @@ export const ColumnsEmployee = (
     flex: 1,
     editable: true,
     resizable: false,
-    minWidth:250,
+    minWidth: 250,
   },
   {
     field: "edit",
@@ -31,7 +31,7 @@ export const ColumnsEmployee = (
     filterable: false,
     align: "center",
     renderCell: (params) => (
-      <IconButton size="small" onClick={() => handleEditClick(params.row)}>
+      <IconButton onClick={() => handleEditClick(params.row)}>
         <EditIcon />
       </IconButton>
     ),

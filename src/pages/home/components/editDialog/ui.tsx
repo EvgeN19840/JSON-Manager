@@ -1,17 +1,13 @@
 import { CustomDialog } from "@/shared/components/customDialog";
-import { EditForm } from "./components/editForm";
 import { useModal } from "@/hooks/useModal";
+import { EditFormWrapper } from "./components/editFormWrapper";
 
-export const EditDialog: React.FC= () => {
+export const EditDialog: React.FC = () => {
   const { isEditDialogOpen } = useModal();
 
   const renderContent = () => {
-    return <EditForm  />;
+    return <EditFormWrapper />;
   };
 
-  return (
-    <CustomDialog open={isEditDialogOpen}>
-      {renderContent()}
-    </CustomDialog>
-  );
+  return <CustomDialog open={isEditDialogOpen}>{renderContent()}</CustomDialog>;
 };

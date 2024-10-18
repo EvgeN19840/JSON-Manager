@@ -1,10 +1,18 @@
 import { ReactNode, useState } from "react";
 import { TabsContext } from "../tabsContext";
+import { TabType } from "../types";
 
-export const TabsProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [activeTab, setActiveTab] = useState<string>("1");
 
-  const handleTabChange = (_: React.SyntheticEvent | null, newValue: string) => {
+
+export const TabsProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
+  const [activeTab, setActiveTab] = useState<TabType>("1");
+
+  const handleTabChange = (
+    _: React.SyntheticEvent | null,
+    newValue: TabType
+  ) => {
     setActiveTab(newValue);
   };
 

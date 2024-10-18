@@ -1,38 +1,22 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
-import { useDataStateContext } from "@/hooks/useDataStateContext";
+import { EditFormProps } from "../types";
 import { useModal } from "@/hooks/useModal";
 import { useTabs } from "@/hooks/useTabs";
 
-export const EditForm: React.FC = () => {
-  const {
-    firstName,
-    lastName,
-    benefitName,
-    benefitID,
-    setFirstName,
-    setLastName,
-    setBenefitName,
-    setBenefitID,
-    handleSaveEmployee,
-    handleSaveBenefit,
-  } = useDataStateContext();
-
+export const EditForm: React.FC<EditFormProps> = ({
+  employeeData,
+  setEmployeeData,
+  benefitData,
+  setBenefitData,
+  saveData,
+}) => {
   const { setEditDialogOpen } = useModal();
   const { activeTab } = useTabs();
 
-  const saveData = () => {
-    if (activeTab === "1") {
-      handleSaveEmployee();
-    } else {
-      handleSaveBenefit();
-    }
-    setEditDialogOpen(false);
-  };
-
-  return (
-    <Box>
-      {activeTab === "1" ? (
-        <Box>
+  const renderForm = () => {
+    if (activeTab === "1" && employeeData) {
+      return (
+        <>
           <Typography variant="h6" sx={{ textAlign: "center" }}>
             Edit Employee
           </Typography>
@@ -47,20 +31,29 @@ export const EditForm: React.FC = () => {
           >
             <TextField
               label="First Name"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
+              value={employeeData.firstName || ""}
+              onChange={(e) =>
+                setEmployeeData({
+                  ...employeeData,
+                  firstName: e.target.value,
+                })
+              }
               fullWidth
             />
             <TextField
               label="Last Name"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
+              value={employeeData.lastName || ""}
+              onChange={(e) =>
+                setEmployeeData({ ...employeeData, lastName: e.target.value })
+              }
               fullWidth
             />
           </Box>
-        </Box>
-      ) : (
-        <Box>
+        </>
+      );
+    } else if (activeTab === "2" && benefitData) {
+      return (
+        <>
           <Typography variant="h6" sx={{ textAlign: "center" }}>
             Edit Benefit
           </Typography>
@@ -75,19 +68,31 @@ export const EditForm: React.FC = () => {
           >
             <TextField
               label="Benefit Name"
-              value={benefitName}
-              onChange={(e) => setBenefitName(e.target.value)}
+              value={benefitData.name || ""}
+              onChange={(e) =>
+                setBenefitData({ ...benefitData, name: e.target.value })
+              }
               fullWidth
             />
             <TextField
               label="Benefit ID"
-              value={benefitID}
-              onChange={(e) => setBenefitID(e.target.value)}
+              value={benefitData.id || ""}
+              onChange={(e) =>
+                setBenefitData({ ...benefitData, id: e.target.value })
+              }
               fullWidth
             />
           </Box>
-        </Box>
-      )}
+        </>
+      );
+    } else {
+      return <Typography>No data to edit</Typography>;
+    }
+  };
+
+  return (
+    <Box>
+      {renderForm()}
       <Box
         sx={{
           display: "flex",
