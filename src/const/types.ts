@@ -1,9 +1,9 @@
 export interface ITypeJSON {
-  employees: Employee[];
-  benefits: SystemBenefit[];
+  employees: IEmployee[];
+  benefits: ISystemBenefit[];
 }
 
-export interface Employee {
+export interface IEmployee {
   eId: number;
   number: string;
   firstName: string;
@@ -19,18 +19,18 @@ export interface Employee {
   lifeInsuranceMemberNumber: string;
   transferEmployeeStatutoryToVoluntaryOnCap: boolean;
   transferCompanyStatutoryToVoluntaryOnCap: boolean;
-  depositAccounts: DepositAccount[];
-  reimbursements: Reimbursement[];
-  loansAndSalaryAdvances: LoanOrSalaryAdvance[];
-  otherDeductions: OtherDeduction[];
-  benefits: EmployeeBenefit[];
-  salary: Salary[];
-  jobInfo: JobInfo[];
-  employmentStatus: EmploymentStatus[];
-  bonuses: Bonus[];
+  depositAccounts: IDepositAccount[];
+  reimbursements: IReimbursement[];
+  loansAndSalaryAdvances: ILoanOrSalaryAdvance[];
+  otherDeductions: IOtherDeduction[];
+  benefits: IEmployeeBenefit[];
+  salary: ISalary[];
+  jobInfo: IJobInfo[];
+  employmentStatus: IEmploymentStatus[];
+  bonuses: IBonus[];
 }
 
-export interface DepositAccount {
+export interface IDepositAccount {
   orderNumber: number;
   bank: string;
   accountName: string;
@@ -44,7 +44,7 @@ export interface DepositAccount {
   isPercentValue: boolean;
 }
 
-export interface Reimbursement {
+export interface IReimbursement {
   name: string;
   startDate: string | null;
   endDate: string | null;
@@ -54,7 +54,7 @@ export interface Reimbursement {
   currencyCode: string;
 }
 
-export interface LoanOrSalaryAdvance {
+export interface ILoanOrSalaryAdvance {
   name: string;
   startDate: string | null;
   endDate: string | null;
@@ -64,7 +64,7 @@ export interface LoanOrSalaryAdvance {
   currencyCode: string;
 }
 
-export interface OtherDeduction {
+export interface IOtherDeduction {
   name: string;
   startDate: string | null;
   endDate: string | null;
@@ -74,7 +74,7 @@ export interface OtherDeduction {
   currencyCode: string;
 }
 
-export interface EmployeeBenefit {
+export interface IEmployeeBenefit {
   name: string;
   value: number;
   currencyCode: string;
@@ -85,7 +85,7 @@ export interface EmployeeBenefit {
   id: string;
 }
 
-export interface Salary {
+export interface ISalary {
   customBambooTalbeRowId: number;
   salaryRate: number;
   salaryCurrencyCode: string;
@@ -98,7 +98,7 @@ export interface Salary {
   overtimeRate: number | null;
 }
 
-export interface JobInfo {
+export interface IJobInfo {
   customBambooTalbeRowId: number;
   effectiveDate: string;
   jobTitle: string;
@@ -108,14 +108,14 @@ export interface JobInfo {
   reportsTo: string | null;
 }
 
-export interface EmploymentStatus {
+export interface IEmploymentStatus {
   customBambooTalbeRowId: number;
   effectiveDate: string;
   employmentStatus: string;
   comment: string | null;
 }
 
-export interface Bonus {
+export interface IBonus {
   customBambooTalbeRowId: number;
   effectiveDate: string;
   amount: number;
@@ -124,7 +124,7 @@ export interface Bonus {
   comment: string | null;
 }
 
-export interface SystemBenefit {
+export interface ISystemBenefit {
   name: string;
   id: string;
 }

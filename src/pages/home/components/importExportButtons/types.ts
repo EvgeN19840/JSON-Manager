@@ -1,1 +1,0 @@
-export type IDialog = "Export data" | "Import data" | null

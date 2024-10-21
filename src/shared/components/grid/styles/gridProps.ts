@@ -1,4 +1,3 @@
-
 export const StylesgridProps = {
   display: "flex",
   flexDirection: "column",
@@ -6,5 +5,4 @@ export const StylesgridProps = {
   height: "100vh",
   width: "100%",
   flexGrow: 1,
-
 };

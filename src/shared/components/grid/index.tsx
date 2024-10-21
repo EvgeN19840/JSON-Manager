@@ -3,7 +3,7 @@ import { StylesgridProps } from "./styles/gridProps";
 
 interface IMyGridProps<T extends GridValidRowModel> {
   columns: GridColDef<T>[];
-  data?: T[];
+  data: T[];
 }
 
 export const MyGrid = <T extends GridValidRowModel>({
@@ -13,8 +13,7 @@ export const MyGrid = <T extends GridValidRowModel>({
   return (
     <DataGrid
       rows={data ?? []}
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      getRowId={(row) => (row as any).eId || (row as any).id}
+      getRowId={(row) => (row as T).eId || (row as T).id}
       columns={columns}
       initialState={{
         pagination: {

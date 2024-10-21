@@ -3,20 +3,18 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import { CopyButton } from "./buttons";
 import { ITypeJSON } from "@/const/types";
 import { useNotification } from "@/hooks/useNotification";
-import { useDataStateContext } from "@/hooks/useDataStateContext";
 import { useModal } from "@/hooks/useModal";
 import { downloadJSONFileAsTXT } from "@/shared/utils";
 
 export const ExportDataComponent: React.FC = () => {
-  const { parsedData } = useDataStateContext();
   const { showNotification } = useNotification();
-  const { setDialogOpen } = useModal();
+  const { setDialogOpen, dataForDialog } = useModal();
   const [inputNameFile, setInputNameFile] = useState("");
 
   const downloadFile = () => {
-    if (inputNameFile && parsedData) {
+    if (inputNameFile && dataForDialog) {
       try {
-        const jsonData: ITypeJSON = JSON.parse(parsedData);
+        const jsonData: ITypeJSON = JSON.parse(dataForDialog as string );
         downloadJSONFileAsTXT(inputNameFile, jsonData);
         setInputNameFile("");
         setDialogOpen(false);
@@ -51,7 +49,7 @@ export const ExportDataComponent: React.FC = () => {
           rows={20}
           sx={{ width: "100%" }}
           placeholder="Viewing data"
-          value={parsedData || "No data available."}
+          value={dataForDialog || "No data available."}
           slotProps={{
             input: {
               readOnly: true,
@@ -59,7 +57,7 @@ export const ExportDataComponent: React.FC = () => {
           }}
         />
         <Box sx={{ position: "absolute", top: 9, right: 8, zIndex: 1, pr: 4 }}>
-          <CopyButton textToCopy={parsedData} />
+          <CopyButton textToCopy={dataForDialog as string} />
         </Box>
       </Box>
       <Box

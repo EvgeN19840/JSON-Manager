@@ -1,37 +1,63 @@
+// ** React
 import { ReactNode, useState } from "react";
 
+// ** Context
 import { ModalContext } from "../modalContext";
+
+// ** Hooks
 import { useDataStateContext } from "@/hooks/useDataStateContext";
-import { IDialog } from "@/pages/home/components/importExportButtons/types";
+
+// ** Types
+import { IDataForDialog, IModalType } from "../types";
+import { IEmployee, ISystemBenefit } from "@/const/types";
 
 export const ModalProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const { data, setParsedData } = useDataStateContext();
-  const [source, setSource] = useState<IDialog>(null);
-  const [isDialogOpen, setDialogOpen] = useState(false);
-  const [isEditDialogOpen, setEditDialogOpen] = useState(false);
+  const { data } = useDataStateContext();
+  const [typeModal, setTypeModal] = useState<IModalType>(null);
+  const [isDialogOpen, setDialogOpen] = useState<boolean>(false);
+  const [dataForDialog, setDataForDialog] = useState<IDataForDialog>(null)
 
-
-
-  const handleClickOpenFromGrid = (actionType: IDialog) => {
-    if (actionType === "Export data" && data) {
-      setParsedData(JSON.stringify(data, null, 2));
+  const handleClickOpenDialog = (typeModal: IModalType, item?: IDataForDialog) => {
+    switch (typeModal) {
+      case 'Export data':
+        setDataForDialog(JSON.stringify(data, null, 2));
+        break;
+      case 'Import data':
+        setDataForDialog(null);
+        break;
+      case 'Edit user':
+        setDataForDialog(item as IEmployee);
+        break;
+      case 'Edit benefits':
+        setDataForDialog(item as ISystemBenefit);
+        break;
     }
     setDialogOpen(true);
-    setSource(actionType);
+    setTypeModal(typeModal);
   };
-  
+
+  const closeDialog = () => {
+    setDialogOpen(false);
+
+    // ** Возможно, тут нужен будет UseEffect и логика для удаления таймера )))0))0)
+    setTimeout(() => {
+      setTypeModal(null);
+      setDataForDialog(null);
+    }, 500);
+  };
+
   return (
     <ModalContext.Provider
       value={{
-        source,
-        setSource,
+        typeModal,
+        closeDialog,
+        dataForDialog,
+        setTypeModal,
         isDialogOpen,
         setDialogOpen,
-        isEditDialogOpen,
-        setEditDialogOpen,
-        handleClickOpenFromGrid
+        handleClickOpenDialog
       }}
     >
       {children}

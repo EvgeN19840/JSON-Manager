@@ -1,7 +1,11 @@
+// ** React
 import { ReactNode, useState } from "react";
-import { TabsContext } from "../tabsContext";
-import { TabType } from "../types";
 
+// ** Context
+import { TabsContext } from "../tabsContext";
+
+// ** Types
+import { TabType } from "../types";
 
 
 export const TabsProvider: React.FC<{ children: ReactNode }> = ({

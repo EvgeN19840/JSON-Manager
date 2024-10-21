@@ -1,14 +1,15 @@
-import { IDialog } from "@/pages/home/components/importExportButtons/types";
+import { IEmployee, ISystemBenefit } from "@/const/types";
 
+export type IModalType = "Export data" | "Import data" | "Edit user" | "Edit benefits" | null
 
-export interface IModalType {
-  source: IDialog
-  setSource: (data: IDialog) => void;
+export interface IModalTypeContext {
+  typeModal: IModalType
+  setTypeModal: (data: IModalType) => void;
+  dataForDialog: IDataForDialog,
   isDialogOpen: boolean;
   setDialogOpen: (data: boolean) => void;
-  isEditDialogOpen: boolean;
-  setEditDialogOpen: (open: boolean) => void;
-  handleClickOpenFromGrid: (actionType: IDialog) => void;
-
-
+  closeDialog: () => void;
+  handleClickOpenDialog: (actionType: IModalType, item?: IEmployee | ISystemBenefit) => void;
 }
+
+export type IDataForDialog = string | null | IEmployee | ISystemBenefit

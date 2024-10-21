@@ -1,19 +1,14 @@
 import { FC, ReactNode } from "react";
-import { Box, AppBar, Toolbar, Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { HeaderTitle } from "../headerTitle";
+import { HeaderTitle } from "./components/headerTitle";
 
 export const Layout: FC<{ children: ReactNode }> = ({ children }) => {
   const theme = useTheme();
 
   return (
     <>
-      <AppBar position="fixed" sx={{ bgcolor: theme.palette.primary.main }}>
-        <Toolbar>
-          <HeaderTitle />
-        </Toolbar>
-      </AppBar>
-
+      <HeaderTitle />
       <Box
         component="main"
         sx={{
@@ -24,9 +19,9 @@ export const Layout: FC<{ children: ReactNode }> = ({ children }) => {
         }}
       >
         <Container
-          sx={{ flexGrow: 1, width: "100%" }}
-          disableGutters 
-          maxWidth={false} 
+          sx={{ flexGrow: 1 }}
+          disableGutters
+          maxWidth={false}
         >
           {children}
         </Container>

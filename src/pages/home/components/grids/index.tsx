@@ -1,58 +1,55 @@
+// ** React
 import { FC } from "react";
-import { Employee, SystemBenefit } from "@/const/types";
-import { ColumnsEmployee } from "@/const/columnsEmployee";
-import { ColumnsBenefit } from "@/const/columnsBenefit";
+
+// ** Types
+import { IEmployee, ISystemBenefit } from "@/const/types";
+
+// ** Columns
+import { ColumnsEmployee, ColumnsBenefit } from "./consts";
+
+// ** Context
 import { useDataStateContext } from "@/hooks/useDataStateContext";
-import { useModal } from "@/hooks/useModal";
-import { EditDialog } from "@/pages/home/components/editDialog";
-import { GridColDef } from "@mui/x-data-grid";
+
+// ** Hooks
 import { useTabs } from "@/hooks/useTabs";
+import { useModal } from "@/hooks/useModal";
+
+// ** Components
 import { MyGrid } from "@/shared/components/grid";
 
 export const Grids: FC = () => {
-  const { data, setSelectedEmployee, setSelectedBenefit } =
-    useDataStateContext();
-  const { setEditDialogOpen } = useModal();
+  const { data } = useDataStateContext();
+  const { handleClickOpenDialog } = useModal();
   const { activeTab } = useTabs();
 
-  const handleEditClick = (item: Employee | SystemBenefit) => {
+  const handleEditClick = (item: IEmployee | ISystemBenefit) => {
     if (activeTab === "1") {
-      setSelectedEmployee(item as Employee);
+      // setSelectedEmployee(item as IEmployee);
+      handleClickOpenDialog('Edit user', item)
     } else {
-      setSelectedBenefit(item as SystemBenefit);
+      // setSelectedBenefit(item as ISystemBenefit);
+      handleClickOpenDialog('Edit benefits', item)
     }
-    setEditDialogOpen(true);
   };
 
   const renderGrid = () => {
     switch (activeTab) {
       case "1": {
-        const gridData = data?.employees as Employee[] | undefined;
-        const gridColumns = ColumnsEmployee(
-          handleEditClick
-        ) as GridColDef<Employee>[];
+        const gridData = data.employees;
+        const gridColumns = ColumnsEmployee(handleEditClick)
 
-        return <MyGrid<Employee> data={gridData || []} columns={gridColumns} />;
+        return <MyGrid<IEmployee> data={gridData} columns={gridColumns} />;
       }
       case "2": {
-        const gridData = data?.benefits as SystemBenefit[] | undefined;
-        const gridColumns = ColumnsBenefit(
-          handleEditClick
-        ) as GridColDef<SystemBenefit>[];
+        const gridData = data.benefits;
+        const gridColumns = ColumnsBenefit(handleEditClick)
 
         return (
-          <MyGrid<SystemBenefit> data={gridData || []} columns={gridColumns} />
+          <MyGrid<ISystemBenefit> data={gridData} columns={gridColumns} />
         );
       }
-      default:
-        return null;
     }
   };
 
-  return (
-    <>
-      {renderGrid()}
-      <EditDialog />
-    </>
-  );
+  return renderGrid()
 };

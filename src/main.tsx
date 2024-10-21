@@ -12,8 +12,8 @@ import { TabsProvider } from "./context/tabs/provider";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <DataStateProvider>
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <DataStateProvider>
         <NotificationProvider>
           <ModalProvider>
             <TabsProvider>
@@ -21,7 +21,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             </TabsProvider>
           </ModalProvider>
         </NotificationProvider>
-      </ThemeProvider>
-    </DataStateProvider>
+      </DataStateProvider>
+    </ThemeProvider>
   </React.StrictMode>
 );
