@@ -2,6 +2,14 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import { EditFormProps } from "../types";
 import { useModal } from "@/hooks/useModal";
 import { useTabs } from "@/hooks/useTabs";
+import { useForm } from "react-hook-form";
+
+type IFormData = {
+  firstName?: string;
+  lastName?: string;
+  name?: string;
+  id?: string;
+};
 
 export const EditForm: React.FC<EditFormProps> = ({
   employeeData,
@@ -12,6 +20,27 @@ export const EditForm: React.FC<EditFormProps> = ({
 }) => {
   const { setEditDialogOpen } = useModal();
   const { activeTab } = useTabs();
+  const { register, handleSubmit } = useForm<IFormData>();
+
+  const onSubmit = (data: IFormData) => {
+    console.log("data:", data);
+    if (activeTab === "1" && employeeData) {
+      setEmployeeData({
+        ...employeeData,
+        firstName: data.firstName || employeeData.firstName,
+        lastName: data.lastName || employeeData.lastName,
+      });
+    }
+    if (activeTab === "2" && benefitData) {
+      setBenefitData({
+        ...benefitData,
+        name: data.name || benefitData.name,
+        id: data.id || benefitData.id,
+      });
+    }
+    saveData();
+    setEditDialogOpen(false);
+  };
 
   const renderForm = () => {
     if (activeTab === "1" && employeeData) {
@@ -31,23 +60,10 @@ export const EditForm: React.FC<EditFormProps> = ({
           >
             <TextField
               label="First Name"
-              value={employeeData.firstName || ""}
-              onChange={(e) =>
-                setEmployeeData({
-                  ...employeeData,
-                  firstName: e.target.value,
-                })
-              }
+              {...register("firstName")}
               fullWidth
             />
-            <TextField
-              label="Last Name"
-              value={employeeData.lastName || ""}
-              onChange={(e) =>
-                setEmployeeData({ ...employeeData, lastName: e.target.value })
-              }
-              fullWidth
-            />
+            <TextField label="Last Name" {...register("lastName")} fullWidth />
           </Box>
         </>
       );
@@ -66,22 +82,8 @@ export const EditForm: React.FC<EditFormProps> = ({
               height: "100%",
             }}
           >
-            <TextField
-              label="Benefit Name"
-              value={benefitData.name || ""}
-              onChange={(e) =>
-                setBenefitData({ ...benefitData, name: e.target.value })
-              }
-              fullWidth
-            />
-            <TextField
-              label="Benefit ID"
-              value={benefitData.id || ""}
-              onChange={(e) =>
-                setBenefitData({ ...benefitData, id: e.target.value })
-              }
-              fullWidth
-            />
+            <TextField label="Benefit Name" {...register("name")} fullWidth />
+            <TextField label="Benefit ID" {...register("id")} fullWidth />
           </Box>
         </>
       );
@@ -91,7 +93,7 @@ export const EditForm: React.FC<EditFormProps> = ({
   };
 
   return (
-    <Box>
+    <Box component="form" onSubmit={handleSubmit(onSubmit)}>
       {renderForm()}
       <Box
         sx={{
@@ -104,7 +106,7 @@ export const EditForm: React.FC<EditFormProps> = ({
         <Button onClick={() => setEditDialogOpen(false)} variant="outlined">
           Close
         </Button>
-        <Button onClick={saveData} variant="contained">
+        <Button type="submit" variant="contained">
           Save
         </Button>
       </Box>
