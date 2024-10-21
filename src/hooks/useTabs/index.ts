@@ -5,7 +5,7 @@ import { useContext } from "react";
 export const useTabs = () => {
   const context = useContext(TabsContext);
   if (!context) {
-    throw new Error("useModal must be used within a ModalProvider");
+    throw new Error("useTabs must be used within a TabsProvider");
   }
   return context;
 };
