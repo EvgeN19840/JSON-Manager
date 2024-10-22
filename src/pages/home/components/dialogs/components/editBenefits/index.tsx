@@ -17,15 +17,15 @@ import { useModal } from "@/hooks/useModal";
 import { useDataStateContext } from "@/hooks/useDataStateContext";
 
 // ** Types
-import { IEmployee } from "@/const/types";
-import { IFormProps } from "./types";
+import { ISystemBenefit } from "@/const/types";
+import { IFormBenefitsProps } from "./types";
 
-export const EditUserName = () => {
+export const EditBenefits = () => {
   const { dataForDialog, closeDialog } = useModal();
-  const { handleSaveEmployee } = useDataStateContext();
+  const { handleSaveBenefit } = useDataStateContext();
   const defaultValues = {
-    firstName: (dataForDialog as IEmployee).firstName,
-    lastName: (dataForDialog as IEmployee).lastName,
+    name: (dataForDialog as ISystemBenefit).name,
+    id: (dataForDialog as ISystemBenefit).id,
   };
 
   const {
@@ -33,18 +33,19 @@ export const EditUserName = () => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormProps>({
+  } = useForm<IFormBenefitsProps>({
     defaultValues,
     mode: "onSubmit",
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: IFormProps) => {
-    handleSaveEmployee({
-      ...(dataForDialog as IEmployee),
-      firstName: data.firstName,
-      lastName: data.lastName,
-    } as IEmployee);
+  const onSubmit = (data: IFormBenefitsProps) => {
+    console.log(111, data);
+    handleSaveBenefit({
+      ...(dataForDialog as ISystemBenefit),
+      id: data.id,
+      name: data.name,
+    } as ISystemBenefit);
     closeDialog();
   };
 
@@ -61,52 +62,61 @@ export const EditUserName = () => {
         >
           <FormControl fullWidth sx={{ pl: 0 }}>
             <Controller
-              name="firstName"
+              name="name"
               control={control}
               rules={{ required: true }}
               render={({ field: { value, onChange, onBlur } }) => (
                 <TextField
-                  {...register("firstName")}
-                  label="First Name"
+                  {...register("name")}
+                  label="Benefit name"
                   value={value}
                   onBlur={onBlur}
                   type={"text"}
                   onChange={onChange}
-                  error={Boolean(errors.firstName)}
+                  error={Boolean(errors.name)}
                 />
               )}
             />
-            {errors.firstName && (
+            {errors.name && (
               <FormHelperText sx={{ color: "error.main" }}>
-                {errors.firstName.message}
+                {errors.name.message}
               </FormHelperText>
             )}
           </FormControl>
           <FormControl fullWidth sx={{ pl: 0 }}>
             <Controller
-              name="lastName"
+              name="id"
               control={control}
               rules={{ required: true }}
               render={({ field: { value, onChange, onBlur } }) => (
                 <TextField
-                  {...register("lastName")}
-                  label="Last Name"
+                  {...register("id")}
+                  label="ID"
                   value={value}
                   onBlur={onBlur}
                   type={"text"}
                   onChange={onChange}
-                  error={Boolean(errors.lastName)}
+                  error={Boolean(errors.id)}
+                  slotProps={{
+                    input: {
+                      readOnly: true,
+                    },
+                  }}
                 />
               )}
             />
-            {errors.lastName && (
+            {errors.id && (
               <FormHelperText sx={{ color: "error.main" }}>
-                {errors.lastName.message}
+                {errors.id.message}
               </FormHelperText>
             )}
           </FormControl>
-          <Box sx={{ display: "flex", justifyContent: 'space-between' }}>
-            <Button variant="outlined" onClick={closeDialog} id={"cancel_Modal"}>
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Button
+              variant="outlined"
+              onClick={closeDialog}
+              id={"cansel_Modal"}
+            >
               Cancel
             </Button>
             <Button variant="contained" type={"submit"} id={"save_Modal"}>

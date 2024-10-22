@@ -12,16 +12,19 @@ export const Layout: FC<{ children: ReactNode }> = ({ children }) => {
       <Box
         component="main"
         sx={{
-          mt: 8,
           display: "flex",
           flexDirection: "column",
+        
           bgcolor: theme.palette.background.default,
         }}
       >
         <Container
-          sx={{ flexGrow: 1 }}
           disableGutters
           maxWidth={false}
+          sx={{
+            mt: 8,
+          
+          }}
         >
           {children}
         </Container>

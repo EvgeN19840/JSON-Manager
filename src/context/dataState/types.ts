@@ -1,4 +1,4 @@
-import { IEmployee, ITypeJSON, } from "@/const/types";
+import { IEmployee, ISystemBenefit, ITypeJSON, } from "@/const/types";
 
 export interface DataContextType {
   data: ITypeJSON;
@@ -7,6 +7,6 @@ export interface DataContextType {
   setParsedData: (parsedData: string | null) => void;
 
   handleSaveEmployee: (data: IEmployee) => void;
-  handleSaveBenefit: (benefitName: string, benefitID: string) => void;
+  handleSaveBenefit: (data: ISystemBenefit) => void;
   hasData: boolean;
 }

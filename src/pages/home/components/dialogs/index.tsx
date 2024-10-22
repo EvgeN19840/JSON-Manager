@@ -1,6 +1,6 @@
 // ** Components
 import { CustomDialog } from "@/shared/components/customDialog";
-import { ExportDataComponent, ImportDataComponent, EditUserName } from "./components";
+import { ExportDataComponent, ImportDataComponent, EditUserName,EditBenefits } from "./components";
 
 // ** Hooks
 import { useModal } from "@/hooks/useModal";
@@ -17,7 +17,7 @@ export const Dialogs: React.FC = () => {
       case 'Edit user':
         return <EditUserName />
       case 'Edit benefits':
-        return <>Edit benefits</>
+        return <EditBenefits/>
     }
   };
 
