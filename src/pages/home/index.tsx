@@ -1,5 +1,5 @@
-// ** React
 import { FC } from "react";
+import { Box } from "@mui/material";
 
 // ** Components
 import {
@@ -8,17 +8,24 @@ import {
   ImportExportButtons,
   TabsComponent,
 } from "./components";
-import { Box } from "@mui/material";
 
 export const Home: FC = () => {
   return (
-    <>
-      <Box sx={{ minHeight: "100vh" }}>
-        <TabsComponent />
-        <ImportExportButtons />
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        height: "calc(100vh - 72px)",
+        overflow: "hidden", 
+        mt:9
+      }}
+    >
+      <TabsComponent />
+      <ImportExportButtons />
+      <Box sx={{ flexGrow: 1, display: "flex", overflow: "hidden" }}>
         <Grids />
-        <Dialogs />
       </Box>
-    </>
+      <Dialogs />
+    </Box>
   );
 };

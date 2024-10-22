@@ -21,10 +21,6 @@ export const Layout: FC<{ children: ReactNode }> = ({ children }) => {
         <Container
           disableGutters
           maxWidth={false}
-          sx={{
-            mt: 8,
-          
-          }}
         >
           {children}
         </Container>

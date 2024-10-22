@@ -1,5 +1,6 @@
 import { DataGrid, GridColDef, GridValidRowModel } from "@mui/x-data-grid";
 import { StylesgridProps } from "./styles/gridProps";
+import { Box } from "@mui/material";
 
 interface IMyGridProps<T extends GridValidRowModel> {
   columns: GridColDef<T>[];
@@ -11,20 +12,22 @@ export const MyGrid = <T extends GridValidRowModel>({
   columns,
 }: IMyGridProps<T>) => {
   return (
-    <DataGrid
-      rows={data ?? []}
-      getRowId={(row) => (row as T).eId || (row as T).id}
-      columns={columns}
-      initialState={{
-        pagination: {
-          paginationModel: {
-            pageSize: 20,
+    <Box sx={{ height: "100%", width: "100%",flexGrow: 1 }}>
+      <DataGrid
+        rows={data ?? []}
+        getRowId={(row) => (row as T).eId || (row as T).id}
+        columns={columns}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 20,
+            },
           },
-        },
-      }}
-      pageSizeOptions={[3, 5, 10, 20, 100]}
-      disableRowSelectionOnClick
-      sx={{ ...StylesgridProps }}
-    />
+        }}
+        pageSizeOptions={[3, 5, 10, 20, 100]}
+        disableRowSelectionOnClick
+        sx={{ ...StylesgridProps }}
+      />
+    </Box>
   );
 };

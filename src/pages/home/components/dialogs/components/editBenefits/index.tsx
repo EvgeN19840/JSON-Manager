@@ -40,7 +40,6 @@ export const EditBenefits = () => {
   });
 
   const onSubmit = (data: IFormBenefitsProps) => {
-    console.log(111, data);
     handleSaveBenefit({
       ...(dataForDialog as ISystemBenefit),
       id: data.id,
@@ -97,11 +96,8 @@ export const EditBenefits = () => {
                   type={"text"}
                   onChange={onChange}
                   error={Boolean(errors.id)}
-                  slotProps={{
-                    input: {
-                      readOnly: true,
-                    },
-                  }}
+                  disabled 
+                 
                 />
               )}
             />
