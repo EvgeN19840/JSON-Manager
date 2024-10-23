@@ -1,3 +1,6 @@
+// ** Components
+import { FormWrapper, FormInput, FormFooter } from "@/shared/formElements";
+
 // ** Forms Imports
 import { useForm,  } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -13,10 +16,6 @@ import { useDataStateContext } from "@/hooks/useDataStateContext";
 import { ISystemBenefit } from "@/const/types";
 import { IFormBenefitsProps } from "./types";
 
-// ** Components
-import { FormFooter } from "@/shared/formFooter";
-import { FormWrapper } from "@/shared/formWrapper";
-import { FormInput } from "@/shared/formInput";
 
 export const EditBenefits = () => {
   const { dataForDialog, closeDialog } = useModal();
@@ -61,6 +60,7 @@ export const EditBenefits = () => {
         control={control}
         errorMessage={errors.id?.message}
         rules={{ required: true }}
+        disabled
       />
       <FormFooter
         cancelButtonText={"Cancel"}

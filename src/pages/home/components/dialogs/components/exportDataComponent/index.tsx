@@ -2,11 +2,12 @@
 import { useState } from "react";
 
 // ** MUI
-import { Box, TextField, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 // ** Components
 import { CopyButton } from "./buttons";
-import { FormFooter } from "@/shared/formFooter";
+import { FormFooter } from "@/shared/formElements/formFooter";
+import { InputField } from "@/shared/inputField";
 
 // ** Hooks
 import { useNotification } from "@/hooks/useNotification";
@@ -48,20 +49,19 @@ export const ExportDataComponent: React.FC = () => {
       <Typography variant="h6" sx={{ textAlign: "center" }}>
         Export Data
       </Typography>
+        <InputField
+          value={inputNameFile}
+          placeholder="Enter file name"
+          onChange={handleNameFileChange}  
+          sx={{ width: "100%", display: "flex",  height: "40px", mb: 1 }}
+        />
 
-      <TextField
-        value={inputNameFile}
-        placeholder="Enter file name"
-        onChange={handleNameFileChange}
-        sx={{ display: "flex", mb: 1 }}
-      />
-      <Box sx={{ position: "relative", width: "100%" }}>
-        <TextField
-          multiline
-          rows={20}
-          sx={{ width: "100%" }}
-          placeholder="Viewing data"
+      <Box sx={{ mt:3, position: "relative", width: "100%" }}>
+        <InputField
           value={dataForDialog || "No data available."}
+          onChange={() => {}}
+          rows={20}
+          multiline
           slotProps={{
             input: {
               readOnly: true,

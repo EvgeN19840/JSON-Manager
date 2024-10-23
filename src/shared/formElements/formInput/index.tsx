@@ -19,6 +19,7 @@ export const FormInput: React.FC<FormInputProps> = ({
   errorMessage,
   type = "text",
   rules = {},
+  ...rest
 }) => {
   return (
     <FormControl fullWidth sx={{ pl: 0 }}>
@@ -34,6 +35,7 @@ export const FormInput: React.FC<FormInputProps> = ({
             type={type}
             onChange={onChange}
             error={Boolean(errorMessage)}
+            {...rest}
           />
         )}
       />

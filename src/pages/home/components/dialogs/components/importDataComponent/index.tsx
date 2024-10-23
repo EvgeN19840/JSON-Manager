@@ -2,7 +2,8 @@
 import { useState } from "react";
 
 // ** Components
-import { FormFooter } from "@/shared/formFooter";
+import { FormFooter } from "@/shared/formElements/formFooter";
+import { InputField } from "@/shared/inputField";
 
 // ** Utils
 import { assignMissingIds } from "@/shared/utils";
@@ -11,7 +12,7 @@ import { assignMissingIds } from "@/shared/utils";
 import { ITypeJSON } from "@/const/types";
 
 // ** MUI
-import { Box, TextField, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 // ** Hooks
 import { useModal } from "@/hooks/useModal";
@@ -26,7 +27,6 @@ export const ImportDataComponent: React.FC = () => {
   const handleImport = () => {
     try {
       const parsedData: ITypeJSON = JSON.parse(inputValue);
-
       assignMissingIds(parsedData);
       setData({
         employees: parsedData.employees,
@@ -52,13 +52,11 @@ export const ImportDataComponent: React.FC = () => {
       <Typography variant="h6" sx={{ textAlign: "center" }}>
         Import Data
       </Typography>
-      <TextField
-        multiline
-        rows={20}
-        sx={{ width: "100%" }}
-        placeholder="Paste your JSON data here"
+      <InputField
+        value={inputValue}
         onChange={handleInputChange}
-        value={inputValue || ""}
+        placeholder="Paste your JSON data here"
+        rows={20}
       />
       <FormFooter
         cancelButtonText={"Close"}

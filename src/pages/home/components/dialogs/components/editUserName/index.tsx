@@ -1,7 +1,5 @@
 // ** Components
-import { FormInput } from "@/shared/formInput";
-import { FormFooter } from "@/shared/formFooter";
-import { FormWrapper } from "@/shared/formWrapper";
+import { FormWrapper, FormInput, FormFooter } from "@/shared/formElements";
 
 // ** Forms Imports
 import { useForm } from "react-hook-form";
