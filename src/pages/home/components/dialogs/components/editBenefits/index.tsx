@@ -2,7 +2,7 @@
 import { FormWrapper, FormInput, FormFooter } from "@/shared/formElements";
 
 // ** Forms Imports
-import { useForm,  } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 // ** Schema
@@ -16,6 +16,9 @@ import { useDataStateContext } from "@/hooks/useDataStateContext";
 import { ISystemBenefit } from "@/const/types";
 import { IFormBenefitsProps } from "./types";
 
+// ** Utils
+import { generateErrorMessage } from "@/shared/utils/generateErrorMessage";
+
 
 export const EditBenefits = () => {
   const { dataForDialog, closeDialog } = useModal();
@@ -26,7 +29,6 @@ export const EditBenefits = () => {
   };
 
   const {
-
     control,
     handleSubmit,
     formState: { errors },
@@ -51,17 +53,25 @@ export const EditBenefits = () => {
         name="name"
         label="Benefit name"
         control={control}
-        errorMessage={errors.name?.message}
+        errorMessage={
+          errors.name
+            ? generateErrorMessage("Benefit name", errors.name.type)
+            : ""
+        }
         rules={{ required: true }}
       />
+
       <FormInput
         name="id"
         label="ID"
         control={control}
-        errorMessage={errors.id?.message}
+        errorMessage={
+          errors.id ? generateErrorMessage("ID", errors.id.type) : ""
+        }
         rules={{ required: true }}
         disabled
       />
+
       <FormFooter
         cancelButtonText={"Cancel"}
         actionButtonText={"Save"}

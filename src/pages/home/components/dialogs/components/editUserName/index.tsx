@@ -16,6 +16,9 @@ import { schema } from "./schema";
 import { IEmployee } from "@/const/types";
 import { IFormProps } from "./types";
 
+//** Utils
+import { generateErrorMessage } from "@/shared/utils/generateErrorMessage";
+
 export const EditUserName = () => {
   const { dataForDialog, closeDialog } = useModal();
   const { handleSaveEmployee } = useDataStateContext();
@@ -49,15 +52,23 @@ export const EditUserName = () => {
         name="firstName"
         label="First Name"
         control={control}
-        errorMessage={errors.firstName?.message}
+        errorMessage={
+          errors.firstName
+            ? generateErrorMessage("First Name", errors.firstName.type)
+            : ""
+        }
         rules={{ required: true }}
       />
       <FormInput
         name="lastName"
         label="Last Name"
         control={control}
-        errorMessage={errors.lastName?.message}
         rules={{ required: true }}
+        errorMessage={
+          errors.lastName
+            ? generateErrorMessage("Last Name", errors.lastName.type)
+            : ""
+        }
       />
       <FormFooter
         cancelButtonText={"Cancel"}
