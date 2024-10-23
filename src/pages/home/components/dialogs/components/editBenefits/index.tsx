@@ -1,12 +1,5 @@
-// ** MUI Components
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import FormControl from "@mui/material/FormControl";
-import FormHelperText from "@mui/material/FormHelperText";
-
 // ** Forms Imports
-import { useForm, Controller } from "react-hook-form";
+import { useForm,  } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 // ** Schema
@@ -20,6 +13,11 @@ import { useDataStateContext } from "@/hooks/useDataStateContext";
 import { ISystemBenefit } from "@/const/types";
 import { IFormBenefitsProps } from "./types";
 
+// ** Components
+import { FormFooter } from "@/shared/formFooter";
+import { FormWrapper } from "@/shared/formWrapper";
+import { FormInput } from "@/shared/formInput";
+
 export const EditBenefits = () => {
   const { dataForDialog, closeDialog } = useModal();
   const { handleSaveBenefit } = useDataStateContext();
@@ -29,7 +27,7 @@ export const EditBenefits = () => {
   };
 
   const {
-    register,
+
     control,
     handleSubmit,
     formState: { errors },
@@ -49,78 +47,27 @@ export const EditBenefits = () => {
   };
 
   return (
-    <Box>
-      <form noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            flexDirection: "column",
-            gap: "1rem",
-          }}
-        >
-          <FormControl fullWidth sx={{ pl: 0 }}>
-            <Controller
-              name="name"
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange, onBlur } }) => (
-                <TextField
-                  {...register("name")}
-                  label="Benefit name"
-                  value={value}
-                  onBlur={onBlur}
-                  type={"text"}
-                  onChange={onChange}
-                  error={Boolean(errors.name)}
-                />
-              )}
-            />
-            {errors.name && (
-              <FormHelperText sx={{ color: "error.main" }}>
-                {errors.name.message}
-              </FormHelperText>
-            )}
-          </FormControl>
-          <FormControl fullWidth sx={{ pl: 0 }}>
-            <Controller
-              name="id"
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange, onBlur } }) => (
-                <TextField
-                  {...register("id")}
-                  label="ID"
-                  value={value}
-                  onBlur={onBlur}
-                  type={"text"}
-                  onChange={onChange}
-                  error={Boolean(errors.id)}
-                  disabled 
-                 
-                />
-              )}
-            />
-            {errors.id && (
-              <FormHelperText sx={{ color: "error.main" }}>
-                {errors.id.message}
-              </FormHelperText>
-            )}
-          </FormControl>
-          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Button
-              variant="outlined"
-              onClick={closeDialog}
-              id={"cansel_Modal"}
-            >
-              Cancel
-            </Button>
-            <Button variant="contained" type={"submit"} id={"save_Modal"}>
-              Save
-            </Button>
-          </Box>
-        </Box>
-      </form>
-    </Box>
+    <FormWrapper<IFormBenefitsProps> onSubmit={onSubmit}>
+      <FormInput
+        name="name"
+        label="Benefit name"
+        control={control}
+        errorMessage={errors.name?.message}
+        rules={{ required: true }}
+      />
+      <FormInput
+        name="id"
+        label="ID"
+        control={control}
+        errorMessage={errors.id?.message}
+        rules={{ required: true }}
+      />
+      <FormFooter
+        cancelButtonText={"Cancel"}
+        actionButtonText={"Save"}
+        showSecondButton={true}
+        buttonAction={handleSubmit(onSubmit)}
+      />
+    </FormWrapper>
   );
 };

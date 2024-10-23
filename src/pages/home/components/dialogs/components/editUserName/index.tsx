@@ -1,20 +1,18 @@
-// ** MUI Components
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import FormControl from "@mui/material/FormControl";
-import FormHelperText from "@mui/material/FormHelperText";
+// ** Components
+import { FormInput } from "@/shared/formInput";
+import { FormFooter } from "@/shared/formFooter";
+import { FormWrapper } from "@/shared/formWrapper";
 
 // ** Forms Imports
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-
-// ** Schema
-import { schema } from "./schema";
 
 // ** Hooks
 import { useModal } from "@/hooks/useModal";
 import { useDataStateContext } from "@/hooks/useDataStateContext";
+
+// ** Schema
+import { schema } from "./schema";
 
 // ** Types
 import { IEmployee } from "@/const/types";
@@ -29,7 +27,6 @@ export const EditUserName = () => {
   };
 
   const {
-    register,
     control,
     handleSubmit,
     formState: { errors },
@@ -49,72 +46,27 @@ export const EditUserName = () => {
   };
 
   return (
-    <Box>
-      <form noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            flexDirection: "column",
-            gap: "1rem",
-          }}
-        >
-          <FormControl fullWidth sx={{ pl: 0 }}>
-            <Controller
-              name="firstName"
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange, onBlur } }) => (
-                <TextField
-                  {...register("firstName")}
-                  label="First Name"
-                  value={value}
-                  onBlur={onBlur}
-                  type={"text"}
-                  onChange={onChange}
-                  error={Boolean(errors.firstName)}
-                />
-              )}
-            />
-            {errors.firstName && (
-              <FormHelperText sx={{ color: "error.main" }}>
-                {errors.firstName.message}
-              </FormHelperText>
-            )}
-          </FormControl>
-          <FormControl fullWidth sx={{ pl: 0 }}>
-            <Controller
-              name="lastName"
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange, onBlur } }) => (
-                <TextField
-                  {...register("lastName")}
-                  label="Last Name"
-                  value={value}
-                  onBlur={onBlur}
-                  type={"text"}
-                  onChange={onChange}
-                  error={Boolean(errors.lastName)}
-                />
-              )}
-            />
-            {errors.lastName && (
-              <FormHelperText sx={{ color: "error.main" }}>
-                {errors.lastName.message}
-              </FormHelperText>
-            )}
-          </FormControl>
-          <Box sx={{ display: "flex", justifyContent: 'space-between' }}>
-            <Button variant="outlined" onClick={closeDialog} id={"cancel_Modal"}>
-              Cancel
-            </Button>
-            <Button variant="contained" type={"submit"} id={"save_Modal"}>
-              Save
-            </Button>
-          </Box>
-        </Box>
-      </form>
-    </Box>
+    <FormWrapper<IFormProps> onSubmit={onSubmit}>
+      <FormInput
+        name="firstName"
+        label="First Name"
+        control={control}
+        errorMessage={errors.firstName?.message}
+        rules={{ required: true }}
+      />
+      <FormInput
+        name="lastName"
+        label="Last Name"
+        control={control}
+        errorMessage={errors.lastName?.message}
+        rules={{ required: true }}
+      />
+      <FormFooter
+        cancelButtonText={"Cancel"}
+        actionButtonText={"Save"}
+        showSecondButton={true}
+        buttonAction={handleSubmit(onSubmit)}
+      />
+    </FormWrapper>
   );
 };

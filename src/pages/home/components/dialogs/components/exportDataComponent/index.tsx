@@ -1,10 +1,22 @@
+// ** React
 import { useState } from "react";
-import { Box, Button, TextField, Typography } from "@mui/material";
+
+// ** MUI
+import { Box, TextField, Typography } from "@mui/material";
+
+// ** Components
 import { CopyButton } from "./buttons";
-import { ITypeJSON } from "@/const/types";
+import { FormFooter } from "@/shared/formFooter";
+
+// ** Hooks
 import { useNotification } from "@/hooks/useNotification";
 import { useModal } from "@/hooks/useModal";
+
+// ** Utils
 import { downloadJSONFileAsTXT } from "@/shared/utils";
+
+// ** Types
+import { ITypeJSON } from "@/const/types";
 
 export const ExportDataComponent: React.FC = () => {
   const { showNotification } = useNotification();
@@ -14,7 +26,7 @@ export const ExportDataComponent: React.FC = () => {
   const downloadFile = () => {
     if (inputNameFile && dataForDialog) {
       try {
-        const jsonData: ITypeJSON = JSON.parse(dataForDialog as string );
+        const jsonData: ITypeJSON = JSON.parse(dataForDialog as string);
         downloadJSONFileAsTXT(inputNameFile, jsonData);
         setInputNameFile("");
         setDialogOpen(false);
@@ -60,21 +72,12 @@ export const ExportDataComponent: React.FC = () => {
           <CopyButton textToCopy={dataForDialog as string} />
         </Box>
       </Box>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          mt: 1,
-        }}
-      >
-        <Button variant="outlined" onClick={() => setDialogOpen(false)}>
-          Close
-        </Button>
-        <Button variant="contained" onClick={downloadFile}>
-          Download
-        </Button>
-      </Box>
+      <FormFooter
+        cancelButtonText={"Close"}
+        actionButtonText={"Download"}
+        showSecondButton={true}
+        buttonAction={downloadFile}
+      />
     </Box>
   );
 };

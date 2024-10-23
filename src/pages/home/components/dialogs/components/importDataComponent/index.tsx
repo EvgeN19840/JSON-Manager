@@ -1,10 +1,22 @@
+// ** React
 import { useState } from "react";
+
+// ** Components
+import { FormFooter } from "@/shared/formFooter";
+
+// ** Utils
+import { assignMissingIds } from "@/shared/utils";
+
+// ** Types
 import { ITypeJSON } from "@/const/types";
-import { Box, Button, TextField, Typography } from "@mui/material";
+
+// ** MUI
+import { Box, TextField, Typography } from "@mui/material";
+
+// ** Hooks
+import { useModal } from "@/hooks/useModal";
 import { useNotification } from "@/hooks/useNotification";
 import { useDataStateContext } from "@/hooks/useDataStateContext";
-import { useModal } from "@/hooks/useModal";
-import { assignMissingIds } from "@/shared/utils";
 
 export const ImportDataComponent: React.FC = () => {
   const [inputValue, setInputValue] = useState("");
@@ -48,24 +60,12 @@ export const ImportDataComponent: React.FC = () => {
         onChange={handleInputChange}
         value={inputValue || ""}
       />
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          mt: 1,
-        }}
-      >
-        <Button variant="outlined" onClick={() => setDialogOpen(false)}>
-          Close
-        </Button>
-
-        {inputValue ? (
-          <Button variant="contained" onClick={handleImport}>
-            Import
-          </Button>
-        ) : null}
-      </Box>
+      <FormFooter
+        cancelButtonText={"Close"}
+        actionButtonText={"Import"}
+        showSecondButton={!!inputValue}
+        buttonAction={handleImport}
+      />
     </Box>
   );
 };
