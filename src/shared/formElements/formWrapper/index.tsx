@@ -1,23 +1,11 @@
-// ** Forms Imports
-import { FieldValues, useForm } from "react-hook-form";
 
-// ** MUI
 import { Box } from "@mui/material";
-
-// ** Types
 import { FormWrapperProps } from "./types";
 
-export const FormWrapper = <T extends FieldValues>({
-  onSubmit,
-  children,
-}: FormWrapperProps<T>) => {
-  const { handleSubmit } = useForm<T>({
-    mode: "onSubmit",
-  });
-
+export const FormWrapper = ({ onSubmit, children }: FormWrapperProps) => {
   return (
     <Box>
-      <form noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+      <form noValidate autoComplete="off" onSubmit={onSubmit}>
         <Box
           sx={{
             display: "flex",

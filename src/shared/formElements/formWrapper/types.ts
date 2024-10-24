@@ -1,4 +1,4 @@
-export interface FormWrapperProps<T> {
-  onSubmit: (data: T) => void;
-    children: React.ReactNode;
-  }
+export interface FormWrapperProps {
+  onSubmit: React.FormEventHandler<HTMLFormElement>; 
+  children: React.ReactNode;
+}

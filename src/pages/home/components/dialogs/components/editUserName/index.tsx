@@ -47,7 +47,7 @@ export const EditUserName = () => {
   };
 
   return (
-    <FormWrapper<IFormProps> onSubmit={onSubmit}>
+    <FormWrapper onSubmit={handleSubmit(onSubmit)}>
       <FormInput
         name="firstName"
         label="First Name"

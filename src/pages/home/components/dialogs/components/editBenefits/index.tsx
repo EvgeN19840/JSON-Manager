@@ -19,7 +19,6 @@ import { IFormBenefitsProps } from "./types";
 // ** Utils
 import { generateErrorMessage } from "@/shared/utils/generateErrorMessage";
 
-
 export const EditBenefits = () => {
   const { dataForDialog, closeDialog } = useModal();
   const { handleSaveBenefit } = useDataStateContext();
@@ -48,7 +47,7 @@ export const EditBenefits = () => {
   };
 
   return (
-    <FormWrapper<IFormBenefitsProps> onSubmit={onSubmit}>
+    <FormWrapper onSubmit={handleSubmit(onSubmit)}>
       <FormInput
         name="name"
         label="Benefit name"
