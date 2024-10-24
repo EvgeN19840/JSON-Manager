@@ -1,7 +1,12 @@
+// ** React
+import React from "react";
+
+// ** Hooks
 import { useNotification } from "@/hooks/useNotification";
+
+// ** MUI
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
-import React from "react";
 
 interface ICopyButtonProps {
   textToCopy: string | null;

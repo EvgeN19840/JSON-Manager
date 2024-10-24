@@ -1,3 +1,4 @@
+// ** Types
 import { ITypeJSON } from "@/const/types";
 
 export const downloadJSONFileAsTXT = (filename: string, data: ITypeJSON) => {

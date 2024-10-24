@@ -1,5 +1,8 @@
-import { DataStateContext } from "@/context/dataState/dataStateContext";
+// ** React
 import { useContext } from "react";
+
+// ** Context
+import { DataStateContext } from "@/context/dataState/dataStateContext";
 
 export const useDataStateContext = () => {
   const context = useContext(DataStateContext);

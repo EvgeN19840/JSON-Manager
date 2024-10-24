@@ -1,3 +1,4 @@
+// ** Types
 import { IEmployee, ISystemBenefit, ITypeJSON, } from "@/const/types";
 
 export interface DataContextType {

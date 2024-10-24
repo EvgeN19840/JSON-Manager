@@ -1,6 +1,9 @@
-import { DataGrid, GridColDef, GridValidRowModel } from "@mui/x-data-grid";
-import { StylesgridProps } from "./styles/gridProps";
+// ** MUI
 import { Box } from "@mui/material";
+import { DataGrid, GridColDef, GridValidRowModel } from "@mui/x-data-grid";
+
+// ** Styles
+import { StylesgridProps } from "./styles/gridProps";
 
 interface IMyGridProps<T extends GridValidRowModel> {
   columns: GridColDef<T>[];

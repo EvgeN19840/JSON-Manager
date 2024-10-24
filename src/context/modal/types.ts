@@ -1,3 +1,4 @@
+// ** Types
 import { IEmployee, ISystemBenefit } from "@/const/types";
 
 export type IModalType = "Export data" | "Import data" | "Edit user" | "Edit benefits" | null

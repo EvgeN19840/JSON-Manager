@@ -1,7 +1,15 @@
+// ** React
 import React, { useState, ReactNode } from "react";
-import { INotificationType } from "../types";
-import { NotificationContext } from "../notificationContext";
+
+// ** Components
 import { SnackbarComponent } from "../snackbarComponent";
+
+// ** Context
+import { NotificationContext } from "../notificationContext";
+
+// ** Types
+import { INotificationType } from "../types";
+
 
 
 export const NotificationProvider: React.FC<{ children: ReactNode }> = ({

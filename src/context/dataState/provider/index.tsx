@@ -1,6 +1,12 @@
+// ** React
 import { ReactNode, useState } from "react";
-import { IEmployee, ISystemBenefit, ITypeJSON } from "@/const/types";
+
+// ** Context
 import { DataStateContext } from "../dataStateContext";
+
+// ** Types
+import { IEmployee, ISystemBenefit, ITypeJSON } from "@/const/types";
+
 
 export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
   children,

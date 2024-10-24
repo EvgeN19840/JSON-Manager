@@ -1,6 +1,13 @@
+// ** React
 import React from "react";
+
+// ** MUI
 import { Snackbar, Button } from "@mui/material";
+
+// ** Context
 import { theme } from "@/customTheme";
+
+// ** Types
 import { INotificationType } from "../types";
 
 interface ISnackbarComponentProps {
