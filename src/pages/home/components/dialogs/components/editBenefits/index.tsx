@@ -16,9 +16,6 @@ import { useDataStateContext } from "@/hooks/useDataStateContext";
 import { ISystemBenefit } from "@/const/types";
 import { IFormBenefitsProps } from "./types";
 
-// ** Utils
-import { generateErrorMessage } from "@/shared/utils/generateErrorMessage";
-
 export const EditBenefits = () => {
   const { dataForDialog, closeDialog } = useModal();
   const { handleSaveBenefit } = useDataStateContext();
@@ -52,11 +49,7 @@ export const EditBenefits = () => {
         name="name"
         label="Benefit name"
         control={control}
-        errorMessage={
-          errors.name
-            ? generateErrorMessage("Benefit name", errors.name.type)
-            : ""
-        }
+        errorMessage={errors.name?.message}
         rules={{ required: true }}
       />
 
@@ -64,9 +57,7 @@ export const EditBenefits = () => {
         name="id"
         label="ID"
         control={control}
-        errorMessage={
-          errors.id ? generateErrorMessage("ID", errors.id.type) : ""
-        }
+        errorMessage={errors.id?.message}
         rules={{ required: true }}
         disabled
       />
