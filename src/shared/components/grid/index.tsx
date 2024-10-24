@@ -8,14 +8,16 @@ import { StylesgridProps } from "./styles/gridProps";
 interface IMyGridProps<T extends GridValidRowModel> {
   columns: GridColDef<T>[];
   data: T[];
+  onRowDoubleClick: (row: T) => void;
 }
 
 export const MyGrid = <T extends GridValidRowModel>({
   data,
   columns,
+  onRowDoubleClick,
 }: IMyGridProps<T>) => {
   return (
-    <Box sx={{ height: "100%", width: "100%",flexGrow: 1 }}>
+    <Box sx={{ height: "100%", width: "100%", flexGrow: 1 }}>
       <DataGrid
         rows={data ?? []}
         getRowId={(row) => (row as T).eId || (row as T).id}
@@ -28,8 +30,10 @@ export const MyGrid = <T extends GridValidRowModel>({
           },
         }}
         pageSizeOptions={[3, 5, 10, 20, 100]}
-        disableRowSelectionOnClick
         sx={{ ...StylesgridProps }}
+        disableRowSelectionOnClick
+        onRowDoubleClick={(params) => {
+          onRowDoubleClick(params.row as T)}}
       />
     </Box>
   );

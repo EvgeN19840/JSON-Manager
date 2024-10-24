@@ -33,6 +33,9 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
       case 'Edit benefits':
         setDataForDialog(item as ISystemBenefit);
         break;
+        case "Details employee data":
+          setDataForDialog(null);
+          break;
     }
     setDialogOpen(true);
     setTypeModal(typeModal);

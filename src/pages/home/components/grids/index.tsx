@@ -19,8 +19,9 @@ import { MyGrid } from "@/shared/components/grid";
 
 export const Grids: FC = () => {
   const { data } = useDataStateContext();
-  const { handleClickOpenDialog } = useModal();
+  const { handleClickOpenDialog, } = useModal();
   const { activeTab } = useTabs();
+
 
   const handleEditClick = (item: IEmployee | ISystemBenefit) => {
     if (activeTab === "1") {
@@ -31,6 +32,14 @@ export const Grids: FC = () => {
       handleClickOpenDialog('Edit benefits', item)
     }
   };
+  const handleRowDoubleClick = (item: IEmployee | ISystemBenefit) => {
+    if (activeTab === "1") {
+      handleClickOpenDialog( "Details employee data", item); 
+    } else {
+      handleClickOpenDialog( 'Details benefit data', item); 
+    }
+  };
+
 
   const renderGrid = () => {
     switch (activeTab) {
@@ -38,14 +47,14 @@ export const Grids: FC = () => {
         const gridData = data.employees;
         const gridColumns = ColumnsEmployee(handleEditClick)
 
-        return <MyGrid<IEmployee> data={gridData} columns={gridColumns} />;
+        return <MyGrid<IEmployee> data={gridData} columns={gridColumns}  onRowDoubleClick={handleRowDoubleClick} />;
       }
       case "2": {
         const gridData = data.benefits;
         const gridColumns = ColumnsBenefit(handleEditClick)
 
         return (
-          <MyGrid<ISystemBenefit> data={gridData} columns={gridColumns} />
+          <MyGrid<ISystemBenefit> data={gridData} columns={gridColumns}  onRowDoubleClick={handleRowDoubleClick} />
         );
       }
     }

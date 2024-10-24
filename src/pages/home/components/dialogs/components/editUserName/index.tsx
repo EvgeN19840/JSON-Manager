@@ -16,13 +16,13 @@ import { schema } from "./schema";
 import { IEmployee } from "@/const/types";
 import { IFormProps } from "./types";
 
-
 export const EditUserName = () => {
   const { dataForDialog, closeDialog } = useModal();
   const { handleSaveEmployee } = useDataStateContext();
   const defaultValues = {
     firstName: (dataForDialog as IEmployee).firstName,
     lastName: (dataForDialog as IEmployee).lastName,
+    eId: (dataForDialog as IEmployee).eId,
   };
 
   const {
@@ -59,6 +59,14 @@ export const EditUserName = () => {
         control={control}
         rules={{ required: true }}
         errorMessage={errors.lastName?.message}
+      />
+      <FormInput
+        name="eId"
+        label="ID"
+        control={control}
+        errorMessage={errors.eId?.message}
+        rules={{ required: true }}
+        disabled
       />
       <FormFooter
         cancelButtonText={"Cancel"}

@@ -1,7 +1,7 @@
 // ** Types
 import { IEmployee, ISystemBenefit } from "@/const/types";
 
-export type IModalType = "Export data" | "Import data" | "Edit user" | "Edit benefits" | null
+export type IModalType = "Export data" | "Import data" | "Edit user" | "Edit benefits" | "Details employee data" |"Details benefit data"| null
 
 export interface IModalTypeContext {
   typeModal: IModalType
