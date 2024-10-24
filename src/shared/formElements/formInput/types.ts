@@ -1,14 +1,13 @@
 // ** Forms Imports
-import { Control } from "react-hook-form";
+import { FieldValues, Control, Path } from "react-hook-form";
 
 // ** MUI
 import { TextFieldProps } from "@mui/material/TextField";
 
-export interface FormInputProps extends Omit<TextFieldProps, 'variant' | 'size'> { 
-    name: string;
+export interface FormInputProps<TFieldValues extends FieldValues> extends Omit<TextFieldProps, 'variant' | 'size'> {
+    name: Path<TFieldValues>;
     label: string;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    control: Control<any>;
+    control: Control<TFieldValues>;
     errorMessage?: string;
     type?: string;
     rules?: object;

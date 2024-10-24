@@ -27,7 +27,7 @@ export const ImportExportButtons: React.FC = () => {
         onClick={() => handleClickOpenDialog("Import data")}
         sx={{ width: "calc(50% - 0.5rem)" }}
       >
-        Import Employee Data
+        Import JSON Data
       </Button>
       {hasData && (
         <Button

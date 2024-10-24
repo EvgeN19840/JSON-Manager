@@ -1,5 +1,5 @@
 // ** Forms Imports
-import { Controller } from "react-hook-form";
+import { Controller, FieldValues } from "react-hook-form";
 
 // ** MUI Components
 import TextField from "@mui/material/TextField";
@@ -11,8 +11,7 @@ import { FormInputProps } from "./types";
 
 
 
-
-export const FormInput: React.FC<FormInputProps> = ({
+export const FormInput = <T extends FieldValues>({
   name,
   label,
   control,
@@ -20,7 +19,7 @@ export const FormInput: React.FC<FormInputProps> = ({
   type = "text",
   rules = {},
   ...rest
-}) => {
+}: FormInputProps<T>) => {
   return (
     <FormControl fullWidth sx={{ pl: 0 }}>
       <Controller
