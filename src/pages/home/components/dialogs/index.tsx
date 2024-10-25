@@ -5,6 +5,7 @@ import {
   ImportDataComponent,
   EditUserName,
   EditBenefits,
+  EmployeeDetails,
 } from "./components";
 
 // ** Hooks
@@ -24,7 +25,7 @@ export const Dialogs: React.FC = () => {
       case "Edit benefits":
         return <EditBenefits />;
       case "Details employee data":
-        return "Details employee data";
+        return <EmployeeDetails/>
         case "Details benefit data":
           return "Details benefit data";
     }
