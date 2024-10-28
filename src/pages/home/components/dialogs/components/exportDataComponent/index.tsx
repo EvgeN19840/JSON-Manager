@@ -53,10 +53,10 @@ export const ExportDataComponent: React.FC = () => {
           value={inputNameFile}
           placeholder="Enter file name"
           onChange={handleNameFileChange}  
-          sx={{ width: "100%", display: "flex",  height: "40px", mb: 1 }}
+          sx={{  display: "flex",  height: "40px", mb: 1 }}
         />
 
-      <Box sx={{ mt:3, position: "relative", width: "100%" }}>
+      <Box  maxWidth="xs"  sx={{ mt:3, position: "relative", width: "100%" }}>
         <InputField
           value={dataForDialog || "No data available."}
           onChange={() => {}}

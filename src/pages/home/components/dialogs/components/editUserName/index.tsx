@@ -23,7 +23,11 @@ export const EditUserName = () => {
     firstName: (dataForDialog as IEmployee).firstName,
     lastName: (dataForDialog as IEmployee).lastName,
     eId: (dataForDialog as IEmployee).eId,
+    birthDate: (dataForDialog as IEmployee).birthDate 
+      ? (dataForDialog as IEmployee).birthDate.split('T')[0]
+      : '',
   };
+  
 
   const {
     control,
@@ -34,14 +38,15 @@ export const EditUserName = () => {
     mode: "onSubmit",
     resolver: yupResolver(schema),
   });
-
   const onSubmit = (data: IFormProps) => {
     handleSaveEmployee({
       ...(dataForDialog as IEmployee),
       firstName: data.firstName,
       lastName: data.lastName,
+      birthDate: data.birthDate
     } as IEmployee);
     closeDialog();
+
   };
 
   return (
@@ -59,6 +64,13 @@ export const EditUserName = () => {
         control={control}
         rules={{ required: true }}
         errorMessage={errors.lastName?.message}
+      />
+      <FormInput
+        name="birthDate"
+        label="Birth date"
+        control={control}
+        rules={{ required: true }}
+        errorMessage={errors.birthDate?.message}
       />
       <FormInput
         name="eId"

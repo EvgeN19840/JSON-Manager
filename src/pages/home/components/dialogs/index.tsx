@@ -5,7 +5,7 @@ import {
   ImportDataComponent,
   EditUserName,
   EditBenefits,
-  EmployeeDetails,
+  TabsDetails,
 } from "./components";
 
 // ** Hooks
@@ -24,18 +24,20 @@ export const Dialogs: React.FC = () => {
         return <EditUserName />;
       case "Edit benefits":
         return <EditBenefits />;
-      case "Details employee data":
-        return <EmployeeDetails/>
-        case "Details benefit data":
-          return "Details benefit data";
+      case "Details":
+        return <TabsDetails />;
+      case "Details benefit data":
+        return "Details benefit data";
+      default:
+        return null;
     }
   };
 
+  const maxWidth = typeModal === "Details" ? "xl" : "sm";
+
   return (
-    <CustomDialog
-      onClose={closeDialog}
-      open={isDialogOpen}
-      children={renderContent()}
-    />
+    <CustomDialog onClose={closeDialog} open={isDialogOpen} maxWidth={maxWidth}>
+      {renderContent()}
+    </CustomDialog>
   );
 };

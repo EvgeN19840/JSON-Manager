@@ -9,7 +9,7 @@ export interface IEmployee {
   firstName: string;
   middleName: string | null;
   lastName: string;
-  birthDate: string | null;
+  birthDate: string;
   email: string | null;
   hireDate: string;
   endDate: string | null;

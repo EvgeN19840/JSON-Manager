@@ -1,11 +1,13 @@
 // ** Types
 import { IEmployee, ISystemBenefit } from "@/const/types";
 
-export type IModalType = "Export data" | "Import data" | "Edit user" | "Edit benefits" | "Details employee data" |"Details benefit data"| null
-
+export type IModalType = "Export data" | "Import data" | "Edit user" | "Edit benefits" | "Details" |"Details benefit data"| null
+export type IModalTypeDetails = "Personal" | "Benefits" | "Job" |  null
 export interface IModalTypeContext {
   typeModal: IModalType
+  typeModalDetails:IModalTypeDetails;
   setTypeModal: (data: IModalType) => void;
+  setTypeModalDetails:(data: IModalTypeDetails) => void;
   dataForDialog: IDataForDialog,
   isDialogOpen: boolean;
   setDialogOpen: (data: boolean) => void;

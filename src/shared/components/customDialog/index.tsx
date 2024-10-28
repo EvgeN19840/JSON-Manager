@@ -5,15 +5,17 @@ interface ICustomDialog {
   children: React.ReactNode;
   open: boolean;
   onClose: () => void
+  maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | false;
 }
 
 export const CustomDialog: React.FC<ICustomDialog> = ({
   children,
   open,
-  onClose
+  onClose,
+  maxWidth
 }) => {
   return (
-    <Dialog onClose={onClose} fullWidth sx={{ height: "100vh" }} open={open} >
+    <Dialog  onClose={onClose} fullWidth  maxWidth={maxWidth} open={open} >
       <Box
         sx={{
           p: "1rem",
@@ -21,6 +23,7 @@ export const CustomDialog: React.FC<ICustomDialog> = ({
           flexDirection: "column",
           justifyContent: "space-between",
           height: "100%",
+          
         }}
       >
         {children}
