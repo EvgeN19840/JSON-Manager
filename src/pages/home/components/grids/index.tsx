@@ -16,66 +16,65 @@ import { useModal } from "@/hooks/useModal";
 
 // ** Components
 import { MyGrid } from "@/shared/components/grid";
+
+// ** MUI
 import { GridRenderCellParams } from "@mui/x-data-grid";
 
 export const Grids: FC = () => {
-  const { data } = useDataStateContext();
+  const { data, handleDeleteEmployee, handleAddEmployee } = useDataStateContext();
   const { handleClickOpenDialog } = useModal();
   const { activeTab } = useTabs();
 
-  const handleEditClick = (item: IEmployee | ISystemBenefit) => {
-    if (activeTab === "1") {
-      handleClickOpenDialog("Edit user", item);
-    } else {
-      handleClickOpenDialog("Edit benefits", item);
-    }
+  const handleDeleteEmployeeClick = (params: GridRenderCellParams<IEmployee>) => {
+    handleDeleteEmployee(params.row.eId);
   };
 
-  const handleDeleteEmployee = (params: GridRenderCellParams<IEmployee>) => {
-    const employeeId = params.row.eId;
-    console.log("Deleting employee with ID:", employeeId);
+  const handleAddEmployeeClick = (params: GridRenderCellParams<IEmployee>) => {
+    handleAddEmployee(params.row);
   };
 
-  const handleAddEmployee = (params: GridRenderCellParams<IEmployee>) => {
-    console.log("Adding employee based on params:", params);
+  const handleRowDoubleClickOpenDetails = (item: IEmployee | ISystemBenefit) => {
+    handleClickOpenDialog(
+      activeTab === "1" ? "Details" : "Details benefit data",
+      item
+    );
   };
 
-  const handleRowDoubleClick = (item: IEmployee | ISystemBenefit) => {
-    if (activeTab === "1") {
-      handleClickOpenDialog("Details", item);
-    } else {
-      handleClickOpenDialog("Details benefit data", item);
-    }
+  const handleEditDialogOpen = (item: IEmployee | ISystemBenefit) => {
+    handleClickOpenDialog(
+      activeTab === "1" ? "Edit user" : "Edit benefits",
+      item
+    );
   };
 
   const renderGrid = () => {
     switch (activeTab) {
       case "1": {
         const gridData = data.employees;
-        const gridColumns = ColumnsEmployee(handleEditClick, {
+        const gridColumns = ColumnsEmployee(handleEditDialogOpen, {
           openForm: (params: GridRenderCellParams<IEmployee>) =>
-            handleEditClick(params.row),
-          deleteEmployee: handleDeleteEmployee,
-          addEmployee: handleAddEmployee,
+            handleEditDialogOpen(params.row),
+          deleteEmployee: handleDeleteEmployeeClick,
+          addEmployee: handleAddEmployeeClick,
         });
 
         return (
           <MyGrid<IEmployee>
             data={gridData}
             columns={gridColumns}
-            onRowDoubleClick={handleRowDoubleClick}
+            onRowDoubleClick={handleRowDoubleClickOpenDetails}
           />
         );
       }
       case "2": {
         const gridData = data.benefits;
-        const gridColumns = ColumnsBenefit(handleEditClick);
+        const gridColumns = ColumnsBenefit(handleEditDialogOpen);
 
         return (
           <MyGrid<ISystemBenefit>
             data={gridData}
             columns={gridColumns}
-            onRowDoubleClick={handleRowDoubleClick}
+            onRowDoubleClick={handleRowDoubleClickOpenDetails}
           />
         );
       }

@@ -1,25 +1,21 @@
-// ** MyContextMenu Component
-import React from 'react';
-import { Menu, MenuItem } from '@mui/material';
-import { GridRenderCellParams } from "@mui/x-data-grid";
-import { IEmployee } from '@/const/types';
+// ** React
+import React, { Fragment } from "react";
 
-interface ContextMenuItem {
-  name: string;
-  callback: (params: GridRenderCellParams<IEmployee>) => void; 
-  disabled?: boolean;
-}
+// ** MUI
+import { IconButton, Menu, MenuItem } from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
-interface MyContextMenuProps {
-  items: ContextMenuItem[];
-  params: GridRenderCellParams<IEmployee>;
-}
+// ** Types
+import { MyContextMenuProps } from "./types";
 
-export const MyContextMenu: React.FC<MyContextMenuProps> = ({ items, params }) => {
+export const MyContextMenu: React.FC<MyContextMenuProps> = ({
+  items,
+  params,
+  disabled = false,
+}) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleContextMenu = (event: React.MouseEvent<HTMLElement>) => {
-    event.preventDefault(); 
     setAnchorEl(event.currentTarget);
   };
 
@@ -28,29 +24,24 @@ export const MyContextMenu: React.FC<MyContextMenuProps> = ({ items, params }) =
   };
 
   return (
-    <div onContextMenu={handleContextMenu}>
-      <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        {items.map((item, index) => {
-          console.log(item.name); 
-
-          return (
-            <MenuItem
-              key={index}
-              onClick={() => {
-                item.callback(params);
-                handleClose(); 
-              }}
-              disabled={item.disabled}
-            >
-              {item.name}
-            </MenuItem>
-          );
-        })}
+    <Fragment>
+      <IconButton size="small" disabled={disabled} onClick={handleContextMenu}>
+        <MoreVertIcon>dots-vertical</MoreVertIcon>
+      </IconButton>
+      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+        {items.map((item, index) => (
+          <MenuItem
+            key={index}
+            onClick={() => {
+              item.callback(params);
+              handleClose();
+            }}
+            disabled={item.disabled ?? false}
+          >
+            {item.name}
+          </MenuItem>
+        ))}
       </Menu>
-    </div>
+    </Fragment>
   );
 };

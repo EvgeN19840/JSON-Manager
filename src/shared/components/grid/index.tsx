@@ -33,7 +33,8 @@ export const MyGrid = <T extends GridValidRowModel>({
         sx={{ ...StylesgridProps }}
         disableRowSelectionOnClick
         onRowDoubleClick={(params) => {
-          onRowDoubleClick(params.row as T)}}
+          onRowDoubleClick(params.row as T);
+        }}
       />
     </Box>
   );

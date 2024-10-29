@@ -27,7 +27,7 @@ export const ImportDataComponent: React.FC = () => {
   const handleImport = () => {
     try {
       const parsedData: ITypeJSON = JSON.parse(inputValue);
-      assignMissingIds(parsedData);
+      assignMissingIds(parsedData, "benefits");
       setData({
         employees: parsedData.employees,
         benefits: parsedData.benefits,
