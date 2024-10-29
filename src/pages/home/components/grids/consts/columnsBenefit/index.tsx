@@ -1,12 +1,17 @@
 // ** Types
-import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import { contextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
 import { ISystemBenefit } from "@/const/types";
 
+// ** MUI
+import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+
 // ** Components
-import { EditButton } from "@/shared/components/grid/components";
+import { MyContextMenu } from "@/shared/components/myContextMenu";
+import { actionMenu } from "@/shared/components/myContextMenu/actionMenu";
 
 export const ColumnsBenefit = (
-  handleEditClick: (employee: ISystemBenefit) => void
+  _handleEditClick:  (employee: ISystemBenefit) => void,
+  callbacks: contextMenuItemsCallbacks
 ): GridColDef<ISystemBenefit>[] => [
     {
       field: "name",
@@ -25,15 +30,20 @@ export const ColumnsBenefit = (
       minWidth: 250,
     },
     {
-      field: "edit",
-      headerName: "",
-      width: 30,
-      sortable: false,
+      width: 35,
+      minWidth: 35,
+      maxWidth: 35,
       resizable: false,
+      field: 'Actions',
+      renderHeader: () => '',
+      sortable: false,
+      hideable: false,
       filterable: false,
-      align: "center",
-      renderCell: (params: GridRenderCellParams<ISystemBenefit>) => (
-        <EditButton<ISystemBenefit> params={params} handleEditClick={handleEditClick} />
-      )
+      align: 'center',
+      renderCell: (params: GridRenderCellParams<ISystemBenefit>) => {
+        return (
+          <MyContextMenu items={actionMenu(callbacks, params)} params={params} />
+        );
+      },
     },
   ];

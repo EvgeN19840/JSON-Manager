@@ -17,20 +17,25 @@ import { useModal } from "@/hooks/useModal";
 // ** Components
 import { MyGrid } from "@/shared/components/grid";
 
-// ** MUI
-import { GridRenderCellParams } from "@mui/x-data-grid";
-
 export const Grids: FC = () => {
-  const { data, handleDeleteEmployee, handleAddEmployee } = useDataStateContext();
+  const { data, handleDeleteItem, handleAddItem } = useDataStateContext();
   const { handleClickOpenDialog } = useModal();
   const { activeTab } = useTabs();
 
-  const handleDeleteEmployeeClick = (params: GridRenderCellParams<IEmployee>) => {
-    handleDeleteEmployee(params.row.eId);
+  const deleteItem = (item: IEmployee | ISystemBenefit) => {
+    if ("eId" in item) {
+      handleDeleteItem(item.eId, "employees");
+    } else {
+      handleDeleteItem(item.id, "benefits");
+    }
   };
 
-  const handleAddEmployeeClick = (params: GridRenderCellParams<IEmployee>) => {
-    handleAddEmployee(params.row);
+  const addItem = (item: IEmployee | ISystemBenefit) => {
+    if ("eId" in item) {
+      handleAddItem(item, "employees");
+    } else {
+      handleAddItem(item, "benefits");
+    }
   };
 
   const handleRowDoubleClickOpenDetails = (item: IEmployee | ISystemBenefit) => {
@@ -52,10 +57,9 @@ export const Grids: FC = () => {
       case "1": {
         const gridData = data.employees;
         const gridColumns = ColumnsEmployee(handleEditDialogOpen, {
-          openForm: (params: GridRenderCellParams<IEmployee>) =>
-            handleEditDialogOpen(params.row),
-          deleteEmployee: handleDeleteEmployeeClick,
-          addEmployee: handleAddEmployeeClick,
+          openForm: handleEditDialogOpen,
+          deleteItem: deleteItem,
+          addItem: addItem,
         });
 
         return (
@@ -68,7 +72,11 @@ export const Grids: FC = () => {
       }
       case "2": {
         const gridData = data.benefits;
-        const gridColumns = ColumnsBenefit(handleEditDialogOpen);
+        const gridColumns = ColumnsBenefit(handleEditDialogOpen, {
+          openForm: handleEditDialogOpen,
+          deleteItem: deleteItem,
+          addItem: addItem,
+        });
 
         return (
           <MyGrid<ISystemBenefit>
@@ -85,3 +93,4 @@ export const Grids: FC = () => {
 
   return renderGrid();
 };
+

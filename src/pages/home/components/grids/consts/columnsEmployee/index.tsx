@@ -1,9 +1,12 @@
 // ** Types
 import { IEmployee } from "@/const/types";
+import { contextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
+
+// ** MUI
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 
 // ** Components
-import { actionMenu, contextMenuItemsCallbacks } from "./actionMenu";
+import { actionMenu } from "@/shared/components/myContextMenu/actionMenu";
 import { MyContextMenu } from "@/shared/components/myContextMenu";
 
 export const ColumnsEmployee = (
@@ -32,20 +35,14 @@ export const ColumnsEmployee = (
     minWidth: 250,
   },
   {
+    field: "Actions",
     width: 35,
-    minWidth: 35,
-    maxWidth: 35,
-    resizable: false,
-    field: 'Actions',
-    renderHeader: () => '',
+    align: "center",
+    renderHeader: () => "",
     sortable: false,
-    hideable: false,
     filterable: false,
-    align: 'center',
-    renderCell: (params: GridRenderCellParams<IEmployee>) => {
-      return (
-        <MyContextMenu items={actionMenu(callbacks, params)} params={params} />
-      );
-    },
+    renderCell: (params: GridRenderCellParams<IEmployee>) => (
+      <MyContextMenu items={actionMenu(callbacks, params)} params={params} />
+    ),
   },
 ];

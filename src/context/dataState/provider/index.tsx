@@ -10,7 +10,6 @@ import { IEmployee, ISystemBenefit, ITypeJSON } from "@/const/types";
 // ** Utils
 import { assignMissingIds } from "@/shared/utils";
 
-
 export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
@@ -36,27 +35,60 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
     setData({ ...data, benefits: updatedBenefits });
   };
 
-
-  const handleDeleteEmployee = (eId: number) => {
-    const updatedEmployees = data.employees.filter(
-      (emp) => emp.eId !== eId
-    );
-    setData({ ...data, employees: updatedEmployees });
+  const handleDeleteItem = (
+    id: number | string,
+    type: "employees" | "benefits"
+  ) => {
+    if (type === "employees") {
+      setData((prevData) => ({
+        ...prevData,
+        employees: prevData.employees.filter((emp) => emp.eId !== id),
+      }));
+    } else if (type === "benefits") {
+      setData((prevData) => ({
+        ...prevData,
+        benefits: prevData.benefits.filter((ben) => ben.id !== id),
+      }));
+    }
   };
 
-  const handleAddEmployee = (employee: IEmployee) => {
-    const newEmployeeId = assignMissingIds(data, "employees");
-    const newEmployee: IEmployee = {
-      ...employee,
-      eId: newEmployeeId,
-      firstName: `${employee.firstName}+1`,
-    };
-    setData((prevData) => ({
-      ...prevData,
-      employees: [...prevData.employees, newEmployee],
-    }));
-  };
+  const handleAddItem = (
+    item: IEmployee | ISystemBenefit,
+    type: "employees" | "benefits"
+  ) => {
+    if (type === "employees" && "eId" in item) {
+      const newEmployeeId = assignMissingIds(data, "employees");
+      const similarEmployees = data.employees.filter((emp) =>
+        emp.firstName.startsWith(item.firstName)
+      );
+      const nextIndex = similarEmployees.length + 0;
 
+      const newEmployee: IEmployee = {
+        ...item,
+        eId: newEmployeeId,
+        firstName: `${item.firstName}+${nextIndex}`,
+      };
+      setData((prevData) => ({
+        ...prevData,
+        employees: [...prevData.employees, newEmployee],
+      }));
+    } else if (type === "benefits" && "id" in item) {
+      const newBenefitId = assignMissingIds(data, "benefits");
+      const similarBenefits = data.benefits.filter((emp) =>
+        emp.name.startsWith(item.name)
+      );
+      const nextIndex = similarBenefits.length + 0;
+      const newBenefit: ISystemBenefit = {
+        ...item,
+        id: newBenefitId.toString(),
+        name: `${item.name}+${nextIndex}`,
+      };
+      setData((prevData) => ({
+        ...prevData,
+        benefits: [...prevData.benefits, newBenefit],
+      }));
+    }
+  };
 
   const hasData = !!(data?.benefits?.length || data?.employees?.length);
 
@@ -69,8 +101,8 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
         setParsedData,
         handleSaveEmployee,
         handleSaveBenefit,
-        handleAddEmployee,
-        handleDeleteEmployee,
+        handleDeleteItem,
+        handleAddItem,
         hasData,
       }}
     >
