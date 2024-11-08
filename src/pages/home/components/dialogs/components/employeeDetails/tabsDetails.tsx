@@ -6,10 +6,16 @@ import { Box, Typography } from "@mui/material";
 
 // ** Hooks
 import { useTabs } from "@/hooks/useTabs";
-import { PersonalTab } from "./tabsDetails/personal";
-import { BenefitsTab } from "./tabsDetails/benefits";
-import { JobInfoTab } from "./tabsDetails/job";
-import { DepositAccountTab } from "./tabsDetails/depositAccounts";
+
+// ** Components
+import {
+  PersonalTab,
+  BenefitsTab,
+  JobInfoTab,
+  DepositAccountTab,
+  OtherDeductionTab,
+  BonusesTab,
+} from "./tabsDetails/index";
 
 export const TabsDetails = () => {
   const { activeDetailTab, handleDetailTabChange } = useTabs();
@@ -19,17 +25,17 @@ export const TabsDetails = () => {
       case "1":
         return <PersonalTab />;
       case "2":
-        return <BenefitsTab/>;
+        return <BenefitsTab />;
       case "3":
-        return <JobInfoTab/>;
+        return <JobInfoTab />;
       case "4":
-        return <DepositAccountTab/>;
+        return <DepositAccountTab />;
       case "5":
         return "Custom income";
       case "6":
-        return "Custom deductions";
+        return <OtherDeductionTab />;
       case "7":
-        return "Bonus";
+        return <BonusesTab/>;
     }
   };
 
@@ -59,7 +65,8 @@ export const TabsDetails = () => {
           <Tab label="Bonus" value="7" />
         </TabList>
       </TabContext>
-      {renderTabContent()}
+      <Box>{renderTabContent()}</Box>
     </Box>
   );
 };
+export { PersonalTab };

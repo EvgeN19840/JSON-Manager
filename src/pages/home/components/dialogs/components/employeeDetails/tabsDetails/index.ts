@@ -1,0 +1,6 @@
+export { PersonalTab } from './personal'
+export { OtherDeductionTab } from './otherDeduction'
+export { JobInfoTab } from './job'
+export { DepositAccountTab } from './depositAccounts'
+export { BenefitsTab } from './benefits'
+export { BonusesTab } from './bonuses'

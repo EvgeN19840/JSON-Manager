@@ -5,53 +5,61 @@ import { Box, Typography } from "@mui/material";
 import { useModal } from "@/hooks/useModal";
 
 // ** Types
-import { IDepositAccount } from "@/const/types";
+import { IDepositAccounts } from "@/const/types";
 
 export const DepositAccountTab: React.FC = () => {
   const { dataForDialog } = useModal();
-  const depositAccountData = dataForDialog as IDepositAccount;
+  const depositAccountData =
+    dataForDialog?.depositAccounts as IDepositAccounts[];
 
   return (
     <Box>
-      {depositAccountData ? (
-        <Box sx={{ width: "100%", padding: 2, border: "1px solid #ccc" }}>
-          <Typography>
-            Order Number: {depositAccountData.orderNumber}
-          </Typography>
-          <Typography>Bank: {depositAccountData.bank}</Typography>
-          <Typography>
-            Account Name: {depositAccountData.accountName}
-          </Typography>
-          <Typography>
-            Account Number: {depositAccountData.accountNumber}
-          </Typography>
-          <Typography>
-            Currency Code: {depositAccountData.currencyCode}
-          </Typography>
-          <Typography>
-            Account Type: {depositAccountData.accountType}
-          </Typography>
-          <Typography>
-            Transit Number: {depositAccountData.transitNumber}
-          </Typography>
-          <Typography>
-            Deposit Amount:{" "}
-            {depositAccountData.depositAmount !== null
-              ? depositAccountData.depositAmount
-              : "N/A"}
-          </Typography>
-          <Typography>
-            Description: {depositAccountData.description || "N/A"}
-          </Typography>
-          <Typography>
-            Custom Bamboo Table Row ID:{" "}
-            {depositAccountData.customBambooTalbeRowId}
-          </Typography>
-          <Typography>
-            Is Percent Value: {depositAccountData.isPercentValue ? "Yes" : "No"}
-          </Typography>
+      {depositAccountData && depositAccountData.length > 0 ? (
+        depositAccountData.map((accountData) => (
+          <Box
+            sx={{
+              padding: 2,
+              border: "1px solid #ccc",
+              marginBottom: 2,
+            }}
+          >
+            <Typography>Order Number: {accountData.orderNumber}</Typography>
+            <Typography>Bank: {accountData.bank}</Typography>
+            <Typography>Account Name: {accountData.accountName}</Typography>
+            <Typography>Account Number: {accountData.accountNumber}</Typography>
+            <Typography>Currency Code: {accountData.currencyCode}</Typography>
+            <Typography>Account Type: {accountData.accountType}</Typography>
+            <Typography>Transit Number: {accountData.transitNumber}</Typography>
+            <Typography>
+              Deposit Amount:{" "}
+              {accountData.depositAmount !== null
+                ? accountData.depositAmount
+                : "N/A"}
+            </Typography>
+            <Typography>
+              Description: {accountData.description || "N/A"}
+            </Typography>
+            <Typography>
+              Custom Bamboo Table Row ID: {accountData.customBambooTalbeRowId}
+            </Typography>
+            <Typography>
+              Is Percent Value: {accountData.isPercentValue ? "Yes" : "No"}
+            </Typography>
+          </Box>
+        ))
+      ) : (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "10rem",
+            textAlign: "center",
+          }}
+        >
+          <Typography>No deposit accounts available.</Typography>
         </Box>
-      ) : null}
+      )}
     </Box>
   );
 };

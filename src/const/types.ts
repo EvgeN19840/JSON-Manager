@@ -19,7 +19,7 @@ export interface IEmployee {
   lifeInsuranceMemberNumber: string;
   transferEmployeeStatutoryToVoluntaryOnCap: boolean;
   transferCompanyStatutoryToVoluntaryOnCap: boolean;
-  depositAccounts: IDepositAccount[];
+  depositAccounts: IDepositAccounts[];
   reimbursements: IReimbursement[];
   loansAndSalaryAdvances: ILoanOrSalaryAdvance[];
   otherDeductions: IOtherDeduction[];
@@ -27,10 +27,10 @@ export interface IEmployee {
   salary: ISalary[];
   jobInfo: IJobInfo[];
   employmentStatus: IEmploymentStatus[];
-  bonuses: IBonus[];
+  bonuses: IBonuses[];
 }
 
-export interface IDepositAccount {
+export interface IDepositAccounts {
   orderNumber: number;
   bank: string;
   accountName: string;
@@ -115,7 +115,7 @@ export interface IEmploymentStatus {
   comment: string | null;
 }
 
-export interface IBonus {
+export interface IBonuses {
   customBambooTalbeRowId: number;
   effectiveDate: string;
   amount: number;

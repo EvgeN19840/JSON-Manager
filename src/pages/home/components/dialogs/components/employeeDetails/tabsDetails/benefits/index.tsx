@@ -1,34 +1,48 @@
 // ** MUI
 import { Box, Typography } from "@mui/material";
+import { DataGrid, GridRowsProp } from "@mui/x-data-grid";
 
 // ** Hooks
 import { useModal } from "@/hooks/useModal";
 
-// ** Types
+// ** Types and Columns
 import { IEmployeeBenefit } from "@/const/types";
+import { ColumnsBenefit } from "./columnsBenefit";
 
 export const BenefitsTab: React.FC = () => {
   const { dataForDialog } = useModal();
-  const benefitData = dataForDialog as IEmployeeBenefit;
+  const benefitsData = dataForDialog?.benefits as IEmployeeBenefit[];
+
+  const rows: GridRowsProp = benefitsData?.map((benefit) => ({
+
+    ...benefit,
+  })) || [];
 
   return (
     <Box>
-      {benefitData ? (
-        <Box sx={{ width: "100%", padding: 2, border: '1px solid #ccc' }}>
-          <Typography>Name: {benefitData.name}</Typography>
-          <Typography>Value: {benefitData.value}</Typography>
-          <Typography>Currency Code: {benefitData.currencyCode}</Typography>
-          <Typography>Company Value: {benefitData.companyValue}</Typography>
-          <Typography>Company Currency Code: {benefitData.companyCurrencyCode}</Typography>
-          <Typography>
-            Is Percent Value: {benefitData.isPerentValue ? "Yes" : "No"}
-          </Typography>
-          <Typography>
-            Effective Date: {benefitData.effectiveDate || "N/A"}
-          </Typography>
-          <Typography>ID: {benefitData.id}</Typography>
+      {benefitsData && benefitsData.length > 0 ? (
+        <DataGrid
+          rows={rows}
+          columns={ColumnsBenefit()}
+          autoHeight
+          sx={{
+            border: "1px solid #ccc",
+            ".MuiDataGrid-cell": { padding: 2 },
+          }}
+        />
+      ) : (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "10rem",
+            textAlign: "center",
+          }}
+        >
+          <Typography>No benefits data available.</Typography>
         </Box>
-      ) : null}
+      )}
     </Box>
   );
 };

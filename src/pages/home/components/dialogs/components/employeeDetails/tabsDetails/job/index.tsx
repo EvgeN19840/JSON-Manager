@@ -9,13 +9,21 @@ import { IJobInfo } from "@/const/types";
 
 export const JobInfoTab: React.FC = () => {
   const { dataForDialog } = useModal();
-  const jobInfoData = dataForDialog as IJobInfo;
+  const jobInfoData = (dataForDialog?.jobInfo as IJobInfo[])?.[0];
 
   return (
     <Box>
       {jobInfoData ? (
-        <Box sx={{ width: "100%", padding: 2, border: '1px solid #ccc' }}>
-          <Typography>Custom Bamboo Table Row ID: {jobInfoData.customBambooTalbeRowId}</Typography>
+        <Box
+          sx={{
+            padding: 2,
+            border: "1px solid #ccc",
+            marginBottom: 2,
+          }}
+        >
+          <Typography>
+            Custom Bamboo Table Row ID: {jobInfoData.customBambooTalbeRowId}
+          </Typography>
           <Typography>Effective Date: {jobInfoData.effectiveDate}</Typography>
           <Typography>Job Title: {jobInfoData.jobTitle}</Typography>
           <Typography>Department: {jobInfoData.department || "N/A"}</Typography>
@@ -23,7 +31,18 @@ export const JobInfoTab: React.FC = () => {
           <Typography>Division: {jobInfoData.division || "N/A"}</Typography>
           <Typography>Reports To: {jobInfoData.reportsTo || "N/A"}</Typography>
         </Box>
-      ) : null}
+      ) : (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "10rem",
+            textAlign: "center",
+          }}
+        >
+          <Typography>No job info data available.</Typography>
+        </Box>)}
     </Box>
   );
 };
