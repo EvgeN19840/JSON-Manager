@@ -8,10 +8,10 @@ export interface IModalTypeContext {
   typeModalDetails: IModalTypeDetails;
   setTypeModal: (data: IModalType) => void;
   setTypeModalDetails: (data: IModalTypeDetails) => void;
-  dataForDialog:  IDataForDialog  |null| string;
+  dataForDialog:  IDataForDialog |null | string;
   isDialogOpen: boolean;
   setDialogOpen: (data: boolean) => void;
   closeDialog: () => void;
-  handleClickOpenDialog: (actionType: IModalType, item?: IEmployee[] | ISystemBenefit[]) => void;
+  handleClickOpenDialog: (actionType: IModalType, item?: IEmployee | ISystemBenefit) => void;
 }
 export type IDataForDialog = IEmployee[] | ISystemBenefit[] | IJobInfo[] | IDepositAccounts[] | IOtherDeduction[] | IBonuses[] |IEmployeeBenefit[];

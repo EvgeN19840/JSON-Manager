@@ -10,7 +10,9 @@ import { IEmployeeBenefit } from "@/const/types";
 import { ColumnsBenefit } from "./columnsBenefit";
 
 export const BenefitsTab: React.FC = () => {
-  const { dataForDialog } = useModal();
+  const { dataForDialog } = useModal() as {
+    dataForDialog: IEmployeeBenefit | null;
+  };
   const benefitsData = (dataForDialog as { benefits?: IEmployeeBenefit[] })?.benefits || [];
 
   const rows: GridRowsProp = benefitsData?.map((benefit) => ({

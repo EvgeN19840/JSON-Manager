@@ -17,7 +17,10 @@ import { IEmployee } from "@/const/types";
 import { IFormProps } from "./types";
 
 export const EditUserName = () => {
-  const { dataForDialog, closeDialog } = useModal();
+  const { dataForDialog, closeDialog } = useModal() as {
+    dataForDialog: IEmployee | null;
+    closeDialog: () => void;
+  };
   const { handleSaveEmployee } = useDataStateContext();
   const defaultValues = {
     firstName: (dataForDialog as IEmployee).firstName,
@@ -27,7 +30,6 @@ export const EditUserName = () => {
       ? (dataForDialog as IEmployee).birthDate.split('T')[0]
       : '',
   };
-  
 
   const {
     control,
@@ -46,7 +48,6 @@ export const EditUserName = () => {
       birthDate: data.birthDate
     } as IEmployee);
     closeDialog();
-
   };
 
   return (

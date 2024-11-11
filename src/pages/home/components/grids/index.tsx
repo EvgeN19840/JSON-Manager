@@ -45,7 +45,7 @@ export const Grids: FC = () => {
     );
   };
 
-  const handleEditDialogOpen = (item: IEmployee | ISystemBenefit) => {
+  const handleEditDialogOpen = (item: IEmployee| ISystemBenefit) => {
     handleClickOpenDialog(
       activeTab === "1" ? "Edit user" : "Edit benefits",
       item

@@ -7,10 +7,11 @@ import { useModal } from "@/hooks/useModal";
 // ** Types
 import { IJobInfo } from "@/const/types";
 
-export const JobInfoTab: React.FC = () => {
-  const { dataForDialog } = useModal();
-  const jobInfoData = (dataForDialog?.jobInfo as IJobInfo[])?.[0];
-
+const { dataForDialog } = useModal() as {
+  dataForDialog: IJobInfo | null;
+};
+  const jobInfoData =  (dataForDialog as { jobInfo?:   IJobInfo[] })?.jobInfo || [];
+ 
   return (
     <Box>
       {jobInfoData ? (

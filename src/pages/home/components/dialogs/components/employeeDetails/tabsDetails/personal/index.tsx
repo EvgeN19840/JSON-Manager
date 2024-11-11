@@ -9,7 +9,9 @@ import { useModal } from "@/hooks/useModal";
 import { IEmployee } from "@/const/types";
 
 export const PersonalTab: React.FC = () => {
-  const { dataForDialog, } = useModal();
+  const { dataForDialog } = useModal() as {
+    dataForDialog: IEmployee | null;
+  };
   const employeeData = dataForDialog as IEmployee;
 
   return (

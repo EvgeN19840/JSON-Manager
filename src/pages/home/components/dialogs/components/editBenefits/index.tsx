@@ -17,7 +17,10 @@ import { ISystemBenefit } from "@/const/types";
 import { IFormBenefitsProps } from "./types";
 
 export const EditBenefits = () => {
-  const { dataForDialog, closeDialog } = useModal();
+  const { dataForDialog, closeDialog } = useModal() as {
+    dataForDialog: ISystemBenefit | null;
+    closeDialog: () => void;
+  };
   const { handleSaveBenefit } = useDataStateContext();
   const defaultValues = {
     name: (dataForDialog as ISystemBenefit).name,
