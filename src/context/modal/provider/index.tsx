@@ -16,9 +16,10 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const { data } = useDataStateContext();
   const [typeModal, setTypeModal] = useState<IModalType>(null);
-  const [typeModalDetails, setTypeModalDetails] = useState<IModalTypeDetails>(null); 
+  const [typeModalDetails, setTypeModalDetails] =
+    useState<IModalTypeDetails>(null);
   const [isDialogOpen, setDialogOpen] = useState<boolean>(false);
-  const [dataForDialog, setDataForDialog] = useState<IDataForDialog>(null);
+  const [dataForDialog, setDataForDialog] = useState<IDataForDialog  | string |null >(null);
 
   const handleClickOpenDialog = (
     typeModal: IModalType,
@@ -32,14 +33,14 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
         setDataForDialog(null);
         break;
       case "Edit user":
-        setDataForDialog(item as IEmployee);
+        setDataForDialog(item as IEmployee[]);
         break;
       case "Edit benefits":
-        setDataForDialog(item as ISystemBenefit);
+        setDataForDialog(item as ISystemBenefit[]);
         break;
       case "Details":
-        setDataForDialog(item as IEmployee);
-        setTypeModalDetails("Personal"); 
+        setDataForDialog(item as IEmployee[]);
+        setTypeModalDetails("Personal");
         break;
     }
     setDialogOpen(true);
@@ -53,7 +54,7 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
     setTimeout(() => {
       setTypeModal(null);
       setDataForDialog(null);
-      setTypeModalDetails(null); 
+      setTypeModalDetails(null);
     }, 500);
   };
 
@@ -61,11 +62,11 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
     <ModalContext.Provider
       value={{
         typeModal,
-        typeModalDetails, 
+        typeModalDetails,
         closeDialog,
         dataForDialog,
         setTypeModal,
-        setTypeModalDetails, 
+        setTypeModalDetails,
         isDialogOpen,
         setDialogOpen,
         handleClickOpenDialog,

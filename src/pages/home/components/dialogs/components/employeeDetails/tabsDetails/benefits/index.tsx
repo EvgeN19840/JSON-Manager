@@ -11,10 +11,9 @@ import { ColumnsBenefit } from "./columnsBenefit";
 
 export const BenefitsTab: React.FC = () => {
   const { dataForDialog } = useModal();
-  const benefitsData = dataForDialog?.benefits as IEmployeeBenefit[];
+  const benefitsData = (dataForDialog as { benefits?: IEmployeeBenefit[] })?.benefits || [];
 
   const rows: GridRowsProp = benefitsData?.map((benefit) => ({
-
     ...benefit,
   })) || [];
 
