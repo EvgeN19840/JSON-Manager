@@ -5,26 +5,27 @@ import { DataGrid, GridRowsProp } from "@mui/x-data-grid";
 // ** Hooks
 import { useModal } from "@/hooks/useModal";
 
-// ** Types and Columns
-import { IDepositAccounts } from "@/const/types";
-import { ColumnsAccounts } from "./columnsAccounts";
+// ** Types
+import { IReimbursement } from "@/const/types";
 
-export const DepositAccountTab: React.FC = () => {
+// ** Columns
+import { ColumnsReimbursements } from "./columnCustomIncome";
+
+export const CustomIncomeTab: React.FC = () => {
   const { dataForDialog } = useModal();
-  const depositAccountData = (dataForDialog as { depositAccounts?: IDepositAccounts[] })?.depositAccounts || [];
+  const reimbursementData = (dataForDialog as { reimbursements?: IReimbursement[] })?.reimbursements || [];
 
-
-  const rows: GridRowsProp = depositAccountData.map((account) => ({
-    id: account.customBambooTalbeRowId, 
-    ...account,
+  const rows: GridRowsProp = reimbursementData.map((reimbursement) => ({
+    id: reimbursement.customBambooTableRowId,
+    ...reimbursement,
   }));
 
   return (
     <Box>
-      {depositAccountData.length > 0 ? (
+      {reimbursementData.length > 0 ? (
         <DataGrid
           rows={rows}
-          columns={ColumnsAccounts()}
+          columns={ColumnsReimbursements()}
           autoHeight
           sx={{
             border: "1px solid #ccc",
@@ -41,7 +42,7 @@ export const DepositAccountTab: React.FC = () => {
             textAlign: "center",
           }}
         >
-          <Typography>No deposit accounts available.</Typography>
+          <Typography>No reimbursement data available.</Typography>
         </Box>
       )}
     </Box>

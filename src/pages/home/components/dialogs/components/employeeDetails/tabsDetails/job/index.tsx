@@ -6,12 +6,14 @@ import { useModal } from "@/hooks/useModal";
 
 // ** Types
 import { IJobInfo } from "@/const/types";
+import { getDateFormat } from "@/shared/utils/getDateFormat";
 
-const { dataForDialog } = useModal() as {
-  dataForDialog: IJobInfo | null;
-};
-  const jobInfoData =  (dataForDialog as { jobInfo?:   IJobInfo[] })?.jobInfo || [];
- 
+export const JobInfoTab: React.FC = () => {
+  const { dataForDialog } = useModal() as {
+    dataForDialog: { jobInfo?: IJobInfo[] } | null;
+  };
+  const jobInfoData = dataForDialog?.jobInfo?.[0] || null;
+
   return (
     <Box>
       {jobInfoData ? (
@@ -25,7 +27,7 @@ const { dataForDialog } = useModal() as {
           <Typography>
             Custom Bamboo Table Row ID: {jobInfoData.customBambooTalbeRowId}
           </Typography>
-          <Typography>Effective Date: {jobInfoData.effectiveDate}</Typography>
+          <Typography>Effective Date: {getDateFormat(jobInfoData.effectiveDate)}</Typography>
           <Typography>Job Title: {jobInfoData.jobTitle}</Typography>
           <Typography>Department: {jobInfoData.department || "N/A"}</Typography>
           <Typography>Location: {jobInfoData.location || "N/A"}</Typography>
@@ -43,7 +45,8 @@ const { dataForDialog } = useModal() as {
           }}
         >
           <Typography>No job info data available.</Typography>
-        </Box>)}
+        </Box>
+      )}
     </Box>
   );
 };

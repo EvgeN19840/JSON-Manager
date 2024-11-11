@@ -1,4 +1,3 @@
-
 // ** MUI
 import { Box, Typography } from "@mui/material";
 
@@ -7,6 +6,7 @@ import { useModal } from "@/hooks/useModal";
 
 // ** Types
 import { IEmployee } from "@/const/types";
+import { getDateFormat } from "@/shared/utils/getDateFormat";
 
 export const PersonalTab: React.FC = () => {
   const { dataForDialog } = useModal() as {
@@ -16,17 +16,17 @@ export const PersonalTab: React.FC = () => {
 
   return (
     <Box>
-      {employeeData  ? (
+      {employeeData ? (
         <Box sx={{ width: "100%", padding: 2, border: '1px solid #ccc' }}>
           <Typography>ID: {employeeData.eId}</Typography>
           <Typography>Number: {employeeData.number}</Typography>
           <Typography>
             Name: {`${employeeData.firstName} ${employeeData.middleName || ""} ${employeeData.lastName}`}
           </Typography>
-          <Typography>Birth Date: {employeeData.birthDate || "N/A"}</Typography>
+          <Typography>Birth Date: {getDateFormat(employeeData.birthDate)}</Typography>
           <Typography>Email: {employeeData.email || "N/A"}</Typography>
-          <Typography>Hire Date: {employeeData.hireDate}</Typography>
-          <Typography>End Date: {employeeData.endDate || "N/A"}</Typography>
+          <Typography>Hire Date: {getDateFormat(employeeData.hireDate)}</Typography>
+          <Typography>End Date: {getDateFormat(employeeData.endDate)}</Typography>
           <Typography>Status: {employeeData.enabledForCayPay ? "Enabled" : "Disabled"}</Typography>
           <Typography>Pension Member Number: {employeeData.pensionMemberNumber}</Typography>
           <Typography>Health Insurance Member Number: {employeeData.healthInsuranceMemberNumber}</Typography>

@@ -1,34 +1,39 @@
 // ** MUI
 import { Box, Typography } from "@mui/material";
+import { DataGrid, GridRowsProp } from "@mui/x-data-grid";
 
 // ** Hooks
 import { useModal } from "@/hooks/useModal";
 
-// ** Types
+// ** Types Columns
 import { IBonuses } from "@/const/types";
+
+// ** Columns
+import { ColumnsBonuses } from "./columnBonuses";
+
+
 
 export const BonusesTab: React.FC = () => {
   const { dataForDialog } = useModal();
-  const bonusesData = dataForDialog?.bonuses as IBonuses[];
+  const bonusesData = (dataForDialog as { bonuses?: IBonuses[] })?.bonuses || [];
+
+  const rows: GridRowsProp = bonusesData.map((bonus) => ({
+    id: bonus.customBambooTalbeRowId,
+    ...bonus,
+  }));
 
   return (
     <Box>
       {bonusesData && bonusesData.length > 0 ? (
-        bonusesData.map((bonus) => (
-          <Box
-            sx={{
-              padding: 2,
-              border: "1px solid #ccc",
-              marginBottom: 2,
-            }}
-          >
-            <Typography>Effective Date: {bonus.effectiveDate}</Typography>
-            <Typography>Amount: {bonus.amount}</Typography>
-            <Typography>Currency Code: {bonus.currencyCode}</Typography>
-            <Typography>Reason: {bonus.reason}</Typography>
-            <Typography>Comment: {bonus.comment}</Typography>
-          </Box>
-        ))
+        <DataGrid
+          rows={rows}
+          columns={ColumnsBonuses()}
+          autoHeight
+          sx={{
+            border: "1px solid #ccc",
+            ".MuiDataGrid-cell": { padding: 2 },
+          }}
+        />
       ) : (
         <Box
           sx={{

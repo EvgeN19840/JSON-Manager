@@ -15,6 +15,7 @@ import {
   DepositAccountTab,
   OtherDeductionTab,
   BonusesTab,
+  CustomIncomeTab,
 } from "./tabsDetails/index";
 
 export const TabsDetails = () => {
@@ -31,7 +32,7 @@ export const TabsDetails = () => {
       case "4":
         return <DepositAccountTab />;
       case "5":
-        return "Custom income";
+        return <CustomIncomeTab/>
       case "6":
         return <OtherDeductionTab />;
       case "7":
