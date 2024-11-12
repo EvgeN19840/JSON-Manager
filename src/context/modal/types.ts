@@ -12,6 +12,6 @@ export interface IModalTypeContext {
   isDialogOpen: boolean;
   setDialogOpen: (data: boolean) => void;
   closeDialog: () => void;
-  handleClickOpenDialog: (actionType: IModalType, item?: IEmployee | ISystemBenefit) => void;
+  handleClickOpenDialog: (actionType: IModalType, item?:  IDataForDialog | IEmployee | ISystemBenefit) => void;
 }
 export type IDataForDialog = IEmployee[] | ISystemBenefit[] | IJobInfo[] | IDepositAccounts[] | IOtherDeduction[] | IBonuses[] |IEmployeeBenefit[];

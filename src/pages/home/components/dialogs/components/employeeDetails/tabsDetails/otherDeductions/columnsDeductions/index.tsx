@@ -3,7 +3,8 @@ import { GridColDef, GridValidRowModel } from "@mui/x-data-grid";
 import { HeaderDetails } from "../../../headerDetails";
 import { getDateFormat } from "@/shared/utils/getDateFormat";
 
-export const ColumnsReimbursements = (): GridColDef<GridValidRowModel>[] => [
+
+export const ColumnsDeductions = (): GridColDef<GridValidRowModel>[] =>  [
   {
     field: "name",
     headerName: "Name",
@@ -16,24 +17,16 @@ export const ColumnsReimbursements = (): GridColDef<GridValidRowModel>[] => [
     headerName: "Start Date",
     minWidth: 115,
     flex: 1,
-    type: "date",
     renderHeader: () => <HeaderDetails title="Start Date" />,
-    renderCell: (params) => {
-      const date = params.value;
-      return date ? getDateFormat(date) : "N/A";
-    },
+    renderCell: (params) => getDateFormat(params.row?.startDate),
   },
   {
     field: "endDate",
     headerName: "End Date",
     minWidth: 115,
     flex: 1,
-    type: "date",
     renderHeader: () => <HeaderDetails title="End Date" />,
-    renderCell: (params) => {
-      const date = params.value;
-      return date ? getDateFormat(date) : "N/A";
-    },
+    renderCell: (params) => getDateFormat(params.row?.endDate),
   },
   {
     field: "payrollOperationFrequency",
@@ -64,3 +57,5 @@ export const ColumnsReimbursements = (): GridColDef<GridValidRowModel>[] => [
     renderHeader: () => <HeaderDetails title="Currency Code" />,
   },
 ];
+
+

@@ -5,29 +5,27 @@ import { DataGrid, GridRowsProp } from "@mui/x-data-grid";
 // ** Hooks
 import { useModal } from "@/hooks/useModal";
 
-// ** Types Columns
-import { IBonuses } from "@/const/types";
+// ** Types
+import { IOtherDeduction } from "@/const/types";
 
 // ** Columns
-import { ColumnsBonuses } from "./columnsBonuses";
+import { ColumnsDeductions } from "./columnsDeductions";
 
-
-
-export const BonusesTab: React.FC = () => {
+export const OtherDeductionTab: React.FC = () => {
   const { dataForDialog } = useModal();
-  const bonusesData = (dataForDialog as { bonuses?: IBonuses[] })?.bonuses || [];
+  const otherDeductionData =(dataForDialog as { otherDeductions?: IOtherDeduction[] })?.otherDeductions || [];
 
-  const rows: GridRowsProp = bonusesData.map((bonus) => ({
-    id: bonus.customBambooTalbeRowId,
-    ...bonus,
+  const rows: GridRowsProp = otherDeductionData.map((deduction) => ({
+    id: deduction.customBambooTableRowId,
+    ...deduction,
   }));
 
   return (
     <Box>
-      {bonusesData && bonusesData.length > 0 ? (
+      {otherDeductionData.length > 0 ? (
         <DataGrid
           rows={rows}
-          columns={ColumnsBonuses()}
+          columns={ColumnsDeductions()}
           autoHeight
           sx={{
             border: "1px solid #ccc",
@@ -44,7 +42,7 @@ export const BonusesTab: React.FC = () => {
             textAlign: "center",
           }}
         >
-          <Typography>No bonus data available.</Typography>
+          <Typography>No deduction data available.</Typography>
         </Box>
       )}
     </Box>

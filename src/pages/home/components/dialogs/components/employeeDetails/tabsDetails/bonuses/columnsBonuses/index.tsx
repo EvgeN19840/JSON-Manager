@@ -1,5 +1,6 @@
 import { GridColDef, GridValidRowModel } from "@mui/x-data-grid";
 import { HeaderDetails } from "../../../headerDetails";
+import { getDateFormat } from "@/shared/utils/getDateFormat";
 
 export const ColumnsBonuses = (): GridColDef<GridValidRowModel>[] => [
   {
@@ -14,9 +15,10 @@ export const ColumnsBonuses = (): GridColDef<GridValidRowModel>[] => [
     headerName: "Effective Date",
     minWidth: 115,
     flex: 1,
-    type: "date",
-    renderHeader: () => <HeaderDetails title="Effective Date" />,
+    renderHeader: () => <HeaderDetails title="Effective Date" center />,
+    renderCell: (params) => getDateFormat(params.row?.effectiveDate),
   },
+
   {
     field: "amount",
     headerName: "Amount",

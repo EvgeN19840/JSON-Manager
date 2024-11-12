@@ -34,8 +34,8 @@ export const employeeData = {
       "reimbursements": [
         {
           "name": "1",
-          "startDate": "2023-01-01T00:00:00Z",
-          "endDate": "2023-02-28T00:00:00Z",
+          "startDate": "2013-02-15T00:00:00Z",
+          "endDate": "2033-02-15T00:00:00Z",
           "payrollOperationFrequency": "Reoccurring",
           "customBambooTableRowId": 175,
           "value": 100,
@@ -240,7 +240,7 @@ export const employeeData = {
       "otherDeductions": [
         {
           "name": "test",
-          "startDate": null,
+          "startDate": "2013-02-15T00:00:00Z",
           "endDate": "2033-02-15T00:00:00Z",
           "payrollOperationFrequency": "Reoccurring",
           "customBambooTableRowId": 147,

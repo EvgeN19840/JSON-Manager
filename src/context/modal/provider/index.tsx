@@ -19,11 +19,13 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
   const [typeModalDetails, setTypeModalDetails] =
     useState<IModalTypeDetails>(null);
   const [isDialogOpen, setDialogOpen] = useState<boolean>(false);
-  const [dataForDialog, setDataForDialog] = useState<IDataForDialog  | string |null >(null);
+  const [dataForDialog, setDataForDialog] = useState<
+    IDataForDialog | string | null
+  >(null);
 
   const handleClickOpenDialog = (
     typeModal: IModalType,
-    item?: IDataForDialog
+    item?: IDataForDialog | IEmployee | ISystemBenefit
   ) => {
     switch (typeModal) {
       case "Export data":

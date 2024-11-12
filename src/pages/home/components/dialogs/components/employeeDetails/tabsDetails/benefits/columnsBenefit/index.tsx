@@ -61,9 +61,6 @@ export const ColumnsBenefit = (): GridColDef<GridValidRowModel>[] => [
     flex: 1,
     type: "date",
     renderHeader: () => <HeaderDetails title="Effective Date" />,
-    renderCell: (params) => {
-      const date = params.value;
-      return date ? getDateFormat(new Date(date)) : "";
-    },
+    renderCell: (params) => getDateFormat(params.row?.effectiveDate),
   },
 ];

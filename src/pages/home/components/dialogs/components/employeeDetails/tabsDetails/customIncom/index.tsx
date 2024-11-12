@@ -9,7 +9,7 @@ import { useModal } from "@/hooks/useModal";
 import { IReimbursement } from "@/const/types";
 
 // ** Columns
-import { ColumnsReimbursements } from "./columnCustomIncome";
+import { ColumnsReimbursements } from "./columnsCustomIncome";
 
 export const CustomIncomeTab: React.FC = () => {
   const { dataForDialog } = useModal();
