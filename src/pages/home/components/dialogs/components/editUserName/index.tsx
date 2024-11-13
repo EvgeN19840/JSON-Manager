@@ -34,7 +34,7 @@ export const EditUserName = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<IFormProps>({
     defaultValues,
     mode: "onSubmit",
@@ -84,7 +84,7 @@ export const EditUserName = () => {
       <FormFooter
         cancelButtonText={"Cancel"}
         actionButtonText={"Save"}
-        showSecondButton={true}
+        showSecondButton={isDirty}
         buttonAction={handleSubmit(onSubmit)}
       />
     </FormWrapper>

@@ -66,7 +66,7 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
       const newEmployee: IEmployee = {
         ...item,
         eId: newEmployeeId,
-        firstName: `${item.firstName}+${nextIndex}`,
+        firstName: `${item.firstName}_${nextIndex}`,
       };
       setData((prevData) => ({
         ...prevData,
@@ -81,7 +81,7 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
       const newBenefit: ISystemBenefit = {
         ...item,
         id: newBenefitId.toString(),
-        name: `${item.name}+${nextIndex}`,
+        name: `${item.name}_${nextIndex}`,
       };
       setData((prevData) => ({
         ...prevData,

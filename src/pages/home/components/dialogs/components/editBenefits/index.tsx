@@ -30,7 +30,7 @@ export const EditBenefits = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<IFormBenefitsProps>({
     defaultValues,
     mode: "onSubmit",
@@ -68,7 +68,7 @@ export const EditBenefits = () => {
       <FormFooter
         cancelButtonText={"Cancel"}
         actionButtonText={"Save"}
-        showSecondButton={true}
+        showSecondButton={isDirty}
         buttonAction={handleSubmit(onSubmit)}
       />
     </FormWrapper>

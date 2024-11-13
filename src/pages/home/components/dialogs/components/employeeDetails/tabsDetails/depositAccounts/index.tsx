@@ -35,10 +35,7 @@ export const DepositAccountTab: React.FC = () => {
         <Box
           sx={{
             display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "10rem",
-            textAlign: "center",
+          
           }}
         >
           <Typography>No deposit accounts available.</Typography>

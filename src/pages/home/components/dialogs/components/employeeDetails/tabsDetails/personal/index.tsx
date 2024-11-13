@@ -17,7 +17,7 @@ export const PersonalTab: React.FC = () => {
   return (
     <Box>
       {employeeData ? (
-        <Box sx={{ width: "100%", padding: 2, border: '1px solid #ccc' }}>
+        <Box sx={{ padding: 2, border: '1px solid #ccc' }}>
           <Typography>ID: {employeeData.eId}</Typography>
           <Typography>Number: {employeeData.number}</Typography>
           <Typography>

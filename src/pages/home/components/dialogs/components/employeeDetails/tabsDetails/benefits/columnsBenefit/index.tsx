@@ -7,14 +7,14 @@ export const ColumnsBenefit = (): GridColDef<GridValidRowModel>[] => [
   {
     field: "name",
     headerName: "Benefit Name",
-    minWidth: 250,
+    minWidth: 300,
     flex: 1,
     renderHeader: () => <HeaderDetails title="Benefit Name" />,
   },
   {
     field: "id",
     headerName: "ID",
-    minWidth: 250,
+    minWidth: 100,
     flex: 1,
     renderHeader: () => <HeaderDetails title="ID" />,
   },

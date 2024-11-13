@@ -22,7 +22,7 @@ export const FormFooter: React.FC<FormFooterProps> = ({
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          mt: 1,
+
         }}
       >
         <Button variant="outlined" onClick={() => setDialogOpen(false)}>

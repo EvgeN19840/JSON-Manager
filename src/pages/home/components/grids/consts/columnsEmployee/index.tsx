@@ -36,13 +36,15 @@ export const ColumnsEmployee = (
   },
   {
     field: "Actions",
-    width: 35,
+    width: 50,
     align: "center",
     renderHeader: () => "",
     sortable: false,
     filterable: false,
-    renderCell: (params: GridRenderCellParams<IEmployee>) => (
-      <MyContextMenu items={actionMenu(callbacks, params)} params={params} />
-    ),
+    renderCell: (params: GridRenderCellParams<IEmployee>) => {
+      return (
+        <MyContextMenu items={actionMenu(callbacks, params)} params={params} />
+      );
+    },
   },
 ];

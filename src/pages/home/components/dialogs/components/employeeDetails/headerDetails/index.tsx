@@ -9,16 +9,12 @@ interface HeaderDetailsProps {
   title: string;
   children?: ReactNode;
   pointer?: boolean;
-  left?: boolean;
-  center?: boolean;
 }
 
 export const HeaderDetails = ({
   title,
   children,
   pointer = false,
-  left = false,
-  center = false
 }: HeaderDetailsProps) => {
   return (
     <Box
@@ -37,7 +33,7 @@ export const HeaderDetails = ({
           fontSize: '0.7rem',
           letterSpacing: '0.17px',
           textTransform: 'uppercase',
-          textAlign: center ? 'center' : left ? 'left' : 'right',
+          textAlign: "center",
           lineHeight: '13px',
           pointerEvents: 'none',
           whiteSpace: 'pre-line',

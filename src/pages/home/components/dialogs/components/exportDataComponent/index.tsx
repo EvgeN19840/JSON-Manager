@@ -56,7 +56,7 @@ export const ExportDataComponent: React.FC = () => {
           sx={{  display: "flex",  height: "40px", mb: 1 }}
         />
 
-      <Box  maxWidth="xs"  sx={{ mt:3, position: "relative", width: "100%" }}>
+      <Box  maxWidth="xs"  sx={{ mt:3, mb:1, position: "relative", width: "100%" }}>
         <InputField
           value={dataForDialog || "No data available."}
           onChange={() => {}}

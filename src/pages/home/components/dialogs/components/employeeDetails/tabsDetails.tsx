@@ -32,11 +32,11 @@ export const TabsDetails = () => {
       case "4":
         return <DepositAccountTab />;
       case "5":
-        return <CustomIncomeTab/>
+        return <CustomIncomeTab />;
       case "6":
         return <OtherDeductionTab />;
       case "7":
-        return <BonusesTab/>;
+        return <BonusesTab />;
     }
   };
 
@@ -51,6 +51,9 @@ export const TabsDetails = () => {
             mb: "1rem",
             "& .MuiTabs-flexContainer": {
               gap: "1rem",
+            },
+            "& .Mui-selected": {
+              outline: "none",
             },
           }}
           onChange={handleDetailTabChange}

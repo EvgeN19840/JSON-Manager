@@ -1,8 +1,8 @@
 // ** React
-import React, { Fragment } from "react";
+import React from "react";
 
 // ** MUI
-import { IconButton, Menu, MenuItem } from "@mui/material";
+import { Box, IconButton, Menu, MenuItem } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 // ** Types
@@ -24,7 +24,7 @@ export const MyContextMenu: React.FC<MyContextMenuProps> = ({
   };
 
   return (
-    <Fragment>
+    <Box>
       <IconButton size="small" disabled={disabled} onClick={handleContextMenu}>
         <MoreVertIcon>dots-vertical</MoreVertIcon>
       </IconButton>
@@ -42,6 +42,6 @@ export const MyContextMenu: React.FC<MyContextMenuProps> = ({
           </MenuItem>
         ))}
       </Menu>
-    </Fragment>
+    </Box>
   );
 };

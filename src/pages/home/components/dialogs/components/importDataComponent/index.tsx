@@ -58,12 +58,14 @@ export const ImportDataComponent: React.FC = () => {
         placeholder="Paste your JSON data here"
         rows={20}
       />
-      <FormFooter
-        cancelButtonText={"Close"}
-        actionButtonText={"Import"}
-        showSecondButton={!!inputValue}
-        buttonAction={handleImport}
-      />
+      <Box sx={{ mt: 1 }}>
+        <FormFooter
+          cancelButtonText={"Close"}
+          actionButtonText={"Import"}
+          showSecondButton={!!inputValue}
+          buttonAction={handleImport}
+        />
+      </Box>
     </Box>
   );
 };

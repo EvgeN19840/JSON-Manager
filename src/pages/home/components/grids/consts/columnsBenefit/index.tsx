@@ -30,16 +30,12 @@ export const ColumnsBenefit = (
       minWidth: 250,
     },
     {
-      width: 35,
-      minWidth: 35,
-      maxWidth: 35,
-      resizable: false,
-      field: 'Actions',
-      renderHeader: () => '',
+      field: "Actions",
+      width: 50,
+      align: "center",
+      renderHeader: () => "",
       sortable: false,
-      hideable: false,
       filterable: false,
-      align: 'center',
       renderCell: (params: GridRenderCellParams<ISystemBenefit>) => {
         return (
           <MyContextMenu items={actionMenu(callbacks, params)} params={params} />

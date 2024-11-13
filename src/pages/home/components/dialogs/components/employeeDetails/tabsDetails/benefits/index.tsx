@@ -35,10 +35,6 @@ export const BenefitsTab: React.FC = () => {
         <Box
           sx={{
             display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "10rem",
-            textAlign: "center",
           }}
         >
           <Typography>No benefits data available.</Typography>
