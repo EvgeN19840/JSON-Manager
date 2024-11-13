@@ -1,7 +1,7 @@
 // ** Types
 import { IBonuses, IDepositAccounts, IEmployee, IEmployeeBenefit, IJobInfo, IOtherDeduction, ISystemBenefit } from "@/const/types";
 
-export type IModalType = "Export data" | "Import data" | "Edit user" | "Edit benefits" | "Details" | "Details benefit data" | null
+export type IModalType = "Export data" | "Import data" | "Edit user" | "Edit benefits" | "Details" | null
 export type IModalTypeDetails = "Personal" | "Benefits" | "Job" | "Deposit Accounts" | "Custom income" | "Custom deductions" | "Bonus" | null
 export interface IModalTypeContext {
   typeModal: IModalType

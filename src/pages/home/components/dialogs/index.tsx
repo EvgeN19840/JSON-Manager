@@ -26,8 +26,6 @@ export const Dialogs: React.FC = () => {
         return <EditBenefits />;
       case "Details":
         return <TabsDetails />;
-      case "Details benefit data":
-        return "Details benefit data";
       default:
         return null;
     }

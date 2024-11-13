@@ -38,11 +38,8 @@ export const Grids: FC = () => {
     }
   };
 
-  const handleRowDoubleClickOpenDetails = (item: IEmployee | ISystemBenefit) => {
-    handleClickOpenDialog(
-      activeTab === "1" ? "Details" : "Details benefit data",
-      item
-    );
+  const handleRowDoubleClickOpenDetails = (item: IEmployee) => {
+    handleClickOpenDialog(activeTab === "1" ? "Details" : null, item);
   };
 
   const handleEditDialogOpen = (item: IEmployee| ISystemBenefit) => {
@@ -58,8 +55,8 @@ export const Grids: FC = () => {
         const gridData = data.employees;
         const gridColumns = ColumnsEmployee(handleEditDialogOpen, {
           openForm: handleEditDialogOpen,
-          deleteItem: deleteItem,
-          addItem: addItem,
+          deleteItem,
+          addItem,
         });
 
         return (
@@ -74,15 +71,15 @@ export const Grids: FC = () => {
         const gridData = data.benefits;
         const gridColumns = ColumnsBenefit(handleEditDialogOpen, {
           openForm: handleEditDialogOpen,
-          deleteItem: deleteItem,
-          addItem: addItem,
+          deleteItem,
+          addItem,
         });
 
         return (
           <MyGrid<ISystemBenefit>
             data={gridData}
             columns={gridColumns}
-            onRowDoubleClick={handleRowDoubleClickOpenDetails}
+            onRowDoubleClick={() => {}}
           />
         );
       }
@@ -93,4 +90,3 @@ export const Grids: FC = () => {
 
   return renderGrid();
 };
-
