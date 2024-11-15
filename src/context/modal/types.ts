@@ -1,17 +1,20 @@
 // ** Types
 import { IBonuses, IDepositAccounts, IEmployee, IEmployeeBenefit, IJobInfo, IOtherDeduction, ISystemBenefit } from "@/const/types";
 
-export type IModalType = "Export data" | "Import data" | "Edit user" | "Edit benefits" | "Details" | null
+export type IModalType = "Export data" | "Import data" | "Edit user" | "Edit benefits" | "Details" | "Edit Details" |null
 export type IModalTypeDetails = "Personal" | "Benefits" | "Job" | "Deposit Accounts" | "Custom income" | "Custom deductions" | "Bonus" | null
+export type IModalTypeDetailsEdits = "Edit benefits details" | "Edit job" | "Edit deposit accounts" | "Edit custom income" | "Edit custom deductions" | "Edit Bonus" | null
 export interface IModalTypeContext {
   typeModal: IModalType
   typeModalDetails: IModalTypeDetails;
+  typeModalDetailsEdit: IModalTypeDetailsEdits;
   setTypeModal: (data: IModalType) => void;
   setTypeModalDetails: (data: IModalTypeDetails) => void;
-  dataForDialog:  IDataForDialog |null | string;
+  setTypeModalDetailsEdit: (data: IModalTypeDetailsEdits) => void,
+  dataForDialog: IDataForDialog | null | string;
   isDialogOpen: boolean;
   setDialogOpen: (data: boolean) => void;
   closeDialog: () => void;
-  handleClickOpenDialog: (actionType: IModalType, item?:  IDataForDialog | IEmployee | ISystemBenefit) => void;
+  handleClickOpenDialog: (actionType: IModalType, item?: IDataForDialog | IEmployee | ISystemBenefit) => void;
 }
-export type IDataForDialog = IEmployee[] | ISystemBenefit[] | IJobInfo[] | IDepositAccounts[] | IOtherDeduction[] | IBonuses[] |IEmployeeBenefit[];
+export type IDataForDialog = IEmployee[] | ISystemBenefit[] | IJobInfo[] | IDepositAccounts[] | IOtherDeduction[] | IBonuses[] | IEmployeeBenefit[];

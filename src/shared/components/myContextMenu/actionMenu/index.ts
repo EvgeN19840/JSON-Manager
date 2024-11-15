@@ -1,13 +1,9 @@
-// ** Types
-import { IEmployee, ISystemBenefit } from "@/const/types";
-import { contextMenuItemsCallbacks } from "./types";
+import { GridRenderCellParams, GridValidRowModel } from "@mui/x-data-grid";
+import { ContextMenuItemsCallbacks } from "./types";
 
-// ** MUI
-import { GridRenderCellParams } from "@mui/x-data-grid";
-
-export const actionMenu = (
-  callbacks: contextMenuItemsCallbacks,
-  params: GridRenderCellParams<IEmployee | ISystemBenefit>
+export const actionMenu = <T extends GridValidRowModel>(
+  callbacks: ContextMenuItemsCallbacks<T>,
+  params: GridRenderCellParams<T>
 ) => [
   {
     name: "Edit",

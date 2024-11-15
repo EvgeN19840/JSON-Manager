@@ -8,8 +8,8 @@ import { ModalContext } from "../modalContext";
 import { useDataStateContext } from "@/hooks/useDataStateContext";
 
 // ** Types
-import { IDataForDialog, IModalType, IModalTypeDetails } from "../types";
-import { IEmployee, ISystemBenefit } from "@/const/types";
+import { IDataForDialog, IModalType, IModalTypeDetails, IModalTypeDetailsEdits } from "../types";
+import { IEmployee, IEmployeeBenefit, ISystemBenefit } from "@/const/types";
 
 export const ModalProvider: React.FC<{ children: ReactNode }> = ({
   children,
@@ -18,6 +18,9 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
   const [typeModal, setTypeModal] = useState<IModalType>(null);
   const [typeModalDetails, setTypeModalDetails] =
     useState<IModalTypeDetails>(null);
+    const [typeModalDetailsEdit, setTypeModalDetailsEdit] =
+    useState<IModalTypeDetailsEdits>(null);
+    
   const [isDialogOpen, setDialogOpen] = useState<boolean>(false);
   const [dataForDialog, setDataForDialog] = useState<
     IDataForDialog | string | null
@@ -25,7 +28,7 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
 
   const handleClickOpenDialog = (
     typeModal: IModalType,
-    item?: IDataForDialog | IEmployee | ISystemBenefit
+    item?: IDataForDialog | IEmployee | ISystemBenefit 
   ) => {
     switch (typeModal) {
       case "Export data":
@@ -44,10 +47,18 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
         setDataForDialog(item as IEmployee[]);
         setTypeModalDetails("Personal");
         break;
+        case "Edit Details":
+          setDataForDialog(item as IEmployeeBenefit[]);
+          setTypeModalDetailsEdit("Edit benefits details");
+
+          break;
     }
     setDialogOpen(true);
     setTypeModal(typeModal);
   };
+
+
+  
 
   const closeDialog = () => {
     setDialogOpen(false);
@@ -65,10 +76,12 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
       value={{
         typeModal,
         typeModalDetails,
+        typeModalDetailsEdit,
         closeDialog,
         dataForDialog,
         setTypeModal,
         setTypeModalDetails,
+        setTypeModalDetailsEdit,
         isDialogOpen,
         setDialogOpen,
         handleClickOpenDialog,

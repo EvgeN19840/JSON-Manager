@@ -16,7 +16,7 @@ import {
   OtherDeductionTab,
   BonusesTab,
   CustomIncomeTab,
-} from "./tabsDetails/index";
+} from "./index";
 
 export const TabsDetails = () => {
   const { activeDetailTab, handleDetailTabChange } = useTabs();

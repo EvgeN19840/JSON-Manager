@@ -1,6 +1,6 @@
 // ** Types
 import { IEmployee } from "@/const/types";
-import { contextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
+
 
 // ** MUI
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
@@ -8,10 +8,11 @@ import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 // ** Components
 import { actionMenu } from "@/shared/components/myContextMenu/actionMenu";
 import { MyContextMenu } from "@/shared/components/myContextMenu";
+import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
 
 export const ColumnsEmployee = (
   _handleEditClick: (employee: IEmployee) => void,
-  callbacks: contextMenuItemsCallbacks
+  callbacks: ContextMenuItemsCallbacks<IEmployee>
 ): GridColDef<IEmployee>[] => [
   {
     field: "firstName",

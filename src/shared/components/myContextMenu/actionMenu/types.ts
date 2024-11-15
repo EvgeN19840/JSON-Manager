@@ -1,12 +1,7 @@
-// ** Types
-import { IEmployee, ISystemBenefit, } from "@/const/types";
+import { GridValidRowModel } from "@mui/x-data-grid";
 
-
-
-
-
-export type contextMenuItemsCallbacks = {
-  openForm: (data: IEmployee | ISystemBenefit) => void;
-  deleteItem: (data: IEmployee | ISystemBenefit) => void;
-  addItem: (data: IEmployee | ISystemBenefit) => void;
-};
+export interface ContextMenuItemsCallbacks<T extends GridValidRowModel> {
+  openForm: (data: T) => void;
+  addItem: (data: T) => void;
+  deleteItem: (data: T) => void;
+}

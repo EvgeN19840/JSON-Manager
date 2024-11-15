@@ -1,9 +1,20 @@
 // ** Types
-import { GridColDef, GridValidRowModel } from "@mui/x-data-grid";
+import { IEmployeeBenefit } from "@/const/types";
+
+// ** MUI
+import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+
+// ** Components
+import { MyContextMenu } from "@/shared/components/myContextMenu";
+import { actionMenu } from "@/shared/components/myContextMenu/actionMenu";
 import { HeaderDetails } from "../../../headerDetails";
 import { getDateFormat } from "@/shared/utils/getDateFormat";
+import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
 
-export const ColumnsBenefit = (): GridColDef<GridValidRowModel>[] => [
+export const ColumnsBenefit = (
+  _handleEditClick: (data: IEmployeeBenefit) => void,
+  callbacks: ContextMenuItemsCallbacks<IEmployeeBenefit>
+): GridColDef<IEmployeeBenefit>[] => [
   {
     field: "name",
     headerName: "Benefit Name",
@@ -52,7 +63,6 @@ export const ColumnsBenefit = (): GridColDef<GridValidRowModel>[] => [
     minWidth: 120,
     flex: 1,
     renderHeader: () => <HeaderDetails title="Is Percent Value" />,
-
   },
   {
     field: "effectiveDate",
@@ -61,6 +71,19 @@ export const ColumnsBenefit = (): GridColDef<GridValidRowModel>[] => [
     flex: 1,
     type: "date",
     renderHeader: () => <HeaderDetails title="Effective Date" />,
-    renderCell: (params) => getDateFormat(params.row?.effectiveDate),
+    renderCell: (params: GridRenderCellParams<IEmployeeBenefit>) => getDateFormat(params.row?.effectiveDate),
+  },
+  {
+    field: "Actions",
+    width: 50,
+    align: "center",
+    renderHeader: () => "",
+    sortable: false,
+    filterable: false,
+    renderCell: (params: GridRenderCellParams<IEmployeeBenefit>) => {
+      return (
+        <MyContextMenu items={actionMenu(callbacks, params)} params={params} />
+      );
+    },
   },
 ];

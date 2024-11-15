@@ -81,7 +81,7 @@ export interface IEmployeeBenefit {
   companyValue: number;
   companyCurrencyCode: string;
   isPerentValue: boolean;
-  effectiveDate: string | null;
+  effectiveDate: string ;
   id: string;
 }
 

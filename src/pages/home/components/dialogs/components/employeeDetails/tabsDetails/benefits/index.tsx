@@ -1,45 +1,63 @@
-// ** MUI
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { DataGrid, GridRowsProp } from "@mui/x-data-grid";
-
-// ** Hooks
 import { useModal } from "@/hooks/useModal";
-
-// ** Types and Columns
-import { IEmployeeBenefit } from "@/const/types";
+import { IEmployee, IEmployeeBenefit } from "@/const/types";
 import { ColumnsBenefit } from "./columnsBenefit";
+import { IModalTypeContext } from "@/context/modal/types";
+// ** Context
+import { useDataStateContext } from "@/hooks/useDataStateContext";
+import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
 
 export const BenefitsTab: React.FC = () => {
+  const { handleClickOpenDialog } = useModal() as IModalTypeContext;
   const { dataForDialog } = useModal() as {
-    dataForDialog: IEmployeeBenefit | null;
+    dataForDialog: IEmployee | null;
   };
-  const benefitsData = (dataForDialog as { benefits?: IEmployeeBenefit[] })?.benefits || [];
+  const benefitsData = dataForDialog?.benefits || [];
 
-  const rows: GridRowsProp = benefitsData?.map((benefit) => ({
+  const { handleDeleteItem, handleAddItem } = useDataStateContext();
+
+  const rows: GridRowsProp<IEmployeeBenefit> = benefitsData?.map((benefit) => ({
     ...benefit,
-  })) || [];
+  }));
+
+  const handleEditClick = (data: IEmployeeBenefit) => {
+    handleClickOpenDialog("Edit Details", data);
+  };
+
+  const addItem = (benefit: IEmployeeBenefit) => {
+    if (benefit.id && dataForDialog?.eId) {
+      handleAddItem(benefit, "item", dataForDialog.eId);
+    }
+  };
+
+  const deleteItem = (benefit: IEmployeeBenefit) => {
+    if (benefit.id && dataForDialog?.eId) {
+      handleDeleteItem(benefit.id, "item", dataForDialog.eId);
+    }
+  };
+
+  const callbacks: ContextMenuItemsCallbacks<IEmployeeBenefit> = {
+    openForm: (data) => handleEditClick(data),
+    addItem: (data) => addItem(data),
+    deleteItem: (data) => deleteItem(data),
+  };
+
+  const columns = ColumnsBenefit((benefit) => handleEditClick(benefit), callbacks);
 
   return (
     <Box>
       {benefitsData && benefitsData.length > 0 ? (
-        <DataGrid
+        <DataGrid<IEmployeeBenefit>
           rows={rows}
-          columns={ColumnsBenefit()}
+          columns={columns}
           autoHeight
           sx={{
             border: "1px solid #ccc",
             ".MuiDataGrid-cell": { padding: 2 },
           }}
         />
-      ) : (
-        <Box
-          sx={{
-            display: "flex",
-          }}
-        >
-          <Typography>No benefits data available.</Typography>
-        </Box>
-      )}
+      ) : null}
     </Box>
   );
 };

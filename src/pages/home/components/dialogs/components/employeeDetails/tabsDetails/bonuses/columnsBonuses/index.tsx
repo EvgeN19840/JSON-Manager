@@ -15,7 +15,7 @@ export const ColumnsBonuses = (): GridColDef<GridValidRowModel>[] => [
     headerName: "Effective Date",
     minWidth: 115,
     flex: 1,
-    renderHeader: () => <HeaderDetails title="Effective Date" center />,
+    renderHeader: () => <HeaderDetails title="Effective Date" />,
     renderCell: (params) => getDateFormat(params.row?.effectiveDate),
   },
 

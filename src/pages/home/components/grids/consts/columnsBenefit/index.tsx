@@ -1,5 +1,4 @@
 // ** Types
-import { contextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
 import { ISystemBenefit } from "@/const/types";
 
 // ** MUI
@@ -8,10 +7,11 @@ import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 // ** Components
 import { MyContextMenu } from "@/shared/components/myContextMenu";
 import { actionMenu } from "@/shared/components/myContextMenu/actionMenu";
+import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
 
 export const ColumnsBenefit = (
   _handleEditClick:  (employee: ISystemBenefit) => void,
-  callbacks: contextMenuItemsCallbacks
+  callbacks: ContextMenuItemsCallbacks<ISystemBenefit>
 ): GridColDef<ISystemBenefit>[] => [
     {
       field: "name",
