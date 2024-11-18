@@ -17,10 +17,10 @@ export interface DataContextType {
     eId?: number | string
   ) => void;
   handleSaveEmployee: (data: IEmployee) => void;
-  handleSaveBenefit: (data: ISystemBenefit ) => void;
+  handleSaveBenefit: (data: ISystemBenefit) => void;
   handleSaveData: <T extends { id: string | number }>(
     value: T,
-    type: "employeeBenefit" | "depositAccount" | "bonuses" 
+    type: "employeeBenefit" | "depositAccount" | "bonuses"
   ) => void;
   hasData: boolean;
 }

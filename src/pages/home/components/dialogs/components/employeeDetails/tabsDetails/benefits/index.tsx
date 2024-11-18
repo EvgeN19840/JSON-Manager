@@ -1,11 +1,22 @@
+// ** React
+import { useEffect, useState } from "react";
+
+// ** MUI
 import { Box } from "@mui/material";
 import { DataGrid, GridRowsProp } from "@mui/x-data-grid";
+
+// ** Hooks
 import { useModal } from "@/hooks/useModal";
-import { IEmployee, IEmployeeBenefit } from "@/const/types";
-import { ColumnsBenefit } from "./columnsBenefit";
-import { IModalTypeContext } from "@/context/modal/types";
-// ** Context
 import { useDataStateContext } from "@/hooks/useDataStateContext";
+
+// ** Types
+import { IEmployee, IEmployeeBenefit } from "@/const/types";
+import { IModalTypeContext } from "@/context/modal/types";
+
+// ** Const
+import { ColumnsBenefit } from "./columnsBenefit";
+
+// ** Context
 import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
 
 export const BenefitsTab: React.FC = () => {
@@ -13,13 +24,14 @@ export const BenefitsTab: React.FC = () => {
   const { dataForDialog } = useModal() as {
     dataForDialog: IEmployee | null;
   };
-  const benefitsData = dataForDialog?.benefits || [];
-
   const { handleDeleteItem, handleAddItem } = useDataStateContext();
 
-  const rows: GridRowsProp<IEmployeeBenefit> = benefitsData?.map((benefit) => ({
-    ...benefit,
-  }));
+  const [rows, setRows] = useState<GridRowsProp<IEmployeeBenefit>>([]);
+  useEffect(() => {
+    if (dataForDialog) {
+      setRows(dataForDialog.benefits || []);
+    }
+  }, [dataForDialog]);
 
   const handleEditClick = (data: IEmployeeBenefit) => {
     handleClickOpenDialog("Edit Details", data);
@@ -28,12 +40,14 @@ export const BenefitsTab: React.FC = () => {
   const addItem = (benefit: IEmployeeBenefit) => {
     if (benefit.id && dataForDialog?.eId) {
       handleAddItem(benefit, "item", dataForDialog.eId);
+      setRows((prev) => [...prev, benefit]);
     }
   };
 
   const deleteItem = (benefit: IEmployeeBenefit) => {
     if (benefit.id && dataForDialog?.eId) {
       handleDeleteItem(benefit.id, "item", dataForDialog.eId);
+      setRows((prev) => prev.filter((row) => row.id !== benefit.id));
     }
   };
 
@@ -47,7 +61,7 @@ export const BenefitsTab: React.FC = () => {
 
   return (
     <Box>
-      {benefitsData && benefitsData.length > 0 ? (
+     {rows.length > 0 ? (
         <DataGrid<IEmployeeBenefit>
           rows={rows}
           columns={columns}    
