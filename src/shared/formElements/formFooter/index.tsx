@@ -1,4 +1,3 @@
-// ** Hooks
 import { useModal } from "@/hooks/useModal";
 
 // ** MUI
@@ -22,18 +21,19 @@ export const FormFooter: React.FC<FormFooterProps> = ({
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-
         }}
       >
         <Button variant="outlined" onClick={() => setDialogOpen(false)}>
           {cancelButtonText}
         </Button>
 
-        {showSecondButton ? (
-          <Button variant="contained" onClick={buttonAction}>
-            {actionButtonText}
-          </Button>
-        ) : null}
+        <Button
+          variant="contained"
+          onClick={buttonAction}
+          disabled={!showSecondButton}
+        >
+          {actionButtonText}
+        </Button>
       </Box>
     </Box>
   );

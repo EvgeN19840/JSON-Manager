@@ -113,8 +113,8 @@ export const EditDetailsBenefits = () => {
         rules={{ required: true }}
       />
       <FormFooter
-        cancelButtonText="Cancel"
-        actionButtonText="Save"
+        cancelButtonText={"Cancel"}
+        actionButtonText={"Save"}
         showSecondButton={isDirty}
         buttonAction={handleSubmit(onSubmit)}
       />
