@@ -17,9 +17,14 @@ import {
   BonusesTab,
   CustomIncomeTab,
 } from "./index";
+import { useModal } from "@/hooks/useModal";
+import { IEmployee } from "@/const/types";
 
 export const TabsDetails = () => {
   const { activeDetailTab, handleDetailTabChange } = useTabs();
+  const { dataForDialog } = useModal() as {
+    dataForDialog: IEmployee | null;
+  };
 
   const renderTabContent = () => {
     switch (activeDetailTab) {
@@ -43,7 +48,9 @@ export const TabsDetails = () => {
   return (
     <Box>
       <Typography variant="h6" sx={{ textAlign: "center" }}>
-        Employee Details
+        {`Details of Employee: ${dataForDialog?.firstName || ""} ${
+          dataForDialog?.lastName || ""
+        }`}
       </Typography>
       <TabContext value={activeDetailTab}>
         <TabList

@@ -26,11 +26,7 @@ export const CustomIncomeTab: React.FC = () => {
         <DataGrid
           rows={rows}
           columns={ColumnsReimbursements()}
-          autoHeight
-          sx={{
-            border: "1px solid #ccc",
-            ".MuiDataGrid-cell": { padding: 2 },
-          }}
+         
         />
       ) : (
         <Box

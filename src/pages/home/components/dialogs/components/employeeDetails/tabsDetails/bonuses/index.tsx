@@ -27,12 +27,7 @@ export const BonusesTab: React.FC = () => {
       {bonusesData && bonusesData.length > 0 ? (
         <DataGrid
           rows={rows}
-          columns={ColumnsBonuses()}
-          autoHeight
-          sx={{
-            border: "1px solid #ccc",
-            ".MuiDataGrid-cell": { padding: 2 },
-          }}
+          columns={ColumnsBonuses()}  
         />
       ) : (
         <Box

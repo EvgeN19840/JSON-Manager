@@ -49,7 +49,7 @@ const handleSaveData = <T extends { id: string | number }>(
         return {
           ...prevData,
           employees: prevData.employees.map((emp) =>
-            emp.benefits.some((ben) => ben.id === value.id)
+            emp.benefits.findIndex((ben) => ben.id === value.id)
               ? {
                   ...emp,
                   benefits: emp.benefits.map((ben) =>
@@ -63,7 +63,7 @@ const handleSaveData = <T extends { id: string | number }>(
         return {
           ...prevData,
           employees: prevData.employees.map((emp) =>
-            emp.depositAccounts.some((acc) => acc.id === value.id)
+            emp.depositAccounts.findIndex((acc) => acc.id === value.id)
               ? {
                   ...emp,
                   depositAccounts: emp.depositAccounts.map((acc) =>
@@ -79,8 +79,6 @@ const handleSaveData = <T extends { id: string | number }>(
     }
   });
 };
-
-  
   
 const handleDeleteItem = (
   id:  string | number ,

@@ -25,11 +25,7 @@ export const DepositAccountTab: React.FC = () => {
         <DataGrid
           rows={rows}
           columns={ColumnsAccounts()}
-          autoHeight
-          sx={{
-            border: "1px solid #ccc",
-            ".MuiDataGrid-cell": { padding: 2 },
-          }}
+        
         />
       ) : (
         <Box

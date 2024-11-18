@@ -50,12 +50,7 @@ export const BenefitsTab: React.FC = () => {
       {benefitsData && benefitsData.length > 0 ? (
         <DataGrid<IEmployeeBenefit>
           rows={rows}
-          columns={columns}
-          autoHeight
-          sx={{
-            border: "1px solid #ccc",
-            ".MuiDataGrid-cell": { padding: 2 },
-          }}
+          columns={columns}    
         />
       ) : null}
     </Box>

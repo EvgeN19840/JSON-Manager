@@ -13,8 +13,8 @@ export const FormWrapper = ({ onSubmit, children }: FormWrapperProps) => {
 
   const title =
     dataForDialog && "eId" in dataForDialog
-      ? "Edit Employee Details"
-      : "Edit Benefits";
+      ? `Edit: ${dataForDialog.firstName || ""} ${dataForDialog.lastName || ""}`
+      : "Edit Benefit";
 
   return (
     <Box>
