@@ -16,11 +16,13 @@ import { schema } from "./schema";
 import { IEmployeeBenefit } from "@/const/types";
 
 export const EditDetailsBenefits = () => {
-  const { dataForDialog, closeDialog } = useModal() as {
+  const { dataForDialog } = useModal() as {
     dataForDialog: IEmployeeBenefit | null;
-    closeDialog: () => void;
   };
-  const { handleSaveData } = useDataStateContext();
+
+  const { handleClickOpenDialog } = useModal();
+  const { handleSaveData, data, setData, eIdSetectedEmploee } =
+    useDataStateContext();
 
   const defaultValues: IEmployeeBenefit = {
     name: dataForDialog?.name || '',
@@ -43,15 +45,30 @@ export const EditDetailsBenefits = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: IEmployeeBenefit) => {
+  const onSubmit = (formData: IEmployeeBenefit) => {
     handleSaveData(
-      {
-        ...dataForDialog,
-        ...data,
-      } as IEmployeeBenefit,
-      "employeeBenefit" 
+      { ...dataForDialog, ...formData } as IEmployeeBenefit,
+      "employeeBenefit"
     );
-    closeDialog();
+    const updatedEmployees = data.employees.map((employee) => {
+      if (employee.eId === eIdSetectedEmploee) {
+        const updatedBenefits = employee.benefits.map((benefit) =>
+          benefit.id === formData.id ? { ...benefit, ...formData } : benefit
+        );
+        return { ...employee, benefits: updatedBenefits };
+      }
+      return employee;
+    });
+    const updatedData = {
+      ...data,
+      employees: updatedEmployees,
+    };
+
+    setData(updatedData);
+    const updatedEmployee = updatedEmployees.find(
+      (employee) => employee.eId === eIdSetectedEmploee
+    );
+    handleClickOpenDialog("Details", updatedEmployee);
   };
 
   return (
@@ -113,10 +130,11 @@ export const EditDetailsBenefits = () => {
         rules={{ required: true }}
       />
       <FormFooter
-        cancelButtonText={"Cancel"}
-        actionButtonText={"Save"}
+        cancelButtonText="Cancel"
+        actionButtonText="Save"
         showSecondButton={isDirty}
         buttonAction={handleSubmit(onSubmit)}
+        source={"employeeDetails"}
       />
     </FormWrapper>
   );

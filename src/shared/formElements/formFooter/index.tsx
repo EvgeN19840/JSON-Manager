@@ -5,14 +5,30 @@ import { Box, Button } from "@mui/material";
 
 // ** Types
 import { FormFooterProps } from "./types";
+import { useDataStateContext } from "@/hooks/useDataStateContext";
 
 export const FormFooter: React.FC<FormFooterProps> = ({
   cancelButtonText,
   actionButtonText,
   showSecondButton,
   buttonAction,
+  source,
 }) => {
-  const { setDialogOpen } = useModal();
+  const { setDialogOpen, handleClickOpenDialog } = useModal();
+
+  const { data, eIdSetectedEmploee } = useDataStateContext();
+  const handleCancel = () => {
+    if (source === "employeeDetails") {
+      const updatedEmployee = data.employees.find(
+        (employee) => employee.eId === eIdSetectedEmploee
+      );
+
+      setDialogOpen(false);
+      handleClickOpenDialog("Details", updatedEmployee);
+    } else {
+      setDialogOpen(false);
+    }
+  };
 
   return (
     <Box>
@@ -23,7 +39,7 @@ export const FormFooter: React.FC<FormFooterProps> = ({
           alignItems: "center",
         }}
       >
-        <Button variant="outlined" onClick={() => setDialogOpen(false)}>
+        <Button variant="outlined" onClick={handleCancel}>
           {cancelButtonText}
         </Button>
 

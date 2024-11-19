@@ -23,6 +23,9 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
     benefits: [],
   });
   const [parsedData, setParsedData] = useState<string | null>(null);
+  const [eIdSetectedEmploee, setEIdSetectedEmploee] = useState<number | null>(
+    null
+  );
 
   const handleSaveEmployee = (value: IEmployee) => {
     const employeeIndex = data.employees.findIndex(
@@ -39,82 +42,81 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
     updatedBenefits[benefitIndex] = value;
     setData({ ...data, benefits: updatedBenefits });
   };
-const handleSaveData = <T extends { id: string | number }>(
-  value: T,
-  type: "employeeBenefit" | "depositAccount" | "bonuses" 
-) => {
-  setData((prevData) => {
-    switch (type) {
-      case "employeeBenefit":
+  const handleSaveData = <T extends { id: string | number }>(
+    value: T,
+    type: "employeeBenefit" | "depositAccount" | "bonuses"
+  ) => {
+    setData((prevData) => {
+      switch (type) {
+        case "employeeBenefit":
+          return {
+            ...prevData,
+            employees: prevData.employees.map((emp) =>
+              emp.benefits.findIndex((ben) => ben.id === value.id)
+                ? {
+                    ...emp,
+                    benefits: emp.benefits.map((ben) =>
+                      ben.id === value.id ? { ...ben, ...value } : ben
+                    ),
+                  }
+                : emp
+            ),
+          };
+        case "depositAccount":
+          return {
+            ...prevData,
+            employees: prevData.employees.map((emp) =>
+              emp.depositAccounts.findIndex((acc) => acc.id === value.id)
+                ? {
+                    ...emp,
+                    depositAccounts: emp.depositAccounts.map((acc) =>
+                      acc.id === value.id ? { ...acc, ...value } : acc
+                    ),
+                  }
+                : emp
+            ),
+          };
+
+        default:
+          return prevData;
+      }
+    });
+  };
+
+  const handleDeleteItem = (
+    id: string | number,
+    type: "employees" | "benefits" | "item",
+    eId?: string | number
+  ) => {
+    setData((prevData) => {
+      if (type === "employees") {
+        return {
+          ...prevData,
+          employees: prevData.employees.filter((emp) => emp.eId !== id),
+        };
+      } else if (type === "benefits") {
+        return {
+          ...prevData,
+          benefits: prevData.benefits.filter((ben) => ben.id !== id),
+        };
+      } else if (type === "item" && eId) {
         return {
           ...prevData,
           employees: prevData.employees.map((emp) =>
-            emp.benefits.findIndex((ben) => ben.id === value.id)
+            emp.eId === eId
               ? {
                   ...emp,
-                  benefits: emp.benefits.map((ben) =>
-                    ben.id === value.id ? { ...ben, ...value } : ben
-                  ),
+                  benefits: emp.benefits.filter((benefit) => benefit.id !== id),
                 }
               : emp
           ),
         };
-      case "depositAccount":
-        return {
-          ...prevData,
-          employees: prevData.employees.map((emp) =>
-            emp.depositAccounts.findIndex((acc) => acc.id === value.id)
-              ? {
-                  ...emp,
-                  depositAccounts: emp.depositAccounts.map((acc) =>
-                    acc.id === value.id ? { ...acc, ...value } : acc
-                  ),
-                }
-              : emp
-          ),
-        };
-
-      default:
-        return prevData; 
-    }
-  });
-};
-  
-const handleDeleteItem = (
-  id:  string | number ,
-  type: "employees" | "benefits" | "item",
-  eId?:  string | number 
-) => {
-  setData((prevData) => {
-    if (type === "employees") {
-      return {
-        ...prevData,
-        employees: prevData.employees.filter((emp) => emp.eId !== id),
-      };
-    } else if (type === "benefits") {
-      return {
-        ...prevData,
-        benefits: prevData.benefits.filter((ben) => ben.id !== id),
-      };
-    } else if (type === "item" && eId) {
-      return {
-        ...prevData,
-        employees: prevData.employees.map((emp) =>
-          emp.eId === eId
-            ? {
-                ...emp,
-                benefits: emp.benefits.filter((benefit) => benefit.id !== id),
-              }
-            : emp
-        ),
-      };
-    } else {
-      console.error("Invalid type for deletion or missing eId.");
-      return prevData;
-    }
-  });
-};
-
+      } else {
+        console.error("Invalid type for deletion or missing eId.");
+        return prevData;
+      }
+    });
+  };
 
   const handleAddItem = (
     item: IEmployee | ISystemBenefit | IEmployeeBenefit,
@@ -127,7 +129,7 @@ const handleDeleteItem = (
         emp.firstName.startsWith(item.firstName)
       );
       const nextIndex = similarEmployees.length + 1;
-  
+
       const newEmployee: IEmployee = {
         ...item,
         eId: newEmployeeId,
@@ -154,12 +156,12 @@ const handleDeleteItem = (
       }));
     } else if (type === "item" && eId && "id" in item && "value" in item) {
       const newBenefitId = assignMissingIds(data, "benefits");
-  
+
       const updatedBenefit: IEmployeeBenefit = {
         ...(item as IEmployeeBenefit),
         id: newBenefitId.toString(),
       };
-  
+
       setData((prevData) => {
         const updatedEmployees = prevData.employees.map((emp) =>
           emp.eId === Number(eId)
@@ -169,15 +171,18 @@ const handleDeleteItem = (
               }
             : emp
         );
-  
+
         const isBenefitNew = !prevData.benefits.some(
           (benefit) => benefit.id === updatedBenefit.id
         );
-  
+
         const updatedBenefits = isBenefitNew
-          ? [...prevData.benefits, { id: updatedBenefit.id, name: updatedBenefit.name }]
+          ? [
+              ...prevData.benefits,
+              { id: updatedBenefit.id, name: updatedBenefit.name },
+            ]
           : prevData.benefits;
-  
+
         return {
           ...prevData,
           employees: updatedEmployees,
@@ -186,7 +191,6 @@ const handleDeleteItem = (
       });
     }
   };
-  
 
   const hasData = !!(data?.benefits?.length || data?.employees?.length);
 
@@ -196,6 +200,8 @@ const handleDeleteItem = (
         data,
         setData,
         parsedData,
+        eIdSetectedEmploee,
+        setEIdSetectedEmploee,
         setParsedData,
         handleSaveEmployee,
         handleSaveBenefit,

@@ -18,7 +18,7 @@ import { useModal } from "@/hooks/useModal";
 import { MyGrid } from "@/shared/components/grid";
 
 export const Grids: FC = () => {
-  const { data, handleDeleteItem, handleAddItem } = useDataStateContext();
+  const { data, handleDeleteItem, handleAddItem,setEIdSetectedEmploee } = useDataStateContext();
   const { handleClickOpenDialog } = useModal();
   const { activeTab } = useTabs();
 
@@ -39,6 +39,7 @@ export const Grids: FC = () => {
   };
 
   const handleRowDoubleClickOpenDetails = (item: IEmployee) => {
+    setEIdSetectedEmploee(item.eId)
     handleClickOpenDialog(activeTab === "1" ? "Details" : null, item);
   };
 

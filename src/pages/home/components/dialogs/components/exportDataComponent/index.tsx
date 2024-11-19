@@ -77,6 +77,7 @@ export const ExportDataComponent: React.FC = () => {
         actionButtonText={"Download"}
         showSecondButton={true}
         buttonAction={downloadFile}
+        source={"general"}
       />
     </Box>
   );

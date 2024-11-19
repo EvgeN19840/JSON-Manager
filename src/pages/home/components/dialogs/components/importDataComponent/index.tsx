@@ -64,6 +64,7 @@ export const ImportDataComponent: React.FC = () => {
           actionButtonText={"Import"}
           showSecondButton={!!inputValue}
           buttonAction={handleImport}
+          source={"general"}
         />
       </Box>
     </Box>

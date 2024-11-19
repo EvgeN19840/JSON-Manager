@@ -8,7 +8,7 @@ import { ModalContext } from "../modalContext";
 import { useDataStateContext } from "@/hooks/useDataStateContext";
 
 // ** Types
-import { IDataForDialog, IModalType, IModalTypeDetails, IModalTypeDetailsEdits } from "../types";
+import { IDataForDialog, IModalType, IModalTypeDetailsEdits } from "../types";
 import { IEmployee, IEmployeeBenefit, ISystemBenefit } from "@/const/types";
 
 export const ModalProvider: React.FC<{ children: ReactNode }> = ({
@@ -16,19 +16,15 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const { data } = useDataStateContext();
   const [typeModal, setTypeModal] = useState<IModalType>(null);
-  const [typeModalDetails, setTypeModalDetails] =
-    useState<IModalTypeDetails>(null);
-    const [typeModalDetailsEdit, setTypeModalDetailsEdit] =
+  const [typeModalDetailsEdit, setTypeModalDetailsEdit] =
     useState<IModalTypeDetailsEdits>(null);
-    
   const [isDialogOpen, setDialogOpen] = useState<boolean>(false);
   const [dataForDialog, setDataForDialog] = useState<
     IDataForDialog | string | null
   >(null);
-
   const handleClickOpenDialog = (
     typeModal: IModalType,
-    item?: IDataForDialog | IEmployee | ISystemBenefit 
+    item?: IDataForDialog | IEmployee | ISystemBenefit
   ) => {
     switch (typeModal) {
       case "Export data":
@@ -45,29 +41,22 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
         break;
       case "Details":
         setDataForDialog(item as IEmployee[]);
-        setTypeModalDetails("Personal");
         break;
-        case "Edit Details":
-          setDataForDialog(item as IEmployeeBenefit[]);
-          setTypeModalDetailsEdit("Edit benefits details");
+      case "Edit Details":
+        setDataForDialog(item as IEmployeeBenefit[]);
+        setTypeModalDetailsEdit("Edit benefits details");
 
-          break;
+        break;
     }
     setDialogOpen(true);
     setTypeModal(typeModal);
   };
-
-
-  
-
   const closeDialog = () => {
     setDialogOpen(false);
-
     // ** Возможно, тут нужен будет UseEffect и логика для удаления таймера )))0))0)
     setTimeout(() => {
       setTypeModal(null);
       setDataForDialog(null);
-      setTypeModalDetails(null);
     }, 500);
   };
 
@@ -75,12 +64,10 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
     <ModalContext.Provider
       value={{
         typeModal,
-        typeModalDetails,
         typeModalDetailsEdit,
         closeDialog,
         dataForDialog,
         setTypeModal,
-        setTypeModalDetails,
         setTypeModalDetailsEdit,
         isDialogOpen,
         setDialogOpen,

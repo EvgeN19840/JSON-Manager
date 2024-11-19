@@ -3,4 +3,5 @@ export interface FormFooterProps {
     actionButtonText: string;
     showSecondButton: boolean;
     buttonAction?: () => void;
+    source: "employeeDetails" | "general";
 }

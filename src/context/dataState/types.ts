@@ -4,6 +4,8 @@ import { IEmployee, ISystemBenefit, ITypeJSON, } from "@/const/types";
 export interface DataContextType {
   data: ITypeJSON;
   setData: (data: ITypeJSON) => void;
+  eIdSetectedEmploee: number | null;
+  setEIdSetectedEmploee:(eId:number)=>void;
   parsedData: string | null;
   setParsedData: (parsedData: string | null) => void;
   handleDeleteItem: (
