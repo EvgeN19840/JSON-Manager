@@ -6,39 +6,53 @@ import { useModal } from "@/hooks/useModal";
 
 // ** Types
 import { IEmployee } from "@/const/types";
-import { getDateFormat } from "@/shared/utils/getDateFormat";
+
+// ** Utils
+import { currentData } from "./utils";
 
 export const PersonalTab: React.FC = () => {
-  const { dataForDialog } = useModal() as {
+  const { dataForDialog, handleClickOpenDialog } = useModal() as {
     dataForDialog: IEmployee | null;
+    handleClickOpenDialog: (
+      dialogName: string,
+      data?: IEmployee | null
+    ) => void;
   };
-  const employeeData = dataForDialog as IEmployee;
+  const { setTypeModalDetailsEdit } = useModal();
+  if (!dataForDialog) {
+    return <Typography>No Employee Data Available</Typography>;
+  }
+
+  const handleDoubleClick = () => {
+    handleClickOpenDialog("Edit Details", dataForDialog);
+    setTypeModalDetailsEdit("Edit Personal");
+  };
 
   return (
-    <Box>
-      {employeeData ? (
-        <Box sx={{ padding: 2, border: '1px solid #ccc' }}>
-          <Typography>ID: {employeeData.eId}</Typography>
-          <Typography>Number: {employeeData.number}</Typography>
-          <Typography>
-            Name: {`${employeeData.firstName} ${employeeData.middleName || ""} ${employeeData.lastName}`}
-          </Typography>
-          <Typography>Birth Date: {getDateFormat(employeeData.birthDate)}</Typography>
-          <Typography>Email: {employeeData.email || "N/A"}</Typography>
-          <Typography>Hire Date: {getDateFormat(employeeData.hireDate)}</Typography>
-          <Typography>End Date: {getDateFormat(employeeData.endDate)}</Typography>
-          <Typography>Status: {employeeData.enabledForCayPay ? "Enabled" : "Disabled"}</Typography>
-          <Typography>Pension Member Number: {employeeData.pensionMemberNumber}</Typography>
-          <Typography>Health Insurance Member Number: {employeeData.healthInsuranceMemberNumber}</Typography>
-          <Typography>Life Insurance Member Number: {employeeData.lifeInsuranceMemberNumber}</Typography>
-          <Typography>
-            Transfer Employee Statutory to Voluntary on Cap: {employeeData.transferEmployeeStatutoryToVoluntaryOnCap ? "Yes" : "No"}
-          </Typography>
-          <Typography>
-            Transfer Company Statutory to Voluntary on Cap: {employeeData.transferCompanyStatutoryToVoluntaryOnCap ? "Yes" : "No"}
-          </Typography>
+    <Box
+      onDoubleClick={handleDoubleClick}
+      sx={{
+        padding: 2,
+        border: "1px solid #ccc",
+        borderRadius: 1,
+        cursor: "pointer",
+      }}
+    >
+      {currentData(dataForDialog).map((item, index) => (
+        <Box
+          key={index}
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            borderBottom: "1px solid #f0f0f0",
+
+          }}
+        >
+          <Typography>{item.title}:</Typography>
+          <Typography>{item.value}</Typography>
         </Box>
-      ) : null}
+      ))}
     </Box>
   );
 };

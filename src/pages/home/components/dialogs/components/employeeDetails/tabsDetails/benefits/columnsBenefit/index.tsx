@@ -69,9 +69,8 @@ export const ColumnsBenefit = (
     headerName: "Effective Date",
     minWidth: 115,
     flex: 1,
-    type: "date",
     renderHeader: () => <HeaderDetails title="Effective Date" />,
-    renderCell: (params: GridRenderCellParams<IEmployeeBenefit>) => getDateFormat(params.row?.effectiveDate),
+    renderCell: (params) => getDateFormat(params.row?.effectiveDate),
   },
   {
     field: "Actions",

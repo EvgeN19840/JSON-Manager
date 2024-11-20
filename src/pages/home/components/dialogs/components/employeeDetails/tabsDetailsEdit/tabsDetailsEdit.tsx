@@ -3,6 +3,7 @@ import { Typography } from "@mui/material";
 import { useModal } from "@/hooks/useModal";
 import { EditDetailsBenefits } from "./editDetailsBenefits";
 import { CustomDialog } from "@/shared/components/customDialog";
+import { EditPersonalTab } from "./editPersonal";
 
 export const TabsDetailsEdit: React.FC = () => {
   const { typeModalDetailsEdit, isDialogOpen, closeDialog } = useModal();
@@ -10,8 +11,8 @@ export const TabsDetailsEdit: React.FC = () => {
     switch (typeModalDetailsEdit) {
       case "Edit benefits details":
         return <EditDetailsBenefits />;
-      case "Edit job":
-        return "Edit job";
+      case "Edit Personal":
+        return <EditPersonalTab/>;
       case "Edit deposit accounts":
         return "Edit deposit accounts";
       case "Edit custom income":

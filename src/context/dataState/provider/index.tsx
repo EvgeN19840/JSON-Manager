@@ -42,46 +42,49 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
     updatedBenefits[benefitIndex] = value;
     setData({ ...data, benefits: updatedBenefits });
   };
-  const handleSaveData = <T extends { id: string | number }>(
-    value: T,
-    type: "employeeBenefit" | "depositAccount" | "bonuses"
+  const handleSaveData = (
+    value: Partial<IEmployee | IEmployeeBenefit>,
+    type: "personal" | "employeeBenefit" | "bonuses" | "depositAccount"
   ) => {
     setData((prevData) => {
-      switch (type) {
-        case "employeeBenefit":
-          return {
-            ...prevData,
-            employees: prevData.employees.map((emp) =>
-              emp.benefits.findIndex((ben) => ben.id === value.id)
-                ? {
-                    ...emp,
-                    benefits: emp.benefits.map((ben) =>
-                      ben.id === value.id ? { ...ben, ...value } : ben
-                    ),
-                  }
-                : emp
-            ),
-          };
-        case "depositAccount":
-          return {
-            ...prevData,
-            employees: prevData.employees.map((emp) =>
-              emp.depositAccounts.findIndex((acc) => acc.id === value.id)
-                ? {
-                    ...emp,
-                    depositAccounts: emp.depositAccounts.map((acc) =>
-                      acc.id === value.id ? { ...acc, ...value } : acc
-                    ),
-                  }
-                : emp
-            ),
-          };
-
-        default:
-          return prevData;
-      }
+      return {
+        ...prevData,
+        employees: prevData.employees.map((employee) => {
+          if (employee.eId !== eIdSetectedEmploee) return employee;
+  
+          switch (type) {
+            case "personal":
+              return { ...employee, ...value };
+            case "employeeBenefit":
+              
+              return {
+                ...employee,
+                benefits: employee.benefits.map((benefit) =>
+                  benefit.id === value.id ? { ...benefit, ...value } : benefit
+                ),
+              };
+            case "bonuses":
+              return {
+                ...employee,
+                bonuses: employee.bonuses.map((bonus) =>
+                  bonus.id === value.id ? { ...bonus, ...value } : bonus
+                ),
+              };
+            case "depositAccount":
+              return {
+                ...employee,
+                depositAccounts: employee.depositAccounts.map((account) =>
+                  account.id === value.id ? { ...account, ...value } : account
+                ),
+              };
+            default:
+              return employee;
+          }
+        }),
+      };
     });
   };
+  
 
   const handleDeleteItem = (
     id: string | number,

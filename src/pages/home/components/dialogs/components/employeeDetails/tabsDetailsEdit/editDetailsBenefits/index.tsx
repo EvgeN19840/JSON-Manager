@@ -14,6 +14,7 @@ import { schema } from "./schema";
 
 // ** Types
 import { IEmployeeBenefit } from "@/const/types";
+import { useDefaultValues } from "./components/defaultValues";
 
 export const EditDetailsBenefits = () => {
   const { dataForDialog } = useModal() as {
@@ -21,19 +22,9 @@ export const EditDetailsBenefits = () => {
   };
 
   const { handleClickOpenDialog } = useModal();
-  const { handleSaveData, data, setData, eIdSetectedEmploee } =
-    useDataStateContext();
+  const { handleSaveData, data, eIdSetectedEmploee } = useDataStateContext();
 
-  const defaultValues: IEmployeeBenefit = {
-    name: dataForDialog?.name || '',
-    value: dataForDialog?.value || 0,
-    currencyCode: dataForDialog?.currencyCode || '',
-    companyValue: dataForDialog?.companyValue || 0,
-    companyCurrencyCode: dataForDialog?.companyCurrencyCode || '',
-    isPerentValue: dataForDialog?.isPerentValue || false,
-    effectiveDate: dataForDialog?.effectiveDate || "",
-    id: dataForDialog?.id || '',
-  };
+  const defaultValues = useDefaultValues();
 
   const {
     control,
@@ -59,12 +50,7 @@ export const EditDetailsBenefits = () => {
       }
       return employee;
     });
-    const updatedData = {
-      ...data,
-      employees: updatedEmployees,
-    };
 
-    setData(updatedData);
     const updatedEmployee = updatedEmployees.find(
       (employee) => employee.eId === eIdSetectedEmploee
     );
@@ -79,6 +65,7 @@ export const EditDetailsBenefits = () => {
         control={control}
         errorMessage={errors.name?.message}
         rules={{ required: true }}
+        disabled
       />
       <FormInput
         name="value"
@@ -128,6 +115,7 @@ export const EditDetailsBenefits = () => {
         control={control}
         errorMessage={errors.id?.message}
         rules={{ required: true }}
+        disabled
       />
       <FormFooter
         cancelButtonText="Cancel"

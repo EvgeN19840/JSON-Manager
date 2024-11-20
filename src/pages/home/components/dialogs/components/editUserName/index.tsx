@@ -26,10 +26,10 @@ export const EditUserName = () => {
     firstName: (dataForDialog as IEmployee).firstName,
     lastName: (dataForDialog as IEmployee).lastName,
     eId: (dataForDialog as IEmployee).eId,
-    birthDate: (dataForDialog as IEmployee).birthDate 
-      ? (dataForDialog as IEmployee).birthDate.split('T')[0]
-      : '',
-  };
+    birthDate: dataForDialog?.birthDate 
+    ? dataForDialog.birthDate.split("T")[0]
+    : "",
+};
 
   const {
     control,

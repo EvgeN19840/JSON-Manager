@@ -3,16 +3,50 @@ export interface ITypeJSON {
   benefits: ISystemBenefit[];
 }
 
+
+export interface IEmployeeBasicInfo {
+  eId: number;
+  number: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  birthDate: string ;
+  email: string ;
+  addressStreet1: string;
+  addressStreet2: string;
+  addressCity: string;
+  addressState: string;
+  addressZip: string;
+  addressCountry: string;
+  hireDate: string;
+  endDate: string ;
+  enabledForCayPay: boolean;
+  pensionMemberNumber: string;
+  healthInsuranceMemberNumber: string;
+  lifeInsuranceMemberNumber: string;
+  transferEmployeeStatutoryToVoluntaryOnCap: boolean;
+  transferCompanyStatutoryToVoluntaryOnCap: boolean;
+}
+
+
+
+
 export interface IEmployee {
   eId: number;
   number: string;
   firstName: string;
-  middleName: string | null;
+  middleName: string ;
   lastName: string;
-  birthDate: string;
-  email: string | null;
+  birthDate: string ;
+  email: string ;
+  addressStreet1: string ;
+  addressStreet2: string ;
+  addressCity: string ;
+  addressState: string ;
+  addressZip: string ;
+  addressCountry: string ;
   hireDate: string;
-  endDate: string | null;
+  endDate: string ;
   enabledForCayPay: boolean;
   pensionMemberNumber: string;
   healthInsuranceMemberNumber: string;

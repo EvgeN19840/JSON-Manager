@@ -20,7 +20,8 @@ import { ColumnsBenefit } from "./columnsBenefit";
 import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
 
 export const BenefitsTab: React.FC = () => {
-  const { handleClickOpenDialog } = useModal() as IModalTypeContext;
+  const { handleClickOpenDialog, setTypeModalDetailsEdit } =
+    useModal() as IModalTypeContext;
   const { dataForDialog } = useModal() as {
     dataForDialog: IEmployee | null;
   };
@@ -35,6 +36,7 @@ export const BenefitsTab: React.FC = () => {
 
   const handleEditClick = (data: IEmployeeBenefit) => {
     handleClickOpenDialog("Edit Details", data);
+    setTypeModalDetailsEdit("Edit benefits details");
   };
 
   const addItem = (benefit: IEmployeeBenefit) => {
@@ -57,15 +59,15 @@ export const BenefitsTab: React.FC = () => {
     deleteItem: (data) => deleteItem(data),
   };
 
-  const columns = ColumnsBenefit((benefit) => handleEditClick(benefit), callbacks);
+  const columns = ColumnsBenefit(
+    (benefit) => handleEditClick(benefit),
+    callbacks
+  );
 
   return (
     <Box>
-     {rows.length > 0 ? (
-        <DataGrid<IEmployeeBenefit>
-          rows={rows}
-          columns={columns}    
-        />
+      {rows.length > 0 ? (
+        <DataGrid<IEmployeeBenefit> rows={rows} columns={columns} />
       ) : null}
     </Box>
   );

@@ -5,7 +5,7 @@ export interface DataContextType {
   data: ITypeJSON;
   setData: (data: ITypeJSON) => void;
   eIdSetectedEmploee: number | null;
-  setEIdSetectedEmploee:(eId:number)=>void;
+  setEIdSetectedEmploee: (eId: number) => void;
   parsedData: string | null;
   setParsedData: (parsedData: string | null) => void;
   handleDeleteItem: (
@@ -20,9 +20,9 @@ export interface DataContextType {
   ) => void;
   handleSaveEmployee: (data: IEmployee) => void;
   handleSaveBenefit: (data: ISystemBenefit) => void;
-  handleSaveData: <T extends { id: string | number }>(
+  handleSaveData: <T extends { id: string | number } | { eId: number }>(
     value: T,
-    type: "employeeBenefit" | "depositAccount" | "bonuses"
+    type: "employeeBenefit" | "depositAccount" | "bonuses"|"personal"
   ) => void;
   hasData: boolean;
 }
