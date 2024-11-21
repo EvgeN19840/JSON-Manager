@@ -9,6 +9,7 @@ import { IEmployee } from "@/const/types";
 
 // ** Utils
 import { currentData } from "./utils";
+import { EditButton } from "../../../exportDataComponent/buttons";
 
 export const PersonalTab: React.FC = () => {
   const { dataForDialog, handleClickOpenDialog } = useModal() as {
@@ -23,21 +24,32 @@ export const PersonalTab: React.FC = () => {
     return <Typography>No Employee Data Available</Typography>;
   }
 
-  const handleDoubleClick = () => {
+  const openEditDialog = () => {
     handleClickOpenDialog("Edit Details", dataForDialog);
     setTypeModalDetailsEdit("Edit Personal");
   };
 
   return (
     <Box
-      onDoubleClick={handleDoubleClick}
+    sx={{
+      padding: 1,
+      border: "1px solid #ccc",
+      borderRadius: 1,
+      position: "relative",
+      pt: 7, 
+    }}
+  >
+
+    <Box
       sx={{
-        padding: 2,
-        border: "1px solid #ccc",
-        borderRadius: 1,
-        cursor: "pointer",
+        position: "absolute",
+        top: 16, 
+        right: 16, 
+ 
       }}
     >
+        <EditButton onClick={openEditDialog} />
+      </Box>
       {currentData(dataForDialog).map((item, index) => (
         <Box
           key={index}
@@ -46,7 +58,6 @@ export const PersonalTab: React.FC = () => {
             justifyContent: "space-between",
             alignItems: "center",
             borderBottom: "1px solid #f0f0f0",
-
           }}
         >
           <Typography>{item.title}:</Typography>

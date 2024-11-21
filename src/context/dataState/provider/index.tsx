@@ -42,54 +42,67 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
     updatedBenefits[benefitIndex] = value;
     setData({ ...data, benefits: updatedBenefits });
   };
-  const handleSaveData = (
-    value: Partial<IEmployee | IEmployeeBenefit>,
-    type: "personal" | "employeeBenefit" | "bonuses" | "depositAccount"
+  const handleSaveData = <
+    T extends Partial<{
+      id: string | number;
+      eId: number;
+      customBambooTalbeRowId: number;
+    }>
+  >(
+    value: T,
+    type: "employeeBenefit" | "depositAccount" | "bonuses" | "personal"
   ) => {
-    setData((prevData) => {
-      return {
-        ...prevData,
-        employees: prevData.employees.map((employee) => {
-          if (employee.eId !== eIdSetectedEmploee) return employee;
-  
-          switch (type) {
-            case "personal":
-              return { ...employee, ...value };
-            case "employeeBenefit":
-              
-              return {
-                ...employee,
-                benefits: employee.benefits.map((benefit) =>
-                  benefit.id === value.id ? { ...benefit, ...value } : benefit
-                ),
-              };
-            case "bonuses":
-              return {
-                ...employee,
-                bonuses: employee.bonuses.map((bonus) =>
-                  bonus.id === value.id ? { ...bonus, ...value } : bonus
-                ),
-              };
-            case "depositAccount":
-              return {
-                ...employee,
-                depositAccounts: employee.depositAccounts.map((account) =>
-                  account.id === value.id ? { ...account, ...value } : account
-                ),
-              };
-            default:
-              return employee;
-          }
-        }),
-      };
-    });
+    setData((prevData) => ({
+      ...prevData,
+      employees: prevData.employees.map((employee) => {
+        if (employee.eId !== eIdSetectedEmploee) return employee;
+        switch (type) {
+          case "personal":
+            return { ...employee, ...value };
+          case "employeeBenefit":
+            return {
+              ...employee,
+              benefits: employee.benefits.map((benefit) =>
+                benefit.id === value.id ? { ...benefit, ...value } : benefit
+              ),
+            };
+          case "bonuses":
+            return {
+              ...employee,
+              bonuses: employee.bonuses.map((bonus) =>
+                bonus.customBambooTalbeRowId === value.customBambooTalbeRowId
+                  ? { ...bonus, ...value }
+                  : bonus
+              ),
+            };
+
+          case "depositAccount":
+            return {
+              ...employee,
+              depositAccounts: employee.depositAccounts.map((account) =>
+                account.customBambooTalbeRowId === value.customBambooTalbeRowId
+                  ? { ...account, ...value }
+                  : account
+              ),
+            };
+
+          default:
+            return employee;
+        }
+      }),
+    }));
   };
-  
 
   const handleDeleteItem = (
     id: string | number,
     type: "employees" | "benefits" | "item",
-    eId?: string | number
+    eId?: string | number,
+    nestedType?:
+      | "salary"
+      | "employmentStatus"
+      | "jobInfo"
+      | "depositAccounts"
+      | "benefits"
   ) => {
     setData((prevData) => {
       if (type === "employees") {
@@ -102,20 +115,29 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
           ...prevData,
           benefits: prevData.benefits.filter((ben) => ben.id !== id),
         };
-      } else if (type === "item" && eId) {
+      } else if (type === "item" && eId && nestedType) {
         return {
           ...prevData,
           employees: prevData.employees.map((emp) =>
             emp.eId === eId
               ? {
                   ...emp,
-                  benefits: emp.benefits.filter((benefit) => benefit.id !== id),
+                  [nestedType]: emp[nestedType]?.filter((item) => {
+                    if ("customBambooTalbeRowId" in item) {
+                      return item.customBambooTalbeRowId !== id;
+                    } else if ("id" in item) {
+                      return item.id !== id;
+                    }
+                    return true;
+                  }),
                 }
               : emp
           ),
         };
       } else {
-        console.error("Invalid type for deletion or missing eId.");
+        console.log(
+          "Invalid type for deletion or missing eId or nestedType."
+        );
         return prevData;
       }
     });

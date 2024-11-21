@@ -10,8 +10,8 @@ export interface IEmployeeBasicInfo {
   firstName: string;
   middleName: string;
   lastName: string;
-  birthDate: string ;
-  email: string ;
+  birthDate: string;
+  email: string;
   addressStreet1: string;
   addressStreet2: string;
   addressCity: string;
@@ -19,7 +19,7 @@ export interface IEmployeeBasicInfo {
   addressZip: string;
   addressCountry: string;
   hireDate: string;
-  endDate: string ;
+  endDate: string;
   enabledForCayPay: boolean;
   pensionMemberNumber: string;
   healthInsuranceMemberNumber: string;
@@ -35,18 +35,18 @@ export interface IEmployee {
   eId: number;
   number: string;
   firstName: string;
-  middleName: string ;
+  middleName: string;
   lastName: string;
-  birthDate: string ;
-  email: string ;
-  addressStreet1: string ;
-  addressStreet2: string ;
-  addressCity: string ;
-  addressState: string ;
-  addressZip: string ;
-  addressCountry: string ;
+  birthDate: string;
+  email: string;
+  addressStreet1: string;
+  addressStreet2: string;
+  addressCity: string;
+  addressState: string;
+  addressZip: string;
+  addressCountry: string;
   hireDate: string;
-  endDate: string ;
+  endDate: string;
   enabledForCayPay: boolean;
   pensionMemberNumber: string;
   healthInsuranceMemberNumber: string;
@@ -115,7 +115,7 @@ export interface IEmployeeBenefit {
   companyValue: number;
   companyCurrencyCode: string;
   isPerentValue: boolean;
-  effectiveDate: string ;
+  effectiveDate: string;
   id: string;
 }
 
@@ -141,6 +141,7 @@ export interface IJobInfo {
   division: string | null;
   reportsTo: string | null;
 }
+
 
 export interface IEmploymentStatus {
   customBambooTalbeRowId: number;

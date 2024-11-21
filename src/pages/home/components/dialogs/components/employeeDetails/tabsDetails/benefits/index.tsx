@@ -48,7 +48,7 @@ export const BenefitsTab: React.FC = () => {
 
   const deleteItem = (benefit: IEmployeeBenefit) => {
     if (benefit.id && dataForDialog?.eId) {
-      handleDeleteItem(benefit.id, "item", dataForDialog.eId);
+      handleDeleteItem(benefit.id, "item", dataForDialog.eId, "benefits");
       setRows((prev) => prev.filter((row) => row.id !== benefit.id));
     }
   };

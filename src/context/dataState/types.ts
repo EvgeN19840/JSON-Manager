@@ -11,7 +11,8 @@ export interface DataContextType {
   handleDeleteItem: (
     id: number | string,
     type: "employees" | "benefits" | "item",
-    eId?: number | string
+    eId?: number | string,
+    nestedType?: "salary" | "employmentStatus" | "jobInfo" | "depositAccounts" | "benefits"
   ) => void;
   handleAddItem: (
     item: IEmployee | ISystemBenefit,
@@ -20,9 +21,11 @@ export interface DataContextType {
   ) => void;
   handleSaveEmployee: (data: IEmployee) => void;
   handleSaveBenefit: (data: ISystemBenefit) => void;
-  handleSaveData: <T extends { id: string | number } | { eId: number }>(
+  handleSaveData: <
+    T extends Partial<{ id: string | number; eId: number; customBambooTalbeRowId: number }>
+  >(
     value: T,
-    type: "employeeBenefit" | "depositAccount" | "bonuses"|"personal"
+    type: "employeeBenefit" | "depositAccount" | "bonuses" | "personal"
   ) => void;
   hasData: boolean;
 }
