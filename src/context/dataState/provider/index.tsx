@@ -7,13 +7,10 @@ import { DataStateContext } from "../dataStateContext";
 // ** Types
 import {
   IEmployee,
-  IEmployeeBenefit,
   ISystemBenefit,
   ITypeJSON,
 } from "@/const/types";
 
-// ** Utils
-import { assignMissingIds } from "@/shared/utils";
 
 export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
   children,
@@ -93,131 +90,8 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
     }));
   };
 
-  const handleDeleteItem = (
-    id: string | number,
-    type: "employees" | "benefits" | "item",
-    eId?: string | number,
-    nestedType?:
-      | "salary"
-      | "employmentStatus"
-      | "jobInfo"
-      | "depositAccounts"
-      | "benefits"
-  ) => {
-    setData((prevData) => {
-      if (type === "employees") {
-        return {
-          ...prevData,
-          employees: prevData.employees.filter((emp) => emp.eId !== id),
-        };
-      } else if (type === "benefits") {
-        return {
-          ...prevData,
-          benefits: prevData.benefits.filter((ben) => ben.id !== id),
-        };
-      } else if (type === "item" && eId && nestedType) {
-        return {
-          ...prevData,
-          employees: prevData.employees.map((emp) =>
-            emp.eId === eId
-              ? {
-                  ...emp,
-                  [nestedType]: emp[nestedType]?.filter((item) => {
-                    if ("customBambooTalbeRowId" in item) {
-                      return item.customBambooTalbeRowId !== id;
-                    } else if ("id" in item) {
-                      return item.id !== id;
-                    }
-                    return true;
-                  }),
-                }
-              : emp
-          ),
-        };
-      } else {
-        console.log(
-          "Invalid type for deletion or missing eId or nestedType."
-        );
-        return prevData;
-      }
-    });
-  };
 
-  const handleAddItem = (
-    item: IEmployee | ISystemBenefit | IEmployeeBenefit,
-    type: "employees" | "benefits" | "item",
-    eId?: number | string
-  ) => {
-    if (type === "employees" && "eId" in item) {
-      const newEmployeeId = assignMissingIds(data, "employees");
-      const similarEmployees = data.employees.filter((emp) =>
-        emp.firstName.startsWith(item.firstName)
-      );
-      const nextIndex = similarEmployees.length + 1;
-
-      const newEmployee: IEmployee = {
-        ...item,
-        eId: newEmployeeId,
-        firstName: `${item.firstName}_${nextIndex}`,
-      };
-      setData((prevData) => ({
-        ...prevData,
-        employees: [...prevData.employees, newEmployee],
-      }));
-    } else if (type === "benefits" && "id" in item) {
-      const newBenefitId = assignMissingIds(data, "benefits");
-      const similarBenefits = data.benefits.filter((benefit) =>
-        benefit.name.startsWith(item.name)
-      );
-      const nextIndex = similarBenefits.length + 1;
-      const newBenefit: ISystemBenefit = {
-        ...item,
-        id: newBenefitId.toString(),
-        name: `${item.name}_${nextIndex}`,
-      };
-      setData((prevData) => ({
-        ...prevData,
-        benefits: [...prevData.benefits, newBenefit],
-      }));
-    } else if (type === "item" && eId && "id" in item && "value" in item) {
-      const newBenefitId = assignMissingIds(data, "benefits");
-
-      const updatedBenefit: IEmployeeBenefit = {
-        ...(item as IEmployeeBenefit),
-        id: newBenefitId.toString(),
-      };
-
-      setData((prevData) => {
-        const updatedEmployees = prevData.employees.map((emp) =>
-          emp.eId === Number(eId)
-            ? {
-                ...emp,
-                benefits: [...emp.benefits, updatedBenefit],
-              }
-            : emp
-        );
-
-        const isBenefitNew = !prevData.benefits.some(
-          (benefit) => benefit.id === updatedBenefit.id
-        );
-
-        const updatedBenefits = isBenefitNew
-          ? [
-              ...prevData.benefits,
-              { id: updatedBenefit.id, name: updatedBenefit.name },
-            ]
-          : prevData.benefits;
-
-        return {
-          ...prevData,
-          employees: updatedEmployees,
-          benefits: updatedBenefits,
-        };
-      });
-    }
-  };
-
-  const hasData = !!(data?.benefits?.length || data?.employees?.length);
+   const hasData = !!(data?.benefits?.length || data?.employees?.length);
 
   return (
     <DataStateContext.Provider
@@ -230,8 +104,6 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
         setParsedData,
         handleSaveEmployee,
         handleSaveBenefit,
-        handleDeleteItem,
-        handleAddItem,
         handleSaveData,
         hasData,
       }}

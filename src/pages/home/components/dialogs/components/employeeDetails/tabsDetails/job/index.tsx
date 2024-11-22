@@ -1,17 +1,15 @@
-// ** React
-import { useEffect, useState } from "react";
-
 // ** MUI
 import { Box, Typography } from "@mui/material";
-import { DataGrid, GridRowsProp } from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
 
 // ** Hooks
 import { useModal } from "@/hooks/useModal";
 import { useDataStateContext } from "@/hooks/useDataStateContext";
+import { useHandleDeleteItem } from "@/hooks/useDelete";
+import { useHandleAddItem } from "@/hooks/useAddItem";
 
 // ** Types
-import { IEmployee, IEmploymentStatus, IJobInfo, ISalary } from "@/const/types";
-import { IModalTypeContext } from "@/context/modal/types";
+import { IEmploymentStatus, IJobInfo, ISalary } from "@/const/types";
 
 // ** Context
 import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
@@ -20,124 +18,171 @@ import { ColumnsSalary } from "./columnsJob/salaryInfo";
 import { ColumnsEmploymentStatus } from "./columnsJob/statusInfo";
 
 export const JobInfoTab: React.FC = () => {
-  const { handleClickOpenDialog, setTypeModalDetailsEdit } =
-    useModal() as IModalTypeContext;
-  const { dataForDialog } = useModal() as {
-    dataForDialog: IEmployee | null;
-  };
-  const { handleDeleteItem, handleAddItem } = useDataStateContext();
+  const { handleClickOpenDialog, dataForDialog, setTypeModalDetailsEdit } = useModal();
 
-  const [jobInfoRows, setJobInfoRows] = useState<GridRowsProp<IJobInfo>>([]);
-  const [employmentStatusRows, setEmploymentStatusRows] = useState<
-    GridRowsProp<IEmploymentStatus>
-  >([]);
-  const [salaryRows, setSalaryRows] = useState<GridRowsProp<ISalary>>([]);
+const dialogData = dataForDialog as { eId: number } | null;
+  const { data } = useDataStateContext();
+  const handleDeleteItem = useHandleDeleteItem();
+  const handleAddItem = useHandleAddItem();
 
-  // Populate rows based on `dataForDialog`
-  useEffect(() => {
-    if (dataForDialog) {
-      setJobInfoRows(dataForDialog.jobInfo || []);
-      setEmploymentStatusRows(dataForDialog.employmentStatus || []);
-      setSalaryRows(dataForDialog.salary || []);
-    }
-  }, [dataForDialog]);
-
-  // JobInfo callbacks
-  const handleEditJobInfo = (data: IJobInfo) => {
-    console.log("IJobInfo");
-    // handleClickOpenDialog("Edit Details", data);
-    // setTypeModalDetailsEdit("Edit job info details");
-  };
-
-  const addJobInfoItem = (item: IJobInfo) => {
-    if (item.id && dataForDialog?.eId) {
-      handleAddItem(item, "jobInfo", dataForDialog.eId);
-      setJobInfoRows((prev) => [...prev, item]);
-    }
-  };
-
-  const deleteJobInfoItem = (item: IJobInfo) => {
-    if (item.customBambooTalbeRowId && dataForDialog?.eId) {
-      handleDeleteItem(item.customBambooTalbeRowId, "item", dataForDialog.eId, "jobInfo");
-      setJobInfoRows((prev) =>
-        prev.filter(
-          (row) => row.customBambooTalbeRowId !== item.customBambooTalbeRowId
-        )
+  const getJobInfoRows = (): IJobInfo[] => {
+    if (dataForDialog && dialogData?.eId) {
+      const employee = data.employees.find(
+        (emp) => emp.eId === dialogData.eId
       );
+      return employee?.jobInfo || [];
     }
+    return [];
+  };
+
+  const getEmploymentStatusRows = (): IEmploymentStatus[] => {
+    if (dataForDialog && dialogData?.eId) {
+      const employee = data.employees.find(
+        (emp) => emp.eId === dialogData.eId
+      );
+      return employee?.employmentStatus || [];
+    }
+    return [];
+  };
+
+  const getSalaryRows = (): ISalary[] => {
+    if (dataForDialog && dialogData?.eId) {
+      const employee = data.employees.find(
+        (emp) => emp.eId === dialogData.eId
+      );
+      return employee?.salary || [];
+    }
+    return [];
   };
 
   const jobInfoCallbacks: ContextMenuItemsCallbacks<IJobInfo> = {
-    openForm: (data) => handleEditJobInfo(data),
-    addItem: (data) => addJobInfoItem(data),
-    deleteItem: (data) => deleteJobInfoItem(data),
+    openForm: (data) => {
+      handleClickOpenDialog("Edit Details", data);
+    setTypeModalDetailsEdit("Edit benefits details");
+    },
+    addItem: (data) => {
+      if (dataForDialog && dialogData?.eId) {
+        handleAddItem({
+          item: data,
+          type: "item",
+          eId: dialogData.eId,
+          nestedType: "jobInfo",
+        });
+      }
+    },
+
+    deleteItem: (data) => {
+      if (dataForDialog && dialogData?.eId) {
+        handleDeleteItem({
+          id: data.customBambooTalbeRowId,
+          type: "item",
+          eId: dialogData.eId,
+          nestedType: "jobInfo",
+        });
+      }
+    },
   };
 
-  const jobInfoColumns = ColumnsJobInfo(handleEditJobInfo, jobInfoCallbacks);
+  const employmentStatusCallbacks: ContextMenuItemsCallbacks<IEmploymentStatus> =
+    {
+      openForm: (data) => {
+        handleClickOpenDialog("Edit Details", data);
+      },
+      addItem: (data) => {
+        if (dataForDialog && dialogData?.eId) {
+          handleAddItem({
+            item: data,
+            type: "item",
+            eId: dialogData.eId,
+            nestedType: "employmentStatus",
+          });
+        }
+      },
+      deleteItem: (data) => {
+        if (dataForDialog && dialogData?.eId) {
+          handleDeleteItem({
+            id: data.customBambooTalbeRowId,
+            type: "item",
+            eId: dialogData.eId,
+            nestedType: "employmentStatus",
+          });
+        }
+      },
+    };
 
-  const employmentStatusColumns = ColumnsEmploymentStatus(() => {},
-  {} as ContextMenuItemsCallbacks<IEmploymentStatus>);
+  const salaryCallbacks: ContextMenuItemsCallbacks<ISalary> = {
+    openForm: (data) => {
+      handleClickOpenDialog("Edit Details", data);
+    },
+    addItem: (data) => {
+      if (dataForDialog && dialogData?.eId) {
+        handleAddItem({
+          item: data,
+          type: "item",
+          eId: dialogData.eId,
+          nestedType: "salary",
+        });
+      }
+    },
+    deleteItem: (data) => {
+      if (dataForDialog && dialogData?.eId) {
+        handleDeleteItem({
+          id: data.customBambooTalbeRowId,
+          type: "item",
+          eId: dialogData.eId,
+          nestedType: "salary",
+        });
+      }
+    },
+  };
 
-  const salaryColumns = ColumnsSalary(() => {},
-  {} as ContextMenuItemsCallbacks<ISalary>);
+  // Columns
+  const jobInfoColumns = ColumnsJobInfo(
+    jobInfoCallbacks.openForm,
+    jobInfoCallbacks
+  );
+  const employmentStatusColumns = ColumnsEmploymentStatus(
+    employmentStatusCallbacks.openForm,
+    employmentStatusCallbacks
+  );
+  const salaryColumns = ColumnsSalary(
+    salaryCallbacks.openForm,
+    salaryCallbacks
+  );
 
   return (
     <Box>
       <Box>
-        <Typography
-          sx={{
-            textAlign: "center",
-            mt: 1,
-          }}
-        >
+        <Typography sx={{ textAlign: "center", mt: 1 }}>
           Employment Status
         </Typography>
-        {employmentStatusRows.length ? (
-          <DataGrid<IEmploymentStatus>
-            rows={employmentStatusRows}
-            columns={employmentStatusColumns}
-            getRowId={(row) => row.customBambooTalbeRowId}
-          />
-        ) : (
-          <DataGrid<IEmploymentStatus> columns={employmentStatusColumns} />
-        )}
+        <DataGrid<IEmploymentStatus>
+          rows={getEmploymentStatusRows()}
+          columns={employmentStatusColumns}
+          getRowId={(row) => row.customBambooTalbeRowId}
+        />
       </Box>
 
       <Box>
-        <Typography
-          sx={{
-            textAlign: "center",
-            mt: 1,
-          }}
-        >
+        <Typography sx={{ textAlign: "center", mt: 1 }}>
           Salary Information
         </Typography>
-        {salaryRows.length > 0 && (
-          <DataGrid<ISalary>
-            rows={salaryRows}
-            columns={salaryColumns}
-            getRowId={(row) => row.customBambooTalbeRowId}
-          />
-        )}
+        <DataGrid<ISalary>
+          rows={getSalaryRows()}
+          columns={salaryColumns}
+          getRowId={(row) => row.customBambooTalbeRowId}
+        />
       </Box>
+
       <Box>
-        <Typography
-          sx={{
-            textAlign: "center",
-            mt: 1,
-          }}
-        >
+        <Typography sx={{ textAlign: "center", mt: 1 }}>
           Job Information
         </Typography>
-        {jobInfoRows.length ? (
-          <DataGrid<IJobInfo>
-            rows={jobInfoRows}
-            columns={jobInfoColumns}
-            getRowId={(row) => row.customBambooTalbeRowId}
-          />
-        ) : (
-          <DataGrid<IJobInfo> columns={jobInfoColumns} />
-        )}
+        <DataGrid<IJobInfo>
+          rows={getJobInfoRows()}
+          columns={jobInfoColumns}
+          getRowId={(row) => row.customBambooTalbeRowId}
+        />
       </Box>
     </Box>
   );

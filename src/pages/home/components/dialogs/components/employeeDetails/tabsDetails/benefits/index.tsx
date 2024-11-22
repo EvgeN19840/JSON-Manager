@@ -1,38 +1,44 @@
-// ** React
-import { useEffect, useState } from "react";
-
 // ** MUI
 import { Box } from "@mui/material";
-import { DataGrid, GridRowsProp } from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
 
 // ** Hooks
 import { useModal } from "@/hooks/useModal";
 import { useDataStateContext } from "@/hooks/useDataStateContext";
+import { useHandleDeleteItem } from "@/hooks/useDelete";
 
 // ** Types
-import { IEmployee, IEmployeeBenefit } from "@/const/types";
-import { IModalTypeContext } from "@/context/modal/types";
+import { IEmployeeBenefit } from "@/const/types";
 
 // ** Const
 import { ColumnsBenefit } from "./columnsBenefit";
 
 // ** Context
 import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
+import { useHandleAddItem } from "@/hooks/useAddItem";
+import { IEmployeeDataForDialog } from "@/context/modal/types";
 
 export const BenefitsTab: React.FC = () => {
-  const { handleClickOpenDialog, setTypeModalDetailsEdit } =
-    useModal() as IModalTypeContext;
-  const { dataForDialog } = useModal() as {
-    dataForDialog: IEmployee | null;
-  };
-  const { handleDeleteItem, handleAddItem } = useDataStateContext();
+  const { handleClickOpenDialog, setTypeModalDetailsEdit, dataForDialog } =
+    useModal();
+    const dialogData = dataForDialog as { eId: number } | null;
+  const { data } = useDataStateContext();
+  const handleDeleteItem = useHandleDeleteItem();
+  const handleAddItem = useHandleAddItem();
 
-  const [rows, setRows] = useState<GridRowsProp<IEmployeeBenefit>>([]);
-  useEffect(() => {
-    if (dataForDialog) {
-      setRows(dataForDialog.benefits || []);
+  const rows = (() => {
+    if (
+      dataForDialog &&
+      typeof dataForDialog === "object" &&
+      dialogData
+    ) {
+      const employee = data.employees.find(
+        (emp) => emp.eId === (dataForDialog as IEmployeeDataForDialog).eId
+      );
+      return employee?.benefits || [];
     }
-  }, [dataForDialog]);
+    return [];
+  })();
 
   const handleEditClick = (data: IEmployeeBenefit) => {
     handleClickOpenDialog("Edit Details", data);
@@ -40,16 +46,23 @@ export const BenefitsTab: React.FC = () => {
   };
 
   const addItem = (benefit: IEmployeeBenefit) => {
-    if (benefit.id && dataForDialog?.eId) {
-      handleAddItem(benefit, "item", dataForDialog.eId);
-      setRows((prev) => [...prev, benefit]);
+    if (dataForDialog && dialogData) {
+      handleAddItem({
+        item: benefit,
+        type: "item",
+        eId: dialogData.eId,
+        nestedType: "benefits",
+      });
     }
   };
-
-  const deleteItem = (benefit: IEmployeeBenefit) => {
-    if (benefit.id && dataForDialog?.eId) {
-      handleDeleteItem(benefit.id, "item", dataForDialog.eId, "benefits");
-      setRows((prev) => prev.filter((row) => row.id !== benefit.id));
+  const deleteItem = (item: IEmployeeBenefit) => {
+    if (dataForDialog && dialogData) {
+      handleDeleteItem({
+        id: item.id,
+        type: "item",
+        eId: (dataForDialog as IEmployeeDataForDialog).eId,
+        nestedType: "benefits",
+      });
     }
   };
 
@@ -66,9 +79,7 @@ export const BenefitsTab: React.FC = () => {
 
   return (
     <Box>
-      {rows.length > 0 ? (
-        <DataGrid<IEmployeeBenefit> rows={rows} columns={columns} />
-      ) : null}
+      <DataGrid<IEmployeeBenefit> rows={rows} columns={columns} />
     </Box>
   );
 };

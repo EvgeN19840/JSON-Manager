@@ -8,17 +8,6 @@ export interface DataContextType {
   setEIdSetectedEmploee: (eId: number) => void;
   parsedData: string | null;
   setParsedData: (parsedData: string | null) => void;
-  handleDeleteItem: (
-    id: number | string,
-    type: "employees" | "benefits" | "item",
-    eId?: number | string,
-    nestedType?: "salary" | "employmentStatus" | "jobInfo" | "depositAccounts" | "benefits"
-  ) => void;
-  handleAddItem: (
-    item: IEmployee | ISystemBenefit,
-    type: "employees" | "benefits" | "item",
-    eId?: number | string
-  ) => void;
   handleSaveEmployee: (data: IEmployee) => void;
   handleSaveBenefit: (data: ISystemBenefit) => void;
   handleSaveData: <

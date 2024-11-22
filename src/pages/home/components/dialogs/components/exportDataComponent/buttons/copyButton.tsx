@@ -6,10 +6,11 @@ import { useNotification } from "@/hooks/useNotification";
 
 // ** MUI
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { IModalType } from "@/context/modal/types";
 
 
 interface ICopyButtonProps {
-  textToCopy: string | null;
+  textToCopy: IModalType| null;
 }
 
 export const CopyButton: React.FC<ICopyButtonProps> = ({ textToCopy }) => {

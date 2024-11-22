@@ -20,7 +20,7 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
     useState<IModalTypeDetailsEdits>(null);
   const [isDialogOpen, setDialogOpen] = useState<boolean>(false);
   const [dataForDialog, setDataForDialog] = useState<
-    IDataForDialog | string | null
+    IDataForDialog |  null
   >(null);
   const handleClickOpenDialog = (
     typeModal: IModalType,
@@ -34,13 +34,13 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
         setDataForDialog(null);
         break;
       case "Edit user":
-        setDataForDialog(item as IEmployee[]);
+        setDataForDialog(item as IEmployee);
         break;
       case "Edit benefits":
         setDataForDialog(item as ISystemBenefit[]);
         break;
       case "Details":
-        setDataForDialog(item as IEmployee[]);
+        setDataForDialog(item as IEmployee);
         break;
       case "Edit Details":
         setDataForDialog(item as IEmployeeBenefit[]);
@@ -67,6 +67,7 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
         typeModalDetailsEdit,
         closeDialog,
         dataForDialog,
+        setDataForDialog,
         setTypeModal,
         setTypeModalDetailsEdit,
         isDialogOpen,

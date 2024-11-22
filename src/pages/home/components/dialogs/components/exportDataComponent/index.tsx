@@ -18,6 +18,7 @@ import { downloadJSONFileAsTXT } from "@/shared/utils";
 
 // ** Types
 import { ITypeJSON } from "@/const/types";
+import { IModalType } from "@/context/modal/types";
 
 export const ExportDataComponent: React.FC = () => {
   const { showNotification } = useNotification();
@@ -25,15 +26,14 @@ export const ExportDataComponent: React.FC = () => {
   const [inputNameFile, setInputNameFile] = useState("");
 
   const downloadFile = () => {
-    if (inputNameFile && dataForDialog) {
+    if (inputNameFile && typeof dataForDialog === "string") {
       try {
-        const jsonData: ITypeJSON = JSON.parse(dataForDialog as string);
+        const jsonData: ITypeJSON = JSON.parse(dataForDialog);
         downloadJSONFileAsTXT(inputNameFile, jsonData);
         setInputNameFile("");
         setDialogOpen(false);
       } catch (e) {
         console.log(e);
-        showNotification("Failed to parse the data for download.", "error");
       }
     } else {
       showNotification("Please enter a valid file name.", "error");
@@ -69,7 +69,7 @@ export const ExportDataComponent: React.FC = () => {
           }}
         />
         <Box sx={{ position: "absolute", top: 9, right: 8, zIndex: 1, pr: 4 }}>
-          <CopyButton textToCopy={dataForDialog as string} />
+          <CopyButton textToCopy={dataForDialog as IModalType } />
         </Box>
       </Box>
       <FormFooter

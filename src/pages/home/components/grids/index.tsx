@@ -16,34 +16,38 @@ import { useModal } from "@/hooks/useModal";
 
 // ** Components
 import { MyGrid } from "@/shared/components/grid";
+import { useHandleAddItem } from "@/hooks/useAddItem";
+import { useHandleDeleteItem } from "@/hooks/useDelete";
 
 export const Grids: FC = () => {
-  const { data, handleDeleteItem, handleAddItem,setEIdSetectedEmploee } = useDataStateContext();
+  const { data, setEIdSetectedEmploee } = useDataStateContext();
   const { handleClickOpenDialog } = useModal();
+  const handleAddItem = useHandleAddItem();
+  const handleDeleteItem = useHandleDeleteItem();
   const { activeTab } = useTabs();
 
   const deleteItem = (item: IEmployee | ISystemBenefit) => {
     if ("eId" in item) {
-      handleDeleteItem(item.eId, "employees");
+      handleDeleteItem({ id: item.eId, type: "employees" });
     } else {
-      handleDeleteItem(item.id, "benefits");
+      handleDeleteItem({ id: item.id, type: "benefits" });
     }
   };
 
   const addItem = (item: IEmployee | ISystemBenefit) => {
     if ("eId" in item) {
-      handleAddItem(item, "employees");
+      handleAddItem({ item: item, type: "employees" });
     } else {
-      handleAddItem(item, "benefits");
+      handleAddItem({ item: item, type: "benefits" });
     }
   };
 
   const handleRowDoubleClickOpenDetails = (item: IEmployee) => {
-    setEIdSetectedEmploee(item.eId)
+    setEIdSetectedEmploee(item.eId);
     handleClickOpenDialog(activeTab === "1" ? "Details" : null, item);
   };
 
-  const handleEditDialogOpen = (item: IEmployee| ISystemBenefit) => {
+  const handleEditDialogOpen = (item: IEmployee | ISystemBenefit) => {
     handleClickOpenDialog(
       activeTab === "1" ? "Edit user" : "Edit benefits",
       item
