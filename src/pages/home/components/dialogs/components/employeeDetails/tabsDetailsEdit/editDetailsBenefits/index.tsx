@@ -14,7 +14,8 @@ import { schema } from "./schema";
 
 // ** Types
 import { IEmployeeBenefit } from "@/const/types";
-import { useDefaultValues } from "./components/defaultValues";
+import { useDefaultEmployeeBenefit } from "../../../../../../../../hooks/useDefaultData";
+
 
 export const EditDetailsBenefits = () => {
   const { dataForDialog } = useModal() as {
@@ -24,7 +25,7 @@ export const EditDetailsBenefits = () => {
   const { handleClickOpenDialog } = useModal();
   const { handleSaveData, data, eIdSetectedEmploee } = useDataStateContext();
 
-  const defaultValues = useDefaultValues();
+  const defaultValues = useDefaultEmployeeBenefit();
 
   const {
     control,

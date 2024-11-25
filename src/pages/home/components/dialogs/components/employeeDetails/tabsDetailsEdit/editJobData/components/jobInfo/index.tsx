@@ -1,51 +1,34 @@
-// ** MUI
-import { Box } from "@mui/material";
-
-// ** Forms Imports
+import { Box, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { FormWrapper, FormInput, FormFooter } from "@/shared/formElements";
+import { IJobInfo } from "@/const/types";
 
-// ** Hooks
+import { jobInfoSchema } from "../../schema";
 import { useModal } from "@/hooks/useModal";
 import { useDataStateContext } from "@/hooks/useDataStateContext";
-import { useDefaultEmployeeBasicInfo } from "@/hooks/useDefaultData";
+import { useDefaultJobInfo } from "@/hooks/useDefaultData";
 
-// ** Schema
-import { schema } from "./schema";
-
-// ** Types
-import { IEmployeeBasicInfo } from "@/const/types";
-
-// ** Components
-import { FormWrapper, FormInput, FormFooter } from "@/shared/formElements";
-
-
-
-export const EditPersonalTab: React.FC = () => {
+export const JobInfo: React.FC = () => {
   const { dataForDialog } = useModal() as {
-    dataForDialog: IEmployeeBasicInfo | null;
+    dataForDialog: IJobInfo | null;
   };
-
   const { handleClickOpenDialog } = useModal();
+  const defaultValues = useDefaultJobInfo();
   const { handleSaveData, data, eIdSetectedEmploee } = useDataStateContext();
-
-  const defaultValues = useDefaultEmployeeBasicInfo();
 
   const {
     control,
     handleSubmit,
     formState: { errors, isDirty },
-  } = useForm<IEmployeeBasicInfo>({
+  } = useForm<IJobInfo>({
     defaultValues,
     mode: "onSubmit",
-    resolver: yupResolver(schema),
+    resolver: yupResolver(jobInfoSchema),
   });
 
-  const onSubmit = (formData: IEmployeeBasicInfo) => {
-    handleSaveData(
-      { ...dataForDialog, ...formData } as IEmployeeBasicInfo,
-      "personal"
-    );
+  const onSubmit = (formData: IJobInfo) => {
+    handleSaveData({ ...dataForDialog, ...formData } as IJobInfo, "jobInfo");
     const updatedEmployees = data.employees.map((employee) =>
       employee.eId === eIdSetectedEmploee
         ? { ...employee, ...formData }
@@ -56,23 +39,23 @@ export const EditPersonalTab: React.FC = () => {
       (employee) => employee.eId === eIdSetectedEmploee
     );
     handleClickOpenDialog("Details", updatedEmployee);
-
-
   };
 
   return (
     <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+      <Typography variant="h6" mt={4} mb={1}>
+        Job Info
+      </Typography>
       {Object.keys(defaultValues).map((key) => (
-        <Box key={key}>
+        <Box key={key} mb={2}>
           <FormInput
-            name={key as keyof IEmployeeBasicInfo}
+            name={key as keyof IJobInfo}
             label={key.replace(/([A-Z])/g, " $1")}
             control={control}
-            errorMessage={errors[key as keyof IEmployeeBasicInfo]?.message}
+            errorMessage={errors[key as keyof IJobInfo]?.message}
           />
         </Box>
       ))}
-
       <FormFooter
         cancelButtonText="Cancel"
         actionButtonText="Save"

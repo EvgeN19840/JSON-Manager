@@ -29,7 +29,7 @@ export const FormInput = <T extends FieldValues>({
         render={({ field: { value, onChange, onBlur } }) => (
           <TextField
             label={label}
-            value={value}
+            value={value || ""}
             onBlur={onBlur}
             type={type}
             onChange={onChange}

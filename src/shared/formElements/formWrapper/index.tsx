@@ -11,10 +11,12 @@ export const FormWrapper = ({ onSubmit, children }: FormWrapperProps) => {
     dataForDialog: IEmployee | ISystemBenefit | null;
   };
 
-  const title =
-    dataForDialog && "eId" in dataForDialog
-      ? `Edit: ${dataForDialog.firstName || ""} ${dataForDialog.lastName || ""}`
-      : "Edit Benefit";
+  const title: string =
+  dataForDialog && "eId" in dataForDialog
+    ? `Edit: ${dataForDialog.firstName || ""} ${dataForDialog.lastName || ""}`
+    : dataForDialog && "customBambooTalbeRowId" in dataForDialog
+    ? ""
+    : "Edit Benefit";
 
   return (
     <Box>

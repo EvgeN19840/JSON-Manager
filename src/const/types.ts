@@ -121,12 +121,12 @@ export interface IEmployeeBenefit {
 
 export interface ISalary {
   customBambooTalbeRowId: number;
-  salaryRate: number;
-  salaryCurrencyCode: string;
-  salaryRatePeriod: string;
+  salaryRate: number| null;
+  salaryCurrencyCode:string | null;
+  salaryRatePeriod: string | null;
   payPeriod: string | null;
   allowOvertime: boolean;
-  effectiveDate: string;
+  effectiveDate:string | null;
   changeReason: string | null;
   comment: string | null;
   overtimeRate: number | null;
@@ -134,8 +134,8 @@ export interface ISalary {
 
 export interface IJobInfo {
   customBambooTalbeRowId: number;
-  effectiveDate: string;
-  jobTitle: string;
+  effectiveDate: string| null;
+  jobTitle: string| null;
   department: string | null;
   location: string | null;
   division: string | null;
@@ -145,8 +145,8 @@ export interface IJobInfo {
 
 export interface IEmploymentStatus {
   customBambooTalbeRowId: number;
-  effectiveDate: string;
-  employmentStatus: string;
+  effectiveDate:string | null;
+  employmentStatus:string | null;
   comment: string | null;
 }
 

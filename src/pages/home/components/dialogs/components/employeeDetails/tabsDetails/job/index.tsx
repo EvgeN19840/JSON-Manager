@@ -58,7 +58,7 @@ const dialogData = dataForDialog as { eId: number } | null;
   const jobInfoCallbacks: ContextMenuItemsCallbacks<IJobInfo> = {
     openForm: (data) => {
       handleClickOpenDialog("Edit Details", data);
-    setTypeModalDetailsEdit("Edit benefits details");
+    setTypeModalDetailsEdit("Edit job");
     },
     addItem: (data) => {
       if (dataForDialog && dialogData?.eId) {
@@ -87,6 +87,7 @@ const dialogData = dataForDialog as { eId: number } | null;
     {
       openForm: (data) => {
         handleClickOpenDialog("Edit Details", data);
+        setTypeModalDetailsEdit("Edit status");
       },
       addItem: (data) => {
         if (dataForDialog && dialogData?.eId) {
@@ -113,6 +114,7 @@ const dialogData = dataForDialog as { eId: number } | null;
   const salaryCallbacks: ContextMenuItemsCallbacks<ISalary> = {
     openForm: (data) => {
       handleClickOpenDialog("Edit Details", data);
+      setTypeModalDetailsEdit("Edit salary");
     },
     addItem: (data) => {
       if (dataForDialog && dialogData?.eId) {
@@ -135,8 +137,6 @@ const dialogData = dataForDialog as { eId: number } | null;
       }
     },
   };
-
-  // Columns
   const jobInfoColumns = ColumnsJobInfo(
     jobInfoCallbacks.openForm,
     jobInfoCallbacks

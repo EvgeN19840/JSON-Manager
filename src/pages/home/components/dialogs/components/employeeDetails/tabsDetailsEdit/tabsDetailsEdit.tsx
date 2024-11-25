@@ -4,6 +4,9 @@ import { useModal } from "@/hooks/useModal";
 import { EditDetailsBenefits } from "./editDetailsBenefits";
 import { CustomDialog } from "@/shared/components/customDialog";
 import { EditPersonalTab } from "./editPersonal";
+import { JobInfo } from "./editJobData/components/jobInfo";
+import { Salary } from "./editJobData/components/salary";
+import { EmploymentStatus } from "./editJobData/components/status";
 
 export const TabsDetailsEdit: React.FC = () => {
   const { typeModalDetailsEdit, isDialogOpen, closeDialog } = useModal();
@@ -12,21 +15,19 @@ export const TabsDetailsEdit: React.FC = () => {
       case "Edit benefits details":
         return <EditDetailsBenefits />;
       case "Edit Personal":
-        return <EditPersonalTab/>;
-      case "Edit deposit accounts":
-        return "Edit deposit accounts";
-      case "Edit custom income":
-        return "Edit custom income";
-      case "Edit custom deductions":
-        return "Edit custom deductions";
+        return <EditPersonalTab />;
+      case "Edit job":
+        return <JobInfo />;
+      case "Edit salary":
+        return <Salary />;
+      case "Edit status":
+        return <EmploymentStatus />;
       case "Edit Bonus":
         return "Edit Bonus";
       default:
         return <Typography>Select a tab to view details.</Typography>;
     }
   };
-
-
 
   return (
     <CustomDialog onClose={closeDialog} open={isDialogOpen} maxWidth="sm">

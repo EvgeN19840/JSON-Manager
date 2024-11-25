@@ -9,7 +9,14 @@ import { useDataStateContext } from "@/hooks/useDataStateContext";
 
 // ** Types
 import { IDataForDialog, IModalType, IModalTypeDetailsEdits } from "../types";
-import { IEmployee, IEmployeeBenefit, ISystemBenefit } from "@/const/types";
+import {
+  IEmployee,
+  IEmployeeBenefit,
+  IEmploymentStatus,
+  IJobInfo,
+  ISalary,
+  ISystemBenefit,
+} from "@/const/types";
 
 export const ModalProvider: React.FC<{ children: ReactNode }> = ({
   children,
@@ -19,12 +26,18 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
   const [typeModalDetailsEdit, setTypeModalDetailsEdit] =
     useState<IModalTypeDetailsEdits>(null);
   const [isDialogOpen, setDialogOpen] = useState<boolean>(false);
-  const [dataForDialog, setDataForDialog] = useState<
-    IDataForDialog |  null
-  >(null);
+  const [dataForDialog, setDataForDialog] = useState<IDataForDialog | null>(
+    null
+  );
   const handleClickOpenDialog = (
     typeModal: IModalType,
-    item?: IDataForDialog | IEmployee | ISystemBenefit
+    item?:
+      | IDataForDialog
+      | IEmployee
+      | ISystemBenefit
+      | IJobInfo
+      | IEmploymentStatus
+      | ISalary
   ) => {
     switch (typeModal) {
       case "Export data":

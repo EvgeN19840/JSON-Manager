@@ -5,12 +5,7 @@ import { ReactNode, useState } from "react";
 import { DataStateContext } from "../dataStateContext";
 
 // ** Types
-import {
-  IEmployee,
-  ISystemBenefit,
-  ITypeJSON,
-} from "@/const/types";
-
+import { IEmployee, ISystemBenefit, ITypeJSON } from "@/const/types";
 
 export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
   children,
@@ -47,13 +42,47 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
     }>
   >(
     value: T,
-    type: "employeeBenefit" | "depositAccount" | "bonuses" | "personal"
+    type:
+      | "employeeBenefit"
+      | "depositAccount"
+      | "bonuses"
+      | "personal"
+      | "jobInfo"
+      | "salary"
+      | "status"
   ) => {
     setData((prevData) => ({
       ...prevData,
       employees: prevData.employees.map((employee) => {
         if (employee.eId !== eIdSetectedEmploee) return employee;
         switch (type) {
+          case "jobInfo":
+            return {
+              ...employee,
+              jobInfo: employee.jobInfo.map((info) =>
+                info.customBambooTalbeRowId === value.customBambooTalbeRowId
+                  ? { ...info, ...value }
+                  : info
+              ),
+            };
+          case "salary":
+            return {
+              ...employee,
+              salary: employee.salary.map((item) =>
+                item.customBambooTalbeRowId === value.customBambooTalbeRowId
+                  ? { ...item, ...value }
+                  : item
+              ),
+            };
+          case "status":
+            return {
+              ...employee,
+              employmentStatus: employee.employmentStatus.map((status) =>
+                status.customBambooTalbeRowId === value.customBambooTalbeRowId
+                  ? { ...status, ...value }
+                  : status
+              ),
+            };
           case "personal":
             return { ...employee, ...value };
           case "employeeBenefit":
@@ -90,8 +119,7 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
     }));
   };
 
-
-   const hasData = !!(data?.benefits?.length || data?.employees?.length);
+  const hasData = !!(data?.benefits?.length || data?.employees?.length);
 
   return (
     <DataStateContext.Provider
