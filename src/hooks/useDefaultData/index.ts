@@ -5,6 +5,7 @@ import {
   IJobInfo,
   IEmploymentStatus,
   ISalary,
+  IDepositAccounts,
 } from "@/const/types";
 
 export const useDefaultEmployeeBasicInfo = (): IEmployeeBasicInfo => {
@@ -71,6 +72,32 @@ export const useDefaultJobInfo = (): IJobInfo => {
     reportsTo: dataForDialog?.reportsTo || null,
   };
 };
+
+
+
+
+
+export const useDefaultDepositAccounts = (): IDepositAccounts => {
+  const { dataForDialog } = useModal() as {
+    dataForDialog: IDepositAccounts | null;
+  };
+
+  return {
+    orderNumber: dataForDialog?.orderNumber || null,
+    bank: dataForDialog?.bank || null,
+    accountName: dataForDialog?.accountName || null,
+    accountNumber: dataForDialog?.accountNumber || null,
+    currencyCode: dataForDialog?.currencyCode || null,
+    accountType: dataForDialog?.accountType || null,
+    transitNumber: dataForDialog?.transitNumber || null,
+    depositAmount: dataForDialog?.depositAmount || null,
+    description: dataForDialog?.description || null,
+    customBambooTalbeRowId: dataForDialog?.customBambooTalbeRowId || 0,
+    isPercentValue: dataForDialog?.isPercentValue || false, 
+  };
+};
+
+
 
 export const useDefaultEmploymentStatus = (): IEmploymentStatus => {
   const { dataForDialog } = useModal() as {

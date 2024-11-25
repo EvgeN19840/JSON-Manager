@@ -13,7 +13,7 @@ export interface IModalTypeContext {
   setDataForDialog: (data: IDataForDialog) => void,
   setDialogOpen: (data: boolean) => void;
   closeDialog: () => void;
-  handleClickOpenDialog: (actionType: IModalType, item?: IDataForDialog | IEmployee | ISystemBenefit | IJobInfo | IEmploymentStatus | ISalary) => void;
+  handleClickOpenDialog: (actionType: IModalType, item?: IDepositAccounts| IDataForDialog | IEmployee | ISystemBenefit | IJobInfo | IEmploymentStatus | ISalary) => void;
 }
 export interface IEmployeeDataForDialog extends IEmployee {
   eId: number;

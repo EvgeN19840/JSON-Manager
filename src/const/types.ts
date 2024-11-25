@@ -65,13 +65,13 @@ export interface IEmployee {
 }
 
 export interface IDepositAccounts {
-  orderNumber: number;
-  bank: string;
-  accountName: string;
-  accountNumber: string;
-  currencyCode: string;
-  accountType: string;
-  transitNumber: string;
+  orderNumber: number | null;
+  bank: string | null;
+  accountName: string | null;
+  accountNumber: string | null;
+  currencyCode: string | null;
+  accountType: string | null;
+  transitNumber: string | null;
   depositAmount: number | null;
   description: string | null;
   customBambooTalbeRowId: number;

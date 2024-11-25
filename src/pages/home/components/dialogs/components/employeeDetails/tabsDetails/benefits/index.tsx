@@ -21,24 +21,18 @@ import { IEmployeeDataForDialog } from "@/context/modal/types";
 export const BenefitsTab: React.FC = () => {
   const { handleClickOpenDialog, setTypeModalDetailsEdit, dataForDialog } =
     useModal();
-    const dialogData = dataForDialog as { eId: number } | null;
+  const dialogData = dataForDialog as { eId: number } | null;
   const { data } = useDataStateContext();
   const handleDeleteItem = useHandleDeleteItem();
   const handleAddItem = useHandleAddItem();
 
-  const rows = (() => {
-    if (
-      dataForDialog &&
-      typeof dataForDialog === "object" &&
-      dialogData
-    ) {
-      const employee = data.employees.find(
-        (emp) => emp.eId === (dataForDialog as IEmployeeDataForDialog).eId
-      );
+  const getBenefitRows = (): IEmployeeBenefit[] => {
+    if (dataForDialog && dialogData?.eId) {
+      const employee = data.employees.find((emp) => emp.eId === dialogData.eId);
       return employee?.benefits || [];
     }
     return [];
-  })();
+  };
 
   const handleEditClick = (data: IEmployeeBenefit) => {
     handleClickOpenDialog("Edit Details", data);
@@ -79,7 +73,7 @@ export const BenefitsTab: React.FC = () => {
 
   return (
     <Box>
-      <DataGrid<IEmployeeBenefit> rows={rows} columns={columns} />
+      <DataGrid<IEmployeeBenefit> rows={getBenefitRows()} columns={columns} />
     </Box>
   );
 };

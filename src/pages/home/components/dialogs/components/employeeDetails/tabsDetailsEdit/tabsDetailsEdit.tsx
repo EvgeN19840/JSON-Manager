@@ -7,6 +7,8 @@ import { EditPersonalTab } from "./editPersonal";
 import { JobInfo } from "./editJobData/components/jobInfo";
 import { Salary } from "./editJobData/components/salary";
 import { EmploymentStatus } from "./editJobData/components/status";
+import { EditDepositAccounts } from "./editDepositAccounts";
+
 
 export const TabsDetailsEdit: React.FC = () => {
   const { typeModalDetailsEdit, isDialogOpen, closeDialog } = useModal();
@@ -24,6 +26,8 @@ export const TabsDetailsEdit: React.FC = () => {
         return <EmploymentStatus />;
       case "Edit Bonus":
         return "Edit Bonus";
+      case "Edit deposit accounts":
+        return <EditDepositAccounts />;
       default:
         return <Typography>Select a tab to view details.</Typography>;
     }
