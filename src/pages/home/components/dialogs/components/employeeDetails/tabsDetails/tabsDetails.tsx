@@ -73,7 +73,7 @@ export const TabsDetails = () => {
           <Tab label="Deposit Accounts" value="4" />
           <Tab label="Custom income" value="5" />
           <Tab label="Custom deductions" value="6" />
-          <Tab label="Bonus" value="7" />
+          <Tab label="Bonuses" value="7" />
         </TabList>
       </TabContext>
       <Box>{renderTabContent()}</Box>

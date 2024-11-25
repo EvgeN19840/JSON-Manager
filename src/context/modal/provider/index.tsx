@@ -10,6 +10,7 @@ import { useDataStateContext } from "@/hooks/useDataStateContext";
 // ** Types
 import { IDataForDialog, IModalType, IModalTypeDetailsEdits } from "../types";
 import {
+  IBonuses,
   IDepositAccounts,
   IEmployee,
   IEmployeeBenefit,
@@ -39,7 +40,8 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
       | IJobInfo
       | IEmploymentStatus
       | ISalary
-      |IDepositAccounts
+      | IDepositAccounts
+      | IBonuses
   ) => {
     switch (typeModal) {
       case "Export data":

@@ -1,15 +1,16 @@
-import { GridColDef, GridValidRowModel } from "@mui/x-data-grid";
+import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { HeaderDetails } from "../../../headerDetails";
 import { getDateFormat } from "@/shared/utils/getDateFormat";
+import { IBonuses } from "@/const/types";
+import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
+import { MyContextMenu } from "@/shared/components/myContextMenu";
+import { actionMenu } from "@/shared/components/myContextMenu/actionMenu";
 
-export const ColumnsBonuses = (): GridColDef<GridValidRowModel>[] => [
-  {
-    field: "customBambooTalbeRowId",
-    headerName: "Custom Bamboo Table Row ID",
-    minWidth: 250,
-    flex: 1,
-    renderHeader: () => <HeaderDetails title="Custom Bamboo Table Row ID" />,
-  },
+export const ColumnsBonuses = (
+  _handleEditClick: (data: IBonuses) => void,
+  callbacks: ContextMenuItemsCallbacks<IBonuses>
+): GridColDef<IBonuses>[] => [
+ 
   {
     field: "effectiveDate",
     headerName: "Effective Date",
@@ -46,5 +47,18 @@ export const ColumnsBonuses = (): GridColDef<GridValidRowModel>[] => [
     minWidth: 200,
     flex: 1,
     renderHeader: () => <HeaderDetails title="Comment" />,
+  },
+  {
+    field: "Actions",
+    width: 50,
+    align: "center",
+    renderHeader: () => "",
+    sortable: false,
+    filterable: false,
+    renderCell: (params: GridRenderCellParams<IBonuses>) => {
+      return (
+        <MyContextMenu items={actionMenu(callbacks, params)} params={params} />
+      );
+    },
   },
 ];

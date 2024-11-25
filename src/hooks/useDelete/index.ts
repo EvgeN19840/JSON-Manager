@@ -1,5 +1,5 @@
 import { useDataStateContext } from "@/hooks/useDataStateContext";
-import { useModal } from "@/hooks/useModal"; 
+import { useModal } from "@/hooks/useModal";
 import { ITypeJSON } from "@/const/types";
 
 
@@ -8,15 +8,16 @@ interface IUseHandleDeleteItemParams {
   type: "employees" | "benefits" | "item";
   eId?: string | number;
   nestedType?:
-    | "salary"
-    | "employmentStatus"
-    | "jobInfo"
-    | "depositAccounts"
-    | "benefits";
+  | "salary"
+  | "employmentStatus"
+  | "jobInfo"
+  | "depositAccounts"
+  | "benefits"
+  | "bonuses"
 }
 
 export const useHandleDeleteItem = () => {
-  const { setData } = useDataStateContext(); 
+  const { setData } = useDataStateContext();
   const { setDataForDialog } = useModal();
 
   const handleDeleteItem = ({
@@ -45,16 +46,16 @@ export const useHandleDeleteItem = () => {
         updatedData.employees = updatedData.employees.map((emp) =>
           emp.eId === eId
             ? {
-                ...emp,
-                [nestedType]: emp[nestedType]?.filter((item) => {
-                  if ("customBambooTalbeRowId" in item) {
-                    return item.customBambooTalbeRowId !== id;
-                  } else if ("id" in item) {
-                    return item.id !== id;
-                  }
-                  return true;
-                }),
-              }
+              ...emp,
+              [nestedType]: emp[nestedType]?.filter((item) => {
+                if ("customBambooTalbeRowId" in item) {
+                  return item.customBambooTalbeRowId !== id;
+                } else if ("id" in item) {
+                  return item.id !== id;
+                }
+                return true;
+              }),
+            }
             : emp
         );
         const updatedEmployee = updatedData.employees.find(
@@ -66,7 +67,7 @@ export const useHandleDeleteItem = () => {
             [nestedType]: updatedEmployee[nestedType] || [],
           });
         }
-      } 
+      }
       return updatedData;
     });
   };

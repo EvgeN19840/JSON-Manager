@@ -18,7 +18,7 @@ interface IUseHandleAddItemParams {
     item: IEmployee | ISystemBenefit | ISalary | IJobInfo | IDepositAccounts | IEmploymentStatus | IEmployeeBenefit | IBonuses | IOtherDeduction;
     type: "employees" | "benefits" | "item";
     eId?: string | number;
-    nestedType?: "salary" | "employmentStatus" | "jobInfo" | "depositAccounts" | "benefits";
+    nestedType?: "salary" | "employmentStatus" | "jobInfo" | "depositAccounts" | "benefits" | "bonuses";
 }
 
 export const useHandleAddItem = () => {

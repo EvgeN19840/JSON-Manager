@@ -6,6 +6,7 @@ import {
   IEmploymentStatus,
   ISalary,
   IDepositAccounts,
+  IBonuses,
 } from "@/const/types";
 
 export const useDefaultEmployeeBasicInfo = (): IEmployeeBasicInfo => {
@@ -74,6 +75,21 @@ export const useDefaultJobInfo = (): IJobInfo => {
 };
 
 
+export const useDefaultBonuses = (): IBonuses => {
+  const { dataForDialog } = useModal() as {
+    dataForDialog: IBonuses | null;
+  };
+
+  return {
+    customBambooTalbeRowId: dataForDialog?.customBambooTalbeRowId || 0,
+    effectiveDate: dataForDialog?.effectiveDate || "",
+    amount: dataForDialog?.amount || 0,
+    currencyCode: dataForDialog?.currencyCode || "",
+    reason: dataForDialog?.reason || null,
+    comment: dataForDialog?.comment || null,
+  };
+};
+
 
 
 
@@ -93,7 +109,7 @@ export const useDefaultDepositAccounts = (): IDepositAccounts => {
     depositAmount: dataForDialog?.depositAmount || null,
     description: dataForDialog?.description || null,
     customBambooTalbeRowId: dataForDialog?.customBambooTalbeRowId || 0,
-    isPercentValue: dataForDialog?.isPercentValue || false, 
+    isPercentValue: dataForDialog?.isPercentValue || false,
   };
 };
 

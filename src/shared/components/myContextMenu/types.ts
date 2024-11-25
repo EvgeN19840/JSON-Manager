@@ -2,19 +2,19 @@
 import { GridRenderCellParams } from "@mui/x-data-grid";
 
 //** Types
-import { IDepositAccounts, IEmployee, IEmploymentStatus, IJobInfo, ISalary, ISystemBenefit } from "@/const/types";
+import { IBonuses, IDepositAccounts, IEmployee, IEmploymentStatus, IJobInfo, ISalary, ISystemBenefit } from "@/const/types";
 
 
 export interface ContextMenuItem {
     name: string;
-    callback: (params: GridRenderCellParams<IEmployee | ISystemBenefit | IJobInfo | IEmploymentStatus | ISalary | IDepositAccounts>) => void;
+    callback: (params: GridRenderCellParams<IEmployee | ISystemBenefit | IJobInfo | IEmploymentStatus | ISalary | IBonuses | IDepositAccounts>) => void;
     disabled?: boolean;
 }
 
 export interface MyContextMenuProps {
     items: ContextMenuItem[];
     params: GridRenderCellParams<
-        IEmployee | ISystemBenefit | IJobInfo | IEmploymentStatus | ISalary | IDepositAccounts
+        IEmployee | ISystemBenefit | IJobInfo | IEmploymentStatus | ISalary | IDepositAccounts | IBonuses
     >;
     disabled?: boolean;
 }

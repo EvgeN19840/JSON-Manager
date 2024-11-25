@@ -8,6 +8,7 @@ import { JobInfo } from "./editJobData/components/jobInfo";
 import { Salary } from "./editJobData/components/salary";
 import { EmploymentStatus } from "./editJobData/components/status";
 import { EditDepositAccounts } from "./editDepositAccounts";
+import { EditBonuses } from "./editBonuses";
 
 
 export const TabsDetailsEdit: React.FC = () => {
@@ -24,8 +25,8 @@ export const TabsDetailsEdit: React.FC = () => {
         return <Salary />;
       case "Edit status":
         return <EmploymentStatus />;
-      case "Edit Bonus":
-        return "Edit Bonus";
+      case "Edit bonuses":
+        return <EditBonuses/>;
       case "Edit deposit accounts":
         return <EditDepositAccounts />;
       default:
