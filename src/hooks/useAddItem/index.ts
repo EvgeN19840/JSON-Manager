@@ -16,14 +16,32 @@ import {
 import { assignMissingIds } from "@/shared/utils";
 
 interface IUseHandleAddItemParams {
-    item: IEmployee | ISystemBenefit | ISalary | IJobInfo | IDepositAccounts | IEmploymentStatus | IEmployeeBenefit | IBonuses | IOtherDeduction |IReimbursement;
+    item:
+    | IEmployee
+    | ISystemBenefit
+    | ISalary
+    | IJobInfo
+    | IDepositAccounts
+    | IEmploymentStatus
+    | IEmployeeBenefit
+    | IBonuses
+    | IOtherDeduction
+    | IReimbursement;
     type: "employees" | "benefits" | "item";
     eId?: string | number;
-    nestedType?: "salary" | "employmentStatus" | "jobInfo" | "depositAccounts" | "benefits" | "bonuses" |"reimbursements" | "otherDeductions";
+    nestedType?:
+    | "salary"
+    | "employmentStatus"
+    | "jobInfo"
+    | "depositAccounts"
+    | "benefits"
+    | "bonuses"
+    | "reimbursements"
+    | "otherDeductions";
 }
 
 export const useHandleAddItem = () => {
-    const { setData } = useDataStateContext();
+    const { setData, data } = useDataStateContext();
     const { setDataForDialog } = useModal();
 
     const handleAddItem = ({
@@ -32,71 +50,78 @@ export const useHandleAddItem = () => {
         eId,
         nestedType,
     }: IUseHandleAddItemParams): void => {
-        setData((prevData: ITypeJSON) => {
-            const updatedData: ITypeJSON = { ...prevData };
+        const updatedData: ITypeJSON = { ...data };
 
-            if (type === "employees" && "eId" in item) {
-                const newEmployeeId = assignMissingIds(prevData, "employees");
-                const similarEmployees = prevData.employees.filter((emp) =>
-                    emp.firstName.startsWith(item.firstName)
-                );
-                const nextIndex = similarEmployees.length + 1;
+        if (type === "employees" && "eId" in item) {
+            const newEmployeeId = assignMissingIds(data, "employees");
+            const similarEmployees = data.employees.filter((emp) =>
+                emp.firstName.startsWith(item.firstName)
+            );
+            const nextIndex = similarEmployees.length + 1;
 
-                const newEmployee: IEmployee = {
-                    ...item,
-                    eId: newEmployeeId,
-                    firstName: `${item.firstName}_${nextIndex}`,
-                };
+            const newEmployee: IEmployee = {
+                ...item,
+                eId: newEmployeeId,
+                firstName: `${item.firstName}_${nextIndex}`,
+            };
 
-                updatedData.employees = [...prevData.employees, newEmployee];
-                setDataForDialog(newEmployee);
-            } else if (type === "benefits" && "id" in item) {
-                const newBenefitId = assignMissingIds(prevData, "benefits");
-                const similarBenefits = prevData.benefits.filter((benefit) =>
-                    benefit.name.startsWith(item.name)
-                );
-                const nextIndex = similarBenefits.length + 1;
+            updatedData.employees = [...data.employees, newEmployee];
+            setDataForDialog(newEmployee);
+        } else if (type === "benefits" && "id" in item) {
+            const newBenefitId = assignMissingIds(data, "benefits");
+            const similarBenefits = data.benefits.filter((benefit) =>
+                benefit.name.startsWith(item.name)
+            );
+            const nextIndex = similarBenefits.length + 1;
 
-                const newBenefit: ISystemBenefit = {
-                    ...item,
-                    id: newBenefitId.toString(),
-                    name: `${item.name}_${nextIndex}`,
-                };
+            const newBenefit: ISystemBenefit = {
+                ...item,
+                id: newBenefitId.toString(),
+                name: `${item.name}_${nextIndex}`,
+            };
 
-                updatedData.benefits = [...prevData.benefits, newBenefit];
-                setDataForDialog(updatedData.benefits);
-            } else if (type === "item" && eId && nestedType) {
-                const idKey = "customBambooTalbeRowId" in item ? "customBambooTalbeRowId" : "id";
-                const newNestedItemId = assignMissingIds(prevData, "employees", eId, nestedType, idKey);
+            updatedData.benefits = [...data.benefits, newBenefit];
+            setDataForDialog(updatedData.benefits);
+        } else if (type === "item" && eId && nestedType) {
+            const idKey =
+                "customBambooTalbeRowId" in item
+                    ? "customBambooTalbeRowId"
+                    : "id";
+            const newNestedItemId = assignMissingIds(
+                data,
+                "employees",
+                eId,
+                nestedType,
+                idKey
+            );
 
-                const newNestedItem = {
-                    ...item,
-                    [idKey]: newNestedItemId.toString(),
-                };
+            const newNestedItem = {
+                ...item,
+                [idKey]: newNestedItemId.toString(),
+            };
 
-                updatedData.employees = prevData.employees.map((emp) =>
-                    emp.eId === eId
-                        ? {
-                            ...emp,
-                            [nestedType]: [...(emp[nestedType] || []), newNestedItem],
-                        }
-                        : emp
-                );
+            updatedData.employees = data.employees.map((emp) =>
+                emp.eId === eId
+                    ? {
+                        ...emp,
+                        [nestedType]: [...(emp[nestedType] || []), newNestedItem],
+                    }
+                    : emp
+            );
 
-                const updatedEmployee = updatedData.employees.find(
-                    (emp) => emp.eId === eId
-                );
+            const updatedEmployee = updatedData.employees.find(
+                (emp) => emp.eId === eId
+            );
 
-                if (updatedEmployee) {
-                    setDataForDialog({
-                        ...updatedEmployee,
-                        [nestedType]: updatedEmployee[nestedType] || [],
-                    });
-                }
+            if (updatedEmployee) {
+                setDataForDialog({
+                    ...updatedEmployee,
+                    [nestedType]: updatedEmployee[nestedType] || [],
+                });
             }
+        }
 
-            return updatedData;
-        });
+        setData(updatedData);
     };
 
     return handleAddItem;
