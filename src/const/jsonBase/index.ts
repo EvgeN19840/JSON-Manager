@@ -50,7 +50,15 @@ export const employeeData = {
           "isPercentValue": false
         }
       ],
-      "reimbursements": [],
+      "reimbursements": [{
+        "name": "One time reimb.",
+        "startDate": null,
+        "endDate": "2024-09-02T00:00:00Z",
+        "payrollOperationFrequency": "OneTime",
+        "customBambooTableRowId": 178,
+        "value": 20,
+        "currencyCode": "KYD"
+      },],
       "loansAndSalaryAdvances": [
         {
           "name": "Advance",

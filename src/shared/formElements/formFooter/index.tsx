@@ -45,13 +45,11 @@ export const FormFooter: React.FC<FormFooterProps> = ({
           {cancelButtonText}
         </Button>
 
-        <Button
-          variant="contained"
-          onClick={addBaseEmployee}
-          disabled={!canAddBaseEmployee}
-        >
-         Add Base Employee
-        </Button>
+        {canAddBaseEmployee && (
+          <Button variant="contained" onClick={addBaseEmployee}>
+            Add Base Employee
+          </Button>
+        )}
         <Button
           variant="contained"
           onClick={buttonAction}

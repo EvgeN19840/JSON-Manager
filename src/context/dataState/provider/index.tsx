@@ -50,6 +50,8 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
       | "jobInfo"
       | "salary"
       | "status"
+      | "reimbursements"
+      | "otherDeductions"
   ) => {
     setData((prevData) => ({
       ...prevData,
@@ -101,12 +103,29 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
                   : bonus
               ),
             };
-
           case "depositAccount":
             return {
               ...employee,
               depositAccounts: employee.depositAccounts.map((account) =>
                 account.customBambooTalbeRowId === value.customBambooTalbeRowId
+                  ? { ...account, ...value }
+                  : account
+              ),
+            };
+          case "reimbursements":
+            return {
+              ...employee,
+              reimbursements: employee.reimbursements.map((account) =>
+                account.customBambooTableRowId === value.customBambooTalbeRowId
+                  ? { ...account, ...value }
+                  : account
+              ),
+            };
+          case "otherDeductions":
+            return {
+              ...employee,
+              otherDeductions: employee.otherDeductions.map((account) =>
+                account.customBambooTableRowId === value.customBambooTalbeRowId
                   ? { ...account, ...value }
                   : account
               ),
