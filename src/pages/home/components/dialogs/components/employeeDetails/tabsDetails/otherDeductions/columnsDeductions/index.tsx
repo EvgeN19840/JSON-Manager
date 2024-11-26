@@ -1,10 +1,16 @@
 // ** Types
-import { GridColDef, GridValidRowModel } from "@mui/x-data-grid";
-import { HeaderDetails } from "../../../headerDetails";
+import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { getDateFormat } from "@/shared/utils/getDateFormat";
+import { MyContextMenu } from "@/shared/components/myContextMenu";
+import { HeaderDetails } from "../../../headerDetails";
+import { IOtherDeduction } from "@/const/types";
+import { actionMenu } from "@/shared/components/myContextMenu/actionMenu";
+import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
 
-
-export const ColumnsDeductions = (): GridColDef<GridValidRowModel>[] =>  [
+export const ColumnsDeductions = (
+  _handleEditClick: (data: IOtherDeduction) => void,
+  callbacks: ContextMenuItemsCallbacks<IOtherDeduction>
+): GridColDef<IOtherDeduction>[] => [
   {
     field: "name",
     headerName: "Name",
@@ -56,6 +62,17 @@ export const ColumnsDeductions = (): GridColDef<GridValidRowModel>[] =>  [
     flex: 1,
     renderHeader: () => <HeaderDetails title="Currency Code" />,
   },
+  {
+    field: "Actions",
+    width: 50,
+    align: "center",
+    renderHeader: () => "",
+    sortable: false,
+    filterable: false,
+    renderCell: (params: GridRenderCellParams<IOtherDeduction>) => {
+      return (
+        <MyContextMenu items={actionMenu(callbacks, params)} params={params} />
+      );
+    },
+  },
 ];
-
-

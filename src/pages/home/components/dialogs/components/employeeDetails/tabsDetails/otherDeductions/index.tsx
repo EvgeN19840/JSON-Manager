@@ -1,6 +1,6 @@
 // ** MUI
-import { Box, Typography } from "@mui/material";
-import { DataGrid, GridRowsProp } from "@mui/x-data-grid";
+import { Box } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 
 // ** Hooks
 import { useModal } from "@/hooks/useModal";
@@ -10,37 +10,64 @@ import { IOtherDeduction } from "@/const/types";
 
 // ** Columns
 import { ColumnsDeductions } from "./columnsDeductions";
+import { useDataStateContext } from "@/hooks/useDataStateContext";
+import { useHandleDeleteItem } from "@/hooks/useDelete";
+import { useHandleAddItem } from "@/hooks/useAddItem";
+import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
 
 export const OtherDeductionTab: React.FC = () => {
-  const { dataForDialog } = useModal();
-  const otherDeductionData =(dataForDialog as { otherDeductions?: IOtherDeduction[] })?.otherDeductions || [];
+  const { handleClickOpenDialog, dataForDialog, setTypeModalDetailsEdit } =
+  useModal();
+const dialogData = dataForDialog as { eId: number } | null;
+const { data } = useDataStateContext();
+const handleDeleteItem = useHandleDeleteItem();
+const handleAddItem = useHandleAddItem();
 
-  const rows: GridRowsProp = otherDeductionData.map((deduction) => ({
-    id: deduction.customBambooTableRowId,
-    ...deduction,
-  }));
+const getDeductionsRows = (): IOtherDeduction[] => {
+  if (dataForDialog && dialogData?.eId) {
+    const employee = data.employees.find((emp) => emp.eId === dialogData.eId);
+    return employee?.otherDeductions || [];
+  }
+  return [];
+};
 
+const deductionsCallbacks: ContextMenuItemsCallbacks<IOtherDeduction> = {
+  openForm: (data) => {
+    handleClickOpenDialog("Edit Details", data);
+    setTypeModalDetailsEdit("Edit deductions");
+  },
+  addItem: (data) => {
+    if (dataForDialog && dialogData?.eId) {
+      handleAddItem({
+        item: data,
+        type: "item",
+        eId: dialogData.eId,
+        nestedType: "otherDeductions",
+      });
+    }
+  },
+  deleteItem: (data) => {
+    if (dataForDialog && dialogData?.eId) {
+      handleDeleteItem({
+        id: data.customBambooTableRowId,
+        type: "item",
+        eId: dialogData.eId,
+        nestedType: "otherDeductions",
+      });
+    }
+  },
+};
+  const deductionsColumns = ColumnsDeductions(
+    deductionsCallbacks.openForm,
+    deductionsCallbacks
+  );
   return (
     <Box>
-      {otherDeductionData.length > 0 ? (
-        <DataGrid
-          rows={rows}
-          columns={ColumnsDeductions()}
-        
-        />
-      ) : (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "10rem",
-            textAlign: "center",
-          }}
-        >
-          <Typography>No deduction data available.</Typography>
-        </Box>
-      )}
+      <DataGrid<IOtherDeduction>
+        rows={getDeductionsRows()}
+        getRowId={(row) => row.customBambooTableRowId}
+        columns={deductionsColumns}
+      />
     </Box>
   );
 };

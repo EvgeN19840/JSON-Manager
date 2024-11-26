@@ -8,6 +8,7 @@ import {
   IDepositAccounts,
   IBonuses,
   IReimbursement,
+  IOtherDeduction,
 } from "@/const/types";
 
 export const useDefaultEmployeeBasicInfo = (): IEmployeeBasicInfo => {
@@ -131,6 +132,22 @@ export const useDefaultDepositAccounts = (): IDepositAccounts => {
   };
 };
 
+
+export const useDefaultOtherDeduction = (): IOtherDeduction => {
+  const { dataForDialog } = useModal() as {
+    dataForDialog: IOtherDeduction | null;
+  };
+
+  return {
+    name: dataForDialog?.name || "",
+    startDate: dataForDialog?.startDate || null,
+    endDate: dataForDialog?.endDate || null,
+    payrollOperationFrequency: dataForDialog?.payrollOperationFrequency || "",
+    customBambooTableRowId: dataForDialog?.customBambooTableRowId || 0,
+    value: dataForDialog?.value || 0,
+    currencyCode: dataForDialog?.currencyCode || "",
+  };
+};
 
 
 export const useDefaultEmploymentStatus = (): IEmploymentStatus => {

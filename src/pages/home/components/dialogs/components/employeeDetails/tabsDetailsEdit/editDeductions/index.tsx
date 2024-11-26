@@ -1,48 +1,36 @@
-// ** MUI
-import { Box } from "@mui/material";
-
-// ** Forms Imports
+import { Box, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-
-// ** Hooks
 import { useModal } from "@/hooks/useModal";
 import { useDataStateContext } from "@/hooks/useDataStateContext";
-import { useDefaultReimbursement } from "@/hooks/useDefaultData";
-
-// ** Schema
+import { FormWrapper, FormInput, FormFooter } from "@/shared/formElements";
+import { IOtherDeduction } from "@/const/types";
+import { useDefaultOtherDeduction } from "@/hooks/useDefaultData";
 import { schema } from "./schema";
 
-// ** Types
-import { IReimbursement } from "@/const/types";
-
-// ** Components
-import { FormWrapper, FormInput, FormFooter } from "@/shared/formElements";
-
-export const EditReimbursementTab: React.FC = () => {
+export const EditDeductions: React.FC = () => {
   const { dataForDialog } = useModal() as {
-    dataForDialog: IReimbursement | null;
+    dataForDialog: IOtherDeduction | null;
   };
+  const defaultValues = useDefaultOtherDeduction();
 
   const { handleClickOpenDialog } = useModal();
   const { handleSaveData, data, eIdSetectedEmploee } = useDataStateContext();
-
-  const defaultValues = useDefaultReimbursement();
 
   const {
     control,
     handleSubmit,
     formState: { errors, isDirty },
-  } = useForm<IReimbursement>({
+  } = useForm<IOtherDeduction>({
     defaultValues,
     mode: "onSubmit",
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (formData: IReimbursement) => {
+  const onSubmit = (formData: IOtherDeduction) => {
     handleSaveData(
-      { ...dataForDialog, ...formData } as IReimbursement,
-      "personal"
+      { ...dataForDialog, ...formData } as IOtherDeduction,
+      "otherDeductions"
     );
     const updatedEmployees = data.employees.map((employee) =>
       employee.eId === eIdSetectedEmploee
@@ -58,17 +46,19 @@ export const EditReimbursementTab: React.FC = () => {
 
   return (
     <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+      <Typography variant="h6" mt={4} mb={1}>
+        Salary
+      </Typography>
       {Object.keys(defaultValues).map((key) => (
-        <Box key={key}>
+        <Box key={key} mb={2}>
           <FormInput
-            name={key as keyof IReimbursement}
+            name={key as keyof IOtherDeduction}
             label={key.replace(/([A-Z])/g, " $1")}
             control={control}
-            errorMessage={errors[key as keyof IReimbursement]?.message}
+            errorMessage={errors[key as keyof IOtherDeduction]?.message}
           />
         </Box>
       ))}
-
       <FormFooter
         cancelButtonText="Cancel"
         actionButtonText="Save"
