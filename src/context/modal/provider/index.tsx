@@ -16,6 +16,7 @@ import {
   IEmployeeBenefit,
   IEmploymentStatus,
   IJobInfo,
+  IReimbursement,
   ISalary,
   ISystemBenefit,
 } from "@/const/types";
@@ -42,6 +43,7 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
       | ISalary
       | IDepositAccounts
       | IBonuses
+      | IReimbursement
   ) => {
     switch (typeModal) {
       case "Export data":

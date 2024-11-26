@@ -84,8 +84,8 @@ export interface IReimbursement {
   endDate: string | null;
   payrollOperationFrequency: string;
   customBambooTableRowId: number;
-  value: number;
-  currencyCode: string;
+  value: number | null;
+  currencyCode: string | null;
 }
 
 export interface ILoanOrSalaryAdvance {
@@ -121,12 +121,12 @@ export interface IEmployeeBenefit {
 
 export interface ISalary {
   customBambooTalbeRowId: number;
-  salaryRate: number| null;
-  salaryCurrencyCode:string | null;
+  salaryRate: number | null;
+  salaryCurrencyCode: string | null;
   salaryRatePeriod: string | null;
   payPeriod: string | null;
   allowOvertime: boolean;
-  effectiveDate:string | null;
+  effectiveDate: string | null;
   changeReason: string | null;
   comment: string | null;
   overtimeRate: number | null;
@@ -134,8 +134,8 @@ export interface ISalary {
 
 export interface IJobInfo {
   customBambooTalbeRowId: number;
-  effectiveDate: string| null;
-  jobTitle: string| null;
+  effectiveDate: string | null;
+  jobTitle: string | null;
   department: string | null;
   location: string | null;
   division: string | null;
@@ -145,8 +145,8 @@ export interface IJobInfo {
 
 export interface IEmploymentStatus {
   customBambooTalbeRowId: number;
-  effectiveDate:string | null;
-  employmentStatus:string | null;
+  effectiveDate: string | null;
+  employmentStatus: string | null;
   comment: string | null;
 }
 

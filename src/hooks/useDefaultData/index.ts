@@ -7,6 +7,7 @@ import {
   ISalary,
   IDepositAccounts,
   IBonuses,
+  IReimbursement,
 } from "@/const/types";
 
 export const useDefaultEmployeeBasicInfo = (): IEmployeeBasicInfo => {
@@ -57,6 +58,23 @@ export const useDefaultEmployeeBenefit = (): IEmployeeBenefit => {
     id: dataForDialog?.id || "",
   };
 };
+
+export const useDefaultReimbursement = (): IReimbursement => {
+  const { dataForDialog } = useModal() as {
+    dataForDialog: IReimbursement | null;
+  };
+
+  return {
+    name: dataForDialog?.name || "",
+    startDate: dataForDialog?.startDate || null,
+    endDate: dataForDialog?.endDate || null,
+    payrollOperationFrequency: dataForDialog?.payrollOperationFrequency || "",
+    customBambooTableRowId: dataForDialog?.customBambooTableRowId || 0,
+    value: dataForDialog?.value || null,
+    currencyCode: dataForDialog?.currencyCode || null,
+  };
+};
+
 
 export const useDefaultJobInfo = (): IJobInfo => {
   const { dataForDialog } = useModal() as {

@@ -1,8 +1,15 @@
-import { GridColDef, GridValidRowModel } from "@mui/x-data-grid";
+import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { HeaderDetails } from "../../../headerDetails";
 import { getDateFormat } from "@/shared/utils/getDateFormat";
+import { MyContextMenu } from "@/shared/components/myContextMenu";
+import { actionMenu } from "@/shared/components/myContextMenu/actionMenu";
+import { IReimbursement } from "@/const/types";
+import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
 
-export const ColumnsReimbursements = (): GridColDef<GridValidRowModel>[] => [
+export const ColumnsReimbursements = (
+  _handleEditClick: (data: IReimbursement) => void,
+  callbacks: ContextMenuItemsCallbacks<IReimbursement>
+): GridColDef<IReimbursement>[] => [
   {
     field: "name",
     headerName: "Name",
@@ -10,7 +17,6 @@ export const ColumnsReimbursements = (): GridColDef<GridValidRowModel>[] => [
     flex: 1,
     renderHeader: () => <HeaderDetails title="Name" />,
   },
-
   {
     field: "startDate",
     headerName: "Start Date",
@@ -54,5 +60,18 @@ export const ColumnsReimbursements = (): GridColDef<GridValidRowModel>[] => [
     minWidth: 100,
     flex: 1,
     renderHeader: () => <HeaderDetails title="Currency Code" />,
+  },
+  {
+    field: "Actions",
+    width: 50,
+    align: "center",
+    renderHeader: () => "",
+    sortable: false,
+    filterable: false,
+    renderCell: (params: GridRenderCellParams<IReimbursement>) => {
+      return (
+        <MyContextMenu items={actionMenu(callbacks, params)} params={params} />
+      );
+    },
   },
 ];

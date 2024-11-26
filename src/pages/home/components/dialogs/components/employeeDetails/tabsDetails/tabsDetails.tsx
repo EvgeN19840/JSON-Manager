@@ -15,7 +15,7 @@ import {
   DepositAccountTab,
   OtherDeductionTab,
   BonusesTab,
-  CustomIncomeTab,
+  Reimbursements,
 } from "./index";
 import { useModal } from "@/hooks/useModal";
 import { IEmployee } from "@/const/types";
@@ -37,7 +37,7 @@ export const TabsDetails = () => {
       case "4":
         return <DepositAccountTab />;
       case "5":
-        return <CustomIncomeTab />;
+        return <Reimbursements />;
       case "6":
         return <OtherDeductionTab />;
       case "7":

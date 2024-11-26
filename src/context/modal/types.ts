@@ -1,8 +1,8 @@
 // ** Types
-import { IBonuses, IDepositAccounts, IEmployee, IEmployeeBenefit, IEmploymentStatus, IJobInfo, IOtherDeduction, ISalary, ISystemBenefit } from "@/const/types";
+import { IBonuses, IDepositAccounts, IEmployee, IEmployeeBenefit, IEmploymentStatus, IJobInfo, IOtherDeduction, IReimbursement, ISalary, ISystemBenefit } from "@/const/types";
 
 export type IModalType = "Export data" | "Import data" | "Edit user" | "Edit benefits" | "Details" | "Edit Details" | null
-export type IModalTypeDetailsEdits = "Edit benefits details" | "Edit salary" | "Edit status" | "Edit job" | "Edit deposit accounts" | "Edit custom income" | "Edit Personal" | "Edit custom deductions" | "Edit bonuses" | null
+export type IModalTypeDetailsEdits = "Edit benefits details" | "Edit salary" | "Edit status" | "Edit job" | "Edit deposit accounts" | "Edit reimbursements" | "Edit Personal" | "Edit custom deductions" | "Edit bonuses" | null
 export interface IModalTypeContext {
   typeModal: IModalType
   typeModalDetailsEdit: IModalTypeDetailsEdits;
@@ -13,7 +13,7 @@ export interface IModalTypeContext {
   setDataForDialog: (data: IDataForDialog) => void,
   setDialogOpen: (data: boolean) => void;
   closeDialog: () => void;
-  handleClickOpenDialog: (actionType: IModalType, item?: IDepositAccounts | IDataForDialog | IEmployee | IBonuses | ISystemBenefit | IJobInfo | IEmploymentStatus | ISalary) => void;
+  handleClickOpenDialog: (actionType: IModalType, item?: IDepositAccounts | IDataForDialog | IEmployee | IBonuses | ISystemBenefit | IJobInfo | IEmploymentStatus | ISalary | IReimbursement) => void;
 }
 export interface IEmployeeDataForDialog extends IEmployee {
   eId: number;

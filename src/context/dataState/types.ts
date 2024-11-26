@@ -11,7 +11,7 @@ export interface DataContextType {
   handleSaveEmployee: (data: IEmployee) => void;
   handleSaveBenefit: (data: ISystemBenefit) => void;
   handleSaveData: <
-    T extends Partial<{ id: string | number; eId: number; customBambooTalbeRowId: number }>
+    T extends Partial<{ id: string | number; eId: number; customBambooTalbeRowId: number; customBambooTableRowId: number; }>
   >(
     value: T,
     type: "employeeBenefit" | "depositAccount" | "bonuses" | "personal"|"jobInfo" |"salary" |"status"

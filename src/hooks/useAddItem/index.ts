@@ -8,6 +8,7 @@ import {
     IEmploymentStatus,
     IJobInfo,
     IOtherDeduction,
+    IReimbursement,
     ISalary,
     ISystemBenefit,
     ITypeJSON,
@@ -15,10 +16,10 @@ import {
 import { assignMissingIds } from "@/shared/utils";
 
 interface IUseHandleAddItemParams {
-    item: IEmployee | ISystemBenefit | ISalary | IJobInfo | IDepositAccounts | IEmploymentStatus | IEmployeeBenefit | IBonuses | IOtherDeduction;
+    item: IEmployee | ISystemBenefit | ISalary | IJobInfo | IDepositAccounts | IEmploymentStatus | IEmployeeBenefit | IBonuses | IOtherDeduction |IReimbursement;
     type: "employees" | "benefits" | "item";
     eId?: string | number;
-    nestedType?: "salary" | "employmentStatus" | "jobInfo" | "depositAccounts" | "benefits" | "bonuses";
+    nestedType?: "salary" | "employmentStatus" | "jobInfo" | "depositAccounts" | "benefits" | "bonuses" |"reimbursements";
 }
 
 export const useHandleAddItem = () => {
