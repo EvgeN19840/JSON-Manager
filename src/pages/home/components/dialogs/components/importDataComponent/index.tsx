@@ -18,6 +18,7 @@ import { Box, Typography } from "@mui/material";
 import { useModal } from "@/hooks/useModal";
 import { useNotification } from "@/hooks/useNotification";
 import { useDataStateContext } from "@/hooks/useDataStateContext";
+import { employeeData } from "@/const/jsonBase";
 
 export const ImportDataComponent: React.FC = () => {
   const [inputValue, setInputValue] = useState("");
@@ -46,6 +47,15 @@ export const ImportDataComponent: React.FC = () => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
+const addBaseEmployee =()=>{
+  setData({
+    employees: employeeData.employees,
+    benefits: employeeData.benefits,
+  });
+  setDialogOpen(false);
+  setInputValue("");
+}
+
 
   return (
     <Box>
@@ -63,7 +73,9 @@ export const ImportDataComponent: React.FC = () => {
           cancelButtonText={"Close"}
           actionButtonText={"Import"}
           showSecondButton={!!inputValue}
-          buttonAction={handleImport}
+          canAddBaseEmployee={true}
+          buttonAction={handleImport }
+          addBaseEmployee={addBaseEmployee}
           source={"general"}
         />
       </Box>

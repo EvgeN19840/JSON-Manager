@@ -10,7 +10,9 @@ import { useDataStateContext } from "@/hooks/useDataStateContext";
 export const FormFooter: React.FC<FormFooterProps> = ({
   cancelButtonText,
   actionButtonText,
+  canAddBaseEmployee,
   showSecondButton,
+  addBaseEmployee,
   buttonAction,
   source,
 }) => {
@@ -43,6 +45,13 @@ export const FormFooter: React.FC<FormFooterProps> = ({
           {cancelButtonText}
         </Button>
 
+        <Button
+          variant="contained"
+          onClick={addBaseEmployee}
+          disabled={!canAddBaseEmployee}
+        >
+         Add Base Employee
+        </Button>
         <Button
           variant="contained"
           onClick={buttonAction}
