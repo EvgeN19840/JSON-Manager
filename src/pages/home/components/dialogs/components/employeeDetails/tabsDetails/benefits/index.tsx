@@ -17,12 +17,15 @@ import { ColumnsBenefit } from "./columnsBenefit";
 import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
 import { useHandleAddItem } from "@/hooks/useAddItem";
 import { IEmployeeDataForDialog } from "@/context/modal/types";
+import { CustomFooter } from "@/shared/components/customFooter";
+import { useDefaultEmployeeBenefit } from "@/hooks/useDefaultData";
 
 export const BenefitsTab: React.FC = () => {
   const { handleClickOpenDialog, setTypeModalDetailsEdit, dataForDialog } =
     useModal();
   const dialogData = dataForDialog as { eId: number } | null;
   const { data } = useDataStateContext();
+  const defaultValues = useDefaultEmployeeBenefit();
   const handleDeleteItem = useHandleDeleteItem();
   const handleAddItem = useHandleAddItem();
 
@@ -70,10 +73,26 @@ export const BenefitsTab: React.FC = () => {
     (benefit) => handleEditClick(benefit),
     callbacks
   );
-
+  const addNewRow = () => {
+    handleClickOpenDialog("Edit Details", defaultValues);
+    setTypeModalDetailsEdit("Edit benefits details");
+  };
   return (
     <Box>
-      <DataGrid<IEmployeeBenefit> rows={getBenefitRows()} columns={columns} />
+      <DataGrid<IEmployeeBenefit>
+        rows={getBenefitRows()}
+        columns={columns}
+        pagination
+        slots={{
+          footer: () => <CustomFooter onAddEmptyRow={addNewRow} />,
+        }}
+        pageSizeOptions={[5, 10, 20]}
+        initialState={{
+          pagination: {
+            paginationModel: { pageSize: 5, page: 0 },
+          },
+        }}
+      />
     </Box>
   );
 };

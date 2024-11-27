@@ -34,109 +34,105 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
     updatedBenefits[benefitIndex] = value;
     setData({ ...data, benefits: updatedBenefits });
   };
-  const handleSaveData = <
-    T extends Partial<{
-      id: string | number;
-      eId: number;
-      customBambooTalbeRowId: number;
-    }>
-  >(
-    value: T,
-    type:
-      | "employeeBenefit"
-      | "depositAccount"
-      | "bonuses"
-      | "personal"
-      | "jobInfo"
-      | "salary"
-      | "status"
-      | "reimbursements"
-      | "otherDeductions"
-  ) => {
-    setData((prevData) => ({
-      ...prevData,
-      employees: prevData.employees.map((employee) => {
-        if (employee.eId !== eIdSetectedEmploee) return employee;
-        switch (type) {
-          case "jobInfo":
-            return {
-              ...employee,
-              jobInfo: employee.jobInfo.map((info) =>
-                info.customBambooTalbeRowId === value.customBambooTalbeRowId
-                  ? { ...info, ...value }
-                  : info
-              ),
-            };
-          case "salary":
-            return {
-              ...employee,
-              salary: employee.salary.map((item) =>
-                item.customBambooTalbeRowId === value.customBambooTalbeRowId
-                  ? { ...item, ...value }
-                  : item
-              ),
-            };
-          case "status":
-            return {
-              ...employee,
-              employmentStatus: employee.employmentStatus.map((status) =>
-                status.customBambooTalbeRowId === value.customBambooTalbeRowId
-                  ? { ...status, ...value }
-                  : status
-              ),
-            };
-          case "personal":
-            return { ...employee, ...value };
-          case "employeeBenefit":
-            return {
-              ...employee,
-              benefits: employee.benefits.map((benefit) =>
-                benefit.id === value.id ? { ...benefit, ...value } : benefit
-              ),
-            };
-          case "bonuses":
-            return {
-              ...employee,
-              bonuses: employee.bonuses.map((bonus) =>
-                bonus.customBambooTalbeRowId === value.customBambooTalbeRowId
-                  ? { ...bonus, ...value }
-                  : bonus
-              ),
-            };
-          case "depositAccount":
-            return {
-              ...employee,
-              depositAccounts: employee.depositAccounts.map((account) =>
-                account.customBambooTalbeRowId === value.customBambooTalbeRowId
-                  ? { ...account, ...value }
-                  : account
-              ),
-            };
-          case "reimbursements":
-            return {
-              ...employee,
-              reimbursements: employee.reimbursements.map((account) =>
-                account.customBambooTableRowId === value.customBambooTalbeRowId
-                  ? { ...account, ...value }
-                  : account
-              ),
-            };
-          case "otherDeductions":
-            return {
-              ...employee,
-              otherDeductions: employee.otherDeductions.map((account) =>
-                account.customBambooTableRowId === value.customBambooTalbeRowId
-                  ? { ...account, ...value }
-                  : account
-              ),
-            };
 
-          default:
-            return employee;
-        }
-      }),
-    }));
+  const handleSaveData = <
+  T extends Partial<{
+    id: string | number;
+    eId: number;
+    customBambooTalbeRowId: number;
+  }>
+>(
+  value: T,
+  type:
+    | "employeeBenefit"
+    | "depositAccount"
+    | "bonuses"
+    | "personal"
+    | "jobInfo"
+    | "salary"
+    | "status"
+    | "reimbursements"
+    | "otherDeductions"
+) => {
+  const checkArray = <Field extends keyof IEmployee>(
+    arrayField: Field,
+    employee: IEmployee
+  ): IEmployee[Field] => {
+    const fieldArray = employee[arrayField] as IEmployee[Field] 
+    if (!Array.isArray(fieldArray)) {
+      throw new Error(`Expected an array for field: ${String(arrayField)}`);
+    }
+
+    const updatedArray = (fieldArray).map((item) =>
+   item.customBambooTalbeRowId === value.customBambooTalbeRowId
+        ? { ...item, ...value }
+        : item
+    );
+    const itemExists = updatedArray.find(
+      (item) => item.customBambooTalbeRowId === value.customBambooTalbeRowId
+    );
+    if (!itemExists) {
+      updatedArray.push(value as typeof fieldArray[number]);
+    }
+
+    return updatedArray as IEmployee[Field];
   };
+
+  setData((prevData) => ({
+    ...prevData,
+    employees: prevData.employees.map((employee) => {
+      if (employee.eId !== eIdSetectedEmploee) return employee;
+
+      switch (type) {
+        case "jobInfo":
+          return {
+            ...employee,
+            jobInfo: checkArray("jobInfo", employee),
+          };
+        case "salary":
+          return {
+            ...employee,
+            salary: checkArray("salary", employee),
+          };
+        case "status":
+          return {
+            ...employee,
+            employmentStatus: checkArray("employmentStatus", employee),
+          };
+        case "personal":
+          return { ...employee, ...value };
+        case "employeeBenefit":
+          return {
+            ...employee,
+            benefits: checkArray("benefits", employee),
+          };
+        case "bonuses":
+          return {
+            ...employee,
+            bonuses: checkArray("bonuses", employee),
+          };
+        case "depositAccount":
+          return {
+            ...employee,
+            depositAccounts: checkArray("depositAccounts", employee),
+          };
+        case "reimbursements":
+          return {
+            ...employee,
+            reimbursements: checkArray("reimbursements", employee),
+          };
+        case "otherDeductions":
+          return {
+            ...employee,
+            otherDeductions: checkArray("otherDeductions", employee),
+          };
+        default:
+          return employee;
+      }
+    }),
+  }));
+};
+
 
   const hasData = !!(data?.benefits?.length || data?.employees?.length);
 

@@ -16,20 +16,28 @@ import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/act
 import { ColumnsJobInfo } from "./columnsJob/jobInfo";
 import { ColumnsSalary } from "./columnsJob/salaryInfo";
 import { ColumnsEmploymentStatus } from "./columnsJob/statusInfo";
+import { CustomFooter } from "@/shared/components/customFooter";
+import {
+  useDefaultJobInfo,
+  useDefaultEmploymentStatus,
+  useDefaultSalary,
+} from "@/hooks/useDefaultData";
 
 export const JobInfoTab: React.FC = () => {
-  const { handleClickOpenDialog, dataForDialog, setTypeModalDetailsEdit } = useModal();
+  const { handleClickOpenDialog, dataForDialog, setTypeModalDetailsEdit } =
+    useModal();
 
-const dialogData = dataForDialog as { eId: number } | null;
+  const dialogData = dataForDialog as { eId: number } | null;
   const { data } = useDataStateContext();
+  const defaultJobInfo = useDefaultJobInfo();
+  const defaultEmploymentStatus = useDefaultEmploymentStatus();
+  const defaultSalary = useDefaultSalary();
   const handleDeleteItem = useHandleDeleteItem();
   const handleAddItem = useHandleAddItem();
 
   const getJobInfoRows = (): IJobInfo[] => {
     if (dataForDialog && dialogData?.eId) {
-      const employee = data.employees.find(
-        (emp) => emp.eId === dialogData.eId
-      );
+      const employee = data.employees.find((emp) => emp.eId === dialogData.eId);
       return employee?.jobInfo || [];
     }
     return [];
@@ -37,9 +45,7 @@ const dialogData = dataForDialog as { eId: number } | null;
 
   const getEmploymentStatusRows = (): IEmploymentStatus[] => {
     if (dataForDialog && dialogData?.eId) {
-      const employee = data.employees.find(
-        (emp) => emp.eId === dialogData.eId
-      );
+      const employee = data.employees.find((emp) => emp.eId === dialogData.eId);
       return employee?.employmentStatus || [];
     }
     return [];
@@ -47,9 +53,7 @@ const dialogData = dataForDialog as { eId: number } | null;
 
   const getSalaryRows = (): ISalary[] => {
     if (dataForDialog && dialogData?.eId) {
-      const employee = data.employees.find(
-        (emp) => emp.eId === dialogData.eId
-      );
+      const employee = data.employees.find((emp) => emp.eId === dialogData.eId);
       return employee?.salary || [];
     }
     return [];
@@ -58,7 +62,7 @@ const dialogData = dataForDialog as { eId: number } | null;
   const jobInfoCallbacks: ContextMenuItemsCallbacks<IJobInfo> = {
     openForm: (data) => {
       handleClickOpenDialog("Edit Details", data);
-    setTypeModalDetailsEdit("Edit job");
+      setTypeModalDetailsEdit("Edit job");
     },
     addItem: (data) => {
       if (dataForDialog && dialogData?.eId) {
@@ -149,7 +153,24 @@ const dialogData = dataForDialog as { eId: number } | null;
     salaryCallbacks.openForm,
     salaryCallbacks
   );
-
+  const addNewRow = (type: "job" | "status" | "salary") => {
+    let defaults;
+    switch (type) {
+      case "job":
+        defaults = defaultJobInfo;
+        break;
+      case "status":
+        defaults = defaultEmploymentStatus;
+        break;
+      case "salary":
+        defaults = defaultSalary;
+        break;
+      default:
+        return;
+    }
+    handleClickOpenDialog("Edit Details", defaults);
+    setTypeModalDetailsEdit(`Edit ${type}`);
+  };
   return (
     <Box>
       <Box>
@@ -160,6 +181,18 @@ const dialogData = dataForDialog as { eId: number } | null;
           rows={getEmploymentStatusRows()}
           columns={employmentStatusColumns}
           getRowId={(row) => row.customBambooTalbeRowId}
+          pagination
+          slots={{
+            footer: () => (
+              <CustomFooter onAddEmptyRow={() => addNewRow("status")} />
+            ),
+          }}
+          pageSizeOptions={[5, 10, 20]}
+          initialState={{
+            pagination: {
+              paginationModel: { pageSize: 5, page: 0 },
+            },
+          }}
         />
       </Box>
 
@@ -171,6 +204,18 @@ const dialogData = dataForDialog as { eId: number } | null;
           rows={getSalaryRows()}
           columns={salaryColumns}
           getRowId={(row) => row.customBambooTalbeRowId}
+          pagination
+          slots={{
+            footer: () => (
+              <CustomFooter onAddEmptyRow={() => addNewRow("salary")} />
+            ),
+          }}
+          pageSizeOptions={[5, 10, 20]}
+          initialState={{
+            pagination: {
+              paginationModel: { pageSize: 5, page: 0 },
+            },
+          }}
         />
       </Box>
 
@@ -182,6 +227,18 @@ const dialogData = dataForDialog as { eId: number } | null;
           rows={getJobInfoRows()}
           columns={jobInfoColumns}
           getRowId={(row) => row.customBambooTalbeRowId}
+          pagination
+          slots={{
+            footer: () => (
+              <CustomFooter onAddEmptyRow={() => addNewRow("job")} />
+            ),
+          }}
+          pageSizeOptions={[5, 10, 20]}
+          initialState={{
+            pagination: {
+              paginationModel: { pageSize: 5, page: 0 },
+            },
+          }}
         />
       </Box>
     </Box>

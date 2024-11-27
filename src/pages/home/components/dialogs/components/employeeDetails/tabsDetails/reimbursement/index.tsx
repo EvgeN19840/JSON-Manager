@@ -14,11 +14,14 @@ import { useDataStateContext } from "@/hooks/useDataStateContext";
 import { useHandleDeleteItem } from "@/hooks/useDelete";
 import { useHandleAddItem } from "@/hooks/useAddItem";
 import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
+import { CustomFooter } from "@/shared/components/customFooter";
+import { useDefaultReimbursement } from "@/hooks/useDefaultData";
 
 export const Reimbursements: React.FC = () => {
   const { handleClickOpenDialog, dataForDialog, setTypeModalDetailsEdit } =
     useModal();
   const { data } = useDataStateContext();
+  const defaultValues = useDefaultReimbursement();
   const handleDeleteItem = useHandleDeleteItem();
   const handleAddItem = useHandleAddItem();
   const dialogData = dataForDialog as { eId: number } | null;
@@ -60,12 +63,26 @@ export const Reimbursements: React.FC = () => {
     customIncomeCallbacks.openForm,
     customIncomeCallbacks
   );
+  const addNewRow = () => {
+    handleClickOpenDialog("Edit Details", defaultValues);
+    setTypeModalDetailsEdit("Edit reimbursements");
+  };
   return (
     <Box>
       <DataGrid<IReimbursement>
         rows={getReimbursementsRows()}
         getRowId={(row) => row.customBambooTableRowId}
         columns={CustomIncomeColumns}
+        pagination
+        slots={{
+          footer: () => <CustomFooter onAddEmptyRow={addNewRow} />,
+        }}
+        pageSizeOptions={[5, 10, 20]}
+        initialState={{
+          pagination: {
+            paginationModel: { pageSize: 5, page: 0 },
+          },
+        }}
       />
     </Box>
   );

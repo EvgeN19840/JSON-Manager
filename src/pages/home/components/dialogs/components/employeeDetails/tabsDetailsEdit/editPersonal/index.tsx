@@ -61,7 +61,7 @@ export const EditPersonalTab: React.FC = () => {
   };
 
   return (
-    <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+    <FormWrapper title="Personal" onSubmit={handleSubmit(onSubmit)}>
       {Object.keys(defaultValues).map((key) => (
         <Box key={key}>
           <FormInput

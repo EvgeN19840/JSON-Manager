@@ -60,7 +60,7 @@ export const EditDetailsBenefits = () => {
   };
 
   return (
-    <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+    <FormWrapper title="Benefit" onSubmit={handleSubmit(onSubmit)}>
     {Object.keys(defaultValues).map((key) => (
       <Box key={key} mb={2}>
         <FormInput

@@ -55,9 +55,8 @@ export const EditReimbursementTab: React.FC = () => {
     );
     handleClickOpenDialog("Details", updatedEmployee);
   };
-
   return (
-    <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+    <FormWrapper title="Reimbursement" onSubmit={handleSubmit(onSubmit)}>
       {Object.keys(defaultValues).map((key) => (
         <Box key={key}>
           <FormInput

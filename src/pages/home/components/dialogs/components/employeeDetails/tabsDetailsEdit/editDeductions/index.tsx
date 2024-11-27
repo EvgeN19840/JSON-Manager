@@ -45,7 +45,7 @@ export const EditDeductions: React.FC = () => {
   };
 
   return (
-    <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+    <FormWrapper title="Deduction" onSubmit={handleSubmit(onSubmit)}>
       {Object.keys(defaultValues).map((key) => (
         <Box key={key} mb={2}>
           <FormInput

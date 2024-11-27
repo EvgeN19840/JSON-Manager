@@ -14,10 +14,13 @@ import { useDataStateContext } from "@/hooks/useDataStateContext";
 import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
 import { useHandleDeleteItem } from "@/hooks/useDelete";
 import { useHandleAddItem } from "@/hooks/useAddItem";
+import { CustomFooter } from "@/shared/components/customFooter";
+import { useDefaultBonuses } from "@/hooks/useDefaultData";
 
 export const BonusesTab: React.FC = () => {
   const { handleClickOpenDialog, dataForDialog, setTypeModalDetailsEdit } =
     useModal();
+  const defaultValues = useDefaultBonuses();
   const { data } = useDataStateContext();
   const handleDeleteItem = useHandleDeleteItem();
   const handleAddItem = useHandleAddItem();
@@ -59,11 +62,26 @@ export const BonusesTab: React.FC = () => {
     bonusesCallbacks.openForm,
     bonusesCallbacks
   );
+  const addNewRow = () => {
+    handleClickOpenDialog("Edit Details", defaultValues);
+    setTypeModalDetailsEdit("Edit bonuses");
+  };
+
   return (
     <Box>
       <DataGrid<IBonuses>
         rows={getBonusesRows()}
-        getRowId={(row) => row.customBambooTalbeRowId}
+              getRowId={(row) => row.customBambooTalbeRowId}
+        pagination
+        slots={{
+          footer: () => <CustomFooter onAddEmptyRow={addNewRow} />,
+        }}
+        pageSizeOptions={[5, 10, 20]}
+        initialState={{
+          pagination: {
+            paginationModel: { pageSize: 5, page: 0 },
+          },
+        }}
         columns={bonusesColumns}
       />
     </Box>

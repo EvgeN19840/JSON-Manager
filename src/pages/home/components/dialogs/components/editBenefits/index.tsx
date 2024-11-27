@@ -47,7 +47,7 @@ export const EditBenefits = () => {
   };
 
   return (
-    <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+    <FormWrapper title='Benefit' onSubmit={handleSubmit(onSubmit)}>
       <FormInput
         name="name"
         label="Benefit name"

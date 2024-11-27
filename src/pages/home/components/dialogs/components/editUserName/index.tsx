@@ -52,7 +52,7 @@ export const EditUserName = () => {
   };
 
   return (
-    <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+    <FormWrapper title="Employee" onSubmit={handleSubmit(onSubmit)}>
       {Object.keys(defaultValues).map((key) => (
         <Box key={key} mb={2}>
           <FormInput

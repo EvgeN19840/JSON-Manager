@@ -71,7 +71,7 @@ export const TabsDetails = () => {
           <Tab label="Benefits" value="2" />
           <Tab label="Job" value="3" />
           <Tab label="Deposit Accounts" value="4" />
-          <Tab label="Custom income" value="5" />
+          <Tab label="Reimbursements" value="5" />
           <Tab label="Custom deductions" value="6" />
           <Tab label="Bonuses" value="7" />
         </TabList>

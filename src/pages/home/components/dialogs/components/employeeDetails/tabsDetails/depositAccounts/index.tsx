@@ -12,12 +12,15 @@ import { useDataStateContext } from "@/hooks/useDataStateContext";
 import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
 import { useHandleAddItem } from "@/hooks/useAddItem";
 import { useHandleDeleteItem } from "@/hooks/useDelete";
+import { CustomFooter } from "@/shared/components/customFooter";
+import { useDefaultDepositAccounts } from "@/hooks/useDefaultData";
 
 export const DepositAccountTab: React.FC = () => {
   const { handleClickOpenDialog, dataForDialog, setTypeModalDetailsEdit } =
     useModal();
   const dialogData = dataForDialog as { eId: number } | null;
   const { data } = useDataStateContext();
+  const defaultValues = useDefaultDepositAccounts();
   const handleDeleteItem = useHandleDeleteItem();
   const handleAddItem = useHandleAddItem();
   const getDepostAccountRows = (): IDepositAccounts[] => {
@@ -57,12 +60,26 @@ export const DepositAccountTab: React.FC = () => {
     depositAccountCallbacks.openForm,
     depositAccountCallbacks
   );
+  const addNewRow = () => {
+    handleClickOpenDialog("Edit Details", defaultValues);
+    setTypeModalDetailsEdit("Edit deposit accounts");
+  };
   return (
     <Box>
       <DataGrid<IDepositAccounts>
         rows={getDepostAccountRows()}
         getRowId={(row) => row.customBambooTalbeRowId}
         columns={employmentStatusColumns}
+        pagination
+        slots={{
+          footer: () => <CustomFooter onAddEmptyRow={addNewRow} />,
+        }}
+        pageSizeOptions={[5, 10, 20]}
+        initialState={{
+          pagination: {
+            paginationModel: { pageSize: 5, page: 0 },
+          },
+        }}
       />
     </Box>
   );

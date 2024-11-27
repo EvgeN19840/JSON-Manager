@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormWrapper, FormInput, FormFooter } from "@/shared/formElements";
@@ -45,10 +45,8 @@ export const EmploymentStatus: React.FC = () => {
   };
 
   return (
-    <FormWrapper onSubmit={handleSubmit(onSubmit)}>
-      <Typography variant="h6" mt={4} mb={1}>
-        Employment Status
-      </Typography>
+    <FormWrapper title="Employment Status" onSubmit={handleSubmit(onSubmit)}>
+      
       {Object.keys(defaultValues).map((key) => (
         <Box key={key} mb={2}>
           <FormInput

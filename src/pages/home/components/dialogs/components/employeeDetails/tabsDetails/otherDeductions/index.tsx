@@ -14,12 +14,15 @@ import { useDataStateContext } from "@/hooks/useDataStateContext";
 import { useHandleDeleteItem } from "@/hooks/useDelete";
 import { useHandleAddItem } from "@/hooks/useAddItem";
 import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
+import { CustomFooter } from "@/shared/components/customFooter";
+import { useDefaultOtherDeduction } from "@/hooks/useDefaultData";
 
 export const OtherDeductionTab: React.FC = () => {
   const { handleClickOpenDialog, dataForDialog, setTypeModalDetailsEdit } =
   useModal();
 const dialogData = dataForDialog as { eId: number } | null;
 const { data } = useDataStateContext();
+const defaultValues = useDefaultOtherDeduction();
 const handleDeleteItem = useHandleDeleteItem();
 const handleAddItem = useHandleAddItem();
 
@@ -61,12 +64,26 @@ const deductionsCallbacks: ContextMenuItemsCallbacks<IOtherDeduction> = {
     deductionsCallbacks.openForm,
     deductionsCallbacks
   );
+  const addNewRow = () => {
+    handleClickOpenDialog("Edit Details", defaultValues);
+    setTypeModalDetailsEdit("Edit benefits details");
+  };
   return (
     <Box>
       <DataGrid<IOtherDeduction>
         rows={getDeductionsRows()}
         getRowId={(row) => row.customBambooTableRowId}
         columns={deductionsColumns}
+        pagination
+        slots={{
+          footer: () => <CustomFooter onAddEmptyRow={addNewRow} />,
+        }}
+        pageSizeOptions={[5, 10, 20]}
+        initialState={{
+          pagination: {
+            paginationModel: { pageSize: 5, page: 0 },
+          },
+        }}
       />
     </Box>
   );
