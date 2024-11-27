@@ -51,8 +51,13 @@ export const Salary: React.FC = () => {
         <Box key={key} mb={2}>
           <FormInput
             name={key as keyof ISalary}
-            label={key.replace(/([A-Z])/g, " $1")}
+            label={key}
             control={control}
+            type={
+              typeof defaultValues[key as keyof ISalary] === "boolean"
+                ? "checkbox"
+                : "text"
+            }
             errorMessage={errors[key as keyof ISalary]?.message}
           />
         </Box>

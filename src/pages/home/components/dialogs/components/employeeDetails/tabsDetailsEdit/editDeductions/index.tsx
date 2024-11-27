@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useModal } from "@/hooks/useModal";
@@ -46,14 +46,11 @@ export const EditDeductions: React.FC = () => {
 
   return (
     <FormWrapper onSubmit={handleSubmit(onSubmit)}>
-      <Typography variant="h6" mt={4} mb={1}>
-        Salary
-      </Typography>
       {Object.keys(defaultValues).map((key) => (
         <Box key={key} mb={2}>
           <FormInput
             name={key as keyof IOtherDeduction}
-            label={key.replace(/([A-Z])/g, " $1")}
+            label={key}
             control={control}
             errorMessage={errors[key as keyof IOtherDeduction]?.message}
           />

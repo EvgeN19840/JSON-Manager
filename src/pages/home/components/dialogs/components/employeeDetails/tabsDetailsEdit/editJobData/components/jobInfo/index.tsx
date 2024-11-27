@@ -50,7 +50,7 @@ export const JobInfo: React.FC = () => {
         <Box key={key} mb={2}>
           <FormInput
             name={key as keyof IJobInfo}
-            label={key.replace(/([A-Z])/g, " $1")}
+            label={key}
             control={control}
             errorMessage={errors[key as keyof IJobInfo]?.message}
           />

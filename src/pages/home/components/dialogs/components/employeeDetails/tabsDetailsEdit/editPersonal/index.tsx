@@ -66,8 +66,13 @@ export const EditPersonalTab: React.FC = () => {
         <Box key={key}>
           <FormInput
             name={key as keyof IEmployeeBasicInfo}
-            label={key.replace(/([A-Z])/g, " $1")}
+            label={key}
             control={control}
+            type={
+              typeof defaultValues[key as keyof IEmployeeBasicInfo] === "boolean"
+                ? "checkbox"
+                : "text"
+            }
             errorMessage={errors[key as keyof IEmployeeBasicInfo]?.message}
           />
         </Box>

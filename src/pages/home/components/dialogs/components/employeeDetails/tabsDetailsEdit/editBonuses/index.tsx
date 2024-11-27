@@ -54,7 +54,7 @@ export const EditBonuses: React.FC = () => {
         <Box key={key} mb={2}>
           <FormInput
             name={key as keyof IBonuses}
-            label={key.replace(/([A-Z])/g, " $1")}
+            label={key}
             control={control}
             errorMessage={errors[key as keyof IBonuses]?.message}
           />

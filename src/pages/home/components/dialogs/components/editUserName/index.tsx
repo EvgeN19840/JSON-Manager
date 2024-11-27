@@ -15,6 +15,7 @@ import { schema } from "./schema";
 // ** Types
 import { IEmployee } from "@/const/types";
 import { IFormProps } from "./types";
+import { Box } from "@mui/material";
 
 export const EditUserName = () => {
   const { dataForDialog, closeDialog } = useModal() as {
@@ -26,10 +27,10 @@ export const EditUserName = () => {
     firstName: (dataForDialog as IEmployee).firstName,
     lastName: (dataForDialog as IEmployee).lastName,
     eId: (dataForDialog as IEmployee).eId,
-    birthDate: dataForDialog?.birthDate 
-    ? dataForDialog.birthDate.split("T")[0]
-    : "",
-};
+    birthDate: dataForDialog?.birthDate
+      ? dataForDialog.birthDate.split("T")[0]
+      : "",
+  };
 
   const {
     control,
@@ -45,45 +46,31 @@ export const EditUserName = () => {
       ...(dataForDialog as IEmployee),
       firstName: data.firstName,
       lastName: data.lastName,
-      birthDate: data.birthDate
+      birthDate: data.birthDate,
     } as IEmployee);
     closeDialog();
   };
 
   return (
     <FormWrapper onSubmit={handleSubmit(onSubmit)}>
-      <FormInput
-        name="firstName"
-        label="First Name"
-        control={control}
-        errorMessage={errors.firstName?.message}
-        rules={{ required: true }}
-      />
-      <FormInput
-        name="lastName"
-        label="Last Name"
-        control={control}
-        rules={{ required: true }}
-        errorMessage={errors.lastName?.message}
-      />
-      <FormInput
-        name="birthDate"
-        label="Birth date"
-        control={control}
-        rules={{ required: true }}
-        errorMessage={errors.birthDate?.message}
-      />
-      <FormInput
-        name="eId"
-        label="ID"
-        control={control}
-        errorMessage={errors.eId?.message}
-        rules={{ required: true }}
-        disabled
-      />
+      {Object.keys(defaultValues).map((key) => (
+        <Box key={key} mb={2}>
+          <FormInput
+            name={key as keyof IFormProps}
+            label={key}
+            control={control}
+            type={
+              typeof defaultValues[key as keyof IFormProps] === "boolean"
+                ? "checkbox"
+                : "text"
+            }
+            errorMessage={errors[key as keyof IFormProps]?.message}
+          />
+        </Box>
+      ))}
       <FormFooter
-        cancelButtonText={"Cancel"}
-        actionButtonText={"Save"}
+        cancelButtonText="Cancel"
+        actionButtonText="Save"
         showSecondButton={isDirty}
         buttonAction={handleSubmit(onSubmit)}
         source={"general"}

@@ -3,13 +3,10 @@ import { Controller, FieldValues } from "react-hook-form";
 
 // ** MUI Components
 import TextField from "@mui/material/TextField";
-import FormControl from "@mui/material/FormControl";
-import FormHelperText from "@mui/material/FormHelperText";
 
 // ** Types
 import { FormInputProps } from "./types";
-
-
+import { Checkbox, FormControlLabel } from "@mui/material";
 
 export const FormInput = <T extends FieldValues>({
   name,
@@ -17,32 +14,39 @@ export const FormInput = <T extends FieldValues>({
   control,
   errorMessage,
   type = "text",
-  rules = {},
-  ...rest
 }: FormInputProps<T>) => {
+  const formatLabel = (label: string) =>
+    label
+      .replace(/([A-Z])/g, " $1")
+      .toLowerCase()
+      .replace(/^./, (char) => char.toUpperCase());
+
   return (
-    <FormControl fullWidth sx={{ pl: 0 }}>
-      <Controller
-        name={name}
-        control={control}
-        rules={rules}
-        render={({ field: { value, onChange, onBlur } }) => (
-          <TextField
-            label={label}
-            value={value || ""}
-            onBlur={onBlur}
-            type={type}
-            onChange={onChange}
-            error={Boolean(errorMessage)}
-            {...rest}
+    <Controller
+      name={name}
+      control={control}
+      render={({ field: { value, onChange } }) =>
+        type === "checkbox" ? (
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={Boolean(value)}
+                onChange={(e) => onChange(e.target.checked)}
+              />
+            }
+            label={formatLabel(label)}
           />
-        )}
-      />
-      {errorMessage && (
-        <FormHelperText sx={{ color: "error.main" }}>
-          {errorMessage}
-        </FormHelperText>
-      )}
-    </FormControl>
+        ) : (
+          <TextField
+            label={formatLabel(label)}
+            value={value || ""}
+            onChange={onChange}
+            error={!!errorMessage}
+            helperText={errorMessage}
+            fullWidth
+          />
+        )
+      }
+    />
   );
 };

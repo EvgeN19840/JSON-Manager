@@ -62,7 +62,7 @@ export const EditReimbursementTab: React.FC = () => {
         <Box key={key}>
           <FormInput
             name={key as keyof IReimbursement}
-            label={key.replace(/([A-Z])/g, " $1")}
+            label={key}
             control={control}
             errorMessage={errors[key as keyof IReimbursement]?.message}
           />

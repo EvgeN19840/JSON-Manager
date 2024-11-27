@@ -14,7 +14,8 @@ import { schema } from "./schema";
 
 // ** Types
 import { IEmployeeBenefit } from "@/const/types";
-import { useDefaultEmployeeBenefit } from "../../../../../../../../hooks/useDefaultData";
+import { Box } from "@mui/material";
+import { useDefaultEmployeeBenefit } from "@/hooks/useDefaultData";
 
 
 export const EditDetailsBenefits = () => {
@@ -60,71 +61,28 @@ export const EditDetailsBenefits = () => {
 
   return (
     <FormWrapper onSubmit={handleSubmit(onSubmit)}>
-      <FormInput
-        name="name"
-        label="Benefit Name"
-        control={control}
-        errorMessage={errors.name?.message}
-        rules={{ required: true }}
-        disabled
-      />
-      <FormInput
-        name="value"
-        label="Value"
-        type="number"
-        control={control}
-        errorMessage={errors.value?.message}
-        rules={{ required: true }}
-      />
-      <FormInput
-        name="currencyCode"
-        label="Currency Code"
-        control={control}
-        errorMessage={errors.currencyCode?.message}
-        rules={{ required: true }}
-      />
-      <FormInput
-        name="companyValue"
-        label="Company Value"
-        type="number"
-        control={control}
-        errorMessage={errors.companyValue?.message}
-        rules={{ required: true }}
-      />
-      <FormInput
-        name="companyCurrencyCode"
-        label="Company Currency Code"
-        control={control}
-        errorMessage={errors.companyCurrencyCode?.message}
-        rules={{ required: true }}
-      />
-      <FormInput
-        name="isPerentValue"
-        label="Is Percent Value"
-        control={control}
-        errorMessage={errors.isPerentValue?.message}
-      />
-      <FormInput
-        name="effectiveDate"
-        label="Effective Date"
-        control={control}
-        errorMessage={errors.effectiveDate?.message}
-      />
-      <FormInput
-        name="id"
-        label="ID"
-        control={control}
-        errorMessage={errors.id?.message}
-        rules={{ required: true }}
-        disabled
-      />
-      <FormFooter
-        cancelButtonText="Cancel"
-        actionButtonText="Save"
-        showSecondButton={isDirty}
-        buttonAction={handleSubmit(onSubmit)}
-        source={"employeeDetails"}
-      />
-    </FormWrapper>
+    {Object.keys(defaultValues).map((key) => (
+      <Box key={key} mb={2}>
+        <FormInput
+          name={key as keyof IEmployeeBenefit}
+          label={key}
+          control={control}
+          type={
+            typeof defaultValues[key as keyof IEmployeeBenefit] === "boolean"
+              ? "checkbox"
+              : "text"
+          }
+          errorMessage={errors[key as keyof IEmployeeBenefit]?.message}
+        />
+      </Box>
+    ))}
+    <FormFooter
+      cancelButtonText="Cancel"
+      actionButtonText="Save"
+      showSecondButton={isDirty}
+      buttonAction={handleSubmit(onSubmit)}
+      source="employeeDetails"
+    />
+  </FormWrapper>
   );
 };
