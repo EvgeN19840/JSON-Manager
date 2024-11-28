@@ -17,11 +17,6 @@ import { ColumnsJobInfo } from "./columnsJob/jobInfo";
 import { ColumnsSalary } from "./columnsJob/salaryInfo";
 import { ColumnsEmploymentStatus } from "./columnsJob/statusInfo";
 import { CustomFooter } from "@/shared/components/customFooter";
-import {
-  useDefaultJobInfo,
-  useDefaultEmploymentStatus,
-  useDefaultSalary,
-} from "@/hooks/useDefaultData";
 
 export const JobInfoTab: React.FC = () => {
   const { handleClickOpenDialog, dataForDialog, setTypeModalDetailsEdit } =
@@ -29,9 +24,7 @@ export const JobInfoTab: React.FC = () => {
 
   const dialogData = dataForDialog as { eId: number } | null;
   const { data } = useDataStateContext();
-  const defaultJobInfo = useDefaultJobInfo();
-  const defaultEmploymentStatus = useDefaultEmploymentStatus();
-  const defaultSalary = useDefaultSalary();
+
   const handleDeleteItem = useHandleDeleteItem();
   const handleAddItem = useHandleAddItem();
 
@@ -78,7 +71,7 @@ export const JobInfoTab: React.FC = () => {
     deleteItem: (data) => {
       if (dataForDialog && dialogData?.eId) {
         handleDeleteItem({
-          id: data.customBambooTalbeRowId,
+          id: data.customBambooTableRowId,
           type: "item",
           eId: dialogData.eId,
           nestedType: "jobInfo",
@@ -106,7 +99,7 @@ export const JobInfoTab: React.FC = () => {
       deleteItem: (data) => {
         if (dataForDialog && dialogData?.eId) {
           handleDeleteItem({
-            id: data.customBambooTalbeRowId,
+            id: data.customBambooTableRowId,
             type: "item",
             eId: dialogData.eId,
             nestedType: "employmentStatus",
@@ -133,7 +126,7 @@ export const JobInfoTab: React.FC = () => {
     deleteItem: (data) => {
       if (dataForDialog && dialogData?.eId) {
         handleDeleteItem({
-          id: data.customBambooTalbeRowId,
+          id: data.customBambooTableRowId,
           type: "item",
           eId: dialogData.eId,
           nestedType: "salary",
@@ -154,21 +147,21 @@ export const JobInfoTab: React.FC = () => {
     salaryCallbacks
   );
   const addNewRow = (type: "job" | "status" | "salary") => {
-    let defaults;
-    switch (type) {
-      case "job":
-        defaults = defaultJobInfo;
-        break;
-      case "status":
-        defaults = defaultEmploymentStatus;
-        break;
-      case "salary":
-        defaults = defaultSalary;
-        break;
-      default:
-        return;
-    }
-    handleClickOpenDialog("Edit Details", defaults);
+    // let defaults;
+    // switch (type) {
+    //   case "job":
+    //     defaults = defaultJobInfo;
+    //     break;
+    //   case "status":
+    //     defaults = defaultEmploymentStatus;
+    //     break;
+    //   case "salary":
+    //     defaults = defaultSalary;
+    //     break;
+    //   default:
+    //     return;
+    // }
+    handleClickOpenDialog("Edit Details");
     setTypeModalDetailsEdit(`Edit ${type}`);
   };
   return (
@@ -180,7 +173,7 @@ export const JobInfoTab: React.FC = () => {
         <DataGrid<IEmploymentStatus>
           rows={getEmploymentStatusRows()}
           columns={employmentStatusColumns}
-          getRowId={(row) => row.customBambooTalbeRowId}
+          getRowId={(row) => row.customBambooTableRowId}
           pagination
           slots={{
             footer: () => (
@@ -203,7 +196,7 @@ export const JobInfoTab: React.FC = () => {
         <DataGrid<ISalary>
           rows={getSalaryRows()}
           columns={salaryColumns}
-          getRowId={(row) => row.customBambooTalbeRowId}
+          getRowId={(row) => row.customBambooTableRowId}
           pagination
           slots={{
             footer: () => (
@@ -226,7 +219,7 @@ export const JobInfoTab: React.FC = () => {
         <DataGrid<IJobInfo>
           rows={getJobInfoRows()}
           columns={jobInfoColumns}
-          getRowId={(row) => row.customBambooTalbeRowId}
+          getRowId={(row) => row.customBambooTableRowId}
           pagination
           slots={{
             footer: () => (

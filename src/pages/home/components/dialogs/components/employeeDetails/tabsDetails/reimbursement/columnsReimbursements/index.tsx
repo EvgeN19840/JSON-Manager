@@ -11,6 +11,13 @@ export const ColumnsReimbursements = (
   callbacks: ContextMenuItemsCallbacks<IReimbursement>
 ): GridColDef<IReimbursement>[] => [
   {
+    field: "customBambooTableRowId",
+    headerName: "Custom Bamboo Table Row ID",
+    minWidth: 180,
+    flex: 1,
+    renderHeader: () => <HeaderDetails title="Custom Bamboo Table Row ID" />,
+  },
+  {
     field: "name",
     headerName: "Name",
     minWidth: 150,
@@ -40,13 +47,7 @@ export const ColumnsReimbursements = (
     flex: 1,
     renderHeader: () => <HeaderDetails title="Payroll Operation Frequency" />,
   },
-  {
-    field: "customBambooTableRowId",
-    headerName: "Custom Bamboo Table Row ID",
-    minWidth: 180,
-    flex: 1,
-    renderHeader: () => <HeaderDetails title="Custom Bamboo Table Row ID" />,
-  },
+
   {
     field: "value",
     headerName: "Value",

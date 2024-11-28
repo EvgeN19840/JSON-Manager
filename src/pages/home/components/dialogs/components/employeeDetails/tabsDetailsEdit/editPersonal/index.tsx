@@ -74,6 +74,7 @@ export const EditPersonalTab: React.FC = () => {
                 : "text"
             }
             errorMessage={errors[key as keyof IEmployeeBasicInfo]?.message}
+             disabled={key === "eId"}
           />
         </Box>
       ))}

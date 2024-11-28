@@ -33,7 +33,7 @@ export const employeeData = {
           "transitNumber": "testTrNumber",
           "depositAmount": null,
           "description": null,
-          "customBambooTalbeRowId": 1,
+          "customBambooTableRowId": 1,
           "isPercentValue": false
         }
       ],
@@ -74,7 +74,7 @@ export const employeeData = {
       ],
       "salary": [
         {
-          "customBambooTalbeRowId": 18298,
+          "customBambooTableRowId": 18298,
           "salaryRate": 5000,
           "salaryCurrencyCode": "KYD",
           "salaryRatePeriod": "PerMonth",
@@ -88,7 +88,7 @@ export const employeeData = {
       ],
       "jobInfo": [
         {
-          "customBambooTalbeRowId": 38784,
+          "customBambooTableRowId": 38784,
           "effectiveDate": "2020-01-01T00:00:00Z",
           "jobTitle": "Director",
           "department": null,
@@ -99,7 +99,7 @@ export const employeeData = {
       ],
       "employmentStatus": [
         {
-          "customBambooTalbeRowId": 27415,
+          "customBambooTableRowId": 27415,
           "effectiveDate": "2020-01-01T00:00:00Z",
           "employmentStatus": "Full-Time",
           "comment": "Start date"

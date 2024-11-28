@@ -16,19 +16,20 @@ export const ColumnsBenefit = (
   callbacks: ContextMenuItemsCallbacks<IEmployeeBenefit>
 ): GridColDef<IEmployeeBenefit>[] => [
   {
-    field: "name",
-    headerName: "Benefit Name",
-    minWidth: 300,
-    flex: 1,
-    renderHeader: () => <HeaderDetails title="Benefit Name" />,
-  },
-  {
     field: "id",
     headerName: "ID",
     minWidth: 100,
     flex: 1,
     renderHeader: () => <HeaderDetails title="ID" />,
   },
+  {
+    field: "name",
+    headerName: "Benefit Name",
+    minWidth: 300,
+    flex: 1,
+    renderHeader: () => <HeaderDetails title="Benefit Name" />,
+  },
+
   {
     field: "value",
     headerName: "Value",

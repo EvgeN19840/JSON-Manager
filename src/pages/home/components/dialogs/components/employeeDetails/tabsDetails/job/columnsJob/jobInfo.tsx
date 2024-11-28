@@ -16,6 +16,13 @@ export const ColumnsJobInfo = (
   callbacks: ContextMenuItemsCallbacks<IJobInfo>
 ): GridColDef<IJobInfo>[] => [
   {
+    field: "customBambooTableRowId",
+    headerName: "Custom Bamboo Table Row ID",
+    minWidth: 180,
+    flex: 1,
+    renderHeader: () => <HeaderDetails title="Custom Bamboo Table Row ID" />,
+  },
+  {
     field: "jobTitle",
     headerName: "Job Title",
     minWidth: 200,

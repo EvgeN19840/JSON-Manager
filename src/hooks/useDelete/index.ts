@@ -49,8 +49,8 @@ export const useHandleDeleteItem = () => {
           ? {
             ...emp,
             [nestedType]: emp[nestedType]?.filter((item) => {
-              if ("customBambooTalbeRowId" in item) {
-                return item.customBambooTalbeRowId !== id;
+              if ("customBambooTableRowId" in item) {
+                return item.customBambooTableRowId !== id;
               } else if ("id" in item) {
                 return item.id !== id;
               }

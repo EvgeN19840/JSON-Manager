@@ -42,7 +42,7 @@ export const EditReimbursementTab: React.FC = () => {
   const onSubmit = (formData: IReimbursement) => {
     handleSaveData(
       { ...dataForDialog, ...formData } as IReimbursement,
-      "personal"
+      "reimbursements"
     );
     const updatedEmployees = data.employees.map((employee) =>
       employee.eId === eIdSetectedEmploee

@@ -5,7 +5,7 @@ export const assignMissingIds = (
   type: "employees" | "benefits",
   eId?: string | number,
   nestedType?: keyof IEmployee, 
-  idKey: "id" | "customBambooTalbeRowId" = "id"
+  idKey: "id" | "customBambooTableRowId" = "id"
 ): number => {
   let maxId = 0;
 

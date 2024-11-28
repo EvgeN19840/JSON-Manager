@@ -84,8 +84,8 @@ export const useHandleAddItem = () => {
             setDataForDialog(updatedData.benefits);
         } else if (type === "item" && eId && nestedType) {
             const idKey =
-                "customBambooTalbeRowId" in item
-                    ? "customBambooTalbeRowId"
+                "customBambooTableRowId" in item
+                    ? "customBambooTableRowId"
                     : "id";
             const newNestedItemId = assignMissingIds(
                 data,

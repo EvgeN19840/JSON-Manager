@@ -11,10 +11,10 @@ export interface DataContextType {
   handleSaveEmployee: (data: IEmployee) => void;
   handleSaveBenefit: (data: ISystemBenefit) => void;
   handleSaveData: <
-    T extends Partial<{ id: string | number; eId: number; customBambooTalbeRowId: number; customBambooTableRowId: number; }>
+    T extends Partial<{ id: string | number; eId: number; customBambooTableRowId: number; }>
   >(
     value: T,
-    type: "employeeBenefit" | "depositAccount" | "bonuses" | "personal"|"jobInfo" |"salary" |"status"| "otherDeductions"|"reimbursements"
+    type: "employeeBenefit" | "depositAccount" | "bonuses" | "personal" | "jobInfo" | "salary" | "status" | "otherDeductions" | "reimbursements"
   ) => void;
   hasData: boolean;
 }

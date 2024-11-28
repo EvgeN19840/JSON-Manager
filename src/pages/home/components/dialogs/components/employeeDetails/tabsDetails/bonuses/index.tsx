@@ -15,12 +15,10 @@ import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/act
 import { useHandleDeleteItem } from "@/hooks/useDelete";
 import { useHandleAddItem } from "@/hooks/useAddItem";
 import { CustomFooter } from "@/shared/components/customFooter";
-import { useDefaultBonuses } from "@/hooks/useDefaultData";
 
 export const BonusesTab: React.FC = () => {
   const { handleClickOpenDialog, dataForDialog, setTypeModalDetailsEdit } =
     useModal();
-  const defaultValues = useDefaultBonuses();
   const { data } = useDataStateContext();
   const handleDeleteItem = useHandleDeleteItem();
   const handleAddItem = useHandleAddItem();
@@ -50,7 +48,7 @@ export const BonusesTab: React.FC = () => {
     deleteItem: (data) => {
       if (dataForDialog && dialogData?.eId) {
         handleDeleteItem({
-          id: data.customBambooTalbeRowId,
+          id: data.customBambooTableRowId,
           type: "item",
           eId: dialogData.eId,
           nestedType: "bonuses",
@@ -63,7 +61,7 @@ export const BonusesTab: React.FC = () => {
     bonusesCallbacks
   );
   const addNewRow = () => {
-    handleClickOpenDialog("Edit Details", defaultValues);
+    handleClickOpenDialog("Edit Details");
     setTypeModalDetailsEdit("Edit bonuses");
   };
 
@@ -71,7 +69,7 @@ export const BonusesTab: React.FC = () => {
     <Box>
       <DataGrid<IBonuses>
         rows={getBonusesRows()}
-              getRowId={(row) => row.customBambooTalbeRowId}
+        getRowId={(row) => row.customBambooTableRowId}
         pagination
         slots={{
           footer: () => <CustomFooter onAddEmptyRow={addNewRow} />,

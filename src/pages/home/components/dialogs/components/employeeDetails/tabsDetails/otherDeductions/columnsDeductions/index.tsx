@@ -12,6 +12,13 @@ export const ColumnsDeductions = (
   callbacks: ContextMenuItemsCallbacks<IOtherDeduction>
 ): GridColDef<IOtherDeduction>[] => [
   {
+    field: "customBambooTableRowId",
+    headerName: "Custom Bamboo Table Row ID",
+    minWidth: 180,
+    flex: 1,
+    renderHeader: () => <HeaderDetails title="Custom Bamboo Table Row ID" />,
+  },
+  {
     field: "name",
     headerName: "Name",
     minWidth: 150,
@@ -40,13 +47,6 @@ export const ColumnsDeductions = (
     minWidth: 200,
     flex: 1,
     renderHeader: () => <HeaderDetails title="Payroll Operation Frequency" />,
-  },
-  {
-    field: "customBambooTableRowId",
-    headerName: "Custom Bamboo Table Row ID",
-    minWidth: 180,
-    flex: 1,
-    renderHeader: () => <HeaderDetails title="Custom Bamboo Table Row ID" />,
   },
   {
     field: "value",

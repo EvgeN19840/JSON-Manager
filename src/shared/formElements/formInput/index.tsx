@@ -14,6 +14,7 @@ export const FormInput = <T extends FieldValues>({
   control,
   errorMessage,
   type = "text",
+  disabled = false,
 }: FormInputProps<T>) => {
   const formatLabel = (label: string) =>
     label
@@ -43,6 +44,7 @@ export const FormInput = <T extends FieldValues>({
             onChange={onChange}
             error={!!errorMessage}
             helperText={errorMessage}
+            disabled={disabled}
             fullWidth
           />
         )

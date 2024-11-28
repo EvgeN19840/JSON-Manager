@@ -83,7 +83,7 @@ export const useDefaultJobInfo = (): IJobInfo => {
   };
 
   return {
-    customBambooTalbeRowId: dataForDialog?.customBambooTalbeRowId || 0,
+    customBambooTableRowId: dataForDialog?.customBambooTableRowId || 0,
     effectiveDate: dataForDialog?.effectiveDate || "",
     jobTitle: dataForDialog?.jobTitle || "",
     department: dataForDialog?.department || null,
@@ -100,7 +100,7 @@ export const useDefaultBonuses = (): IBonuses => {
   };
 
   return {
-    customBambooTalbeRowId: dataForDialog?.customBambooTalbeRowId || 0,
+    customBambooTableRowId: dataForDialog?.customBambooTableRowId || 0,
     effectiveDate: dataForDialog?.effectiveDate || "",
     amount: dataForDialog?.amount || 0,
     currencyCode: dataForDialog?.currencyCode || "",
@@ -127,7 +127,7 @@ export const useDefaultDepositAccounts = (): IDepositAccounts => {
     transitNumber: dataForDialog?.transitNumber || null,
     depositAmount: dataForDialog?.depositAmount || null,
     description: dataForDialog?.description || null,
-    customBambooTalbeRowId: dataForDialog?.customBambooTalbeRowId || 0,
+    customBambooTableRowId: dataForDialog?.customBambooTableRowId || 0,
     isPercentValue: dataForDialog?.isPercentValue || false,
   };
 };
@@ -156,7 +156,7 @@ export const useDefaultEmploymentStatus = (): IEmploymentStatus => {
   };
 
   return {
-    customBambooTalbeRowId: dataForDialog?.customBambooTalbeRowId || 0,
+    customBambooTableRowId: dataForDialog?.customBambooTableRowId || 0,
     effectiveDate: dataForDialog?.effectiveDate || "",
     employmentStatus: dataForDialog?.employmentStatus || "",
     comment: dataForDialog?.comment || null,
@@ -169,7 +169,7 @@ export const useDefaultSalary = (): ISalary => {
   };
 
   return {
-    customBambooTalbeRowId: dataForDialog?.customBambooTalbeRowId || 0,
+    customBambooTableRowId: dataForDialog?.customBambooTableRowId || 0,
     salaryRate: dataForDialog?.salaryRate || 0,
     salaryCurrencyCode: dataForDialog?.salaryCurrencyCode || "",
     salaryRatePeriod: dataForDialog?.salaryRatePeriod || "",

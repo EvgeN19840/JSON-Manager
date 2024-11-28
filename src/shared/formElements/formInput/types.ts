@@ -11,4 +11,5 @@ export interface FormInputProps<TFieldValues extends FieldValues> extends Omit<T
     errorMessage?: string;
     type?: string;
     rules?: object;
+    disabled?: boolean;
 }

@@ -39,7 +39,7 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
   T extends Partial<{
     id: string | number;
     eId: number;
-    customBambooTalbeRowId: number;
+    customBambooTableRowId: number;
   }>
 >(
   value: T,
@@ -64,12 +64,12 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
     }
 
     const updatedArray = (fieldArray).map((item) =>
-   item.customBambooTalbeRowId === value.customBambooTalbeRowId
+   item.customBambooTableRowId === value.customBambooTableRowId
         ? { ...item, ...value }
         : item
     );
     const itemExists = updatedArray.find(
-      (item) => item.customBambooTalbeRowId === value.customBambooTalbeRowId
+      (item) => item.customBambooTableRowId === value.customBambooTableRowId
     );
     if (!itemExists) {
       updatedArray.push(value as typeof fieldArray[number]);

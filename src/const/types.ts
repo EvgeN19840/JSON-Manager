@@ -74,7 +74,7 @@ export interface IDepositAccounts {
   transitNumber: string | null;
   depositAmount: number | null;
   description: string | null;
-  customBambooTalbeRowId: number;
+  customBambooTableRowId: number;
   isPercentValue: boolean;
 }
 
@@ -99,11 +99,11 @@ export interface ILoanOrSalaryAdvance {
 }
 
 export interface IOtherDeduction {
+  customBambooTableRowId: number;
   name: string;
   startDate: string | null;
   endDate: string | null;
   payrollOperationFrequency: string;
-  customBambooTableRowId: number;
   value: number;
   currencyCode: string;
 }
@@ -120,7 +120,7 @@ export interface IEmployeeBenefit {
 }
 
 export interface ISalary {
-  customBambooTalbeRowId: number;
+  customBambooTableRowId: number;
   salaryRate: number | null;
   salaryCurrencyCode: string | null;
   salaryRatePeriod: string | null;
@@ -133,7 +133,7 @@ export interface ISalary {
 }
 
 export interface IJobInfo {
-  customBambooTalbeRowId: number;
+  customBambooTableRowId: number;
   effectiveDate: string | null;
   jobTitle: string | null;
   department: string | null;
@@ -144,14 +144,14 @@ export interface IJobInfo {
 
 
 export interface IEmploymentStatus {
-  customBambooTalbeRowId: number;
+  customBambooTableRowId: number;
   effectiveDate: string | null;
   employmentStatus: string | null;
   comment: string | null;
 }
 
 export interface IBonuses {
-  customBambooTalbeRowId: number;
+  customBambooTableRowId: number;
   effectiveDate: string;
   amount: number;
   currencyCode: string;

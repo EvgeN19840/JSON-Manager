@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 
 export const schema = yup.object().shape({
-  customBambooTalbeRowId: yup
+  customBambooTableRowId: yup
     .number()
     .required('Custom Bamboo Table Row ID is required'),
 

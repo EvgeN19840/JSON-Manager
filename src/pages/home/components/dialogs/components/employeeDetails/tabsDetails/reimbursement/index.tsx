@@ -15,13 +15,11 @@ import { useHandleDeleteItem } from "@/hooks/useDelete";
 import { useHandleAddItem } from "@/hooks/useAddItem";
 import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
 import { CustomFooter } from "@/shared/components/customFooter";
-import { useDefaultReimbursement } from "@/hooks/useDefaultData";
 
 export const Reimbursements: React.FC = () => {
   const { handleClickOpenDialog, dataForDialog, setTypeModalDetailsEdit } =
     useModal();
   const { data } = useDataStateContext();
-  const defaultValues = useDefaultReimbursement();
   const handleDeleteItem = useHandleDeleteItem();
   const handleAddItem = useHandleAddItem();
   const dialogData = dataForDialog as { eId: number } | null;
@@ -64,7 +62,7 @@ export const Reimbursements: React.FC = () => {
     customIncomeCallbacks
   );
   const addNewRow = () => {
-    handleClickOpenDialog("Edit Details", defaultValues);
+    handleClickOpenDialog("Edit Details");
     setTypeModalDetailsEdit("Edit reimbursements");
   };
   return (

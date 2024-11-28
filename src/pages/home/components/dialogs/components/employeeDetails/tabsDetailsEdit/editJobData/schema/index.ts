@@ -1,6 +1,6 @@
 import * as yup from "yup";
 export const employmentStatusSchema = yup.object().shape({
-  customBambooTalbeRowId: yup.number().required("Row ID is required"),
+  customBambooTableRowId: yup.number().required("Row ID is required"),
   effectiveDate: yup.string().nullable().default(null),
   employmentStatus: yup
     .string()
@@ -13,7 +13,7 @@ export const employmentStatusSchema = yup.object().shape({
 });
 
 export const salarySchema = yup.object().shape({
-  customBambooTalbeRowId: yup.number().required("Row ID is required"),
+  customBambooTableRowId: yup.number().required("Row ID is required"),
   salaryRate: yup.number().nullable().default(null),
   salaryCurrencyCode: yup.string().nullable().default(null),
   salaryRatePeriod: yup.string().nullable().default(null),
@@ -26,7 +26,7 @@ export const salarySchema = yup.object().shape({
 });
 
 export const jobInfoSchema = yup.object().shape({
-  customBambooTalbeRowId: yup.number().required("Row ID is required"),
+  customBambooTableRowId: yup.number().required("Row ID is required"),
   effectiveDate: yup.string().nullable().default(null),
   jobTitle: yup.string().nullable().default(null),
   department: yup.string().nullable().default(null),

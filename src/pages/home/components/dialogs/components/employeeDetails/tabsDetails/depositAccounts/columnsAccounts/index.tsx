@@ -14,6 +14,13 @@ export const ColumnsAccounts = (
   callbacks: ContextMenuItemsCallbacks<IDepositAccounts>
 ): GridColDef<IDepositAccounts>[] => [
   {
+    field: "customBambooTableRowId",
+    headerName: "Custom Bamboo Table Row ID",
+    minWidth: 180,
+    flex: 1,
+    renderHeader: () => <HeaderDetails title="Custom Bamboo Table Row ID" />,
+  },
+  {
     field: "orderNumber",
     headerName: "Order Number",
     minWidth: 100,

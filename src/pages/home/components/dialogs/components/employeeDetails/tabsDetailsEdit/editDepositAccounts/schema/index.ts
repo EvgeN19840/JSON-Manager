@@ -46,7 +46,7 @@ export const schema = yup.object().shape({
     .nullable()
     .default(null),
 
-  customBambooTalbeRowId: yup
+  customBambooTableRowId: yup
     .number()
     .required('Custom Bamboo Table Row ID is required'),
 

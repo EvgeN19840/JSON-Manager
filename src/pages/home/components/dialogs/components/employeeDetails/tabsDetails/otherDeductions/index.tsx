@@ -15,14 +15,12 @@ import { useHandleDeleteItem } from "@/hooks/useDelete";
 import { useHandleAddItem } from "@/hooks/useAddItem";
 import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
 import { CustomFooter } from "@/shared/components/customFooter";
-import { useDefaultOtherDeduction } from "@/hooks/useDefaultData";
 
 export const OtherDeductionTab: React.FC = () => {
   const { handleClickOpenDialog, dataForDialog, setTypeModalDetailsEdit } =
   useModal();
 const dialogData = dataForDialog as { eId: number } | null;
 const { data } = useDataStateContext();
-const defaultValues = useDefaultOtherDeduction();
 const handleDeleteItem = useHandleDeleteItem();
 const handleAddItem = useHandleAddItem();
 
@@ -65,8 +63,8 @@ const deductionsCallbacks: ContextMenuItemsCallbacks<IOtherDeduction> = {
     deductionsCallbacks
   );
   const addNewRow = () => {
-    handleClickOpenDialog("Edit Details", defaultValues);
-    setTypeModalDetailsEdit("Edit benefits details");
+    handleClickOpenDialog("Edit Details");
+    setTypeModalDetailsEdit("Edit deductions");
   };
   return (
     <Box>
