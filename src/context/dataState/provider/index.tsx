@@ -5,7 +5,12 @@ import { ReactNode, useState } from "react";
 import { DataStateContext } from "../dataStateContext";
 
 // ** Types
-import { IEmployee, ISystemBenefit, ITypeJSON } from "@/const/types";
+import {
+  IEmployee,
+  IEmployeeBenefit,
+  ISystemBenefit,
+  ITypeJSON,
+} from "@/const/types";
 
 export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
   children,
@@ -36,103 +41,113 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const handleSaveData = <
-  T extends Partial<{
-    id: string | number;
-    eId: number;
-    customBambooTableRowId: number;
-  }>
->(
-  value: T,
-  type:
-    | "employeeBenefit"
-    | "depositAccount"
-    | "bonuses"
-    | "personal"
-    | "jobInfo"
-    | "salary"
-    | "status"
-    | "reimbursements"
-    | "otherDeductions"
-) => {
-  const checkArray = <Field extends keyof IEmployee>(
-    arrayField: Field,
-    employee: IEmployee
-  ): IEmployee[Field] => {
-    const fieldArray = employee[arrayField] as IEmployee[Field] 
-    if (!Array.isArray(fieldArray)) {
-      throw new Error(`Expected an array for field: ${String(arrayField)}`);
-    }
+    T extends Partial<{
+      id: string | number;
+      eId: number;
+      customBambooTableRowId: number;
+    }>
+  >(
+    value: T,
+    type:
+      | "employeeBenefit"
+      | "depositAccount"
+      | "bonuses"
+      | "personal"
+      | "jobInfo"
+      | "salary"
+      | "status"
+      | "reimbursements"
+      | "otherDeductions"
+  ) => {
+    const checkArray = <Field extends keyof IEmployee>(
+      arrayField: Field,
+      employee: IEmployee
+    ): IEmployee[Field] => {
+      const fieldArray = employee[arrayField] as IEmployee[Field];
 
-    const updatedArray = (fieldArray).map((item) =>
-   item.customBambooTableRowId === value.customBambooTableRowId
-        ? { ...item, ...value }
-        : item
-    );
-    const itemExists = updatedArray.find(
-      (item) => item.customBambooTableRowId === value.customBambooTableRowId
-    );
-    if (!itemExists) {
-      updatedArray.push(value as typeof fieldArray[number]);
-    }
-
-    return updatedArray as IEmployee[Field];
-  };
-
-  setData((prevData) => ({
-    ...prevData,
-    employees: prevData.employees.map((employee) => {
-      if (employee.eId !== eIdSetectedEmploee) return employee;
-
-      switch (type) {
-        case "jobInfo":
-          return {
-            ...employee,
-            jobInfo: checkArray("jobInfo", employee),
-          };
-        case "salary":
-          return {
-            ...employee,
-            salary: checkArray("salary", employee),
-          };
-        case "status":
-          return {
-            ...employee,
-            employmentStatus: checkArray("employmentStatus", employee),
-          };
-        case "personal":
-          return { ...employee, ...value };
-        case "employeeBenefit":
-          return {
-            ...employee,
-            benefits: checkArray("benefits", employee),
-          };
-        case "bonuses":
-          return {
-            ...employee,
-            bonuses: checkArray("bonuses", employee),
-          };
-        case "depositAccount":
-          return {
-            ...employee,
-            depositAccounts: checkArray("depositAccounts", employee),
-          };
-        case "reimbursements":
-          return {
-            ...employee,
-            reimbursements: checkArray("reimbursements", employee),
-          };
-        case "otherDeductions":
-          return {
-            ...employee,
-            otherDeductions: checkArray("otherDeductions", employee),
-          };
-        default:
-          return employee;
+      if (!Array.isArray(fieldArray)) {
+        throw new Error(`Expected an array for field: ${String(arrayField)}`);
       }
-    }),
-  }));
-};
 
+      const updatedArray = fieldArray.map((item) =>
+        type === "employeeBenefit"
+          ? (item as IEmployeeBenefit).id === value.id
+            ? { ...item, ...value }
+            : item
+          : (item as { customBambooTableRowId: number })
+              .customBambooTableRowId === value.customBambooTableRowId
+          ? { ...item, ...value }
+          : item
+      );
+
+      const itemExists = updatedArray.some((item) =>
+        type === "employeeBenefit"
+          ? (item as IEmployeeBenefit).id === value.id
+          : (item as { customBambooTableRowId: number })
+              .customBambooTableRowId === value.customBambooTableRowId
+      );
+
+      if (!itemExists) {
+        updatedArray.push(value as (typeof fieldArray)[number]);
+      }
+
+      return updatedArray as IEmployee[Field];
+    };
+
+    setData((prevData) => ({
+      ...prevData,
+      employees: prevData.employees.map((employee) => {
+        if (employee.eId !== eIdSetectedEmploee) return employee;
+
+        switch (type) {
+          case "jobInfo":
+            return {
+              ...employee,
+              jobInfo: checkArray("jobInfo", employee),
+            };
+          case "salary":
+            return {
+              ...employee,
+              salary: checkArray("salary", employee),
+            };
+          case "status":
+            return {
+              ...employee,
+              employmentStatus: checkArray("employmentStatus", employee),
+            };
+          case "personal":
+            return { ...employee, ...value };
+          case "employeeBenefit":
+            return {
+              ...employee,
+              benefits: checkArray("benefits", employee),
+            };
+          case "bonuses":
+            return {
+              ...employee,
+              bonuses: checkArray("bonuses", employee),
+            };
+          case "depositAccount":
+            return {
+              ...employee,
+              depositAccounts: checkArray("depositAccounts", employee),
+            };
+          case "reimbursements":
+            return {
+              ...employee,
+              reimbursements: checkArray("reimbursements", employee),
+            };
+          case "otherDeductions":
+            return {
+              ...employee,
+              otherDeductions: checkArray("otherDeductions", employee),
+            };
+          default:
+            return employee;
+        }
+      }),
+    }));
+  };
 
   const hasData = !!(data?.benefits?.length || data?.employees?.length);
 
