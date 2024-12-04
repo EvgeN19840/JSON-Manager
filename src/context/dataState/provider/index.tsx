@@ -44,7 +44,7 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
     T extends Partial<{
       id: string | number;
       eId: number;
-      customBambooTableRowId: number;
+      customBambooTableRowId: number | string;
     }>
   >(
     value: T,
@@ -68,29 +68,39 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
       if (!Array.isArray(fieldArray)) {
         throw new Error(`Expected an array for field: ${String(arrayField)}`);
       }
+      const normalizedValueId = Number(value.customBambooTableRowId);
 
-      const updatedArray = fieldArray.map((item) =>
-        type === "employeeBenefit"
-          ? (item as IEmployeeBenefit).id === value.id
-            ? { ...item, ...value }
-            : item
-          : (item as { customBambooTableRowId: number })
-              .customBambooTableRowId === value.customBambooTableRowId
-          ? { ...item, ...value }
-          : item
-      );
+      const updatedArray = fieldArray.map((item) => {
+        if (
+          type === "employeeBenefit" &&
+          (item as IEmployeeBenefit).id === value.id
+        ) {
+          return { ...item, ...value };
+        }
+
+        if (
+          type !== "employeeBenefit" &&
+          Number(
+            (item as { customBambooTableRowId: number }).customBambooTableRowId
+          ) === normalizedValueId
+        ) {
+          return { ...item, ...value };
+        }
+        return item;
+      });
 
       const itemExists = updatedArray.some((item) =>
         type === "employeeBenefit"
           ? (item as IEmployeeBenefit).id === value.id
-          : (item as { customBambooTableRowId: number })
-              .customBambooTableRowId === value.customBambooTableRowId
+          : Number(
+              (item as { customBambooTableRowId: number })
+                .customBambooTableRowId
+            ) === normalizedValueId
       );
 
       if (!itemExists) {
         updatedArray.push(value as (typeof fieldArray)[number]);
       }
-
       return updatedArray as IEmployee[Field];
     };
 
