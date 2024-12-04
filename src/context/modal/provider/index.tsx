@@ -20,7 +20,7 @@ import {
   ISalary,
   ISystemBenefit,
 } from "@/const/types";
-import { validateUniqueIds } from "@/shared/utils/checkBambooRow";
+import { validateUniqueIds } from "@/shared/utils/validateUniqueIds";
 
 export const ModalProvider: React.FC<{ children: ReactNode }> = ({
   children,
