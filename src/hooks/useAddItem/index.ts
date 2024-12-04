@@ -51,7 +51,6 @@ export const useHandleAddItem = () => {
         nestedType,
     }: IUseHandleAddItemParams): void => {
         const updatedData: ITypeJSON = { ...data };
-
         if (type === "employees" && "eId" in item) {
             const newEmployeeId = assignMissingIds(data, "employees");
             const similarEmployees = data.employees.filter((emp) =>
