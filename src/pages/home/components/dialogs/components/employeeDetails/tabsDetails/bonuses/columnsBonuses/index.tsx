@@ -10,13 +10,7 @@ export const ColumnsBonuses = (
   _handleEditClick: (data: IBonuses) => void,
   callbacks: ContextMenuItemsCallbacks<IBonuses>
 ): GridColDef<IBonuses>[] => [
-  {
-    field: "customBambooTableRowId",
-    headerName: "Custom Bamboo Table Row ID",
-    minWidth: 180,
-    flex: 1,
-    renderHeader: () => <HeaderDetails title="Custom Bamboo Table Row ID" />,
-  },
+ 
  
   {
     field: "effectiveDate",

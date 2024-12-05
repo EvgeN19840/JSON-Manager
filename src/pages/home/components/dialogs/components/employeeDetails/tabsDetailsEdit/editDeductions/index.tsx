@@ -46,16 +46,18 @@ export const EditDeductions: React.FC = () => {
 
   return (
     <FormWrapper title="Deduction" onSubmit={handleSubmit(onSubmit)}>
-      {Object.keys(defaultValues).map((key) => (
-        <Box key={key} mb={2}>
-          <FormInput
-            name={key as keyof IOtherDeduction}
-            label={key}
-            control={control}
-            errorMessage={errors[key as keyof IOtherDeduction]?.message}
-          />
-        </Box>
-      ))}
+      {Object.keys(defaultValues)
+        .filter((key) => key !== "customBambooTableRowId")
+        .map((key) => (
+          <Box key={key} mb={2}>
+            <FormInput
+              name={key as keyof IOtherDeduction}
+              label={key}
+              control={control}
+              errorMessage={errors[key as keyof IOtherDeduction]?.message}
+            />
+          </Box>
+        ))}
       <FormFooter
         cancelButtonText="Cancel"
         actionButtonText="Save"

@@ -44,21 +44,23 @@ export const Salary: React.FC = () => {
 
   return (
     <FormWrapper title="Salary" onSubmit={handleSubmit(onSubmit)}>
-      {Object.keys(defaultValues).map((key) => (
-        <Box key={key} mb={2}>
-          <FormInput
-            name={key as keyof ISalary}
-            label={key}
-            control={control}
-            type={
-              typeof defaultValues[key as keyof ISalary] === "boolean"
-                ? "checkbox"
-                : "text"
-            }
-            errorMessage={errors[key as keyof ISalary]?.message}
-          />
-        </Box>
-      ))}
+      {Object.keys(defaultValues)
+        .filter((key) => key !== "customBambooTableRowId")
+        .map((key) => (
+          <Box key={key} mb={2}>
+            <FormInput
+              name={key as keyof ISalary}
+              label={key}
+              control={control}
+              type={
+                typeof defaultValues[key as keyof ISalary] === "boolean"
+                  ? "checkbox"
+                  : "text"
+              }
+              errorMessage={errors[key as keyof ISalary]?.message}
+            />
+          </Box>
+        ))}
       <FormFooter
         cancelButtonText="Cancel"
         actionButtonText="Save"

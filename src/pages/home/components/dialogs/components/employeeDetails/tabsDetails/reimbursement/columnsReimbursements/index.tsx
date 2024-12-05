@@ -10,13 +10,7 @@ export const ColumnsReimbursements = (
   _handleEditClick: (data: IReimbursement) => void,
   callbacks: ContextMenuItemsCallbacks<IReimbursement>
 ): GridColDef<IReimbursement>[] => [
-  {
-    field: "customBambooTableRowId",
-    headerName: "Custom Bamboo Table Row ID",
-    minWidth: 180,
-    flex: 1,
-    renderHeader: () => <HeaderDetails title="Custom Bamboo Table Row ID" />,
-  },
+ 
   {
     field: "name",
     headerName: "Name",

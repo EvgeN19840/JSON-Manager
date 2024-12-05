@@ -3,6 +3,7 @@ import { FormWrapper, FormInput, FormFooter } from "@/shared/formElements";
 
 // ** Forms Imports
 import { useForm } from "react-hook-form";
+import { Box } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 // ** Hooks
@@ -14,9 +15,7 @@ import { schema } from "./schema";
 
 // ** Types
 import { IEmployeeBenefit } from "@/const/types";
-import { Box } from "@mui/material";
 import { useDefaultEmployeeBenefit } from "@/hooks/useDefaultData";
-
 
 export const EditDetailsBenefits = () => {
   const { dataForDialog } = useModal() as {
@@ -61,28 +60,31 @@ export const EditDetailsBenefits = () => {
 
   return (
     <FormWrapper title="Benefit" onSubmit={handleSubmit(onSubmit)}>
-    {Object.keys(defaultValues).map((key) => (
-      <Box key={key} mb={2}>
-        <FormInput
-          name={key as keyof IEmployeeBenefit}
-          label={key}
-          control={control}
-          type={
-            typeof defaultValues[key as keyof IEmployeeBenefit] === "boolean"
-              ? "checkbox"
-              : "text"
-          }
-          errorMessage={errors[key as keyof IEmployeeBenefit]?.message}
-        />
-      </Box>
-    ))}
-    <FormFooter
-      cancelButtonText="Cancel"
-      actionButtonText="Save"
-      showSecondButton={isDirty}
-      buttonAction={handleSubmit(onSubmit)}
-      source="employeeDetails"
-    />
-  </FormWrapper>
+      {Object.keys(defaultValues)
+        .filter((key) => key !== "id")
+        .map((key) => (
+          <Box key={key} mb={2}>
+            <FormInput
+              name={key as keyof IEmployeeBenefit}
+              label={key}
+              control={control}
+              type={
+                typeof defaultValues[key as keyof IEmployeeBenefit] ===
+                "boolean"
+                  ? "checkbox"
+                  : "text"
+              }
+              errorMessage={errors[key as keyof IEmployeeBenefit]?.message}
+            />
+          </Box>
+        ))}
+      <FormFooter
+        cancelButtonText="Cancel"
+        actionButtonText="Save"
+        showSecondButton={isDirty}
+        buttonAction={handleSubmit(onSubmit)}
+        source="employeeDetails"
+      />
+    </FormWrapper>
   );
 };

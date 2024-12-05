@@ -15,13 +15,7 @@ export const ColumnsSalary = (
   _handleEditClick: (data: ISalary) => void,
   callbacks: ContextMenuItemsCallbacks<ISalary>
 ): GridColDef<ISalary>[] => [
-  {
-    field: "customBambooTableRowId",
-    headerName: "Custom Bamboo Table Row ID",
-    minWidth: 180,
-    flex: 1,
-    renderHeader: () => <HeaderDetails title="Custom Bamboo Table Row ID" />,
-  },
+ 
   {
     field: "salaryRate",
     headerName: "Salary Rate",
