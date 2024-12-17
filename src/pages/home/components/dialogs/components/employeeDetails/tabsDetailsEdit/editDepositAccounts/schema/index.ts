@@ -4,7 +4,10 @@ export const schema = yup.object().shape({
   orderNumber: yup
     .number()
     .nullable()
-    .default(null),
+    .default(null)
+    .transform((value, originalValue) =>
+      originalValue === '' ? null : value
+    ),
 
   bank: yup
     .string()
@@ -39,8 +42,10 @@ export const schema = yup.object().shape({
   depositAmount: yup
     .number()
     .nullable()
-    .default(null),
-
+    .default(null)
+    .transform((value, originalValue) =>
+      originalValue === '' ? null : value
+    ),
   description: yup
     .string()
     .nullable()
