@@ -20,14 +20,44 @@ import { useNotification } from "@/hooks/useNotification";
 import { useDataStateContext } from "@/hooks/useDataStateContext";
 import { employeeData } from "@/const/jsonBase";
 
+const normalizeToJson = (input: string): string => {
+  return input
+    .replace(/([{,])\s*([a-zA-Z0-9_]+)\s*:/g, '$1"$2":')
+    .replace(/'/g, '"');
+};
+
+const parseInputData = (input: string): ITypeJSON | null => {
+  try {
+    return JSON.parse(input);
+  } catch (e) {
+    console.log(e);
+    try {
+      const normalizedInput = normalizeToJson(input);
+      return JSON.parse(normalizedInput);
+    } catch (e) {
+      console.log("Parsing failed after normalization:", e);
+      return null;
+    }
+  }
+};
+
 export const ImportDataComponent: React.FC = () => {
   const [inputValue, setInputValue] = useState("");
   const { showNotification } = useNotification();
   const { setData } = useDataStateContext();
   const { setDialogOpen } = useModal();
   const handleImport = () => {
+    const parsedData = parseInputData(inputValue);
+
+    if (!parsedData) {
+      showNotification(
+        "Invalid data format. Please correct and try again.",
+        "error"
+      );
+      return;
+    }
+
     try {
-      const parsedData: ITypeJSON = JSON.parse(inputValue);
       assignMissingIds(parsedData, "benefits");
       setData({
         employees: parsedData.employees,
