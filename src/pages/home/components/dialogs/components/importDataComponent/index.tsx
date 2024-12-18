@@ -20,14 +20,38 @@ import { useNotification } from "@/hooks/useNotification";
 import { useDataStateContext } from "@/hooks/useDataStateContext";
 import { employeeData } from "@/const/jsonBase";
 
+const normalizeToJson = (input: string): string => {
+  return input
+    .replace(/([{,])\s*([a-zA-Z0-9_]+)\s*:/g, '$1"$2":') 
+    .replace(/'/g, '"') 
+    .replace(/,\s*}/g, '}')
+    .replace(/,\s*]/g, ']');
+};
+
+const isValidJson = (input: string): boolean => {
+  try {
+    JSON.parse(input);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
 export const ImportDataComponent: React.FC = () => {
   const [inputValue, setInputValue] = useState("");
   const { showNotification } = useNotification();
   const { setData } = useDataStateContext();
   const { setDialogOpen } = useModal();
   const handleImport = () => {
+    const normalizedInput = normalizeToJson(inputValue);
+
+    if (!isValidJson(normalizedInput)) {
+      showNotification("Invalid data format. Please correct and try again.", "error");
+      return;
+    }
+
     try {
-      const parsedData: ITypeJSON = JSON.parse(inputValue);
+      const parsedData = JSON.parse(normalizedInput) as ITypeJSON;
       assignMissingIds(parsedData, "benefits");
       setData({
         employees: parsedData.employees,
@@ -55,8 +79,6 @@ const addBaseEmployee =()=>{
   setDialogOpen(false);
   setInputValue("");
 }
-
-
   return (
     <Box>
       <Typography variant="h6" sx={{ textAlign: "center" }}>
