@@ -22,22 +22,18 @@ import { employeeData } from "@/const/jsonBase";
 
 const normalizeToJson = (input: string): string => {
   return input
-    .replace(/([{,])\s*([a-zA-Z0-9_]+)\s*:/g, '$1"$2":')
-    .replace(/'/g, '"');
+    .replace(/([{,])\s*([a-zA-Z0-9_]+)\s*:/g, '$1"$2":') 
+    .replace(/'/g, '"') 
+    .replace(/,\s*}/g, '}')
+    .replace(/,\s*]/g, ']');
 };
 
-const parseInputData = (input: string): ITypeJSON | null => {
+const isValidJson = (input: string): boolean => {
   try {
-    return JSON.parse(input);
-  } catch (e) {
-    console.log(e);
-    try {
-      const normalizedInput = normalizeToJson(input);
-      return JSON.parse(normalizedInput);
-    } catch (e) {
-      console.log("Parsing failed after normalization:", e);
-      return null;
-    }
+    JSON.parse(input);
+    return true;
+  } catch {
+    return false;
   }
 };
 
@@ -47,17 +43,15 @@ export const ImportDataComponent: React.FC = () => {
   const { setData } = useDataStateContext();
   const { setDialogOpen } = useModal();
   const handleImport = () => {
-    const parsedData = parseInputData(inputValue);
+    const normalizedInput = normalizeToJson(inputValue);
 
-    if (!parsedData) {
-      showNotification(
-        "Invalid data format. Please correct and try again.",
-        "error"
-      );
+    if (!isValidJson(normalizedInput)) {
+      showNotification("Invalid data format. Please correct and try again.", "error");
       return;
     }
 
     try {
+      const parsedData = JSON.parse(normalizedInput) as ITypeJSON;
       assignMissingIds(parsedData, "benefits");
       setData({
         employees: parsedData.employees,
