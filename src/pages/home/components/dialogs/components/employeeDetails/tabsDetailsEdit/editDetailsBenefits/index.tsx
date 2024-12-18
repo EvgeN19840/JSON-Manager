@@ -14,7 +14,7 @@ import { useDataStateContext } from "@/hooks/useDataStateContext";
 import { schema } from "./schema";
 
 // ** Types
-import { IEmployeeBenefit } from "@/const/types";
+import { IEmployeeBenefit, ISystemBenefit } from "@/const/types";
 import { useDefaultEmployeeBenefit } from "@/hooks/useDefaultData";
 
 export const EditDetailsBenefits = () => {
@@ -23,7 +23,8 @@ export const EditDetailsBenefits = () => {
   };
 
   const { handleClickOpenDialog } = useModal();
-  const { handleSaveData, data, eIdSetectedEmploee } = useDataStateContext();
+  const { handleSaveData, handleSaveBenefit, data, eIdSetectedEmploee } =
+    useDataStateContext();
 
   const defaultValues = useDefaultEmployeeBenefit();
 
@@ -38,10 +39,17 @@ export const EditDetailsBenefits = () => {
   });
 
   const onSubmit = (formData: IEmployeeBenefit) => {
-    handleSaveData(
-      { ...dataForDialog, ...formData } as IEmployeeBenefit,
-      "employeeBenefit"
-    );
+    const updatedDataForDialog = {
+      ...dataForDialog,
+      ...formData,
+    } as IEmployeeBenefit;
+    const updatedBenefit = {
+      id: formData.id,
+      name: formData.name,
+    } as ISystemBenefit;
+
+    handleSaveData(updatedDataForDialog, "employeeBenefit");
+    handleSaveBenefit(updatedBenefit);
     const updatedEmployees = data.employees.map((employee) => {
       if (employee.eId === eIdSetectedEmploee) {
         const updatedBenefits = employee.benefits.map((benefit) =>
