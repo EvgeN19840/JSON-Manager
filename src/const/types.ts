@@ -109,13 +109,13 @@ export interface IOtherDeduction {
 }
 
 export interface IEmployeeBenefit {
-  name: string;
+  name: string ;
   value: number;
-  currencyCode: string;
+  currencyCode: string | null;
   companyValue: number;
-  companyCurrencyCode: string;
+  companyCurrencyCode: string | null;
   isPerentValue: boolean;
-  effectiveDate: string;
+  effectiveDate: string | null;
   id: string;
 }
 

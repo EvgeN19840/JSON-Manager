@@ -43,18 +43,16 @@ export const JobInfo: React.FC = () => {
 
   return (
     <FormWrapper title="Job Info" onSubmit={handleSubmit(onSubmit)}>
-      {Object.keys(defaultValues)
-        .filter((key) => key !== "customBambooTableRowId")
-        .map((key) => (
-          <Box key={key} mb={2}>
-            <FormInput
-              name={key as keyof IJobInfo}
-              label={key}
-              control={control}
-              errorMessage={errors[key as keyof IJobInfo]?.message}
-            />
-          </Box>
-        ))}
+      {Object.keys(defaultValues).map((key) => (
+        <Box key={key} mb={2}>
+          <FormInput
+            name={key as keyof IJobInfo}
+            label={key}
+            control={control}
+            errorMessage={errors[key as keyof IJobInfo]?.message}
+          />
+        </Box>
+      ))}
       <FormFooter
         cancelButtonText="Cancel"
         actionButtonText="Save"

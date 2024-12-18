@@ -60,24 +60,21 @@ export const EditDetailsBenefits = () => {
 
   return (
     <FormWrapper title="Benefit" onSubmit={handleSubmit(onSubmit)}>
-      {Object.keys(defaultValues)
-        .filter((key) => key !== "id")
-        .map((key) => (
-          <Box key={key} mb={2}>
-            <FormInput
-              name={key as keyof IEmployeeBenefit}
-              label={key}
-              control={control}
-              type={
-                typeof defaultValues[key as keyof IEmployeeBenefit] ===
-                "boolean"
-                  ? "checkbox"
-                  : "text"
-              }
-              errorMessage={errors[key as keyof IEmployeeBenefit]?.message}
-            />
-          </Box>
-        ))}
+      {Object.keys(defaultValues).map((key) => (
+        <Box key={key} mb={2}>
+          <FormInput
+            name={key as keyof IEmployeeBenefit}
+            label={key}
+            control={control}
+            type={
+              typeof defaultValues[key as keyof IEmployeeBenefit] === "boolean"
+                ? "checkbox"
+                : "text"
+            }
+            errorMessage={errors[key as keyof IEmployeeBenefit]?.message}
+          />
+        </Box>
+      ))}
       <FormFooter
         cancelButtonText="Cancel"
         actionButtonText="Save"

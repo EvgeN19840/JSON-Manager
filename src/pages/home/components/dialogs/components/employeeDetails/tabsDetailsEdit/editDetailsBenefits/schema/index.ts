@@ -10,8 +10,10 @@ export const schema = yup.object().shape({
     .typeError('Value must be a number'),
 
   currencyCode: yup
+
     .string()
-    .required('Currency Code is required'),
+    .nullable()
+    .default(null),
 
   companyValue: yup
     .number()
@@ -19,16 +21,20 @@ export const schema = yup.object().shape({
     .typeError('Company Value must be a number'),
 
   companyCurrencyCode: yup
+
     .string()
-    .required('Company Currency Code is required'),
+    .nullable()
+    .default(null),
 
   isPerentValue: yup
     .boolean()
     .required('Is Percent Value is required'),
 
   effectiveDate: yup
+
     .string()
-    .default(null), 
+    .nullable()
+    .default(null),
 
   id: yup
     .string()

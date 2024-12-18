@@ -57,18 +57,16 @@ export const EditReimbursementTab: React.FC = () => {
   };
   return (
     <FormWrapper title="Reimbursement" onSubmit={handleSubmit(onSubmit)}>
-      {Object.keys(defaultValues)
-        .filter((key) => key !== "customBambooTableRowId")
-        .map((key) => (
-          <Box key={key}>
-            <FormInput
-              name={key as keyof IReimbursement}
-              label={key}
-              control={control}
-              errorMessage={errors[key as keyof IReimbursement]?.message}
-            />
-          </Box>
-        ))}
+      {Object.keys(defaultValues).map((key) => (
+        <Box key={key}>
+          <FormInput
+            name={key as keyof IReimbursement}
+            label={key}
+            control={control}
+            errorMessage={errors[key as keyof IReimbursement]?.message}
+          />
+        </Box>
+      ))}
 
       <FormFooter
         cancelButtonText="Cancel"
