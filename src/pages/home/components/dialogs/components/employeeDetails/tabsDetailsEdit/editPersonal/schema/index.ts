@@ -2,7 +2,7 @@ import * as yup from "yup";
 
 export const schema = yup.object().shape({
   eId: yup.number().default(0), 
-  number: yup.string().default(""), 
+  number: yup.mixed<string | number>().nullable().default(0),
   firstName: yup.string().default(""),
   middleName: yup.string().nullable().default(""),
   lastName: yup.string().default(""),
