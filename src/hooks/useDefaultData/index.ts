@@ -173,7 +173,7 @@ export const useDefaultSalary = (): ISalary => {
     salaryRate: dataForDialog?.salaryRate || 0,
     salaryCurrencyCode: dataForDialog?.salaryCurrencyCode || "",
     salaryRatePeriod: dataForDialog?.salaryRatePeriod || "",
-    payPeriod: dataForDialog?.payPeriod || null,
+    payPeriod: dataForDialog?.payPeriod ||  "Monthly",
     allowOvertime: dataForDialog?.allowOvertime || false,
     effectiveDate: dataForDialog?.effectiveDate || "",
     changeReason: dataForDialog?.changeReason || null,
