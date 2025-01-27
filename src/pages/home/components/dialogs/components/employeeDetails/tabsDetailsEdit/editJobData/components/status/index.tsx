@@ -45,19 +45,27 @@ export const EmploymentStatus: React.FC = () => {
   };
 
   return (
-    <FormWrapper title="Employment Status" onSubmit={handleSubmit(onSubmit)}>
-      {Object.keys(defaultValues)
-        .filter((key) => key !== "customBambooTableRowId")
-        .map((key) => (
-          <Box key={key} mb={2}>
-            <FormInput
-              name={key as keyof IEmploymentStatus}
-              label={key}
-              control={control}
-              errorMessage={errors[key as keyof IEmploymentStatus]?.message}
-            />
-          </Box>
-        ))}
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100vh",
+      }}
+    >
+      <FormWrapper title="Employment Status" onSubmit={handleSubmit(onSubmit)}>
+        {Object.keys(defaultValues)
+          .filter((key) => key !== "customBambooTableRowId")
+          .map((key) => (
+            <Box key={key} mb={2}>
+              <FormInput
+                name={key as keyof IEmploymentStatus}
+                label={key}
+                control={control}
+                errorMessage={errors[key as keyof IEmploymentStatus]?.message}
+              />
+            </Box>
+          ))}
+      </FormWrapper>
       <FormFooter
         cancelButtonText="Cancel"
         actionButtonText="Save"
@@ -65,6 +73,6 @@ export const EmploymentStatus: React.FC = () => {
         buttonAction={handleSubmit(onSubmit)}
         source="employeeDetails"
       />
-    </FormWrapper>
+    </Box>
   );
 };

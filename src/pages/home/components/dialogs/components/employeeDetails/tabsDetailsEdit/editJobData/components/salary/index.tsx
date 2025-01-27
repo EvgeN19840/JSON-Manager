@@ -44,48 +44,56 @@ export const Salary: React.FC = () => {
   };
 
   return (
-    <FormWrapper title="Salary" onSubmit={handleSubmit(onSubmit)}>
-      {Object.keys(defaultValues)
-        .filter((key) => key !== "customBambooTableRowId")
-        .map((key) => (
-          <Box key={key} mb={2}>
-            {key === "payPeriod" ? (
-              <FormControl fullWidth variant="outlined">
-                <InputLabel>{key}</InputLabel>
-                <Controller
-                  name="payPeriod"
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100vh",
+      }}
+    >
+      <FormWrapper title="Salary" onSubmit={handleSubmit(onSubmit)}>
+        {Object.keys(defaultValues)
+          .filter((key) => key !== "customBambooTableRowId")
+          .map((key) => (
+            <Box key={key} mb={2}>
+              {key === "payPeriod" ? (
+                <FormControl fullWidth variant="outlined">
+                  <InputLabel>{key}</InputLabel>
+                  <Controller
+                    name="payPeriod"
+                    control={control}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        label={key}
+                        value={field.value || ""}
+                        onChange={(e) => field.onChange(e.target.value)}
+                      >
+                        {payPeriod.map((option) => (
+                          <MenuItem key={option} value={option}>
+                            {option}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    )}
+                  />
+                </FormControl>
+              ) : (
+                <FormInput
+                  name={key as keyof ISalary}
+                  label={key}
                   control={control}
-                  render={({ field }) => (
-                    <Select
-                      {...field}
-                      label={key}
-                      value={field.value || ""}
-                      onChange={(e) => field.onChange(e.target.value)}
-                    >
-                      {payPeriod.map((option) => (
-                        <MenuItem key={option} value={option}>
-                          {option}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  )}
+                  type={
+                    typeof defaultValues[key as keyof ISalary] === "boolean"
+                      ? "checkbox"
+                      : "text"
+                  }
+                  errorMessage={errors[key as keyof ISalary]?.message}
                 />
-              </FormControl>
-            ) : (
-              <FormInput
-                name={key as keyof ISalary}
-                label={key}
-                control={control}
-                type={
-                  typeof defaultValues[key as keyof ISalary] === "boolean"
-                    ? "checkbox"
-                    : "text"
-                }
-                errorMessage={errors[key as keyof ISalary]?.message}
-              />
-            )}
-          </Box>
-        ))}
+              )}
+            </Box>
+          ))}
+      </FormWrapper>
       <FormFooter
         cancelButtonText="Cancel"
         actionButtonText="Save"
@@ -93,6 +101,6 @@ export const Salary: React.FC = () => {
         buttonAction={handleSubmit(onSubmit)}
         source="employeeDetails"
       />
-    </FormWrapper>
+    </Box>
   );
 };

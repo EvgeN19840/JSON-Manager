@@ -71,32 +71,34 @@ export const ImportDataComponent: React.FC = () => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
-const addBaseEmployee =()=>{
-  setData({
-    employees: employeeData.employees,
-    benefits: employeeData.benefits,
-  });
-  setDialogOpen(false);
-  setInputValue("");
-}
+  const addBaseEmployee = () => {
+    setData({
+      employees: employeeData.employees,
+      benefits: employeeData.benefits,
+    });
+    setDialogOpen(false);
+    setInputValue("");
+  };
   return (
     <Box>
       <Typography variant="h6" sx={{ textAlign: "center" }}>
         Import Data
       </Typography>
+      <Box sx={{ px: "1rem" }}>
       <InputField
         value={inputValue}
         onChange={handleInputChange}
         placeholder="Paste your JSON data here"
         rows={20}
       />
+      </Box>
       <Box sx={{ mt: 1 }}>
         <FormFooter
           cancelButtonText={"Close"}
           actionButtonText={"Import"}
           showSecondButton={!!inputValue}
           canAddBaseEmployee={true}
-          buttonAction={handleImport }
+          buttonAction={handleImport}
           addBaseEmployee={addBaseEmployee}
           source={"general"}
         />

@@ -67,22 +67,31 @@ export const EditDetailsBenefits = () => {
   };
 
   return (
-    <FormWrapper title="Benefit" onSubmit={handleSubmit(onSubmit)}>
-      {Object.keys(defaultValues).map((key) => (
-        <Box key={key} mb={2}>
-          <FormInput
-            name={key as keyof IEmployeeBenefit}
-            label={key}
-            control={control}
-            type={
-              typeof defaultValues[key as keyof IEmployeeBenefit] === "boolean"
-                ? "checkbox"
-                : "text"
-            }
-            errorMessage={errors[key as keyof IEmployeeBenefit]?.message}
-          />
-        </Box>
-      ))}
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100vh",
+      }}
+    >
+      <FormWrapper title="Benefit" onSubmit={handleSubmit(onSubmit)}>
+        {Object.keys(defaultValues).map((key) => (
+          <Box key={key} mb={2}>
+            <FormInput
+              name={key as keyof IEmployeeBenefit}
+              label={key}
+              control={control}
+              type={
+                typeof defaultValues[key as keyof IEmployeeBenefit] ===
+                "boolean"
+                  ? "checkbox"
+                  : "text"
+              }
+              errorMessage={errors[key as keyof IEmployeeBenefit]?.message}
+            />
+          </Box>
+        ))}
+      </FormWrapper>
       <FormFooter
         cancelButtonText="Cancel"
         actionButtonText="Save"
@@ -90,6 +99,6 @@ export const EditDetailsBenefits = () => {
         buttonAction={handleSubmit(onSubmit)}
         source="employeeDetails"
       />
-    </FormWrapper>
+    </Box>
   );
 };

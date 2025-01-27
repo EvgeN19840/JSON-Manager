@@ -56,20 +56,27 @@ export const EditReimbursementTab: React.FC = () => {
     handleClickOpenDialog("Details", updatedEmployee);
   };
   return (
-    <FormWrapper title="Reimbursement" onSubmit={handleSubmit(onSubmit)}>
-      {Object.keys(defaultValues)
-        .filter((key) => key !== "customBambooTableRowId")
-        .map((key) => (
-          <Box key={key}>
-            <FormInput
-              name={key as keyof IReimbursement}
-              label={key}
-              control={control}
-              errorMessage={errors[key as keyof IReimbursement]?.message}
-            />
-          </Box>
-        ))}
-
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100vh",
+      }}
+    >
+      <FormWrapper title="Reimbursement" onSubmit={handleSubmit(onSubmit)}>
+        {Object.keys(defaultValues)
+          .filter((key) => key !== "customBambooTableRowId")
+          .map((key) => (
+            <Box key={key} mb={2}>
+              <FormInput
+                name={key as keyof IReimbursement}
+                label={key}
+                control={control}
+                errorMessage={errors[key as keyof IReimbursement]?.message}
+              />
+            </Box>
+          ))}
+      </FormWrapper>
       <FormFooter
         cancelButtonText="Cancel"
         actionButtonText="Save"
@@ -77,6 +84,6 @@ export const EditReimbursementTab: React.FC = () => {
         buttonAction={handleSubmit(onSubmit)}
         source="employeeDetails"
       />
-    </FormWrapper>
+    </Box>
   );
 };

@@ -53,10 +53,10 @@ export const ExportDataComponent: React.FC = () => {
           value={inputNameFile}
           placeholder="Enter file name"
           onChange={handleNameFileChange}  
-          sx={{  display: "flex",  height: "40px", mb: 1 }}
+          sx={{ px:"1rem", display: "flex",  height: "40px", mb: 1 }}
         />
 
-      <Box  maxWidth="xs"  sx={{ mt:3, mb:1, position: "relative", width: "100%" }}>
+      <Box  sx={{ mt:3, mb:1, pr:"1rem", pl:"1rem", position: "relative", maxWidth: "100%" }}>
         <InputField
           value={dataForDialog || "No data available."}
           onChange={() => {}}
@@ -68,7 +68,7 @@ export const ExportDataComponent: React.FC = () => {
             },
           }}
         />
-        <Box sx={{ position: "absolute", top: 9, right: 8, zIndex: 1, pr: 4 }}>
+        <Box sx={{  position: "absolute", top: 9, right: 8, zIndex: 1, pr: 6 }}>
           <CopyButton textToCopy={dataForDialog as IModalType } />
         </Box>
       </Box>
