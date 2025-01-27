@@ -59,37 +59,54 @@ export const EditPersonalTab: React.FC = () => {
   return (
     <Box
       sx={{
-        display: "flex",
         flexDirection: "column",
-        height: "100vh",
       }}
     >
-      <FormWrapper title="Personal" onSubmit={handleSubmit(onSubmit)}>
-        {Object.keys(defaultValues).map((key) => (
-          <Box mt={2} key={key}>
-            <FormInput
-              name={key as keyof IEmployeeBasicInfo}
-              label={key}
-              control={control}
-              type={
-                typeof defaultValues[key as keyof IEmployeeBasicInfo] ===
-                "boolean"
-                  ? "checkbox"
-                  : "text"
-              }
-              errorMessage={errors[key as keyof IEmployeeBasicInfo]?.message}
-              disabled={key === "eId"}
-            />
-          </Box>
-        ))}
-      </FormWrapper>
-      <FormFooter
-        cancelButtonText="Cancel"
-        actionButtonText="Save"
-        showSecondButton={isDirty}
-        buttonAction={handleSubmit(onSubmit)}
-        source="employeeDetails"
-      />
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          overflowY: "auto",
+          height: "80vh",
+        }}
+      >
+        <FormWrapper title="Personal" onSubmit={handleSubmit(onSubmit)}>
+          {Object.keys(defaultValues).map((key) => (
+            <Box mt={2} key={key}>
+              <FormInput
+                name={key as keyof IEmployeeBasicInfo}
+                label={key}
+                control={control}
+                type={
+                  typeof defaultValues[key as keyof IEmployeeBasicInfo] ===
+                  "boolean"
+                    ? "checkbox"
+                    : "text"
+                }
+                errorMessage={errors[key as keyof IEmployeeBasicInfo]?.message}
+                disabled={key === "eId"}
+              />
+            </Box>
+          ))}
+        </FormWrapper>
+      </Box>
+      <Box
+        sx={{
+          flexShrink: 0,
+          position: "sticky",
+          bottom: 0,
+          backgroundColor: "white",
+          zIndex: 1000,
+        }}
+      >
+        <FormFooter
+          cancelButtonText="Cancel"
+          actionButtonText="Save"
+          showSecondButton={isDirty}
+          buttonAction={handleSubmit(onSubmit)}
+          source="employeeDetails"
+        />
+      </Box>
     </Box>
   );
 };
