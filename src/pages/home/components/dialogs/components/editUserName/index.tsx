@@ -65,6 +65,7 @@ export const EditUserName = () => {
                 : "text"
             }
             errorMessage={errors[key as keyof IFormProps]?.message}
+            disabled={key === "eId"} 
           />
         </Box>
       ))}

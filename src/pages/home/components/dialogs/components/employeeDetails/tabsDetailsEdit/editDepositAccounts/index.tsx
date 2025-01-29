@@ -45,22 +45,33 @@ export const EditDepositAccounts: React.FC = () => {
   };
 
   return (
-    <FormWrapper title="Deposit account" onSubmit={handleSubmit(onSubmit)}>
-      {Object.keys(defaultValues).map((key) => (
-        <Box key={key} mb={2}>
-          <FormInput
-            name={key as keyof IDepositAccounts}
-            label={key}
-            control={control}
-            type={
-              typeof defaultValues[key as keyof IDepositAccounts] === "boolean"
-                ? "checkbox"
-                : "text"
-            }
-            errorMessage={errors[key as keyof IDepositAccounts]?.message}
-          />
-        </Box>
-      ))}
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100vh",
+      }}
+    >
+      <FormWrapper title="Deposit account" onSubmit={handleSubmit(onSubmit)}>
+        {Object.keys(defaultValues)
+          .filter((key) => key !== "customBambooTableRowId")
+          .map((key) => (
+            <Box key={key} mb={2}>
+              <FormInput
+                name={key as keyof IDepositAccounts}
+                label={key}
+                control={control}
+                type={
+                  typeof defaultValues[key as keyof IDepositAccounts] ===
+                  "boolean"
+                    ? "checkbox"
+                    : "text"
+                }
+                errorMessage={errors[key as keyof IDepositAccounts]?.message}
+              />
+            </Box>
+          ))}
+      </FormWrapper>
       <FormFooter
         cancelButtonText="Cancel"
         actionButtonText="Save"
@@ -68,6 +79,6 @@ export const EditDepositAccounts: React.FC = () => {
         buttonAction={handleSubmit(onSubmit)}
         source="employeeDetails"
       />
-    </FormWrapper>
+    </Box>
   );
 };

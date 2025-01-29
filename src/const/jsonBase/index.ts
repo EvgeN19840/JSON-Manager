@@ -2,7 +2,7 @@ export const employeeData = {
   "employees": [
     {
       "eId": 1,
-      "number": "1",
+      "number": 1,
       "firstName": "John",
       "middleName": null,
       "lastName": "Wayne",

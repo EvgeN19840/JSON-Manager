@@ -18,7 +18,6 @@ export const CustomDialog: React.FC<ICustomDialog> = ({
     <Dialog  onClose={onClose} fullWidth  maxWidth={maxWidth} open={open} >
       <Box
         sx={{
-          p: "1rem",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",

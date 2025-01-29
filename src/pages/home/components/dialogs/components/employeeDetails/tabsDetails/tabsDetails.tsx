@@ -76,7 +76,7 @@ export const TabsDetails = () => {
           <Tab label="Bonuses" value="7" />
         </TabList>
       </TabContext>
-      <Box>{renderTabContent()}</Box>
+      <Box m={1}>{renderTabContent()}</Box>
     </Box>
   );
 };

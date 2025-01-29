@@ -43,17 +43,27 @@ export const EditBonuses: React.FC = () => {
   };
 
   return (
-    <FormWrapper title="Bonus" onSubmit={handleSubmit(onSubmit)}>
-      {Object.keys(defaultValues).map((key) => (
-        <Box key={key} mb={2}>
-          <FormInput
-            name={key as keyof IBonuses}
-            label={key}
-            control={control}
-            errorMessage={errors[key as keyof IBonuses]?.message}
-          />
-        </Box>
-      ))}
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100vh",
+      }}
+    >
+      <FormWrapper title="Bonus" onSubmit={handleSubmit(onSubmit)}>
+        {Object.keys(defaultValues)
+          .filter((key) => key !== "customBambooTableRowId")
+          .map((key) => (
+            <Box key={key} mb={2}>
+              <FormInput
+                name={key as keyof IBonuses}
+                label={key}
+                control={control}
+                errorMessage={errors[key as keyof IBonuses]?.message}
+              />
+            </Box>
+          ))}
+      </FormWrapper>
       <FormFooter
         cancelButtonText="Cancel"
         actionButtonText="Save"
@@ -61,6 +71,6 @@ export const EditBonuses: React.FC = () => {
         buttonAction={handleSubmit(onSubmit)}
         source="employeeDetails"
       />
-    </FormWrapper>
+    </Box>
   );
 };

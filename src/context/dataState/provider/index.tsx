@@ -34,10 +34,22 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const handleSaveBenefit = (value: ISystemBenefit) => {
-    const benefitIndex = data.benefits.findIndex((ben) => ben.id === value.id);
-    const updatedBenefits = [...data.benefits];
-    updatedBenefits[benefitIndex] = value;
-    setData({ ...data, benefits: updatedBenefits });
+    setData((prevData) => {
+      const benefitIndex = prevData.benefits.findIndex(
+        (ben) => ben.id === value.id
+      );
+      const updatedBenefits = [...prevData.benefits];
+
+      if (benefitIndex !== -1) {
+        updatedBenefits[benefitIndex] = value;
+      } else {
+        updatedBenefits.push(value);
+      }
+      return {
+        ...prevData,
+        benefits: updatedBenefits,
+      };
+    });
   };
 
   const handleSaveData = <

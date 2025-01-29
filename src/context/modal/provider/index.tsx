@@ -20,6 +20,7 @@ import {
   ISalary,
   ISystemBenefit,
 } from "@/const/types";
+import { validateUniqueIds } from "@/shared/utils/validateUniqueIds";
 
 export const ModalProvider: React.FC<{ children: ReactNode }> = ({
   children,
@@ -47,7 +48,12 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
   ) => {
     switch (typeModal) {
       case "Export data":
-        setDataForDialog(JSON.stringify(data, null, 2));
+        {
+          const updatedData = validateUniqueIds(data);
+
+          setDataForDialog(JSON.stringify(updatedData, null, 2));
+        }
+
         break;
       case "Import data":
         setDataForDialog(null);

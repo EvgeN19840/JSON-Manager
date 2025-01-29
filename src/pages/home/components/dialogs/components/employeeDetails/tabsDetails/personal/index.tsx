@@ -13,17 +13,18 @@ import { EditButton } from "../../../exportDataComponent/buttons";
 
 export const PersonalTab: React.FC = () => {
   const { dataForDialog, handleClickOpenDialog } = useModal() as {
-    dataForDialog: IEmployee | null;
+    dataForDialog: IEmployee 
     handleClickOpenDialog: (
       dialogName: string,
       data?: IEmployee | null
     ) => void;
   };
   const { setTypeModalDetailsEdit } = useModal();
-  if (!dataForDialog) {
-    return <Typography>No Employee Data Available</Typography>;
-  }
 
+  const adjustedDataForDialog = {
+    ...dataForDialog,
+    number: dataForDialog.number === "" ? dataForDialog.eId : dataForDialog.number,
+  };
   const openEditDialog = () => {
     handleClickOpenDialog("Edit Details", dataForDialog);
     setTypeModalDetailsEdit("Edit Personal");
@@ -39,7 +40,6 @@ export const PersonalTab: React.FC = () => {
       pt: 7, 
     }}
   >
-
     <Box
       sx={{
         position: "absolute",
@@ -50,7 +50,7 @@ export const PersonalTab: React.FC = () => {
     >
         <EditButton onClick={openEditDialog} />
       </Box>
-      {currentData(dataForDialog).map((item, index) => (
+      {currentData(adjustedDataForDialog).map((item, index) => (
         <Box
           key={index}
           sx={{

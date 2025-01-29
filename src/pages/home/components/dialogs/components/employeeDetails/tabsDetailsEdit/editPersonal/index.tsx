@@ -19,8 +19,6 @@ import { IEmployeeBasicInfo } from "@/const/types";
 // ** Components
 import { FormWrapper, FormInput, FormFooter } from "@/shared/formElements";
 
-
-
 export const EditPersonalTab: React.FC = () => {
   const { dataForDialog } = useModal() as {
     dataForDialog: IEmployeeBasicInfo | null;
@@ -56,36 +54,59 @@ export const EditPersonalTab: React.FC = () => {
       (employee) => employee.eId === eIdSetectedEmploee
     );
     handleClickOpenDialog("Details", updatedEmployee);
-
-
   };
 
   return (
-    <FormWrapper title="Personal" onSubmit={handleSubmit(onSubmit)}>
-      {Object.keys(defaultValues).map((key) => (
-        <Box key={key}>
-          <FormInput
-            name={key as keyof IEmployeeBasicInfo}
-            label={key}
-            control={control}
-            type={
-              typeof defaultValues[key as keyof IEmployeeBasicInfo] === "boolean"
-                ? "checkbox"
-                : "text"
-            }
-            errorMessage={errors[key as keyof IEmployeeBasicInfo]?.message}
-             disabled={key === "eId"}
-          />
-        </Box>
-      ))}
-
-      <FormFooter
-        cancelButtonText="Cancel"
-        actionButtonText="Save"
-        showSecondButton={isDirty}
-        buttonAction={handleSubmit(onSubmit)}
-        source="employeeDetails"
-      />
-    </FormWrapper>
+    <Box
+      sx={{
+        flexDirection: "column",
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          overflowY: "auto",
+          height: "80vh",
+        }}
+      >
+        <FormWrapper title="Personal" onSubmit={handleSubmit(onSubmit)}>
+          {Object.keys(defaultValues).map((key) => (
+            <Box mt={2} key={key}>
+              <FormInput
+                name={key as keyof IEmployeeBasicInfo}
+                label={key}
+                control={control}
+                type={
+                  typeof defaultValues[key as keyof IEmployeeBasicInfo] ===
+                  "boolean"
+                    ? "checkbox"
+                    : "text"
+                }
+                errorMessage={errors[key as keyof IEmployeeBasicInfo]?.message}
+                disabled={key === "eId"}
+              />
+            </Box>
+          ))}
+        </FormWrapper>
+      </Box>
+      <Box
+        sx={{
+          flexShrink: 0,
+          position: "sticky",
+          bottom: 0,
+          backgroundColor: "white",
+          zIndex: 1000,
+        }}
+      >
+        <FormFooter
+          cancelButtonText="Cancel"
+          actionButtonText="Save"
+          showSecondButton={isDirty}
+          buttonAction={handleSubmit(onSubmit)}
+          source="employeeDetails"
+        />
+      </Box>
+    </Box>
   );
 };

@@ -18,7 +18,7 @@ export const useDefaultEmployeeBasicInfo = (): IEmployeeBasicInfo => {
 
   return {
     eId: dataForDialog?.eId || 0,
-    number: dataForDialog?.number || "",
+    number: dataForDialog?.number || dataForDialog?.eId || "",
     firstName: dataForDialog?.firstName || "",
     middleName: dataForDialog?.middleName || "",
     lastName: dataForDialog?.lastName || "",
@@ -55,7 +55,7 @@ export const useDefaultEmployeeBenefit = (): IEmployeeBenefit => {
     companyValue: dataForDialog?.companyValue || 0,
     companyCurrencyCode: dataForDialog?.companyCurrencyCode || "",
     isPerentValue: dataForDialog?.isPerentValue || false,
-    effectiveDate: dataForDialog?.effectiveDate || "",
+    effectiveDate: dataForDialog?.effectiveDate || "2024-01-01",
     id: dataForDialog?.id || "",
   };
 };
@@ -173,7 +173,7 @@ export const useDefaultSalary = (): ISalary => {
     salaryRate: dataForDialog?.salaryRate || 0,
     salaryCurrencyCode: dataForDialog?.salaryCurrencyCode || "",
     salaryRatePeriod: dataForDialog?.salaryRatePeriod || "",
-    payPeriod: dataForDialog?.payPeriod || null,
+    payPeriod: dataForDialog?.payPeriod ||  "Monthly",
     allowOvertime: dataForDialog?.allowOvertime || false,
     effectiveDate: dataForDialog?.effectiveDate || "",
     changeReason: dataForDialog?.changeReason || null,

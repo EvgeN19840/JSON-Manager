@@ -33,7 +33,16 @@ export const FormFooter: React.FC<FormFooterProps> = ({
   };
 
   return (
-    <Box>
+        <Box
+        sx={{
+          position: "sticky",
+          bottom: 0,
+          zIndex: 1,
+          backgroundColor: "white",
+          p: "1rem",
+   
+        }}
+      >
       <Box
         sx={{
           display: "flex",

@@ -6,24 +6,24 @@ export interface ITypeJSON {
 
 export interface IEmployeeBasicInfo {
   eId: number;
-  number: string ;
-  firstName: string ;
-  middleName: string | null ;
-  lastName: string ;
-  birthDate: string |null;
-  email: string |null;
-  addressStreet1: string |null;
-  addressStreet2: string |null;
-  addressCity: string |null;
-  addressState: string |null;
-  addressZip: string |null;
-  addressCountry: string |null;
-  hireDate: string |null;
-  endDate: string |null;
+  number: number | string | null;
+  firstName: string;
+  middleName: string | null;
+  lastName: string;
+  birthDate: string | null;
+  email: string | null;
+  addressStreet1: string | null;
+  addressStreet2: string | null;
+  addressCity: string | null;
+  addressState: string | null;
+  addressZip: string | null;
+  addressCountry: string | null;
+  hireDate: string | null;
+  endDate: string | null;
   enabledForCayPay: boolean;
-  pensionMemberNumber:string |null;
-  healthInsuranceMemberNumber:string |null;
-  lifeInsuranceMemberNumber:string |null;
+  pensionMemberNumber: string | null;
+  healthInsuranceMemberNumber: string | null;
+  lifeInsuranceMemberNumber: string | null;
   transferEmployeeStatutoryToVoluntaryOnCap: boolean;
   transferCompanyStatutoryToVoluntaryOnCap: boolean;
 }
@@ -33,24 +33,24 @@ export interface IEmployeeBasicInfo {
 
 export interface IEmployee {
   eId: number;
-  number: string;
+  number: number | string | null;
   firstName: string;
   middleName: string | null;
   lastName: string;
-  birthDate: string |null;
-  email: string |null;
-  addressStreet1: string |null;
-  addressStreet2: string |null;
-  addressCity: string |null;
-  addressState: string |null;
-  addressZip: string |null;
-  addressCountry: string |null;
-  hireDate: string |null;
-  endDate: string |null;
+  birthDate: string | null;
+  email: string | null;
+  addressStreet1: string | null;
+  addressStreet2: string | null;
+  addressCity: string | null;
+  addressState: string | null;
+  addressZip: string | null;
+  addressCountry: string | null;
+  hireDate: string | null;
+  endDate: string | null;
   enabledForCayPay: boolean;
-  pensionMemberNumber:string |null;
-  healthInsuranceMemberNumber:string |null;
-  lifeInsuranceMemberNumber:string |null;
+  pensionMemberNumber: string | null;
+  healthInsuranceMemberNumber: string | null;
+  lifeInsuranceMemberNumber: string | null;
   transferEmployeeStatutoryToVoluntaryOnCap: boolean;
   transferCompanyStatutoryToVoluntaryOnCap: boolean;
   depositAccounts: IDepositAccounts[];
@@ -109,13 +109,13 @@ export interface IOtherDeduction {
 }
 
 export interface IEmployeeBenefit {
-  name: string;
+  name: string ;
   value: number;
-  currencyCode: string;
+  currencyCode: string | null;
   companyValue: number;
-  companyCurrencyCode: string;
+  companyCurrencyCode: string | null;
   isPerentValue: boolean;
-  effectiveDate: string;
+  effectiveDate: string | null;
   id: string;
 }
 

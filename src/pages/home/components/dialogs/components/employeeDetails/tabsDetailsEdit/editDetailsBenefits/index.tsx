@@ -3,6 +3,7 @@ import { FormWrapper, FormInput, FormFooter } from "@/shared/formElements";
 
 // ** Forms Imports
 import { useForm } from "react-hook-form";
+import { Box } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 // ** Hooks
@@ -13,10 +14,8 @@ import { useDataStateContext } from "@/hooks/useDataStateContext";
 import { schema } from "./schema";
 
 // ** Types
-import { IEmployeeBenefit } from "@/const/types";
-import { Box } from "@mui/material";
+import { IEmployeeBenefit, ISystemBenefit } from "@/const/types";
 import { useDefaultEmployeeBenefit } from "@/hooks/useDefaultData";
-
 
 export const EditDetailsBenefits = () => {
   const { dataForDialog } = useModal() as {
@@ -24,7 +23,8 @@ export const EditDetailsBenefits = () => {
   };
 
   const { handleClickOpenDialog } = useModal();
-  const { handleSaveData, data, eIdSetectedEmploee } = useDataStateContext();
+  const { handleSaveData, handleSaveBenefit, data, eIdSetectedEmploee } =
+    useDataStateContext();
 
   const defaultValues = useDefaultEmployeeBenefit();
 
@@ -39,10 +39,17 @@ export const EditDetailsBenefits = () => {
   });
 
   const onSubmit = (formData: IEmployeeBenefit) => {
-    handleSaveData(
-      { ...dataForDialog, ...formData } as IEmployeeBenefit,
-      "employeeBenefit"
-    );
+    const updatedDataForDialog = {
+      ...dataForDialog,
+      ...formData,
+    } as IEmployeeBenefit;
+    const updatedBenefit = {
+      id: formData.id,
+      name: formData.name,
+    } as ISystemBenefit;
+
+    handleSaveData(updatedDataForDialog, "employeeBenefit");
+    handleSaveBenefit(updatedBenefit);
     const updatedEmployees = data.employees.map((employee) => {
       if (employee.eId === eIdSetectedEmploee) {
         const updatedBenefits = employee.benefits.map((benefit) =>
@@ -60,29 +67,38 @@ export const EditDetailsBenefits = () => {
   };
 
   return (
-    <FormWrapper title="Benefit" onSubmit={handleSubmit(onSubmit)}>
-    {Object.keys(defaultValues).map((key) => (
-      <Box key={key} mb={2}>
-        <FormInput
-          name={key as keyof IEmployeeBenefit}
-          label={key}
-          control={control}
-          type={
-            typeof defaultValues[key as keyof IEmployeeBenefit] === "boolean"
-              ? "checkbox"
-              : "text"
-          }
-          errorMessage={errors[key as keyof IEmployeeBenefit]?.message}
-        />
-      </Box>
-    ))}
-    <FormFooter
-      cancelButtonText="Cancel"
-      actionButtonText="Save"
-      showSecondButton={isDirty}
-      buttonAction={handleSubmit(onSubmit)}
-      source="employeeDetails"
-    />
-  </FormWrapper>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100vh",
+      }}
+    >
+      <FormWrapper title="Benefit" onSubmit={handleSubmit(onSubmit)}>
+        {Object.keys(defaultValues).map((key) => (
+          <Box key={key} mb={2}>
+            <FormInput
+              name={key as keyof IEmployeeBenefit}
+              label={key}
+              control={control}
+              type={
+                typeof defaultValues[key as keyof IEmployeeBenefit] ===
+                "boolean"
+                  ? "checkbox"
+                  : "text"
+              }
+              errorMessage={errors[key as keyof IEmployeeBenefit]?.message}
+            />
+          </Box>
+        ))}
+      </FormWrapper>
+      <FormFooter
+        cancelButtonText="Cancel"
+        actionButtonText="Save"
+        showSecondButton={isDirty}
+        buttonAction={handleSubmit(onSubmit)}
+        source="employeeDetails"
+      />
+    </Box>
   );
 };
