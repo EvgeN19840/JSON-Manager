@@ -56,13 +56,7 @@ export const EditReimbursementTab: React.FC = () => {
     handleClickOpenDialog("Details", updatedEmployee);
   };
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100vh",
-      }}
-    >
+    <Box>
       <FormWrapper title="Reimbursement" onSubmit={handleSubmit(onSubmit)}>
         {Object.keys(defaultValues)
           .filter((key) => key !== "customBambooTableRowId")

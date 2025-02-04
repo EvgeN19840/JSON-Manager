@@ -52,13 +52,7 @@ export const EditUserName = () => {
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100vh",
-      }}
-    >
+    <Box>
       <FormWrapper title="Employee" onSubmit={handleSubmit(onSubmit)}>
         {Object.keys(defaultValues).map((key) => (
           <Box key={key} mb={2}>

@@ -46,11 +46,6 @@ export const Salary: React.FC = () => {
 
   return (
     <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100vh",
-      }}
     >
       <FormWrapper title="Salary" onSubmit={handleSubmit(onSubmit)}>
         {Object.keys(defaultValues)

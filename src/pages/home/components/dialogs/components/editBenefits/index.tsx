@@ -45,11 +45,7 @@ export const EditBenefits = () => {
 
   return (
     <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100vh",
-      }}
+     
     >
       <FormWrapper title="Benefit" onSubmit={handleSubmit(onSubmit)}>
         {Object.keys(defaultValues).map((key) => (

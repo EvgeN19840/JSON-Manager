@@ -57,19 +57,8 @@ export const EditPersonalTab: React.FC = () => {
   };
 
   return (
-    <Box
-      sx={{
-        flexDirection: "column",
-      }}
-    >
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          overflowY: "auto",
-          height: "80vh",
-        }}
-      >
+    <Box>
+      <Box>
         <FormWrapper title="Personal" onSubmit={handleSubmit(onSubmit)}>
           {Object.keys(defaultValues).map((key) => (
             <Box mt={2} key={key}>
