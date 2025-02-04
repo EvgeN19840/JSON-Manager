@@ -18,11 +18,11 @@ export const FormFooter: React.FC<FormFooterProps> = ({
 }) => {
   const { setDialogOpen, handleClickOpenDialog } = useModal();
 
-  const { data, eIdSetectedEmploee } = useDataStateContext();
+  const { data, eIdSelectedEmployee } = useDataStateContext();
   const handleCancel = () => {
     if (source === "employeeDetails") {
       const updatedEmployee = data.employees.find(
-        (employee) => employee.eId === eIdSetectedEmploee
+        (employee) => employee.eId === eIdSelectedEmployee
       );
 
       setDialogOpen(false);

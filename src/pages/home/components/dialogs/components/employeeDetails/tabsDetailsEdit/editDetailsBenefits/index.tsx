@@ -23,7 +23,7 @@ export const EditDetailsBenefits = () => {
   };
 
   const { handleClickOpenDialog } = useModal();
-  const { handleSaveData, handleSaveBenefit, data, eIdSetectedEmploee } =
+  const { handleSaveData, handleSaveBenefit, data, eIdSelectedEmployee } =
     useDataStateContext();
 
   const defaultValues = useDefaultEmployeeBenefit();
@@ -51,7 +51,7 @@ export const EditDetailsBenefits = () => {
     handleSaveData(updatedDataForDialog, "employeeBenefit");
     handleSaveBenefit(updatedBenefit);
     const updatedEmployees = data.employees.map((employee) => {
-      if (employee.eId === eIdSetectedEmploee) {
+      if (employee.eId === eIdSelectedEmployee) {
         const updatedBenefits = employee.benefits.map((benefit) =>
           benefit.id === formData.id ? { ...benefit, ...formData } : benefit
         );
@@ -61,7 +61,7 @@ export const EditDetailsBenefits = () => {
     });
 
     const updatedEmployee = updatedEmployees.find(
-      (employee) => employee.eId === eIdSetectedEmploee
+      (employee) => employee.eId === eIdSelectedEmployee
     );
     handleClickOpenDialog("Details", updatedEmployee);
   };

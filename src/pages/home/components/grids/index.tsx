@@ -20,7 +20,7 @@ import { useHandleAddItem } from "@/hooks/useAddItem";
 import { useHandleDeleteItem } from "@/hooks/useDelete";
 
 export const Grids: FC = () => {
-  const { data, setEIdSetectedEmploee } = useDataStateContext();
+  const { data, seteIdSelectedEmployee } = useDataStateContext();
   const { handleClickOpenDialog } = useModal();
   const handleAddItem = useHandleAddItem();
   const handleDeleteItem = useHandleDeleteItem();
@@ -43,7 +43,7 @@ export const Grids: FC = () => {
   };
 
   const handleRowDoubleClickOpenDetails = (item: IEmployee) => {
-    setEIdSetectedEmploee(item.eId);
+    seteIdSelectedEmployee(item.eId);
     handleClickOpenDialog(activeTab === "1" ? "Details" : null, item);
   };
 

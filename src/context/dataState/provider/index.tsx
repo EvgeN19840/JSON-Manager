@@ -20,7 +20,7 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
     benefits: [],
   });
   const [parsedData, setParsedData] = useState<string | null>(null);
-  const [eIdSetectedEmploee, setEIdSetectedEmploee] = useState<number | null>(
+  const [eIdSelectedEmployee, seteIdSelectedEmployee] = useState<number | null>(
     null
   );
 
@@ -119,7 +119,7 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
     setData((prevData) => ({
       ...prevData,
       employees: prevData.employees.map((employee) => {
-        if (employee.eId !== eIdSetectedEmploee) return employee;
+        if (employee.eId !== eIdSelectedEmployee) return employee;
 
         switch (type) {
           case "jobInfo":
@@ -179,8 +179,8 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
         data,
         setData,
         parsedData,
-        eIdSetectedEmploee,
-        setEIdSetectedEmploee,
+        eIdSelectedEmployee,
+        seteIdSelectedEmployee,
         setParsedData,
         handleSaveEmployee,
         handleSaveBenefit,

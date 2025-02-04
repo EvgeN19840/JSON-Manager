@@ -15,7 +15,7 @@ export const EditDepositAccounts: React.FC = () => {
   const defaultValues = useDefaultDepositAccounts();
 
   const { handleClickOpenDialog } = useModal();
-  const { handleSaveData, data, eIdSetectedEmploee } = useDataStateContext();
+  const { handleSaveData, data, eIdSelectedEmployee } = useDataStateContext();
 
   const {
     control,
@@ -33,13 +33,13 @@ export const EditDepositAccounts: React.FC = () => {
       "depositAccount"
     );
     const updatedEmployees = data.employees.map((employee) =>
-      employee.eId === eIdSetectedEmploee
+      employee.eId === eIdSelectedEmployee
         ? { ...employee, ...formData }
         : employee
     );
 
     const updatedEmployee = updatedEmployees.find(
-      (employee) => employee.eId === eIdSetectedEmploee
+      (employee) => employee.eId === eIdSelectedEmployee
     );
     handleClickOpenDialog("Details", updatedEmployee);
   };
