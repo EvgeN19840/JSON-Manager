@@ -30,7 +30,7 @@ export const ColumnsEmployee = (
   },
   {
     field: "eId",
-    headerName: "Id",
+    headerName: "eId",
     flex: 1,
     editable: false,
     minWidth: 250,

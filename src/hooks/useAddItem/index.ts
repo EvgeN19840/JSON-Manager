@@ -62,6 +62,7 @@ export const useHandleAddItem = () => {
                 ...item,
                 eId: newEmployeeId,
                 firstName: `${item.firstName}_${nextIndex}`,
+                number:`0${newEmployeeId}`
             };
 
             updatedData.employees = [...data.employees, newEmployee];
