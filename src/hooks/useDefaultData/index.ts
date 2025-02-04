@@ -172,7 +172,7 @@ export const useDefaultSalary = (): ISalary => {
     customBambooTableRowId: dataForDialog?.customBambooTableRowId || 0,
     salaryRate: dataForDialog?.salaryRate || 0,
     salaryCurrencyCode: dataForDialog?.salaryCurrencyCode || "",
-    salaryRatePeriod: dataForDialog?.salaryRatePeriod || "",
+    salaryRatePeriod: dataForDialog?.salaryRatePeriod || "PerMonth",
     payPeriod: dataForDialog?.payPeriod ||  "Monthly",
     allowOvertime: dataForDialog?.allowOvertime || false,
     effectiveDate: dataForDialog?.effectiveDate || "",

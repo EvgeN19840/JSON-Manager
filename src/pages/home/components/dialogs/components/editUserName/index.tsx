@@ -1,5 +1,6 @@
 // ** Components
 import { FormWrapper, FormInput, FormFooter } from "@/shared/formElements";
+import { Box } from "@mui/material";
 
 // ** Forms Imports
 import { useForm } from "react-hook-form";
@@ -15,7 +16,6 @@ import { schema } from "./schema";
 // ** Types
 import { IEmployee } from "@/const/types";
 import { IFormProps } from "./types";
-import { Box } from "@mui/material";
 
 export const EditUserName = () => {
   const { dataForDialog, closeDialog } = useModal() as {
@@ -52,23 +52,31 @@ export const EditUserName = () => {
   };
 
   return (
-    <FormWrapper title="Employee" onSubmit={handleSubmit(onSubmit)}>
-      {Object.keys(defaultValues).map((key) => (
-        <Box key={key} mb={2}>
-          <FormInput
-            name={key as keyof IFormProps}
-            label={key}
-            control={control}
-            type={
-              typeof defaultValues[key as keyof IFormProps] === "boolean"
-                ? "checkbox"
-                : "text"
-            }
-            errorMessage={errors[key as keyof IFormProps]?.message}
-            disabled={key === "eId"} 
-          />
-        </Box>
-      ))}
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100vh",
+      }}
+    >
+      <FormWrapper title="Employee" onSubmit={handleSubmit(onSubmit)}>
+        {Object.keys(defaultValues).map((key) => (
+          <Box key={key} mb={2}>
+            <FormInput
+              name={key as keyof IFormProps}
+              label={key}
+              control={control}
+              type={
+                typeof defaultValues[key as keyof IFormProps] === "boolean"
+                  ? "checkbox"
+                  : "text"
+              }
+              errorMessage={errors[key as keyof IFormProps]?.message}
+              disabled={key === "eId"}
+            />
+          </Box>
+        ))}
+      </FormWrapper>
       <FormFooter
         cancelButtonText="Cancel"
         actionButtonText="Save"
@@ -76,6 +84,6 @@ export const EditUserName = () => {
         buttonAction={handleSubmit(onSubmit)}
         source={"general"}
       />
-    </FormWrapper>
+    </Box>
   );
 };
