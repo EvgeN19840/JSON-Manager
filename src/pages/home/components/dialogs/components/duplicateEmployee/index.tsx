@@ -26,6 +26,7 @@ export const DuplicateEmployee = () => {
       eId: eIdSelectedEmployee!,
     });
     closeDialog();
+    setCountDuplicates('1')
   };
 
   return (
