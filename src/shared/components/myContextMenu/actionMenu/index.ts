@@ -11,7 +11,13 @@ export const actionMenu = <T extends GridValidRowModel>(
   },
   {
     name: "Duplicate",
-    callback: () => callbacks.addItem(params.row),
+    callback: () => {
+      if (callbacks.onDuplicate) {
+        callbacks.onDuplicate(params.row);
+      } else {
+        callbacks.addItem(params.row);
+      }
+    },
   },
   {
     name: "Delete",

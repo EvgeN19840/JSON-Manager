@@ -6,11 +6,12 @@ import {
   EditUserName,
   EditBenefits,
   TabsDetails,
-  TabsDetailsEdit
+  TabsDetailsEdit,
 } from "./components";
 
 // ** Hooks
 import { useModal } from "@/hooks/useModal";
+import { DuplicateEmployee } from "./components/duplicateEmployee";
 
 export const Dialogs: React.FC = () => {
   const { typeModal, isDialogOpen, closeDialog } = useModal();
@@ -26,8 +27,10 @@ export const Dialogs: React.FC = () => {
         return <EditBenefits />;
       case "Details":
         return <TabsDetails />;
-        case "Edit Details":
-          return <TabsDetailsEdit />;
+      case "Edit Details":
+        return <TabsDetailsEdit />;
+      case "Duplicate":
+        return <DuplicateEmployee />;
 
       default:
         return null;

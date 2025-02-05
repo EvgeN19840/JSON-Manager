@@ -53,7 +53,6 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
 
           setDataForDialog(JSON.stringify(updatedData, null, 2));
         }
-
         break;
       case "Import data":
         setDataForDialog(null);
@@ -70,8 +69,9 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
       case "Edit Details":
         setDataForDialog(item as IEmployeeBenefit[]);
         setTypeModalDetailsEdit(typeModalDetailsEdit);
-
         break;
+        case "Duplicate":
+          setDataForDialog(null);
     }
     setDialogOpen(true);
     setTypeModal(typeModal);

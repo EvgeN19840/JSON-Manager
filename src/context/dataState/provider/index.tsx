@@ -19,6 +19,7 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
     employees: [],
     benefits: [],
   });
+  const [countDuplicates, setCountDuplicates] = useState<string>('1');
   const [parsedData, setParsedData] = useState<string | null>(null);
   const [eIdSelectedEmployee, seteIdSelectedEmployee] = useState<number | null>(
     null
@@ -178,6 +179,8 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
       value={{
         data,
         setData,
+        countDuplicates,
+        setCountDuplicates,
         parsedData,
         eIdSelectedEmployee,
         seteIdSelectedEmployee,

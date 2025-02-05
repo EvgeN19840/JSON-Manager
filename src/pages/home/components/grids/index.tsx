@@ -21,7 +21,7 @@ import { useHandleDeleteItem } from "@/hooks/useDelete";
 
 export const Grids: FC = () => {
   const { data, seteIdSelectedEmployee } = useDataStateContext();
-  const { handleClickOpenDialog } = useModal();
+  const { handleClickOpenDialog, setDialogOpen } = useModal();
   const handleAddItem = useHandleAddItem();
   const handleDeleteItem = useHandleDeleteItem();
   const { activeTab } = useTabs();
@@ -42,6 +42,12 @@ export const Grids: FC = () => {
     }
   };
 
+  const handleDuplicate = (employee: IEmployee) => {
+    seteIdSelectedEmployee(employee.eId); 
+    handleClickOpenDialog("Duplicate", employee);
+    setDialogOpen(true);
+  };
+
   const handleRowDoubleClickOpenDetails = (item: IEmployee) => {
     seteIdSelectedEmployee(item.eId);
     handleClickOpenDialog(activeTab === "1" ? "Details" : null, item);
@@ -58,11 +64,16 @@ export const Grids: FC = () => {
     switch (activeTab) {
       case "1": {
         const gridData = data.employees;
-        const gridColumns = ColumnsEmployee(handleEditDialogOpen, {
-          openForm: handleEditDialogOpen,
-          deleteItem,
-          addItem,
-        });
+        const gridColumns = ColumnsEmployee(
+          handleEditDialogOpen,
+          {
+            openForm: handleEditDialogOpen,
+            deleteItem,
+            addItem, 
+            onDuplicate: handleDuplicate,
+          },
+
+        );
 
         return (
           <MyGrid<IEmployee>
