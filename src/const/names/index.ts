@@ -1,5 +1,6 @@
 export default [
-    "Liam", "Noah", "Oliver", "James", "Elijah", "William", "Henry", "Lucas", "Benjamin", "Theodore",
+    "Liam", "Noah", "Oliver", "James", "Elijah", "William", "Henry", "Lucas", "Benjamin", "Theodore", "Kyrilll",
+     "Slava", "Eugen", "Andrei", "Vic", "Ekaterina",
     "Olivia", "Emma", "Charlotte", "Amelia", "Sophia", "Isabella", "Ava", "Mia", "Luna", "Harper",
     "Alexander", "Michael", "Ethan", "Daniel", "Jacob", "David", "Matthew", "Joseph", "Samuel", "John",
     "Victoria", "Evelyn", "Scarlett", "Hannah", "Elizabeth", "Mila", "Ella", "Lily", "Grace", "Chloe",
