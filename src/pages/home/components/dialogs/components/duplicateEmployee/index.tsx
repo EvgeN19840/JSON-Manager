@@ -59,7 +59,7 @@ export const DuplicateEmployee = () => {
           actionButtonText="Duplicate"
           showSecondButton={true}
           buttonAction={handleSubmit(onSubmit)}
-          source="general"
+          source="duplicate"
         />
       </Box>
     </Box>

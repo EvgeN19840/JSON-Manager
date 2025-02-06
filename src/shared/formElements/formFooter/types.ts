@@ -5,5 +5,5 @@ export interface FormFooterProps {
     canAddBaseEmployee?: boolean;
     addBaseEmployee?: () => void;
     buttonAction?: () => void;
-    source: "employeeDetails" | "general";
+    source: "employeeDetails" | "general" |"duplicate";
 }

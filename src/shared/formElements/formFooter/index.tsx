@@ -18,7 +18,8 @@ export const FormFooter: React.FC<FormFooterProps> = ({
 }) => {
   const { setDialogOpen, handleClickOpenDialog } = useModal();
 
-  const { data, eIdSelectedEmployee } = useDataStateContext();
+  const { data, eIdSelectedEmployee, setCountDuplicates } =
+    useDataStateContext();
   const handleCancel = () => {
     if (source === "employeeDetails") {
       const updatedEmployee = data.employees.find(
@@ -29,20 +30,22 @@ export const FormFooter: React.FC<FormFooterProps> = ({
       handleClickOpenDialog("Details", updatedEmployee);
     } else {
       setDialogOpen(false);
+      if (source === "duplicate") {
+        setCountDuplicates("1");
+      }
     }
   };
 
   return (
-        <Box
-        sx={{
-          position: "sticky",
-          bottom: 0,
-          zIndex: 1,
-          backgroundColor: "white",
-          p: "1rem",
-   
-        }}
-      >
+    <Box
+      sx={{
+        position: "sticky",
+        bottom: 0,
+        zIndex: 1,
+        backgroundColor: "white",
+        p: "1rem",
+      }}
+    >
       <Box
         sx={{
           display: "flex",
