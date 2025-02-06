@@ -2,7 +2,7 @@ export const employeeData = {
   "employees": [
     {
       "eId": 1,
-      "number": 1,
+      "number": '01',
       "firstName": "John",
       "middleName": null,
       "lastName": "Wayne",
@@ -80,7 +80,7 @@ export const employeeData = {
           "salaryRatePeriod": "PerMonth",
           "payPeriod": "Monthly",
           "allowOvertime": true,
-          "effectiveDate": "2020-01-01T00:00:00Z",
+          "effectiveDate": "2023-01-01T00:00:00Z",
           "changeReason": null,
           "comment": null,
           "overtimeRate": null
@@ -89,7 +89,7 @@ export const employeeData = {
       "jobInfo": [
         {
           "customBambooTableRowId": 38784,
-          "effectiveDate": "2020-01-01T00:00:00Z",
+          "effectiveDate": "2023-01-01T00:00:00Z",
           "jobTitle": "Director",
           "department": null,
           "location": null,
@@ -100,7 +100,7 @@ export const employeeData = {
       "employmentStatus": [
         {
           "customBambooTableRowId": 27415,
-          "effectiveDate": "2020-01-01T00:00:00Z",
+          "effectiveDate": "2023-01-01T00:00:00Z",
           "employmentStatus": "Full-Time",
           "comment": "Start date"
         }
