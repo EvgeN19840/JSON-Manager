@@ -16,7 +16,7 @@ export const EditBonuses: React.FC = () => {
   const defaultValues = useDefaultBonuses();
 
   const { handleClickOpenDialog } = useModal();
-  const { handleSaveData, data, eIdSetectedEmploee } = useDataStateContext();
+  const { handleSaveData, data, eIdSelectedEmployee } = useDataStateContext();
 
   const {
     control,
@@ -31,25 +31,19 @@ export const EditBonuses: React.FC = () => {
   const onSubmit = (formData: IBonuses) => {
     handleSaveData({ ...dataForDialog, ...formData } as IBonuses, "bonuses");
     const updatedEmployees = data.employees.map((employee) =>
-      employee.eId === eIdSetectedEmploee
+      employee.eId === eIdSelectedEmployee
         ? { ...employee, ...formData }
         : employee
     );
 
     const updatedEmployee = updatedEmployees.find(
-      (employee) => employee.eId === eIdSetectedEmploee
+      (employee) => employee.eId === eIdSelectedEmployee
     );
     handleClickOpenDialog("Details", updatedEmployee);
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100vh",
-      }}
-    >
+    <Box>
       <FormWrapper title="Bonus" onSubmit={handleSubmit(onSubmit)}>
         {Object.keys(defaultValues)
           .filter((key) => key !== "customBambooTableRowId")

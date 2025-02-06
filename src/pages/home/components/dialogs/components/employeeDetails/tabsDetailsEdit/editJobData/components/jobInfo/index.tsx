@@ -15,7 +15,7 @@ export const JobInfo: React.FC = () => {
   };
   const { handleClickOpenDialog } = useModal();
   const defaultValues = useDefaultJobInfo();
-  const { handleSaveData, data, eIdSetectedEmploee } = useDataStateContext();
+  const { handleSaveData, data, eIdSelectedEmployee } = useDataStateContext();
 
   const {
     control,
@@ -30,25 +30,19 @@ export const JobInfo: React.FC = () => {
   const onSubmit = (formData: IJobInfo) => {
     handleSaveData({ ...dataForDialog, ...formData } as IJobInfo, "jobInfo");
     const updatedEmployees = data.employees.map((employee) =>
-      employee.eId === eIdSetectedEmploee
+      employee.eId === eIdSelectedEmployee
         ? { ...employee, ...formData }
         : employee
     );
 
     const updatedEmployee = updatedEmployees.find(
-      (employee) => employee.eId === eIdSetectedEmploee
+      (employee) => employee.eId === eIdSelectedEmployee
     );
     handleClickOpenDialog("Details", updatedEmployee);
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100vh",
-      }}
-    >
+    <Box>
       <FormWrapper title="Job Info" onSubmit={handleSubmit(onSubmit)}>
         {Object.keys(defaultValues)
           .filter((key) => key !== "customBambooTableRowId")

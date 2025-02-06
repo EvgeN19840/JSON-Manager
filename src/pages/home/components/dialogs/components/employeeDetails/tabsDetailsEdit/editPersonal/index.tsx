@@ -25,7 +25,7 @@ export const EditPersonalTab: React.FC = () => {
   };
 
   const { handleClickOpenDialog } = useModal();
-  const { handleSaveData, data, eIdSetectedEmploee } = useDataStateContext();
+  const { handleSaveData, data, eIdSelectedEmployee } = useDataStateContext();
 
   const defaultValues = useDefaultEmployeeBasicInfo();
 
@@ -45,31 +45,20 @@ export const EditPersonalTab: React.FC = () => {
       "personal"
     );
     const updatedEmployees = data.employees.map((employee) =>
-      employee.eId === eIdSetectedEmploee
+      employee.eId === eIdSelectedEmployee
         ? { ...employee, ...formData }
         : employee
     );
 
     const updatedEmployee = updatedEmployees.find(
-      (employee) => employee.eId === eIdSetectedEmploee
+      (employee) => employee.eId === eIdSelectedEmployee
     );
     handleClickOpenDialog("Details", updatedEmployee);
   };
 
   return (
-    <Box
-      sx={{
-        flexDirection: "column",
-      }}
-    >
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          overflowY: "auto",
-          height: "80vh",
-        }}
-      >
+    <Box>
+      <Box>
         <FormWrapper title="Personal" onSubmit={handleSubmit(onSubmit)}>
           {Object.keys(defaultValues).map((key) => (
             <Box mt={2} key={key}>

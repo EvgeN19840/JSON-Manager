@@ -12,7 +12,8 @@ import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/act
 
 export const ColumnsEmployee = (
   _handleEditClick: (employee: IEmployee) => void,
-  callbacks: ContextMenuItemsCallbacks<IEmployee>
+  callbacks: ContextMenuItemsCallbacks<IEmployee>,
+
 ): GridColDef<IEmployee>[] => [
   {
     field: "firstName",
@@ -30,7 +31,7 @@ export const ColumnsEmployee = (
   },
   {
     field: "eId",
-    headerName: "Id",
+    headerName: "eId",
     flex: 1,
     editable: false,
     minWidth: 250,
@@ -44,7 +45,18 @@ export const ColumnsEmployee = (
     filterable: false,
     renderCell: (params: GridRenderCellParams<IEmployee>) => {
       return (
-        <MyContextMenu items={actionMenu(callbacks, params)} params={params} />
+        <MyContextMenu
+          items={actionMenu(
+            {
+              ...callbacks,
+              onDuplicate: (employee) => {
+                callbacks.onDuplicate?.(employee)
+              },
+            },
+            params
+          )}
+          params={params}
+        />
       );
     },
   },

@@ -5,7 +5,8 @@ import { useModal } from "@/hooks/useModal";
 import { useDefaultSalary } from "@/hooks/useDefaultData";
 import { useDataStateContext } from "@/hooks/useDataStateContext";
 import { FormWrapper, FormInput, FormFooter } from "@/shared/formElements";
-import payPeriod from "./payPiriodDropdown";
+import payPeriodDropdown from "./payPeriodDropdown";
+import salaryRateDropdown from "./salaryRateDropdown";
 import { ISalary } from "@/const/types";
 
 import { salarySchema } from "../../schema";
@@ -17,7 +18,7 @@ export const Salary: React.FC = () => {
   const defaultValues = useDefaultSalary();
 
   const { handleClickOpenDialog } = useModal();
-  const { handleSaveData, data, eIdSetectedEmploee } = useDataStateContext();
+  const { handleSaveData, data, eIdSelectedEmployee } = useDataStateContext();
 
   const {
     control,
@@ -32,24 +33,19 @@ export const Salary: React.FC = () => {
   const onSubmit = (formData: ISalary) => {
     handleSaveData({ ...dataForDialog, ...formData } as ISalary, "salary");
     const updatedEmployees = data.employees.map((employee) =>
-      employee.eId === eIdSetectedEmploee
+      employee.eId === eIdSelectedEmployee
         ? { ...employee, ...formData }
         : employee
     );
 
     const updatedEmployee = updatedEmployees.find(
-      (employee) => employee.eId === eIdSetectedEmploee
+      (employee) => employee.eId === eIdSelectedEmployee
     );
     handleClickOpenDialog("Details", updatedEmployee);
   };
 
   return (
     <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100vh",
-      }}
     >
       <FormWrapper title="Salary" onSubmit={handleSubmit(onSubmit)}>
         {Object.keys(defaultValues)
@@ -58,18 +54,40 @@ export const Salary: React.FC = () => {
             <Box key={key} mb={2}>
               {key === "payPeriod" ? (
                 <FormControl fullWidth variant="outlined">
-                  <InputLabel>{key}</InputLabel>
+                  <InputLabel>Pay Period</InputLabel>
                   <Controller
                     name="payPeriod"
                     control={control}
                     render={({ field }) => (
                       <Select
                         {...field}
-                        label={key}
-                        value={field.value || ""}
+                        label="Pay Period"
+                        value={field.value}
                         onChange={(e) => field.onChange(e.target.value)}
                       >
-                        {payPeriod.map((option) => (
+                        {payPeriodDropdown.map((option) => (
+                          <MenuItem key={option} value={option}>
+                            {option}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    )}
+                  />
+                </FormControl>
+              ) : key === "salaryRatePeriod" ? (
+                <FormControl fullWidth variant="outlined">
+                  <InputLabel>Rate Period</InputLabel>
+                  <Controller
+                    name="salaryRatePeriod"
+                    control={control}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        label="Rate Period"
+                        value={field.value}
+                        onChange={(e) => field.onChange(e.target.value)}
+                      >
+                        {salaryRateDropdown.map((option) => (
                           <MenuItem key={option} value={option}>
                             {option}
                           </MenuItem>

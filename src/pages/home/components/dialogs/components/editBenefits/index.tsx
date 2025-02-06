@@ -1,16 +1,17 @@
 // ** Components
 import { FormWrapper, FormInput, FormFooter } from "@/shared/formElements";
+import { Box } from "@mui/material";
 
 // ** Forms Imports
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-// ** Schema
-import { schema } from "./schema";
-
 // ** Hooks
 import { useModal } from "@/hooks/useModal";
 import { useDataStateContext } from "@/hooks/useDataStateContext";
+
+// ** Schema
+import { schema } from "./schema";
 
 // ** Types
 import { ISystemBenefit } from "@/const/types";
@@ -22,9 +23,9 @@ export const EditBenefits = () => {
     closeDialog: () => void;
   };
   const { handleSaveBenefit } = useDataStateContext();
-  const defaultValues = {
-    name: (dataForDialog as ISystemBenefit).name,
-    id: (dataForDialog as ISystemBenefit).id,
+  const defaultValues: IFormBenefitsProps = {
+    name: dataForDialog?.name ?? "",
+    id: dataForDialog?.id ?? "",
   };
 
   const {
@@ -38,40 +39,35 @@ export const EditBenefits = () => {
   });
 
   const onSubmit = (data: IFormBenefitsProps) => {
-    handleSaveBenefit({
-      ...(dataForDialog as ISystemBenefit),
-      id: data.id,
-      name: data.name,
-    } as ISystemBenefit);
+    handleSaveBenefit({ ...dataForDialog, ...data } as ISystemBenefit);
     closeDialog();
   };
 
   return (
-    <FormWrapper title='Benefit' onSubmit={handleSubmit(onSubmit)}>
-      <FormInput
-        name="name"
-        label="Benefit name"
-        control={control}
-        errorMessage={errors.name?.message}
-        rules={{ required: true }}
-      />
-
-      <FormInput
-        name="id"
-        label="ID"
-        control={control}
-        errorMessage={errors.id?.message}
-        rules={{ required: true }}
-        disabled
-      />
-
+    <Box
+     
+    >
+      <FormWrapper title="Benefit" onSubmit={handleSubmit(onSubmit)}>
+        {Object.keys(defaultValues).map((key) => (
+          <Box key={key} mb={2}>
+            <FormInput
+              name={key as keyof IFormBenefitsProps}
+              label={key}
+              control={control}
+              type="text"
+              errorMessage={errors[key as keyof IFormBenefitsProps]?.message}
+              disabled={key === "id"}
+            />
+          </Box>
+        ))}
+      </FormWrapper>
       <FormFooter
-        cancelButtonText={"Cancel"}
-        actionButtonText={"Save"}
+        cancelButtonText="Cancel"
+        actionButtonText="Save"
         showSecondButton={isDirty}
         buttonAction={handleSubmit(onSubmit)}
-        source={"general"}
+        source="general"
       />
-    </FormWrapper>
+    </Box>
   );
 };

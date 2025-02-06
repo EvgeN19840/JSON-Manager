@@ -14,6 +14,7 @@ import {
     ITypeJSON,
 } from "@/const/types";
 import { assignMissingIds } from "@/shared/utils";
+import names from "@/const/names";
 
 interface IUseHandleAddItemParams {
     item:
@@ -41,7 +42,7 @@ interface IUseHandleAddItemParams {
 }
 
 export const useHandleAddItem = () => {
-    const { setData, data } = useDataStateContext();
+    const { setData, data, countDuplicates } = useDataStateContext();
     const { setDataForDialog } = useModal();
 
     const handleAddItem = ({
@@ -52,20 +53,23 @@ export const useHandleAddItem = () => {
     }: IUseHandleAddItemParams): void => {
         const updatedData: ITypeJSON = { ...data };
         if (type === "employees" && "eId" in item) {
-            const newEmployeeId = assignMissingIds(data, "employees");
-            const similarEmployees = data.employees.filter((emp) =>
-                emp.firstName.startsWith(item.firstName)
-            );
-            const nextIndex = similarEmployees.length + 1;
+            const newEmployees: IEmployee[] = [];
 
-            const newEmployee: IEmployee = {
-                ...item,
-                eId: newEmployeeId,
-                firstName: `${item.firstName}_${nextIndex}`,
-            };
+            for (let i = 0; i < Number(countDuplicates); i++) {
+                const newEmployeeId = assignMissingIds(data, "employees");
+                const newEmployee: IEmployee = {
+                    ...item,
+                    eId: newEmployeeId + i,
+                    firstName: names[Math.floor(Math.random() * names.length)],
+                    lastName: names[Math.floor(Math.random() * names.length)],
+                    number: `0${newEmployeeId + i}`
+                };
+                newEmployees.push(newEmployee);
+                setDataForDialog(newEmployee);
+            }
 
-            updatedData.employees = [...data.employees, newEmployee];
-            setDataForDialog(newEmployee);
+            updatedData.employees = [...data.employees, ...newEmployees];
+            setData(updatedData);       
         } else if (type === "benefits" && "id" in item) {
             const newBenefitId = assignMissingIds(data, "benefits");
             const similarBenefits = data.benefits.filter((benefit) =>

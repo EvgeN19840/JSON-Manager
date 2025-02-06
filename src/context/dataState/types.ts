@@ -2,10 +2,12 @@
 import { IEmployee, ISystemBenefit, ITypeJSON, } from "@/const/types";
 
 export interface DataContextType {
+  countDuplicates: string;
+  setCountDuplicates: (count: string) => void;
   data: ITypeJSON;
   setData: (data: ITypeJSON) => void;
-  eIdSetectedEmploee: number | null;
-  setEIdSetectedEmploee: (eId: number) => void;
+  eIdSelectedEmployee: number | null;
+  seteIdSelectedEmployee: (eId: number) => void;
   parsedData: string | null;
   setParsedData: (parsedData: string | null) => void;
   handleSaveEmployee: (data: IEmployee) => void;
