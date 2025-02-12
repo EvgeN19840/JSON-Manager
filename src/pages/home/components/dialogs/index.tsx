@@ -3,7 +3,6 @@ import { CustomDialog } from "@/shared/components/customDialog";
 import {
   ExportDataComponent,
   ImportDataComponent,
-  EditUserName,
   EditBenefits,
   TabsDetails,
   TabsDetailsEdit,
@@ -21,8 +20,6 @@ export const Dialogs: React.FC = () => {
         return <ExportDataComponent />;
       case "Import data":
         return <ImportDataComponent />;
-      case "Edit user":
-        return <EditUserName />;
       case "Edit benefits":
         return <EditBenefits />;
       case "Details":
