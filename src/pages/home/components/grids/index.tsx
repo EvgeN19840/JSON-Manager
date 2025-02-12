@@ -55,7 +55,7 @@ export const Grids: FC = () => {
 
   const handleEditDialogOpen = (item: IEmployee | ISystemBenefit) => {
     handleClickOpenDialog(
-      activeTab === "1" ? "Edit user" : "Edit benefits",
+      activeTab === "1" ? "Details" : "Edit benefits",
       item
     );
   };
@@ -67,7 +67,7 @@ export const Grids: FC = () => {
         const gridColumns = ColumnsEmployee(
           handleEditDialogOpen,
           {
-            openForm: handleEditDialogOpen,
+            openForm: handleRowDoubleClickOpenDetails,
             deleteItem,
             addItem, 
             onDuplicate: handleDuplicate,
