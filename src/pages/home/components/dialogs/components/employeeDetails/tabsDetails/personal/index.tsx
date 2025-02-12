@@ -55,6 +55,7 @@ export const PersonalTab: React.FC = () => {
         .map((item, index) => (
           <Box
             key={index}
+            onDoubleClick={openEditDialog}
             sx={{
               display: "flex",
               justifyContent: "space-between",

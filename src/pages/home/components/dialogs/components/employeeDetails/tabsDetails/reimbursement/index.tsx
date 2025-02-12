@@ -68,6 +68,9 @@ export const Reimbursements: React.FC = () => {
   return (
     <Box>
       <DataGrid<IReimbursement>
+        onRowDoubleClick={(params) =>
+          customIncomeCallbacks.openForm(params.row)
+        }
         rows={getReimbursementsRows()}
         getRowId={(row) => row.customBambooTableRowId}
         columns={CustomIncomeColumns}

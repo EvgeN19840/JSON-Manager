@@ -61,11 +61,11 @@ export const DepositAccountTab: React.FC = () => {
   const addNewRow = () => {
     handleClickOpenDialog("Edit Details");
     setTypeModalDetailsEdit("Edit deposit accounts");
-
   };
   return (
     <Box>
       <DataGrid<IDepositAccounts>
+        onRowDoubleClick={(params) => depositAccountCallbacks.openForm(params.row)}
         rows={getDepostAccountRows()}
         getRowId={(row) => row.customBambooTableRowId}
         columns={employmentStatusColumns}
