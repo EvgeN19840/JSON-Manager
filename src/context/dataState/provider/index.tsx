@@ -19,21 +19,11 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
     employees: [],
     benefits: [],
   });
-  const [countDuplicates, setCountDuplicates] = useState<string>('1');
+  const [countDuplicates, setCountDuplicates] = useState<string>("1");
   const [parsedData, setParsedData] = useState<string | null>(null);
   const [eIdSelectedEmployee, seteIdSelectedEmployee] = useState<number | null>(
     null
   );
-
-  const handleSaveEmployee = (value: IEmployee) => {
-    const employeeIndex = data.employees.findIndex(
-      (emp) => emp.eId === value.eId
-    );
-    const updatedEmployees = [...data.employees];
-    updatedEmployees[employeeIndex] = value;
-    setData({ ...data, employees: updatedEmployees });
-  };
-
   const handleSaveBenefit = (value: ISystemBenefit) => {
     setData((prevData) => {
       const benefitIndex = prevData.benefits.findIndex(
@@ -139,7 +129,18 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
               employmentStatus: checkArray("employmentStatus", employee),
             };
           case "personal":
-            return { ...employee, ...value };
+            return {
+              ...employee,
+              ...value,
+              salary: employee.salary,
+              jobInfo: employee.jobInfo,
+              employmentStatus: employee.employmentStatus,
+              benefits: employee.benefits,
+              bonuses: employee.bonuses,
+              depositAccounts: employee.depositAccounts,
+              reimbursements: employee.reimbursements,
+              otherDeductions: employee.otherDeductions,
+            };
           case "employeeBenefit":
             return {
               ...employee,
@@ -185,7 +186,6 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
         eIdSelectedEmployee,
         seteIdSelectedEmployee,
         setParsedData,
-        handleSaveEmployee,
         handleSaveBenefit,
         handleSaveData,
         hasData,
