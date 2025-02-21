@@ -30,7 +30,7 @@ export const EditDepositAccounts: React.FC = () => {
   const onSubmit = (formData: IDepositAccounts) => {
     handleSaveData(
       { ...dataForDialog, ...formData } as IDepositAccounts,
-      "depositAccount"
+      "depositAccounts"
     );
     const updatedEmployees = data.employees.map((employee) =>
       employee.eId === eIdSelectedEmployee

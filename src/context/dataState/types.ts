@@ -1,5 +1,5 @@
 // ** Types
-import {  ISystemBenefit, ITypeJSON, } from "@/const/types";
+import { ISystemBenefit, ITypeJSON, } from "@/const/types";
 
 export interface DataContextType {
   countDuplicates: string;
@@ -16,7 +16,7 @@ export interface DataContextType {
     T extends Partial<{ id: string | number; eId: number; customBambooTableRowId: number; }>
   >(
     value: T,
-    type: "employeeBenefit" | "depositAccount" | "bonuses" | "personal" | "jobInfo" | "salary" | "status" | "otherDeductions" | "reimbursements"
+    type: "employeeBenefit" | "depositAccounts" | "bonuses" | "personal" | "jobInfo" | "salary" | "employmentStatus" | "otherDeductions" | "reimbursements"
   ) => void;
   hasData: boolean;
 }
