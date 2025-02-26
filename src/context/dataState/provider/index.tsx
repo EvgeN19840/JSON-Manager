@@ -24,8 +24,8 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
   });
   const [countDuplicates, setCountDuplicates] = useState<string>("1");
   const [parsedData, setParsedData] = useState<string | null>(null);
-  const [eIdSelectedEmployee, seteIdSelectedEmployee] = useState<number | null>(
-    null
+  const [eIdSelectedEmployee, seteIdSelectedEmployee] = useState<number>(
+    0
   );
   const handleSaveBenefit = (value: ISystemBenefit) => {
     setData((prevData) => {

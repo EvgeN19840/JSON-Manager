@@ -68,12 +68,12 @@ export const TabsDetails = () => {
           aria-label="details-tabs"
         >
           <Tab label="Personal" value="1" />
-          <Tab label="Benefits" value="2" />
-          <Tab label="Job" value="3" />
-          <Tab label="Deposit Accounts" value="4" />
-          <Tab label="Reimbursements" value="5" />
-          <Tab label="Custom deductions" value="6" />
-          <Tab label="Bonuses" value="7" />
+          <Tab label="Job" value="2" />
+          <Tab label="Deposit accounts" value="3" />
+          <Tab label="Custom incomes" value="4" />
+          <Tab label="Custom deductions" value="5" />
+          <Tab label="Benefits" value="6" />
+          <Tab label="Bonus" value="7" />
         </TabList>
       </TabContext>
       <Box m={1}>{renderTabContent()}</Box>

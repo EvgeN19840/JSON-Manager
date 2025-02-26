@@ -14,14 +14,22 @@ export const DuplicateEmployee = () => {
   const { eIdSelectedEmployee, countDuplicates, data, setCountDuplicates } =
     useDataStateContext();
   const handleAddItem = useHandleAddItem();
-
   const { handleSubmit } = useForm();
 
   const onSubmit = () => {
+    const employeeToDuplicate = data.employees.find(
+      (emp) => emp.eId === eIdSelectedEmployee
+    );
+
+    if (!employeeToDuplicate) {
+      console.error("Employee not found in the data list");
+      return;
+    }
+
     handleAddItem({
       type: "employees",
-      item: data.employees[0],
-      eId: eIdSelectedEmployee!,
+      item: employeeToDuplicate,
+      eId: eIdSelectedEmployee ?? "",
     });
     closeDialog();
     setCountDuplicates("1");
@@ -49,11 +57,7 @@ export const DuplicateEmployee = () => {
           />
         </Box>
       </FormWrapper>
-      <Box
-        sx={{
-          mx: 2,
-        }}
-      >
+      <Box sx={{ mx: 2 }}>
         <FormFooter
           cancelButtonText="Cancel"
           actionButtonText="Duplicate"
