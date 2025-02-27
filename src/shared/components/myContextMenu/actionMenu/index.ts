@@ -5,7 +5,6 @@ export const actionMenu = <T extends GridValidRowModel>(
   callbacks: ContextMenuItemsCallbacks<T>,
   params: GridRenderCellParams<T>,
   nameDetails?: boolean
-
 ) => {
   const name = nameDetails ? "Details" : "Edit";
   return [
@@ -20,6 +19,14 @@ export const actionMenu = <T extends GridValidRowModel>(
           callbacks.onDuplicate(params.row);
         } else {
           callbacks.addItem(params.row);
+        }
+      },
+    },
+    {
+      name: "Save employee template",
+      callback: () => {
+        if (callbacks.saveEmployee) {
+          callbacks.saveEmployee(params.row);
         }
       },
     },

@@ -18,6 +18,7 @@ import { useModal } from "@/hooks/useModal";
 import { MyGrid } from "@/shared/components/grid";
 import { useHandleAddItem } from "@/hooks/useAddItem";
 import { useHandleDeleteItem } from "@/hooks/useDelete";
+import { saveEmployeeToLocalStorage } from "@/services/storageService";
 
 export const Grids: FC = () => {
   const { data, seteIdSelectedEmployee } = useDataStateContext();
@@ -43,9 +44,15 @@ export const Grids: FC = () => {
   };
 
   const handleDuplicate = (employee: IEmployee) => {
-    seteIdSelectedEmployee(employee.eId); 
+    seteIdSelectedEmployee(employee.eId);
     handleClickOpenDialog("Duplicate", employee);
     setDialogOpen(true);
+  };
+
+  const saveLocalStorage = (employee: IEmployee) => {
+    console.log(employee);
+    saveEmployeeToLocalStorage(employee);
+    setDialogOpen(false);
   };
 
   const handleRowDoubleClickOpenDetails = (item: IEmployee) => {
@@ -64,16 +71,13 @@ export const Grids: FC = () => {
     switch (activeTab) {
       case "1": {
         const gridData = data.employees;
-        const gridColumns = ColumnsEmployee(
-          handleEditDialogOpen,
-          {
-            openForm: handleRowDoubleClickOpenDetails,
-            deleteItem,
-            addItem, 
-            onDuplicate: handleDuplicate,
-          },
-
-        );
+        const gridColumns = ColumnsEmployee(handleEditDialogOpen, {
+          openForm: handleRowDoubleClickOpenDetails,
+          deleteItem,
+          addItem,
+          onDuplicate: handleDuplicate,
+          saveEmployee: saveLocalStorage,
+        });
 
         return (
           <MyGrid<IEmployee>

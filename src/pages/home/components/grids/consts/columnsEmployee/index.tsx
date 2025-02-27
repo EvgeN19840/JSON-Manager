@@ -47,9 +47,8 @@ export const ColumnsEmployee = (
           items={actionMenu(
             {
               ...callbacks,
-              onDuplicate: (employee) => {
-                callbacks.onDuplicate?.(employee);
-              },
+              onDuplicate: (employee) => callbacks.onDuplicate?.(employee),
+              saveEmployee: (employee) => callbacks.saveEmployee?.(employee),
             },
             params,
             true

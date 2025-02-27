@@ -6,6 +6,8 @@ import { Box, Button } from "@mui/material";
 // ** Types
 import { FormFooterProps } from "./types";
 import { useDataStateContext } from "@/hooks/useDataStateContext";
+import { InputField } from "@/shared/inputField";
+import { useState } from "react";
 
 export const FormFooter: React.FC<FormFooterProps> = ({
   cancelButtonText,
@@ -17,7 +19,6 @@ export const FormFooter: React.FC<FormFooterProps> = ({
   source,
 }) => {
   const { setDialogOpen, handleClickOpenDialog } = useModal();
-
   const { data, eIdSelectedEmployee, setCountDuplicates } =
     useDataStateContext();
   const handleCancel = () => {
@@ -34,6 +35,12 @@ export const FormFooter: React.FC<FormFooterProps> = ({
         setCountDuplicates("1");
       }
     }
+  };
+
+  const [inputNameFile, setInputNameFile] = useState("");
+
+  const handleNameFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputNameFile(event.target.value);
   };
 
   return (
@@ -58,9 +65,28 @@ export const FormFooter: React.FC<FormFooterProps> = ({
         </Button>
 
         {canAddBaseEmployee && (
-          <Button variant="contained" onClick={addBaseEmployee}>
-            Add Base Employee
-          </Button>
+          <Box
+            sx={{ display: "flex", alignItems: "center", gap: "1rem", m: 1 }}
+          >
+            <Button variant="contained" onClick={addBaseEmployee}>
+              Add Base Employee
+            </Button>
+            <InputField
+              value={inputNameFile}
+              placeholder="Name template"
+              onChange={handleNameFileChange}
+              sx={{
+                width: 150,
+              }}
+              slotProps={{
+                input: {
+                  sx: {
+                    padding: 1,
+                  },
+                },
+              }}
+            />
+          </Box>
         )}
         <Button
           variant="contained"
