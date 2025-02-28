@@ -1,9 +1,9 @@
 export interface FormFooterProps {
     cancelButtonText: string;
     actionButtonText: string;
-    showSecondButton: boolean;
     canAddBaseEmployee?: boolean;
-    addBaseEmployee?: () => void;
+    showSecondButton: boolean;
+    addBaseEmployee?: (firstName: string) => void;
     buttonAction?: () => void;
-    source: "employeeDetails" | "general" |"duplicate";
+    source: "employeeDetails" | "general" | "duplicate";
 }

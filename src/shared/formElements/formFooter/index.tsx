@@ -1,13 +1,10 @@
 import { useModal } from "@/hooks/useModal";
-
-// ** MUI
-import { Box, Button } from "@mui/material";
-
-// ** Types
+import { Box, Button, FormControl, MenuItem, Select } from "@mui/material";
 import { FormFooterProps } from "./types";
 import { useDataStateContext } from "@/hooks/useDataStateContext";
-import { InputField } from "@/shared/inputField";
-import { useState } from "react";
+import { listTemplate } from "@/shared/utils/listTemplate";
+import { Controller, useForm } from "react-hook-form";
+import { IEmployee } from "@/const/types";
 
 export const FormFooter: React.FC<FormFooterProps> = ({
   cancelButtonText,
@@ -19,14 +16,16 @@ export const FormFooter: React.FC<FormFooterProps> = ({
   source,
 }) => {
   const { setDialogOpen, handleClickOpenDialog } = useModal();
-  const { data, eIdSelectedEmployee, setCountDuplicates } =
-    useDataStateContext();
+  const { data, eIdSelectedEmployee, setCountDuplicates } = useDataStateContext();
+  const { control, watch } = useForm<IEmployee>({
+    mode: "onSubmit",
+  });
+  const selectedName = watch("firstName");
   const handleCancel = () => {
     if (source === "employeeDetails") {
       const updatedEmployee = data.employees.find(
         (employee) => employee.eId === eIdSelectedEmployee
       );
-
       setDialogOpen(false);
       handleClickOpenDialog("Details", updatedEmployee);
     } else {
@@ -35,12 +34,6 @@ export const FormFooter: React.FC<FormFooterProps> = ({
         setCountDuplicates("1");
       }
     }
-  };
-
-  const [inputNameFile, setInputNameFile] = useState("");
-
-  const handleNameFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputNameFile(event.target.value);
   };
 
   return (
@@ -53,46 +46,45 @@ export const FormFooter: React.FC<FormFooterProps> = ({
         p: "1rem",
       }}
     >
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <Button variant="outlined" onClick={handleCancel}>
           {cancelButtonText}
         </Button>
 
         {canAddBaseEmployee && (
-          <Box
-            sx={{ display: "flex", alignItems: "center", gap: "1rem", m: 1 }}
-          >
-            <Button variant="contained" onClick={addBaseEmployee}>
-              Add Base Employee
-            </Button>
-            <InputField
-              value={inputNameFile}
-              placeholder="Name template"
-              onChange={handleNameFileChange}
-              sx={{
-                width: 150,
-              }}
-              slotProps={{
-                input: {
-                  sx: {
-                    padding: 1,
-                  },
-                },
-              }}
-            />
+          <Box sx={{ display: "flex", alignItems: "center", gap: "1rem", m: 1 }}>
+            {addBaseEmployee && (
+              <Button
+                variant="contained"
+                onClick={() => addBaseEmployee(selectedName)}
+              >
+                Add Base Employee
+              </Button>
+            )}
+
+            <FormControl fullWidth variant="outlined">
+              <Controller
+                name="firstName"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    value={field.value || ""}
+                    onChange={(e) => field.onChange(e.target.value)}
+                  >
+                    {listTemplate().employees.map((emp, index) => (
+                      <MenuItem key={index} value={emp.firstName}>
+                        {emp.firstName}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                )}
+              />
+            </FormControl>
           </Box>
         )}
-        <Button
-          variant="contained"
-          onClick={buttonAction}
-          disabled={!showSecondButton}
-        >
+        <Button variant="contained" onClick={buttonAction} disabled={!showSecondButton}>
           {actionButtonText}
         </Button>
       </Box>

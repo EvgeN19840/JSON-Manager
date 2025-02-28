@@ -7,9 +7,10 @@ import { InputField } from "@/shared/inputField";
 
 // ** Utils
 import { assignMissingIds } from "@/shared/utils";
+import { findEmployeeByName } from "@/shared/utils/findEmployeeByName";
 
 // ** Types
-import { ITypeJSON } from "@/const/types";
+import {  ITypeJSON } from "@/const/types";
 
 // ** MUI
 import { Box, Typography } from "@mui/material";
@@ -18,7 +19,6 @@ import { Box, Typography } from "@mui/material";
 import { useModal } from "@/hooks/useModal";
 import { useNotification } from "@/hooks/useNotification";
 import { useDataStateContext } from "@/hooks/useDataStateContext";
-import { employeeData } from "@/const/jsonBase";
 
 const normalizeToJson = (input: string): string => {
   return input
@@ -71,14 +71,24 @@ export const ImportDataComponent: React.FC = () => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
-  const addBaseEmployee = () => {
-    setData({
-      employees: employeeData.employees,
-      benefits: employeeData.benefits,
-    });
-    setDialogOpen(false);
-    setInputValue("");
+  const addBaseEmployee = (selectedName: string) => {
+    try {
+      const selectedEmp = findEmployeeByName(selectedName);
+  
+      setData((prev: ITypeJSON) => ({
+        employees: prev.employees ? [...prev.employees, selectedEmp] : [selectedEmp],
+        benefits: prev.benefits || [],
+      }));
+  
+      setDialogOpen(false);
+      setInputValue("");
+    } catch (error) {
+      showNotification(error.message, "error");
+    }
   };
+  
+  
+  
   return (
     <Box>
       <Typography variant="h6" sx={{ textAlign: "center" }}>
