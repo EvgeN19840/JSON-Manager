@@ -20,7 +20,9 @@ export const FormFooter: React.FC<FormFooterProps> = ({
   const { control, watch } = useForm<IEmployee>({
     mode: "onSubmit",
   });
+
   const selectedName = watch("firstName");
+
   const handleCancel = () => {
     if (source === "employeeDetails") {
       const updatedEmployee = data.employees.find(
@@ -37,46 +39,25 @@ export const FormFooter: React.FC<FormFooterProps> = ({
   };
 
   return (
-    <Box
-      sx={{
-        position: "sticky",
-        bottom: 0,
-        zIndex: 1,
-        backgroundColor: "white",
-        p: "1rem",
-      }}
-    >
+    <Box sx={{ position: "sticky", bottom: 0, zIndex: 1, backgroundColor: "white", p: "1rem" }}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <Button variant="outlined" onClick={handleCancel}>
-          {cancelButtonText}
-        </Button>
+        
+        <Button variant="outlined" onClick={handleCancel}>{cancelButtonText}</Button>
 
         {canAddBaseEmployee && (
-          <Box sx={{ display: "flex", alignItems: "center", gap: "1rem", m: 1 }}>
+          <Box sx={{ display: "flex", justifyContent: "space-between", flexGrow: 1, alignItems: "center", m:1 }}>
             {addBaseEmployee && (
-              <Button
-                variant="contained"
-                onClick={() => addBaseEmployee(selectedName)}
-              >
-                Add Base Employee
-              </Button>
+              <Button variant="contained" onClick={() => addBaseEmployee(selectedName)}>Add Base Employee</Button>
             )}
-
-            <FormControl fullWidth variant="outlined">
+            <Box  /> 
+            <FormControl sx={{ minWidth: "180px"}}>
               <Controller
                 name="firstName"
                 control={control}
-                defaultValue=""
                 render={({ field }) => (
-                  <Select
-                    {...field}
-                    value={field.value || ""}
-                    onChange={(e) => field.onChange(e.target.value)}
-                  >
+                  <Select {...field} value={field.value || ""} onChange={(e) => field.onChange(e.target.value)}>
                     {listTemplate().employees.map((emp, index) => (
-                      <MenuItem key={index} value={emp.firstName}>
-                        {emp.firstName}
-                      </MenuItem>
+                      <MenuItem key={index} value={emp.firstName}>{emp.firstName}</MenuItem>
                     ))}
                   </Select>
                 )}
@@ -84,9 +65,9 @@ export const FormFooter: React.FC<FormFooterProps> = ({
             </FormControl>
           </Box>
         )}
-        <Button variant="contained" onClick={buttonAction} disabled={!showSecondButton}>
-          {actionButtonText}
-        </Button>
+
+        <Button variant="contained" onClick={buttonAction} disabled={!showSecondButton}>{actionButtonText}</Button>
+
       </Box>
     </Box>
   );
