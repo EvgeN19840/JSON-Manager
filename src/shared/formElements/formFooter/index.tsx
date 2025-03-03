@@ -16,7 +16,8 @@ export const FormFooter: React.FC<FormFooterProps> = ({
   source,
 }) => {
   const { setDialogOpen, handleClickOpenDialog } = useModal();
-  const { data, eIdSelectedEmployee, setCountDuplicates } = useDataStateContext();
+  const { data, eIdSelectedEmployee, setCountDuplicates } =
+    useDataStateContext();
   const { control, watch } = useForm<IEmployee>({
     mode: "onSubmit",
   });
@@ -39,25 +40,61 @@ export const FormFooter: React.FC<FormFooterProps> = ({
   };
 
   return (
-    <Box sx={{ position: "sticky", bottom: 0, zIndex: 1, backgroundColor: "white", p: "1rem" }}>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        
-        <Button variant="outlined" onClick={handleCancel}>{cancelButtonText}</Button>
+    <Box
+      sx={{
+        position: "sticky",
+        bottom: 0,
+        zIndex: 1,
+        backgroundColor: "white",
+        p: "1rem",
+      }}
+    >
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Button variant="outlined" onClick={handleCancel}>
+          {cancelButtonText}
+        </Button>
 
         {canAddBaseEmployee && (
-          <Box sx={{ display: "flex", justifyContent: "space-between", flexGrow: 1, alignItems: "center", m:1 }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              flexGrow: 1,
+              alignItems: "center",
+              mx:2
+            }}
+          >
             {addBaseEmployee && (
-              <Button variant="contained" onClick={() => addBaseEmployee(selectedName)}>Add Base Employee</Button>
+              <Button
+                variant="contained"
+                onClick={() => addBaseEmployee(selectedName)}
+                sx={{ height: "40px"}}
+              >
+                Add Base Employee
+              </Button>
             )}
-            <Box  /> 
-            <FormControl sx={{ minWidth: "180px"}}>
+            <Box />
+            <FormControl sx={{ minWidth: "160px" }}>
               <Controller
                 name="firstName"
                 control={control}
                 render={({ field }) => (
-                  <Select {...field} value={field.value || ""} onChange={(e) => field.onChange(e.target.value)}>
+                  <Select
+                    {...field}
+                    value={field.value || ""}
+                    onChange={(e) => field.onChange(e.target.value)}
+                    sx={{ height: "40px" }}
+                  >
                     {listTemplate().employees.map((emp, index) => (
-                      <MenuItem key={index} value={emp.firstName}>{emp.firstName}</MenuItem>
+                      <MenuItem key={index} value={emp.firstName}>
+                        {emp.firstName}
+                      </MenuItem>
                     ))}
                   </Select>
                 )}
@@ -66,8 +103,13 @@ export const FormFooter: React.FC<FormFooterProps> = ({
           </Box>
         )}
 
-        <Button variant="contained" onClick={buttonAction} disabled={!showSecondButton}>{actionButtonText}</Button>
-
+        <Button
+          variant="contained"
+          onClick={buttonAction}
+          disabled={!showSecondButton}
+        >
+          {actionButtonText}
+        </Button>
       </Box>
     </Box>
   );
