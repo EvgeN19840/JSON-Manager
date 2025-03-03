@@ -31,15 +31,15 @@ export const TabsDetails = () => {
       case "1":
         return <PersonalTab />;
       case "2":
-        return <BenefitsTab />;
-      case "3":
         return <JobInfoTab />;
-      case "4":
+      case "3":
         return <DepositAccountTab />;
-      case "5":
+      case "4":
         return <Reimbursements />;
+      case "5":
+        return <OtherDeductionTab />; 
       case "6":
-        return <OtherDeductionTab />;
+        return <BenefitsTab />;
       case "7":
         return <BonusesTab />;
     }
