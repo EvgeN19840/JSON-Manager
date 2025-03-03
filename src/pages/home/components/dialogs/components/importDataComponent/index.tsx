@@ -87,7 +87,7 @@ export const ImportDataComponent: React.FC = () => {
 
     setData({
       employees: [selectedEmp],
-      benefits: [],
+      benefits: [...selectedEmp.benefits]
     });
 
     setDialogOpen(false);
