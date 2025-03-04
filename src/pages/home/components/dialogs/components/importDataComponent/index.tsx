@@ -7,6 +7,7 @@ import { InputField } from "@/shared/inputField";
 
 // ** Utils
 import { assignMissingIds } from "@/shared/utils";
+import { findEmployeeByName } from "@/shared/utils/findEmployeeByName";
 
 // ** Types
 import { ITypeJSON } from "@/const/types";
@@ -18,14 +19,13 @@ import { Box, Typography } from "@mui/material";
 import { useModal } from "@/hooks/useModal";
 import { useNotification } from "@/hooks/useNotification";
 import { useDataStateContext } from "@/hooks/useDataStateContext";
-import { employeeData } from "@/const/jsonBase";
 
 const normalizeToJson = (input: string): string => {
   return input
-    .replace(/([{,])\s*([a-zA-Z0-9_]+)\s*:/g, '$1"$2":') 
-    .replace(/'/g, '"') 
-    .replace(/,\s*}/g, '}')
-    .replace(/,\s*]/g, ']');
+    .replace(/([{,])\s*([a-zA-Z0-9_]+)\s*:/g, '$1"$2":')
+    .replace(/'/g, '"')
+    .replace(/,\s*}/g, "}")
+    .replace(/,\s*]/g, "]");
 };
 
 const isValidJson = (input: string): boolean => {
@@ -46,7 +46,10 @@ export const ImportDataComponent: React.FC = () => {
     const normalizedInput = normalizeToJson(inputValue);
 
     if (!isValidJson(normalizedInput)) {
-      showNotification("Invalid data format. Please correct and try again.", "error");
+      showNotification(
+        "Invalid data format. Please correct and try again.",
+        "error"
+      );
       return;
     }
 
@@ -71,26 +74,37 @@ export const ImportDataComponent: React.FC = () => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   };
-  const addBaseEmployee = () => {
+  const addBaseEmployee = (selectedName: string) => {
+    const selectedEmp = findEmployeeByName(selectedName);
+
+    if (!selectedEmp) {
+      showNotification(
+        "Select the name of the base employee!",
+        "error"
+      );
+      return;
+    }
+
     setData({
-      employees: employeeData.employees,
-      benefits: employeeData.benefits,
+      employees: [selectedEmp],
+      benefits: [...selectedEmp.benefits]
     });
+
     setDialogOpen(false);
     setInputValue("");
   };
   return (
     <Box>
-      <Typography variant="h6" sx={{ textAlign: "center" }}>
+      <Typography variant="h6" sx={{ textAlign: "center",mt:1}}>
         Import Data
       </Typography>
       <Box sx={{ px: "1rem" }}>
-      <InputField
-        value={inputValue}
-        onChange={handleInputChange}
-        placeholder="Paste your JSON data here"
-        rows={20}
-      />
+        <InputField
+          value={inputValue}
+          onChange={handleInputChange}
+          placeholder="Paste your JSON data here"
+          rows={20}
+        />
       </Box>
       <Box sx={{ mt: 1 }}>
         <FormFooter

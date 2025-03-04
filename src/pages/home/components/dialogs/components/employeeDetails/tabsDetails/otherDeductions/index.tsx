@@ -18,46 +18,46 @@ import { CustomFooter } from "@/shared/components/customFooter";
 
 export const OtherDeductionTab: React.FC = () => {
   const { handleClickOpenDialog, dataForDialog, setTypeModalDetailsEdit } =
-  useModal();
-const dialogData = dataForDialog as { eId: number } | null;
-const { data } = useDataStateContext();
-const handleDeleteItem = useHandleDeleteItem();
-const handleAddItem = useHandleAddItem();
+    useModal();
+  const dialogData = dataForDialog as { eId: number } | null;
+  const { data } = useDataStateContext();
+  const handleDeleteItem = useHandleDeleteItem();
+  const handleAddItem = useHandleAddItem();
 
-const getDeductionsRows = (): IOtherDeduction[] => {
-  if (dataForDialog && dialogData?.eId) {
-    const employee = data.employees.find((emp) => emp.eId === dialogData.eId);
-    return employee?.otherDeductions || [];
-  }
-  return [];
-};
+  const getDeductionsRows = (): IOtherDeduction[] => {
+    if (dataForDialog && dialogData?.eId) {
+      const employee = data.employees.find((emp) => emp.eId === dialogData.eId);
+      return employee?.otherDeductions || [];
+    }
+    return [];
+  };
 
-const deductionsCallbacks: ContextMenuItemsCallbacks<IOtherDeduction> = {
-  openForm: (data) => {
-    handleClickOpenDialog("Edit Details", data);
-    setTypeModalDetailsEdit("Edit deductions");
-  },
-  addItem: (data) => {
-    if (dataForDialog && dialogData?.eId) {
-      handleAddItem({
-        item: data,
-        type: "item",
-        eId: dialogData.eId,
-        nestedType: "otherDeductions",
-      });
-    }
-  },
-  deleteItem: (data) => {
-    if (dataForDialog && dialogData?.eId) {
-      handleDeleteItem({
-        id: data.customBambooTableRowId,
-        type: "item",
-        eId: dialogData.eId,
-        nestedType: "otherDeductions",
-      });
-    }
-  },
-};
+  const deductionsCallbacks: ContextMenuItemsCallbacks<IOtherDeduction> = {
+    openForm: (data) => {
+      handleClickOpenDialog("Edit Details", data);
+      setTypeModalDetailsEdit("Edit deductions");
+    },
+    addItem: (data) => {
+      if (dataForDialog && dialogData?.eId) {
+        handleAddItem({
+          item: data,
+          type: "item",
+          eId: dialogData.eId,
+          nestedType: "otherDeductions",
+        });
+      }
+    },
+    deleteItem: (data) => {
+      if (dataForDialog && dialogData?.eId) {
+        handleDeleteItem({
+          id: data.customBambooTableRowId,
+          type: "item",
+          eId: dialogData.eId,
+          nestedType: "otherDeductions",
+        });
+      }
+    },
+  };
   const deductionsColumns = ColumnsDeductions(
     deductionsCallbacks.openForm,
     deductionsCallbacks
@@ -69,6 +69,7 @@ const deductionsCallbacks: ContextMenuItemsCallbacks<IOtherDeduction> = {
   return (
     <Box>
       <DataGrid<IOtherDeduction>
+        onRowDoubleClick={(params) => deductionsCallbacks.openForm(params.row)}
         rows={getDeductionsRows()}
         getRowId={(row) => row.customBambooTableRowId}
         columns={deductionsColumns}

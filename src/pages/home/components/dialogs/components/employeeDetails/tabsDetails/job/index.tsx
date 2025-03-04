@@ -171,6 +171,9 @@ export const JobInfoTab: React.FC = () => {
           Employment Status
         </Typography>
         <DataGrid<IEmploymentStatus>
+          onRowDoubleClick={(params) =>
+            employmentStatusCallbacks.openForm(params.row)
+          }
           rows={getEmploymentStatusRows()}
           columns={employmentStatusColumns}
           getRowId={(row) => row.customBambooTableRowId}
@@ -194,6 +197,7 @@ export const JobInfoTab: React.FC = () => {
           Salary Information
         </Typography>
         <DataGrid<ISalary>
+          onRowDoubleClick={(params) => salaryCallbacks.openForm(params.row)}
           rows={getSalaryRows()}
           columns={salaryColumns}
           getRowId={(row) => row.customBambooTableRowId}
@@ -217,6 +221,7 @@ export const JobInfoTab: React.FC = () => {
           Job Information
         </Typography>
         <DataGrid<IJobInfo>
+          onRowDoubleClick={(params) => jobInfoCallbacks.openForm(params.row)}
           rows={getJobInfoRows()}
           columns={jobInfoColumns}
           getRowId={(row) => row.customBambooTableRowId}

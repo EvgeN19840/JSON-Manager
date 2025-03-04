@@ -46,7 +46,7 @@ export const EditDeductions: React.FC = () => {
 
   return (
     <Box>
-      <FormWrapper title="Deduction" onSubmit={handleSubmit(onSubmit)}>
+      <FormWrapper title="Custom deductions" onSubmit={handleSubmit(onSubmit)}>
         {Object.keys(defaultValues)
           .filter((key) => key !== "customBambooTableRowId")
           .map((key) => (

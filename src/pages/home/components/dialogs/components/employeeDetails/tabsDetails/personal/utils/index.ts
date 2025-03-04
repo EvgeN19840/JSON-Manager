@@ -114,21 +114,6 @@ export const currentData = (data: IEmployee) => {
       position: "left",
       type: "text",
     },
-    {
-      title: "Employment Status",
-      value: data.employmentStatus.length
-        ? data.employmentStatus
-            .map(
-              (status) =>
-                `${status.employmentStatus} (Effective: ${getDateFormat(
-                  status.effectiveDate
-                )})`
-            )
-            .join(", ")
-        : "N/A",
-      position: "left",
-      type: "text",
-    },
   ];
 };
 

@@ -80,6 +80,7 @@ export const BenefitsTab: React.FC = () => {
   return (
     <Box>
       <DataGrid<IEmployeeBenefit>
+        onRowDoubleClick={(params) => handleEditClick(params.row)}
         rows={getBenefitRows()}
         columns={columns}
         pagination

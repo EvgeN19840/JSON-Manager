@@ -18,12 +18,18 @@ import { useModal } from "@/hooks/useModal";
 import { MyGrid } from "@/shared/components/grid";
 import { useHandleAddItem } from "@/hooks/useAddItem";
 import { useHandleDeleteItem } from "@/hooks/useDelete";
+import {
+  saveEmployeeToLocalStorage,
+  removeEmployeesFromLocalStorage,
+} from "@/services/storageService";
+import { useNotification } from "@/hooks/useNotification";
 
 export const Grids: FC = () => {
   const { data, seteIdSelectedEmployee } = useDataStateContext();
   const { handleClickOpenDialog, setDialogOpen } = useModal();
   const handleAddItem = useHandleAddItem();
   const handleDeleteItem = useHandleDeleteItem();
+  const { showNotification } = useNotification();
   const { activeTab } = useTabs();
 
   const deleteItem = (item: IEmployee | ISystemBenefit) => {
@@ -43,9 +49,25 @@ export const Grids: FC = () => {
   };
 
   const handleDuplicate = (employee: IEmployee) => {
-    seteIdSelectedEmployee(employee.eId); 
+    seteIdSelectedEmployee(employee.eId);
     handleClickOpenDialog("Duplicate", employee);
     setDialogOpen(true);
+  };
+
+  const saveLocalStorage = (employee: IEmployee) => {
+    const message = saveEmployeeToLocalStorage(employee);
+
+    showNotification(message.text, message.type);
+
+    setDialogOpen(false);
+  };
+  const removeLocalStore = (employee: IEmployee) => {
+    const message = removeEmployeesFromLocalStorage(employee.firstName);
+    showNotification(message.text, message.type);
+    setDialogOpen(false);
+    if (employee.firstName !== "John") {
+      handleDeleteItem({ id: employee.eId, type: "employees" });
+    }
   };
 
   const handleRowDoubleClickOpenDetails = (item: IEmployee) => {
@@ -55,7 +77,7 @@ export const Grids: FC = () => {
 
   const handleEditDialogOpen = (item: IEmployee | ISystemBenefit) => {
     handleClickOpenDialog(
-      activeTab === "1" ? "Edit user" : "Edit benefits",
+      activeTab === "1" ? "Details" : "Edit benefits",
       item
     );
   };
@@ -64,16 +86,14 @@ export const Grids: FC = () => {
     switch (activeTab) {
       case "1": {
         const gridData = data.employees;
-        const gridColumns = ColumnsEmployee(
-          handleEditDialogOpen,
-          {
-            openForm: handleEditDialogOpen,
-            deleteItem,
-            addItem, 
-            onDuplicate: handleDuplicate,
-          },
-
-        );
+        const gridColumns = ColumnsEmployee(handleEditDialogOpen, {
+          openForm: handleRowDoubleClickOpenDetails,
+          deleteItem,
+          addItem,
+          onDuplicate: handleDuplicate,
+          saveEmployee: saveLocalStorage,
+          removeEmployee: removeLocalStore,
+        });
 
         return (
           <MyGrid<IEmployee>

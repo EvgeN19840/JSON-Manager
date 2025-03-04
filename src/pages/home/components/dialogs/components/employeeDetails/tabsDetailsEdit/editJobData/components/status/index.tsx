@@ -30,7 +30,7 @@ export const EmploymentStatus: React.FC = () => {
   const onSubmit = (formData: IEmploymentStatus) => {
     handleSaveData(
       { ...dataForDialog, ...formData } as IEmploymentStatus,
-      "status"
+      "employmentStatus"
     );
     const updatedEmployees = data.employees.map((employee) =>
       employee.eId === eIdSelectedEmployee

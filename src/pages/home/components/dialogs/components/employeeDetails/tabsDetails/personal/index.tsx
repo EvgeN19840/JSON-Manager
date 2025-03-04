@@ -50,20 +50,23 @@ export const PersonalTab: React.FC = () => {
     >
         <EditButton onClick={openEditDialog} />
       </Box>
-      {currentData(adjustedDataForDialog).map((item, index) => (
-        <Box
-          key={index}
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            borderBottom: "1px solid #f0f0f0",
-          }}
-        >
-          <Typography>{item.title}:</Typography>
-          <Typography>{item.value}</Typography>
-        </Box>
-      ))}
+      {currentData(adjustedDataForDialog)
+        .filter((item) => item.title !== "Employment Status")
+        .map((item, index) => (
+          <Box
+            key={index}
+            onDoubleClick={openEditDialog}
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              borderBottom: "1px solid #f0f0f0",
+            }}
+          >
+            <Typography>{item.title}:</Typography>
+            <Typography>{item.value}</Typography>
+          </Box>
+        ))}
     </Box>
   );
 };

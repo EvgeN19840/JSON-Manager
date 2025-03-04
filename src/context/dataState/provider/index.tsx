@@ -4,6 +4,9 @@ import { ReactNode, useState } from "react";
 // ** Context
 import { DataStateContext } from "../dataStateContext";
 
+// ** Utils
+import { assignMissingIds } from "@/shared/utils";
+
 // ** Types
 import {
   IEmployee,
@@ -19,21 +22,11 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
     employees: [],
     benefits: [],
   });
-  const [countDuplicates, setCountDuplicates] = useState<string>('1');
+  const [countDuplicates, setCountDuplicates] = useState<string>("1");
   const [parsedData, setParsedData] = useState<string | null>(null);
-  const [eIdSelectedEmployee, seteIdSelectedEmployee] = useState<number | null>(
-    null
+  const [eIdSelectedEmployee, seteIdSelectedEmployee] = useState<number>(
+    0
   );
-
-  const handleSaveEmployee = (value: IEmployee) => {
-    const employeeIndex = data.employees.findIndex(
-      (emp) => emp.eId === value.eId
-    );
-    const updatedEmployees = [...data.employees];
-    updatedEmployees[employeeIndex] = value;
-    setData({ ...data, employees: updatedEmployees });
-  };
-
   const handleSaveBenefit = (value: ISystemBenefit) => {
     setData((prevData) => {
       const benefitIndex = prevData.benefits.findIndex(
@@ -63,113 +56,138 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
     value: T,
     type:
       | "employeeBenefit"
-      | "depositAccount"
+      | "depositAccounts"
       | "bonuses"
       | "personal"
       | "jobInfo"
       | "salary"
-      | "status"
+      | "employmentStatus"
       | "reimbursements"
       | "otherDeductions"
   ) => {
-    const checkArray = <Field extends keyof IEmployee>(
-      arrayField: Field,
-      employee: IEmployee
-    ): IEmployee[Field] => {
-      const fieldArray = employee[arrayField] as IEmployee[Field];
+    setData((prevData) => {
+      return {
+        ...prevData,
+        employees: prevData.employees.map((employee) => {
+          if (employee.eId !== eIdSelectedEmployee) return employee;
+          if (!value.customBambooTableRowId) {
+            value.customBambooTableRowId = assignMissingIds(
+              prevData,
+              "employees",
+              employee.eId,
+              type as keyof IEmployee,
+              "customBambooTableRowId"
+            );
+          }
+          const checkArray = <Field extends keyof IEmployee>(
+            arrayField: Field,
+            employee: IEmployee
+          ): IEmployee[Field] => {
+            const fieldArray = employee[arrayField] as IEmployee[Field];
 
-      if (!Array.isArray(fieldArray)) {
-        throw new Error(`Expected an array for field: ${String(arrayField)}`);
-      }
-      const normalizedValueId = Number(value.customBambooTableRowId);
+            if (!Array.isArray(fieldArray)) {
+              throw new Error(
+                `Expected an array for field: ${String(arrayField)}`
+              );
+            }
 
-      const updatedArray = fieldArray.map((item) => {
-        if (
-          type === "employeeBenefit" &&
-          (item as IEmployeeBenefit).id === value.id
-        ) {
-          return { ...item, ...value };
-        }
+            const normalizedValueId = Number(value.customBambooTableRowId);
 
-        if (
-          type !== "employeeBenefit" &&
-          Number(
-            (item as { customBambooTableRowId: number }).customBambooTableRowId
-          ) === normalizedValueId
-        ) {
-          return { ...item, ...value };
-        }
-        return item;
-      });
+            const updatedArray = fieldArray.map((item) => {
+              if (
+                type === "employeeBenefit" &&
+                (item as IEmployeeBenefit).id === value.id
+              ) {
+                return { ...item, ...value };
+              }
 
-      const itemExists = updatedArray.some((item) =>
-        type === "employeeBenefit"
-          ? (item as IEmployeeBenefit).id === value.id
-          : Number(
-              (item as { customBambooTableRowId: number })
-                .customBambooTableRowId
-            ) === normalizedValueId
-      );
+              if (
+                type !== "employeeBenefit" &&
+                Number(
+                  (item as { customBambooTableRowId: number })
+                    .customBambooTableRowId
+                ) === normalizedValueId
+              ) {
+                return { ...item, ...value };
+              }
+              return item;
+            });
 
-      if (!itemExists) {
-        updatedArray.push(value as (typeof fieldArray)[number]);
-      }
-      return updatedArray as IEmployee[Field];
-    };
+            const itemExists = updatedArray.some((item) =>
+              type === "employeeBenefit"
+                ? (item as IEmployeeBenefit).id === value.id
+                : Number(
+                    (item as { customBambooTableRowId: number })
+                      .customBambooTableRowId
+                  ) === normalizedValueId
+            );
 
-    setData((prevData) => ({
-      ...prevData,
-      employees: prevData.employees.map((employee) => {
-        if (employee.eId !== eIdSelectedEmployee) return employee;
+            if (!itemExists) {
+              updatedArray.push(value as (typeof fieldArray)[number]);
+            }
+            return updatedArray as IEmployee[Field];
+          };
 
-        switch (type) {
-          case "jobInfo":
-            return {
-              ...employee,
-              jobInfo: checkArray("jobInfo", employee),
-            };
-          case "salary":
-            return {
-              ...employee,
-              salary: checkArray("salary", employee),
-            };
-          case "status":
-            return {
-              ...employee,
-              employmentStatus: checkArray("employmentStatus", employee),
-            };
-          case "personal":
-            return { ...employee, ...value };
-          case "employeeBenefit":
-            return {
-              ...employee,
-              benefits: checkArray("benefits", employee),
-            };
-          case "bonuses":
-            return {
-              ...employee,
-              bonuses: checkArray("bonuses", employee),
-            };
-          case "depositAccount":
-            return {
-              ...employee,
-              depositAccounts: checkArray("depositAccounts", employee),
-            };
-          case "reimbursements":
-            return {
-              ...employee,
-              reimbursements: checkArray("reimbursements", employee),
-            };
-          case "otherDeductions":
-            return {
-              ...employee,
-              otherDeductions: checkArray("otherDeductions", employee),
-            };
-          default:
-            return employee;
-        }
-      }),
-    }));
+          switch (type) {
+            case "jobInfo":
+              return {
+                ...employee,
+                jobInfo: checkArray("jobInfo", employee),
+              };
+            case "salary":
+              return {
+                ...employee,
+                salary: checkArray("salary", employee),
+              };
+            case "employmentStatus":
+              return {
+                ...employee,
+                employmentStatus: checkArray("employmentStatus", employee),
+              };
+            case "personal":
+              return {
+                ...employee,
+                ...value,
+                salary: employee.salary,
+                jobInfo: employee.jobInfo,
+                employmentStatus: employee.employmentStatus,
+                benefits: employee.benefits,
+                bonuses: employee.bonuses,
+                depositAccounts: employee.depositAccounts,
+                reimbursements: employee.reimbursements,
+                otherDeductions: employee.otherDeductions,
+              };
+            case "employeeBenefit":
+              return {
+                ...employee,
+                benefits: checkArray("benefits", employee),
+              };
+            case "bonuses":
+              return {
+                ...employee,
+                bonuses: checkArray("bonuses", employee),
+              };
+            case "depositAccounts":
+              return {
+                ...employee,
+                depositAccounts: checkArray("depositAccounts", employee),
+              };
+            case "reimbursements":
+              return {
+                ...employee,
+                reimbursements: checkArray("reimbursements", employee),
+              };
+            case "otherDeductions":
+              return {
+                ...employee,
+                otherDeductions: checkArray("otherDeductions", employee),
+              };
+            default:
+              return employee;
+          }
+        }),
+      };
+    });
   };
 
   const hasData = !!(data?.benefits?.length || data?.employees?.length);
@@ -185,7 +203,6 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({
         eIdSelectedEmployee,
         seteIdSelectedEmployee,
         setParsedData,
-        handleSaveEmployee,
         handleSaveBenefit,
         handleSaveData,
         hasData,

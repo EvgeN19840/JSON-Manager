@@ -68,6 +68,7 @@ export const BonusesTab: React.FC = () => {
   return (
     <Box>
       <DataGrid<IBonuses>
+        onRowDoubleClick={(params) => bonusesCallbacks.openForm(params.row)}
         rows={getBonusesRows()}
         getRowId={(row) => row.customBambooTableRowId}
         pagination

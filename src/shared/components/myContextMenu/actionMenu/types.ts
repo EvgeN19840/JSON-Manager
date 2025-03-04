@@ -5,4 +5,6 @@ export interface ContextMenuItemsCallbacks<T extends GridValidRowModel> {
   addItem: (data: T) => void;
   deleteItem: (data: T) => void;
   onDuplicate?: (item: T) => void;
+  saveEmployee?: (item: T) => void;
+  removeEmployee?: (item: T) => void;
 }
