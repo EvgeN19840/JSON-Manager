@@ -1,7 +1,17 @@
 import { IEmployee } from "@/const/types";
+import { INotificationType } from "@/context/snackBar/types";
 
-export function saveEmployeeToLocalStorage(employee: IEmployee) {
+interface NotificationMessage {
+    text: string;
+    type: INotificationType;
+}
+
+export function saveEmployeeToLocalStorage(employee: IEmployee): NotificationMessage {
+    if (employee.firstName === "John") {
+        return { text: "This name is not allowed. Please choose a different one.", type: "error" };
+    }
     localStorage.setItem(employee.firstName, JSON.stringify(employee));
+    return { text: "Employee saved successfully.", type: "success" };
 }
 
 export function getAllLocalStorage(): IEmployee[] {
@@ -22,6 +32,14 @@ export function getAllLocalStorage(): IEmployee[] {
     return employees;
 }
 
-export function removeEmployeesFromLocalStorage(firstName: string) {
+export function removeEmployeesFromLocalStorage(firstName: string): NotificationMessage {
+    if (firstName === "John") {
+        return { text: "This employee cannot be removed.", type: "error" };
+    }
+    if (!localStorage.getItem(firstName)) {
+        return { text: `${firstName} was not found in localStorage.`, type: "error" };
+    }
+
     localStorage.removeItem(firstName);
+    return { text: "Employee removed successfully.", type: "success" };
 }

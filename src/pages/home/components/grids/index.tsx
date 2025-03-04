@@ -18,13 +18,18 @@ import { useModal } from "@/hooks/useModal";
 import { MyGrid } from "@/shared/components/grid";
 import { useHandleAddItem } from "@/hooks/useAddItem";
 import { useHandleDeleteItem } from "@/hooks/useDelete";
-import { saveEmployeeToLocalStorage } from "@/services/storageService";
+import {
+  saveEmployeeToLocalStorage,
+  removeEmployeesFromLocalStorage,
+} from "@/services/storageService";
+import { useNotification } from "@/hooks/useNotification";
 
 export const Grids: FC = () => {
   const { data, seteIdSelectedEmployee } = useDataStateContext();
   const { handleClickOpenDialog, setDialogOpen } = useModal();
   const handleAddItem = useHandleAddItem();
   const handleDeleteItem = useHandleDeleteItem();
+  const { showNotification } = useNotification();
   const { activeTab } = useTabs();
 
   const deleteItem = (item: IEmployee | ISystemBenefit) => {
@@ -50,9 +55,19 @@ export const Grids: FC = () => {
   };
 
   const saveLocalStorage = (employee: IEmployee) => {
-    console.log(employee);
-    saveEmployeeToLocalStorage(employee);
+    const message = saveEmployeeToLocalStorage(employee);
+
+    showNotification(message.text, message.type);
+
     setDialogOpen(false);
+  };
+  const removeLocalStore = (employee: IEmployee) => {
+    const message = removeEmployeesFromLocalStorage(employee.firstName);
+    showNotification(message.text, message.type);
+    setDialogOpen(false);
+    if (employee.firstName !== "John") {
+      handleDeleteItem({ id: employee.eId, type: "employees" });
+    }
   };
 
   const handleRowDoubleClickOpenDetails = (item: IEmployee) => {
@@ -77,6 +92,7 @@ export const Grids: FC = () => {
           addItem,
           onDuplicate: handleDuplicate,
           saveEmployee: saveLocalStorage,
+          removeEmployee: removeLocalStore,
         });
 
         return (

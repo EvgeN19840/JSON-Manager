@@ -49,6 +49,7 @@ export const ColumnsEmployee = (
               ...callbacks,
               onDuplicate: (employee) => callbacks.onDuplicate?.(employee),
               saveEmployee: (employee) => callbacks.saveEmployee?.(employee),
+              removeEmployee: (employee) => callbacks.removeEmployee?.(employee),
             },
             params,
             true

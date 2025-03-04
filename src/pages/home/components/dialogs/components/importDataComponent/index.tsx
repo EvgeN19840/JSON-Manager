@@ -95,7 +95,7 @@ export const ImportDataComponent: React.FC = () => {
   };
   return (
     <Box>
-      <Typography variant="h6" sx={{ textAlign: "center" }}>
+      <Typography variant="h6" sx={{ textAlign: "center",mt:1}}>
         Import Data
       </Typography>
       <Box sx={{ px: "1rem" }}>

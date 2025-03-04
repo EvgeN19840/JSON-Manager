@@ -31,6 +31,14 @@ export const actionMenu = <T extends GridValidRowModel>(
       },
     },
     {
+      name: "Remove employee template",
+      callback: () => {
+        if (callbacks.removeEmployee) {
+          callbacks.removeEmployee(params.row);
+        }
+      },
+    },
+    {
       name: "Delete",
       callback: () => callbacks.deleteItem(params.row),
     },
