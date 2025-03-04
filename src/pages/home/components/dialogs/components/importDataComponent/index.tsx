@@ -79,7 +79,7 @@ export const ImportDataComponent: React.FC = () => {
 
     if (!selectedEmp) {
       showNotification(
-        `Employee with name "${selectedName}" not found`,
+        "Select the name of the base employee!",
         "error"
       );
       return;
