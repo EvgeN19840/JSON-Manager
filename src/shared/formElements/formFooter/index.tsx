@@ -67,14 +67,14 @@ export const FormFooter: React.FC<FormFooterProps> = ({
               justifyContent: "space-between",
               flexGrow: 1,
               alignItems: "center",
-              mx:2
+              mx: 2,
             }}
           >
             {addBaseEmployee && (
               <Button
                 variant="contained"
                 onClick={() => addBaseEmployee(selectedName)}
-                sx={{ height: "40px"}}
+                sx={{ height: "40px" }}
               >
                 Add Base Employee
               </Button>
@@ -90,7 +90,9 @@ export const FormFooter: React.FC<FormFooterProps> = ({
                     value={field.value || ""}
                     onChange={(e) => field.onChange(e.target.value)}
                     sx={{ height: "40px" }}
+                    // displayEmpty   ???
                   >
+                    <MenuItem value="">{"- None -"}</MenuItem>
                     {listTemplate().employees.map((emp, index) => (
                       <MenuItem key={index} value={emp.firstName}>
                         {emp.firstName}

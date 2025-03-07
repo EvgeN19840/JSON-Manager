@@ -24,6 +24,11 @@ import {
 } from "@/services/storageService";
 import { useNotification } from "@/hooks/useNotification";
 
+
+// ** Utils
+import { listTemplate } from "@/shared/utils/listTemplate";
+import { ColumnsTemplate } from "./consts/columnsTemplate";
+
 export const Grids: FC = () => {
   const { data, seteIdSelectedEmployee } = useDataStateContext();
   const { handleClickOpenDialog, setDialogOpen } = useModal();
@@ -72,7 +77,8 @@ export const Grids: FC = () => {
 
   const handleRowDoubleClickOpenDetails = (item: IEmployee) => {
     seteIdSelectedEmployee(item.eId);
-    handleClickOpenDialog(activeTab === "1" ? "Details" : null, item);
+    handleClickOpenDialog(activeTab === "1" || activeTab === "3" ? "Details" : null, item);
+
   };
 
   const handleEditDialogOpen = (item: IEmployee | ISystemBenefit) => {
@@ -81,6 +87,7 @@ export const Grids: FC = () => {
       item
     );
   };
+const listTemplateEmployees = listTemplate()
 
   const renderGrid = () => {
     switch (activeTab) {
@@ -119,6 +126,25 @@ export const Grids: FC = () => {
           />
         );
       }
+      case "3": {
+        const gridData = listTemplateEmployees.employees;
+        const gridColumns = ColumnsTemplate(handleEditDialogOpen, {
+            openForm: handleRowDoubleClickOpenDetails,
+            addItem,
+            saveEmployee: saveLocalStorage,
+            removeEmployee: removeLocalStore,
+        }, true);     
+        return (
+          <MyGrid<IEmployee>
+          data={gridData}
+          columns={gridColumns}
+          onRowDoubleClick={handleRowDoubleClickOpenDetails}
+        />
+        );
+    }
+    
+
+
       default:
         return null;
     }

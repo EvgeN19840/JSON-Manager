@@ -10,7 +10,17 @@ export function saveEmployeeToLocalStorage(employee: IEmployee): NotificationMes
     if (employee.firstName === "John") {
         return { text: "This name is not allowed. Please choose a different one.", type: "error" };
     }
-    localStorage.setItem(employee.firstName, JSON.stringify(employee));
+    const allTemplatesLS = getAllLocalStorage();
+    const allIds: number[] = [];
+    for (const template of allTemplatesLS) {
+        allIds.push(template.eId);
+
+    }
+    const newId = allIds.length > 0 ? Math.max(...allIds) + 1 : 2;
+    const updatedEmployee = { ...employee, eId: newId };
+
+    localStorage.setItem(employee.firstName, JSON.stringify(updatedEmployee));
+
     return { text: "Employee saved successfully.", type: "success" };
 }
 
