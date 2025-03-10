@@ -5,7 +5,7 @@ import { FC, useEffect, useRef } from "react";
 import { IEmployee, ISystemBenefit, ITypeJSON } from "@/const/types";
 
 // ** Columns
-import { ColumnsEmployee, ColumnsBenefit } from "./consts";
+import { ColumnsEmployee, ColumnsBenefit, ColumnsTemplate } from "./consts";
 
 // ** Context
 import { useDataStateContext } from "@/hooks/useDataStateContext";
@@ -26,7 +26,6 @@ import { useNotification } from "@/hooks/useNotification";
 
 // ** Utils
 import { listTemplate } from "@/shared/utils/listTemplate";
-import { ColumnsTemplate } from "./consts/columnsTemplate";
 
 export const Grids: FC = () => {
   const { data, setData, seteIdSelectedEmployee } = useDataStateContext();

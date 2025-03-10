@@ -62,6 +62,7 @@ export interface IEmployee {
   jobInfo: IJobInfo[];
   employmentStatus: IEmploymentStatus[];
   bonuses: IBonuses[];
+  comment?:string;
 }
 
 export interface IDepositAccounts {

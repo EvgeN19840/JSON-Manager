@@ -8,50 +8,82 @@ import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { actionMenu } from "@/shared/components/myContextMenu/actionMenu";
 import { MyContextMenu } from "@/shared/components/myContextMenu";
 import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
+import { InputField } from "@/shared/inputField";
+import { useDataStateContext } from "@/hooks/useDataStateContext";
 
 export const ColumnsTemplate = (
   _handleEditClick: (employee: IEmployee) => void,
   callbacks: ContextMenuItemsCallbacks<IEmployee>,
   isTemplateMode: boolean
-): GridColDef<IEmployee>[] => [
-  {
-    field: "firstName",
-    headerName: "First name",
-    flex: 1,
-    editable: false,
-    minWidth: 250,
-  },
-  {
-    field: "lastName",
-    headerName: "Last name",
-    flex: 1,
-    editable: false,
-    minWidth: 250,
-  },
-  {
-    field: "Actions",
-    width: 50,
-    align: "center",
-    renderHeader: () => "",
-    sortable: false,
-    filterable: false,
-    renderCell: (params: GridRenderCellParams<IEmployee>) => {
-      return (
-        <MyContextMenu
-          items={actionMenu(
-            {
-              ...callbacks,
-              saveEmployee: (employee) => callbacks.saveEmployee?.(employee),
-              removeEmployee: (employee) =>
-                callbacks.removeEmployee?.(employee),
-            },
-            params,
-            true,
-            isTemplateMode
-          )}
-          params={params}
-        />
-      );
+): GridColDef<IEmployee>[] => {
+  const { data, setData } = useDataStateContext(); // Контекст управления данными
+
+  return [
+    {
+      field: "firstName",
+      headerName: "First name",
+      flex: 1,
+      editable: false,
+      minWidth: 250,
     },
-  },
-];
+    {
+      field: "lastName",
+      headerName: "Last name",
+      flex: 1,
+      editable: false,
+      minWidth: 250,
+    },
+    {
+      field: "comment",
+      headerName: "Comment",
+      flex: 1,
+      minWidth: 250,
+      renderCell: (params: GridRenderCellParams<IEmployee>) => {
+        return (
+          <InputField
+            value={params.row.comment || ""}
+            onChange={(event) => {
+              const newComment = event.target.value;
+              if (!data?.employees) return;
+              setData((prevData) => ({
+                ...prevData,
+                employees: prevData.employees.map((emp) =>
+                  emp.eId === params.row.eId
+                    ? { ...emp, comment: newComment || "" }
+                    : emp
+                ),
+              }));
+            }}
+          />
+        );
+      },
+    },
+
+    {
+      field: "Actions",
+      width: 50,
+      align: "center",
+      renderHeader: () => "",
+      sortable: false,
+      filterable: false,
+      renderCell: (params: GridRenderCellParams<IEmployee>) => {
+        return (
+          <MyContextMenu
+            items={actionMenu(
+              {
+                ...callbacks,
+                saveEmployee: (employee) => callbacks.saveEmployee?.(employee),
+                removeEmployee: (employee) =>
+                  callbacks.removeEmployee?.(employee),
+              },
+              params,
+              true,
+              isTemplateMode
+            )}
+            params={params}
+          />
+        );
+      },
+    },
+  ];
+};
