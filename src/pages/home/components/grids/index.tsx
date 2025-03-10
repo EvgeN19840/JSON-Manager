@@ -1,8 +1,8 @@
 // ** React
-import { FC } from "react";
+import { FC, useEffect, useRef } from "react";
 
 // ** Types
-import { IEmployee, ISystemBenefit } from "@/const/types";
+import { IEmployee, ISystemBenefit, ITypeJSON } from "@/const/types";
 
 // ** Columns
 import { ColumnsEmployee, ColumnsBenefit } from "./consts";
@@ -24,18 +24,46 @@ import {
 } from "@/services/storageService";
 import { useNotification } from "@/hooks/useNotification";
 
-
 // ** Utils
 import { listTemplate } from "@/shared/utils/listTemplate";
 import { ColumnsTemplate } from "./consts/columnsTemplate";
 
 export const Grids: FC = () => {
-  const { data, seteIdSelectedEmployee } = useDataStateContext();
+  const { data, setData, seteIdSelectedEmployee } = useDataStateContext();
   const { handleClickOpenDialog, setDialogOpen } = useModal();
   const handleAddItem = useHandleAddItem();
   const handleDeleteItem = useHandleDeleteItem();
   const { showNotification } = useNotification();
   const { activeTab } = useTabs();
+
+  const originalEmployees = useRef<IEmployee[] | null>(null);
+
+  useEffect(() => {
+    if (activeTab === "3" && originalEmployees.current === null) {
+      originalEmployees.current = [...data.employees];
+    }
+  }, [activeTab, data.employees]);
+
+  useEffect(() => {
+    setData((prev: ITypeJSON) => {
+      if (activeTab === "3") {
+        return {
+          ...prev,
+          employees: listTemplate().employees,
+          benefits: prev.benefits,
+        };
+      } else if (activeTab === "1" && originalEmployees.current) {
+        const restoredEmployees = [...(originalEmployees.current ?? [])];
+        originalEmployees.current = null;
+        return {
+          ...prev,
+          employees: restoredEmployees,
+          benefits: prev.benefits,
+        };
+      }
+      return prev;
+    });
+  }, [activeTab, setData]);
 
   const deleteItem = (item: IEmployee | ISystemBenefit) => {
     if ("eId" in item) {
@@ -87,7 +115,6 @@ export const Grids: FC = () => {
       item
     );
   };
-  const listTemplateEmployees = listTemplate();
 
   const renderGrid = () => {
     switch (activeTab) {
@@ -127,24 +154,25 @@ export const Grids: FC = () => {
         );
       }
       case "3": {
-        const gridData = listTemplateEmployees.employees;
-        const gridColumns = ColumnsTemplate(handleEditDialogOpen, {
+        const gridData = data.employees;
+        const gridColumns = ColumnsTemplate(
+          handleEditDialogOpen,
+          {
             openForm: handleRowDoubleClickOpenDetails,
             addItem,
             saveEmployee: saveLocalStorage,
             removeEmployee: removeLocalStore,
-        }, true);     
+          },
+          true
+        );
         return (
           <MyGrid<IEmployee>
-          data={gridData}
-          columns={gridColumns}
-          onRowDoubleClick={handleRowDoubleClickOpenDetails}
-        />
+            data={gridData}
+            columns={gridColumns}
+            onRowDoubleClick={handleRowDoubleClickOpenDetails}
+          />
         );
-    }
-    
-
-
+      }
       default:
         return null;
     }

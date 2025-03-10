@@ -10,7 +10,6 @@ export interface DataContextType {
   seteIdSelectedEmployee: (eId: number) => void;
   parsedData: string | null;
   setParsedData: (parsedData: string | null) => void;
-
   handleSaveBenefit: (data: ISystemBenefit) => void;
   handleSaveData: <
     T extends Partial<{ id: string | number; eId: number; customBambooTableRowId: number; }>
