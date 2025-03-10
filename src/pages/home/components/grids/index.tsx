@@ -67,7 +67,7 @@ export const Grids: FC = () => {
     setDialogOpen(false);
   };
   const removeLocalStore = (employee: IEmployee) => {
-    const message = removeEmployeesFromLocalStorage(employee.firstName);
+    const message = removeEmployeesFromLocalStorage(employee.eId);
     showNotification(message.text, message.type);
     setDialogOpen(false);
     if (employee.firstName !== "John") {
@@ -83,11 +83,11 @@ export const Grids: FC = () => {
 
   const handleEditDialogOpen = (item: IEmployee | ISystemBenefit) => {
     handleClickOpenDialog(
-      activeTab === "1" ? "Details" : "Edit benefits",
+      activeTab === "1" || activeTab === "3" ? "Details" : "Edit benefits",
       item
     );
   };
-const listTemplateEmployees = listTemplate()
+  const listTemplateEmployees = listTemplate();
 
   const renderGrid = () => {
     switch (activeTab) {
