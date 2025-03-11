@@ -10,20 +10,21 @@ export function saveEmployeeToLocalStorage(employee: IEmployee): NotificationMes
         return { text: "This name is not allowed. Please choose a different one.", type: "error" };
     }
     const allTemplatesLS = getAllLocalStorage();
-    const existingEmployee = allTemplatesLS.find(emp => emp.eId === employee.eId);
-    if (existingEmployee) {
-        const updatedEmployee = { ...existingEmployee, ...employee };
+    const existingEmployeeIndex = allTemplatesLS.findIndex(emp => emp.firstName === employee.firstName);
+
+    if (existingEmployeeIndex !== -1) {
+        const updatedEmployee = { ...allTemplatesLS[existingEmployeeIndex], ...employee };
         localStorage.setItem(updatedEmployee.eId.toString(), JSON.stringify(updatedEmployee));
-        return { text: "Employee updated successfully.", type: "success" };
-    } else {
-        const allIds = allTemplatesLS.map(emp => emp.eId);
-        const newId = allIds.length > 0 ? Math.max(...allIds) + 1 : 2;
-        const newEmployee = { ...employee, eId: newId };
+        return { text: `Employee ${employee.firstName} updated successfully.`, type: "success" };
+    }
 
-        localStorage.setItem(newId.toString(), JSON.stringify(newEmployee));
+    const allIds = allTemplatesLS.map(emp => emp.eId);
+    const newId = allIds.length > 0 ? Math.max(...allIds) + 1 : 2;
+    const newEmployee = { ...employee, eId: newId };
 
-        return { text: "Employee saved successfully.", type: "success" };
-   }
+    localStorage.setItem(newId.toString(), JSON.stringify(newEmployee));
+
+    return { text: "Employee saved successfully.", type: "success" };
 }
 
 export function getAllLocalStorage(): IEmployee[] {

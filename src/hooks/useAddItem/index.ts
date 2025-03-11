@@ -15,6 +15,8 @@ import {
 } from "@/const/types";
 import { assignMissingIds } from "@/shared/utils";
 import names from "@/const/names";
+import { saveEmployeeToLocalStorage } from "@/services/storageService";
+import { useTabs } from "@/hooks/useTabs";
 
 interface IUseHandleAddItemParams {
     item:
@@ -44,6 +46,7 @@ interface IUseHandleAddItemParams {
 export const useHandleAddItem = () => {
     const { setData, data, countDuplicates } = useDataStateContext();
     const { setDataForDialog } = useModal();
+    const { activeTab } = useTabs();
 
     const handleAddItem = ({
         item,
@@ -66,10 +69,13 @@ export const useHandleAddItem = () => {
                 };
                 newEmployees.push(newEmployee);
                 setDataForDialog(newEmployee);
+                if (activeTab === "3") {
+                    saveEmployeeToLocalStorage(newEmployee);
+                }
             }
 
             updatedData.employees = [...data.employees, ...newEmployees];
-            setData(updatedData);       
+            setData(updatedData);
         } else if (type === "benefits" && "id" in item) {
             const newBenefitId = assignMissingIds(data, "benefits");
             const similarBenefits = data.benefits.filter((benefit) =>

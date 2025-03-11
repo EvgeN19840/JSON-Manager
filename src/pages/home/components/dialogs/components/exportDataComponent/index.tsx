@@ -25,11 +25,33 @@ export const ExportDataComponent: React.FC = () => {
   const { setDialogOpen, dataForDialog } = useModal();
   const [inputNameFile, setInputNameFile] = useState("");
 
+  const removeTopLevelComment = (data: string) => {
+    try {
+      const jsonData: ITypeJSON = JSON.parse(data);
+      const cleanedData = { ...jsonData };
+
+      if (Array.isArray(cleanedData.employees)) {
+        cleanedData.employees = cleanedData.employees.map((employee) => {
+          const cleanedEmployee = { ...employee };
+          delete cleanedEmployee.comment; 
+          return cleanedEmployee;
+        });
+      }
+
+      return JSON.stringify(cleanedData, null, 2);
+    } catch (e) {
+      console.log("Error parsing JSON:", e);
+      return data;
+    }
+  };
+
+  const cleanedData = dataForDialog ? removeTopLevelComment(dataForDialog as string) : "No data available.";
+
   const downloadFile = () => {
     if (inputNameFile && typeof dataForDialog === "string") {
       try {
-        const jsonData: ITypeJSON = JSON.parse(dataForDialog);
-        downloadJSONFileAsTXT(inputNameFile, jsonData);
+        const cleanedDataForDownload = JSON.parse(cleanedData);
+        downloadJSONFileAsTXT(inputNameFile, cleanedDataForDownload);
         setInputNameFile("");
         setDialogOpen(false);
       } catch (e) {
@@ -49,16 +71,16 @@ export const ExportDataComponent: React.FC = () => {
       <Typography variant="h6" sx={{ textAlign: "center" }}>
         Export Data
       </Typography>
-        <InputField
-          value={inputNameFile}
-          placeholder="Enter file name"
-          onChange={handleNameFileChange}  
-          sx={{ px:"1rem", display: "flex",  height: "40px", mb: 1 }}
-        />
+      <InputField
+        value={inputNameFile}
+        placeholder="Enter file name"
+        onChange={handleNameFileChange}  
+        sx={{ px: "1rem", display: "flex", height: "40px", mb: 1 }}
+      />
 
-      <Box  sx={{ mt:3, mb:1, pr:"1rem", pl:"1rem", position: "relative", maxWidth: "100%" }}>
+      <Box sx={{ mt: 3, mb: 1, pr: "1rem", pl: "1rem", position: "relative", maxWidth: "100%" }}>
         <InputField
-          value={dataForDialog || "No data available."}
+          value={cleanedData} 
           onChange={() => {}}
           rows={20}
           multiline
@@ -68,8 +90,8 @@ export const ExportDataComponent: React.FC = () => {
             },
           }}
         />
-        <Box sx={{  position: "absolute", top: 9, right: 8, zIndex: 1, pr: 6 }}>
-          <CopyButton textToCopy={dataForDialog as IModalType } />
+        <Box sx={{ position: "absolute", top: 9, right: 8, zIndex: 1, pr: 6 }}>
+          <CopyButton textToCopy={cleanedData as IModalType} /> 
         </Box>
       </Box>
       <FormFooter

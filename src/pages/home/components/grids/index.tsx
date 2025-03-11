@@ -159,6 +159,7 @@ export const Grids: FC = () => {
           {
             openForm: handleRowDoubleClickOpenDetails,
             addItem,
+            onDuplicate: handleDuplicate,
             saveEmployee: saveLocalStorage,
             removeEmployee: removeLocalStore,
           },

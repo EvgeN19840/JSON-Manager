@@ -16,7 +16,7 @@ export const ColumnsTemplate = (
   callbacks: ContextMenuItemsCallbacks<IEmployee>,
   isTemplateMode: boolean
 ): GridColDef<IEmployee>[] => {
-  const { data, setData } = useDataStateContext(); // Контекст управления данными
+  const { data, setData } = useDataStateContext();
 
   return [
     {
@@ -72,6 +72,7 @@ export const ColumnsTemplate = (
             items={actionMenu(
               {
                 ...callbacks,
+                onDuplicate: (employee) => callbacks.onDuplicate?.(employee),
                 saveEmployee: (employee) => callbacks.saveEmployee?.(employee),
                 removeEmployee: (employee) =>
                   callbacks.removeEmployee?.(employee),
