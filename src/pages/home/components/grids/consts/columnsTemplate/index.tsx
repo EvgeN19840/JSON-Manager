@@ -37,11 +37,12 @@ export const ColumnsTemplate = (
       field: "comment",
       headerName: "Comment",
       flex: 1,
-      minWidth: 250,
       renderCell: (params: GridRenderCellParams<IEmployee>) => {
         return (
           <InputField
             value={params.row.comment || ""}
+            placeholder="Type your comment..."
+            noBorderRadius={true} 
             onChange={(event) => {
               const newComment = event.target.value;
               if (!data?.employees) return;
@@ -58,7 +59,6 @@ export const ColumnsTemplate = (
         );
       },
     },
-
     {
       field: "Actions",
       width: 50,
