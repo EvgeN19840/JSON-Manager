@@ -1,11 +1,11 @@
 // ** React
-import { FC } from "react";
+import { FC, useEffect, useRef } from "react";
 
 // ** Types
-import { IEmployee, ISystemBenefit } from "@/const/types";
+import { IEmployee, ISystemBenefit, ITypeJSON } from "@/const/types";
 
 // ** Columns
-import { ColumnsEmployee, ColumnsBenefit } from "./consts";
+import { ColumnsEmployee, ColumnsBenefit, ColumnsTemplate } from "./consts";
 
 // ** Context
 import { useDataStateContext } from "@/hooks/useDataStateContext";
@@ -24,13 +24,45 @@ import {
 } from "@/services/storageService";
 import { useNotification } from "@/hooks/useNotification";
 
+// ** Utils
+import { listTemplate } from "@/shared/utils/listTemplate";
+
 export const Grids: FC = () => {
-  const { data, seteIdSelectedEmployee } = useDataStateContext();
+  const { data, setData, seteIdSelectedEmployee } = useDataStateContext();
   const { handleClickOpenDialog, setDialogOpen } = useModal();
   const handleAddItem = useHandleAddItem();
   const handleDeleteItem = useHandleDeleteItem();
   const { showNotification } = useNotification();
   const { activeTab } = useTabs();
+
+  const originalEmployees = useRef<IEmployee[] | null>(null);
+
+  useEffect(() => {
+    if (activeTab === "3" && originalEmployees.current === null) {
+      originalEmployees.current = [...data.employees];
+    }
+  }, [activeTab, data.employees]);
+
+  useEffect(() => {
+    setData((prev: ITypeJSON) => {
+      if (activeTab === "3") {
+        return {
+          ...prev,
+          employees: listTemplate().employees,
+          benefits: prev.benefits,
+        };
+      } else if (activeTab === "1" && originalEmployees.current) {
+        const restoredEmployees = [...(originalEmployees.current ?? [])];
+        originalEmployees.current = null;
+        return {
+          ...prev,
+          employees: restoredEmployees,
+          benefits: prev.benefits,
+        };
+      }
+      return prev;
+    });
+  }, [activeTab, setData]);
 
   const deleteItem = (item: IEmployee | ISystemBenefit) => {
     if ("eId" in item) {
@@ -62,7 +94,7 @@ export const Grids: FC = () => {
     setDialogOpen(false);
   };
   const removeLocalStore = (employee: IEmployee) => {
-    const message = removeEmployeesFromLocalStorage(employee.firstName);
+    const message = removeEmployeesFromLocalStorage(employee.eId);
     showNotification(message.text, message.type);
     setDialogOpen(false);
     if (employee.firstName !== "John") {
@@ -72,12 +104,13 @@ export const Grids: FC = () => {
 
   const handleRowDoubleClickOpenDetails = (item: IEmployee) => {
     seteIdSelectedEmployee(item.eId);
-    handleClickOpenDialog(activeTab === "1" ? "Details" : null, item);
+    handleClickOpenDialog(activeTab === "1" || activeTab === "3" ? "Details" : null, item);
+
   };
 
   const handleEditDialogOpen = (item: IEmployee | ISystemBenefit) => {
     handleClickOpenDialog(
-      activeTab === "1" ? "Details" : "Edit benefits",
+      activeTab === "1" || activeTab === "3" ? "Details" : "Edit benefits",
       item
     );
   };
@@ -116,6 +149,27 @@ export const Grids: FC = () => {
             data={gridData}
             columns={gridColumns}
             onRowDoubleClick={() => {}}
+          />
+        );
+      }
+      case "3": {
+        const gridData = data.employees;
+        const gridColumns = ColumnsTemplate(
+          handleEditDialogOpen,
+          {
+            openForm: handleRowDoubleClickOpenDetails,
+            addItem,
+            onDuplicate: handleDuplicate,
+            saveEmployee: saveLocalStorage,
+            removeEmployee: removeLocalStore,
+          },
+          true
+        );
+        return (
+          <MyGrid<IEmployee>
+            data={gridData}
+            columns={gridColumns}
+            onRowDoubleClick={handleRowDoubleClickOpenDetails}
           />
         );
       }

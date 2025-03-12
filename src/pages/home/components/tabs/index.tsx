@@ -24,6 +24,7 @@ export const TabsComponent = () => {
       >
         <Tab label="Employees" value="1" />
         <Tab label="Benefits" value="2" />
+        <Tab label="Employee templates" value="3" />
       </TabList>
     </TabContext>
   );

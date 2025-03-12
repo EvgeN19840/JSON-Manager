@@ -5,12 +5,25 @@ interface NotificationMessage {
     text: string;
     type: INotificationType;
 }
-
 export function saveEmployeeToLocalStorage(employee: IEmployee): NotificationMessage {
     if (employee.firstName === "John") {
         return { text: "This name is not allowed. Please choose a different one.", type: "error" };
     }
-    localStorage.setItem(employee.firstName, JSON.stringify(employee));
+    const allTemplatesLS = getAllLocalStorage();
+    const existingEmployeeIndex = allTemplatesLS.findIndex(emp => emp.firstName === employee.firstName);
+
+    if (existingEmployeeIndex !== -1) {
+        const updatedEmployee = { ...allTemplatesLS[existingEmployeeIndex], ...employee };
+        localStorage.setItem(updatedEmployee.eId.toString(), JSON.stringify(updatedEmployee));
+        return { text: `Employee ${employee.firstName} updated successfully.`, type: "success" };
+    }
+
+    const allIds = allTemplatesLS.map(emp => emp.eId);
+    const newId = allIds.length > 0 ? Math.max(...allIds) + 1 : 2;
+    const newEmployee = { ...employee, eId: newId };
+
+    localStorage.setItem(newId.toString(), JSON.stringify(newEmployee));
+
     return { text: "Employee saved successfully.", type: "success" };
 }
 
@@ -32,14 +45,11 @@ export function getAllLocalStorage(): IEmployee[] {
     return employees;
 }
 
-export function removeEmployeesFromLocalStorage(firstName: string): NotificationMessage {
-    if (firstName === "John") {
-        return { text: "This employee cannot be removed.", type: "error" };
-    }
-    if (!localStorage.getItem(firstName)) {
-        return { text: `${firstName} was not found in localStorage.`, type: "error" };
+export function removeEmployeesFromLocalStorage(eId: number): NotificationMessage {
+    if (!localStorage.getItem(eId.toString())) {
+        return { text: `Employee with eId ${eId} was not found in localStorage.`, type: "error" };
     }
 
-    localStorage.removeItem(firstName);
+    localStorage.removeItem(eId.toString());
     return { text: "Employee removed successfully.", type: "success" };
 }
