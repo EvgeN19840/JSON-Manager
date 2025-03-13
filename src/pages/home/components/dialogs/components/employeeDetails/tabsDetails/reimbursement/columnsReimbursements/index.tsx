@@ -3,7 +3,7 @@ import { HeaderDetails } from "../../../headerDetails";
 import { getDateFormat } from "@/shared/utils/getDateFormat";
 import { MyContextMenu } from "@/shared/components/myContextMenu";
 import { actionMenu } from "@/shared/components/myContextMenu/actionMenu";
-import { IReimbursement } from "@/const/types";
+import { IReimbursement } from "@/constants/types";
 import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
 
 export const ColumnsReimbursements = (

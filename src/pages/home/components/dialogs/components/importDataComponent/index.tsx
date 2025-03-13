@@ -15,18 +15,18 @@ const normalizeToJson = (input: string): string => {
   return input
     .replace(/([{,])\s*([a-zA-Z0-9_]+)\s*:/g, '$1"$2":')
     .replace(/'/g, '"')
-    .replace(/,\s*}/g, "}")
-    .replace(/,\s*]/g, "]");
-};
+    .replace(/,\s*}/g, '}')
+    .replace(/,\s*]/g, ']')
+}
 
 const isValidJson = (input: string): boolean => {
   try {
-    JSON.parse(input);
-    return true;
+    JSON.parse(input)
+    return true
   } catch {
-    return false;
+    return false
   }
-};
+}
 
 export const ImportDataComponent: React.FC = () => {
   const [inputValue, setInputValue] = useState("");
@@ -40,25 +40,22 @@ export const ImportDataComponent: React.FC = () => {
   const selectedName = watch("firstName");
 
   const handleImport = () => {
-    const normalizedInput = normalizeToJson(inputValue);
+    const normalizedInput = normalizeToJson(inputValue)
 
     if (!isValidJson(normalizedInput)) {
-      showNotification(
-        "Invalid data format. Please correct and try again.",
-        "error"
-      );
-      return;
+      showNotification('Invalid data format. Please correct and try again.', 'error')
+      return
     }
 
     try {
-      const parsedData = JSON.parse(normalizedInput) as ITypeJSON;
-      assignMissingIds(parsedData, "benefits");
+      const parsedData = JSON.parse(normalizedInput) as ITypeJSON
+      assignMissingIds(parsedData, 'benefits')
       setData({
         employees: parsedData.employees,
-        benefits: parsedData.benefits,
-      });
-      setDialogOpen(false);
-      setInputValue("");
+        benefits: parsedData.benefits
+      })
+      setDialogOpen(false)
+      setInputValue('')
     } catch (e) {
       console.error(e);
       showNotification(
@@ -130,5 +127,5 @@ export const ImportDataComponent: React.FC = () => {
         source={"employeeDetails"}
       />
     </Box>
-  );
-};
+  )
+}

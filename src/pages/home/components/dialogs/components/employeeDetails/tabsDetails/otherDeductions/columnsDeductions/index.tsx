@@ -3,7 +3,7 @@ import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { getDateFormat } from "@/shared/utils/getDateFormat";
 import { MyContextMenu } from "@/shared/components/myContextMenu";
 import { HeaderDetails } from "../../../headerDetails";
-import { IOtherDeduction } from "@/const/types";
+import { IOtherDeduction } from "@/constants/types";
 import { actionMenu } from "@/shared/components/myContextMenu/actionMenu";
 import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
 

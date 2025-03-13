@@ -1,10 +1,10 @@
-import { ITypeJSON, IEmployee } from "@/const/types";
+import { ITypeJSON, IEmployee } from "@/constants/types";
 
 export const assignMissingIds = (
   parsedData: ITypeJSON,
   type: "employees" | "benefits",
   eId?: string | number,
-  nestedType?: keyof IEmployee, 
+  nestedType?: keyof IEmployee,
   idKey: "id" | "customBambooTableRowId" = "id"
 ): number => {
   let maxId = 0;

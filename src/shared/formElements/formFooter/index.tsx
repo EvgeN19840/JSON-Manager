@@ -14,7 +14,7 @@ export const FormFooter: React.FC<FormFooterProps> = ({
   return (
     <Box
       sx={{
-        position: "sticky",
+        position: 'sticky',
         bottom: 0,
         zIndex: 1,
         backgroundColor: "white",
@@ -31,5 +31,5 @@ export const FormFooter: React.FC<FormFooterProps> = ({
         {actionButtonText}
       </Button>
     </Box>
-  );
-};
+  )
+}

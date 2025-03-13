@@ -1,5 +1,5 @@
 // ** Types
-import { IJobInfo } from "@/const/types";
+import { IJobInfo } from "@/constants/types";
 
 // ** MUI
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";

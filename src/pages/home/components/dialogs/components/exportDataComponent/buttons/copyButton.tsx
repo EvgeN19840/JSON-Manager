@@ -1,41 +1,40 @@
 // ** React
-import React from "react";
+import React from 'react'
 
 // ** Hooks
-import { useNotification } from "@/hooks/useNotification";
+import { useNotification } from '@/pages/home/hooks/useNotification'
 
 // ** MUI
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import { IModalType } from "@/context/modal/types";
-
+import ContentCopyIcon from '@mui/icons-material/ContentCopy'
+import { IModalType } from '@/pages/home/context/modal/types'
 
 interface ICopyButtonProps {
-  textToCopy: IModalType| null;
+  textToCopy: IModalType | null
 }
 
 export const CopyButton: React.FC<ICopyButtonProps> = ({ textToCopy }) => {
-  const { showNotification } = useNotification();
+  const { showNotification } = useNotification()
 
   const onClick = async () => {
     if (textToCopy) {
       try {
-        await navigator.clipboard.writeText(textToCopy);
-        showNotification("Text successfully copied to clipboard!", "success");
+        await navigator.clipboard.writeText(textToCopy)
+        showNotification('Text successfully copied to clipboard!', 'success')
       } catch (err) {
-        console.error(err);
+        console.error(err)
       }
     }
-  };
+  }
   return (
     <ContentCopyIcon
       onClick={onClick}
       sx={{
-        cursor: "pointer",
-        "&:hover": {
-          transform: "scale(1.1)",
+        cursor: 'pointer',
+        '&:hover': {
+          transform: 'scale(1.1)'
         },
-        transition: "transform 0.2s ease-in-out",
+        transition: 'transform 0.2s ease-in-out'
       }}
     />
-  );
-};
+  )
+}

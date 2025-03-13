@@ -1,5 +1,5 @@
 // ** Types
-import { ISalary } from "@/const/types";
+import { ISalary } from "@/constants/types";
 
 // ** MUI
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";

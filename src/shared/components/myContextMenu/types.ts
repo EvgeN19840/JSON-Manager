@@ -2,7 +2,7 @@
 import { GridRenderCellParams } from "@mui/x-data-grid";
 
 //** Types
-import { IBonuses, IDepositAccounts, IEmployee, IEmploymentStatus, IJobInfo, IReimbursement, ISalary, ISystemBenefit } from "@/const/types";
+import { IBonuses, IDepositAccounts, IEmployee, IEmploymentStatus, IJobInfo, IReimbursement, ISalary, ISystemBenefit } from "@/constants/types";
 
 
 export interface ContextMenuItem {

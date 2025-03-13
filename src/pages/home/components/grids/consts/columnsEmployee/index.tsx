@@ -1,5 +1,5 @@
 // ** Types
-import { IEmployee } from "@/const/types";
+import { IEmployee } from "@/constants/types";
 
 // ** MUI
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";

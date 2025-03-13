@@ -1,89 +1,85 @@
 // ** MUI
-import { Box } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { Box } from '@mui/material'
+import { DataGrid } from '@mui/x-data-grid'
 
 // ** Hooks
-import { useModal } from "@/hooks/useModal";
+import { useModal } from '@/pages/home/hooks/useModal'
 
 // ** Types
-import { IOtherDeduction } from "@/const/types";
+import { IOtherDeduction } from '@/constants/types'
 
 // ** Columns
-import { ColumnsDeductions } from "./columnsDeductions";
-import { useDataStateContext } from "@/hooks/useDataStateContext";
-import { useHandleDeleteItem } from "@/hooks/useDelete";
-import { useHandleAddItem } from "@/hooks/useAddItem";
-import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
-import { CustomFooter } from "@/shared/components/customFooter";
+import { ColumnsDeductions } from './columnsDeductions'
+import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
+import { useHandleDeleteItem } from '@/pages/home/hooks/useDelete'
+import { useHandleAddItem } from '@/pages/home/hooks/useAddItem'
+import { ContextMenuItemsCallbacks } from '@/shared/components/myContextMenu/actionMenu/types'
+import { CustomFooter } from '@/shared/components/customFooter'
 
 export const OtherDeductionTab: React.FC = () => {
-  const { handleClickOpenDialog, dataForDialog, setTypeModalDetailsEdit } =
-    useModal();
-  const dialogData = dataForDialog as { eId: number } | null;
-  const { data } = useDataStateContext();
-  const handleDeleteItem = useHandleDeleteItem();
-  const handleAddItem = useHandleAddItem();
+  const { handleClickOpenDialog, dataForDialog, setTypeModalDetailsEdit } = useModal()
+  const dialogData = dataForDialog as { eId: number } | null
+  const { data } = useDataStateContext()
+  const handleDeleteItem = useHandleDeleteItem()
+  const handleAddItem = useHandleAddItem()
 
   const getDeductionsRows = (): IOtherDeduction[] => {
     if (dataForDialog && dialogData?.eId) {
-      const employee = data.employees.find((emp) => emp.eId === dialogData.eId);
-      return employee?.otherDeductions || [];
+      const employee = data.employees.find(emp => emp.eId === dialogData.eId)
+      return employee?.otherDeductions || []
     }
-    return [];
-  };
+    return []
+  }
 
   const deductionsCallbacks: ContextMenuItemsCallbacks<IOtherDeduction> = {
-    openForm: (data) => {
-      handleClickOpenDialog("Edit Details", data);
-      setTypeModalDetailsEdit("Edit deductions");
+    openForm: data => {
+      handleClickOpenDialog('Edit Details', data)
+      setTypeModalDetailsEdit('Edit deductions')
     },
-    addItem: (data) => {
+    addItem: data => {
       if (dataForDialog && dialogData?.eId) {
         handleAddItem({
           item: data,
-          type: "item",
+          type: 'item',
           eId: dialogData.eId,
-          nestedType: "otherDeductions",
-        });
+          nestedType: 'otherDeductions'
+        })
       }
     },
-    deleteItem: (data) => {
+    deleteItem: data => {
       if (dataForDialog && dialogData?.eId) {
         handleDeleteItem({
           id: data.customBambooTableRowId,
-          type: "item",
+          type: 'item',
           eId: dialogData.eId,
-          nestedType: "otherDeductions",
-        });
+          nestedType: 'otherDeductions'
+        })
       }
-    },
-  };
-  const deductionsColumns = ColumnsDeductions(
-    deductionsCallbacks.openForm,
-    deductionsCallbacks
-  );
+    }
+  }
+  const deductionsColumns = ColumnsDeductions(deductionsCallbacks.openForm, deductionsCallbacks)
   const addNewRow = () => {
-    handleClickOpenDialog("Edit Details");
-    setTypeModalDetailsEdit("Edit deductions");
-  };
+    handleClickOpenDialog('Edit Details')
+    setTypeModalDetailsEdit('Edit deductions')
+  }
   return (
     <Box>
       <DataGrid<IOtherDeduction>
-        onRowDoubleClick={(params) => deductionsCallbacks.openForm(params.row)}
+        onRowDoubleClick={params => deductionsCallbacks.openForm(params.row)}
         rows={getDeductionsRows()}
-        getRowId={(row) => row.customBambooTableRowId}
+        getRowId={row => row.customBambooTableRowId}
         columns={deductionsColumns}
         pagination
         slots={{
-          footer: () => <CustomFooter onAddEmptyRow={addNewRow} />,
+          footer: () => <CustomFooter onAddEmptyRow={addNewRow} />
         }}
         pageSizeOptions={[5, 10, 20]}
         initialState={{
           pagination: {
-            paginationModel: { pageSize: 5, page: 0 },
-          },
+            paginationModel: { pageSize: 5, page: 0 }
+          }
         }}
       />
     </Box>
-  );
-};
+  )
+}

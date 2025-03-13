@@ -1,5 +1,5 @@
 // ** Types
-import { ITypeJSON } from "@/const/types";
+import { ITypeJSON } from "@/constants/types";
 
 export const downloadJSONFileAsTXT = (filename: string, data: ITypeJSON) => {
     const jsonStr = JSON.stringify(data);

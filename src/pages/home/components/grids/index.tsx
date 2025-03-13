@@ -8,21 +8,18 @@ import { IEmployee, ISystemBenefit, ITypeJSON } from "@/const/types";
 import { ColumnsEmployee, ColumnsBenefit, ColumnsTemplate } from "./consts";
 
 // ** Context
-import { useDataStateContext } from "@/hooks/useDataStateContext";
+import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
 
 // ** Hooks
-import { useTabs } from "@/hooks/useTabs";
-import { useModal } from "@/hooks/useModal";
+import { useTabs } from '@/pages/home/hooks/useTabs'
+import { useModal } from '@/pages/home/hooks/useModal'
 
 // ** Components
-import { MyGrid } from "@/shared/components/grid";
-import { useHandleAddItem } from "@/hooks/useAddItem";
-import { useHandleDeleteItem } from "@/hooks/useDelete";
-import {
-  saveEmployeeToLocalStorage,
-  removeEmployeesFromLocalStorage,
-} from "@/services/storageService";
-import { useNotification } from "@/hooks/useNotification";
+import { MyGrid } from '@/shared/components/grid'
+import { useHandleAddItem } from '@/pages/home/hooks/useAddItem'
+import { useHandleDeleteItem } from '@/pages/home/hooks/useDelete'
+import { saveEmployeeToLocalStorage, removeEmployeesFromLocalStorage } from '@/services/storageService'
+import { useNotification } from '@/pages/home/hooks/useNotification'
 
 // ** Utils
 import { listTemplate } from "@/shared/utils/listTemplate";
@@ -65,34 +62,34 @@ export const Grids: FC = () => {
   }, [activeTab, setData]);
 
   const deleteItem = (item: IEmployee | ISystemBenefit) => {
-    if ("eId" in item) {
-      handleDeleteItem({ id: item.eId, type: "employees" });
+    if ('eId' in item) {
+      handleDeleteItem({ id: item.eId, type: 'employees' })
     } else {
-      handleDeleteItem({ id: item.id, type: "benefits" });
+      handleDeleteItem({ id: item.id, type: 'benefits' })
     }
-  };
+  }
 
   const addItem = (item: IEmployee | ISystemBenefit) => {
-    if ("eId" in item) {
-      handleAddItem({ item: item, type: "employees" });
+    if ('eId' in item) {
+      handleAddItem({ item: item, type: 'employees' })
     } else {
-      handleAddItem({ item: item, type: "benefits" });
+      handleAddItem({ item: item, type: 'benefits' })
     }
-  };
+  }
 
   const handleDuplicate = (employee: IEmployee) => {
-    seteIdSelectedEmployee(employee.eId);
-    handleClickOpenDialog("Duplicate", employee);
-    setDialogOpen(true);
-  };
+    seteIdSelectedEmployee(employee.eId)
+    handleClickOpenDialog('Duplicate', employee)
+    setDialogOpen(true)
+  }
 
   const saveLocalStorage = (employee: IEmployee) => {
-    const message = saveEmployeeToLocalStorage(employee);
+    const message = saveEmployeeToLocalStorage(employee)
 
-    showNotification(message.text, message.type);
+    showNotification(message.text, message.type)
 
-    setDialogOpen(false);
-  };
+    setDialogOpen(false)
+  }
   const removeLocalStore = (employee: IEmployee) => {
     const message = removeEmployeesFromLocalStorage(employee.eId);
     showNotification(message.text, message.type);
@@ -100,7 +97,7 @@ export const Grids: FC = () => {
     if (employee.firstName !== "John") {
       handleDeleteItem({ id: employee.eId, type: "employees" });
     }
-  };
+  }
 
   const handleRowDoubleClickOpenDetails = (item: IEmployee) => {
     seteIdSelectedEmployee(item.eId);
@@ -117,40 +114,30 @@ export const Grids: FC = () => {
 
   const renderGrid = () => {
     switch (activeTab) {
-      case "1": {
-        const gridData = data.employees;
+      case '1': {
+        const gridData = data.employees
         const gridColumns = ColumnsEmployee(handleEditDialogOpen, {
           openForm: handleRowDoubleClickOpenDetails,
           deleteItem,
           addItem,
           onDuplicate: handleDuplicate,
           saveEmployee: saveLocalStorage,
-          removeEmployee: removeLocalStore,
-        });
+          removeEmployee: removeLocalStore
+        })
 
         return (
-          <MyGrid<IEmployee>
-            data={gridData}
-            columns={gridColumns}
-            onRowDoubleClick={handleRowDoubleClickOpenDetails}
-          />
-        );
+          <MyGrid<IEmployee> data={gridData} columns={gridColumns} onRowDoubleClick={handleRowDoubleClickOpenDetails} />
+        )
       }
-      case "2": {
-        const gridData = data.benefits;
+      case '2': {
+        const gridData = data.benefits
         const gridColumns = ColumnsBenefit(handleEditDialogOpen, {
           openForm: handleEditDialogOpen,
           deleteItem,
-          addItem,
-        });
+          addItem
+        })
 
-        return (
-          <MyGrid<ISystemBenefit>
-            data={gridData}
-            columns={gridColumns}
-            onRowDoubleClick={() => {}}
-          />
-        );
+        return <MyGrid<ISystemBenefit> data={gridData} columns={gridColumns} onRowDoubleClick={() => {}} />
       }
       case "3": {
         const gridData = data.employees;
@@ -174,9 +161,9 @@ export const Grids: FC = () => {
         );
       }
       default:
-        return null;
+        return null
     }
-  };
+  }
 
-  return renderGrid();
-};
+  return renderGrid()
+}

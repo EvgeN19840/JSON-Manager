@@ -1,34 +1,38 @@
 // ** React
-import { FC, ReactNode } from "react";
+import { FC } from 'react'
+import { Outlet } from 'react-router-dom'
 
 // ** MUI
-import { Box, Container } from "@mui/material";
+import { Box, Container } from '@mui/material'
 
 // ** Theme
-import { useTheme } from "@mui/material/styles";
+import { useTheme } from '@mui/material/styles'
 
 // ** Components
-import { HeaderTitle } from "./components/headerTitle";
+import { HeaderTitle } from './components/headerTitle'
+import { Navigation } from './components/navigation'
 
-export const Layout: FC<{ children: ReactNode }> = ({ children }) => {
-  const theme = useTheme();
+export const Layout: FC<{ title: string }> = ({ title }) => {
+  const theme = useTheme()
 
   return (
-    <>
-      <HeaderTitle />
-      <Box
-        component="main"
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-
-          bgcolor: theme.palette.background.default,
-        }}
-      >
-        <Container disableGutters maxWidth={false}>
-          {children}
-        </Container>
+    <Box sx={{ display: 'flex', bgcolor: theme.palette.background.default }}>
+      <Navigation />
+      <Box sx={{ flexGrow: 1 }}>
+        <HeaderTitle title={title} />
+        <Box
+          component='main'
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            p: 3
+          }}
+        >
+          <Container disableGutters maxWidth={false}>
+            <Outlet />
+          </Container>
+        </Box>
       </Box>
-    </>
-  );
-};
+    </Box>
+  )
+}

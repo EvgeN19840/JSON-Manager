@@ -6,7 +6,7 @@ import {
 import { HeaderDetails } from "../../../headerDetails";
 import { MyContextMenu } from "@/shared/components/myContextMenu";
 import { actionMenu } from "@/shared/components/myContextMenu/actionMenu";
-import { IDepositAccounts } from "@/const/types";
+import { IDepositAccounts } from "@/constants/types";
 import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
 
 export const ColumnsAccounts = (

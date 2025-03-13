@@ -1,29 +1,29 @@
 // ** React
-import { useState } from "react";
+import { useState } from 'react'
 
 // ** MUI
-import { Box, Typography } from "@mui/material";
+import { Box, Typography } from '@mui/material'
 
 // ** Components
-import { CopyButton } from "./buttons";
-import { FormFooter } from "@/shared/formElements/formFooter";
-import { InputField } from "@/shared/inputField";
+import { CopyButton } from './buttons'
+import { FormFooter } from '@/shared/formElements/formFooter'
+import { InputField } from '@/shared/inputField'
 
 // ** Hooks
-import { useNotification } from "@/hooks/useNotification";
-import { useModal } from "@/hooks/useModal";
+import { useNotification } from '@/pages/home/hooks/useNotification'
+import { useModal } from '@/pages/home/hooks/useModal'
 
 // ** Utils
-import { downloadJSONFileAsTXT } from "@/shared/utils";
+import { downloadJSONFileAsTXT } from '@/shared/utils'
 
 // ** Types
-import { ITypeJSON } from "@/const/types";
-import { IModalType } from "@/context/modal/types";
+import { ITypeJSON } from '@/constants/types'
+import { IModalType } from '@/pages/home/context/modal/types'
 
 export const ExportDataComponent: React.FC = () => {
-  const { showNotification } = useNotification();
-  const { setDialogOpen, dataForDialog } = useModal();
-  const [inputNameFile, setInputNameFile] = useState("");
+  const { showNotification } = useNotification()
+  const { setDialogOpen, dataForDialog } = useModal()
+  const [inputNameFile, setInputNameFile] = useState('')
 
   const removeTopLevelComment = (data: string) => {
     try {
@@ -48,27 +48,27 @@ export const ExportDataComponent: React.FC = () => {
   const cleanedData = dataForDialog ? removeTopLevelComment(dataForDialog as string) : "No data available.";
 
   const downloadFile = () => {
-    if (inputNameFile && typeof dataForDialog === "string") {
+    if (inputNameFile && typeof dataForDialog === 'string') {
       try {
         const cleanedDataForDownload = JSON.parse(cleanedData);
         downloadJSONFileAsTXT(inputNameFile, cleanedDataForDownload);
         setInputNameFile("");
         setDialogOpen(false);
       } catch (e) {
-        console.log(e);
+        console.log(e)
       }
     } else {
-      showNotification("Please enter a valid file name.", "error");
+      showNotification('Please enter a valid file name.', 'error')
     }
-  };
+  }
 
   const handleNameFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputNameFile(event.target.value);
-  };
+    setInputNameFile(event.target.value)
+  }
 
   return (
     <Box>
-      <Typography variant="h6" sx={{ textAlign: "center" }}>
+      <Typography variant='h6' sx={{ textAlign: 'center' }}>
         Export Data
       </Typography>
       <InputField
@@ -86,8 +86,8 @@ export const ExportDataComponent: React.FC = () => {
           multiline
           slotProps={{
             input: {
-              readOnly: true,
-            },
+              readOnly: true
+            }
           }}
         />
         <Box sx={{ position: "absolute", top: 9, right: 8, zIndex: 1, pr: 6 }}>
@@ -95,12 +95,12 @@ export const ExportDataComponent: React.FC = () => {
         </Box>
       </Box>
       <FormFooter
-        cancelButtonText={"Close"}
-        actionButtonText={"Download"}
+        cancelButtonText={'Close'}
+        actionButtonText={'Download'}
         showSecondButton={true}
         buttonAction={downloadFile}
-        source={"general"}
+        source={'general'}
       />
     </Box>
-  );
-};
+  )
+}

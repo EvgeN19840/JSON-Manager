@@ -1,5 +1,5 @@
-import { IEmployee } from "@/const/types";
-import { INotificationType } from "@/context/snackBar/types";
+import { IEmployee } from "@/constants/types";
+import { INotificationType } from "@/pages/home/context/snackBar/types";
 
 interface NotificationMessage {
     text: string;
