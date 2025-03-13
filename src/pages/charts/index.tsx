@@ -1,7 +1,14 @@
-import { FC } from "react"
+// **  Components
+import { StressTest } from './components'
 
-export const Charts: FC = () => {
+// ** Third Party Styles Import
+import 'chart.js/auto'
+import { Box } from '@mui/material'
+
+export const Charts = () => {
   return (
-    <div>index</div>
+    <Box>
+      <StressTest />
+    </Box>
   )
 }

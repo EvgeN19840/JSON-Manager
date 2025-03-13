@@ -1,5 +1,6 @@
 // ** Icons
 import HomeIcon from '@mui/icons-material/Home'
+import AutoGraphIcon from '@mui/icons-material/AutoGraph'
 
 // ** Types
 import { Page, PageKey } from '@/types/pages'
@@ -20,7 +21,7 @@ export const PAGES_CONFIG: { [key in PageKey]: Page } = {
     route: Paths.Charts,
     type: 'public',
     name: 'Charts',
-    icon: <HomeIcon />
+    icon: <AutoGraphIcon />
   }
 }
 
