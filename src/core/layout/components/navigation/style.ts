@@ -34,7 +34,7 @@ export const DrawerFooter = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: open ? 'flex-end' : 'center',
-  padding: theme.spacing(2),
+  padding: theme.spacing(1),
 }))
 
 export const DrawerStyled = styled(MuiDrawer, {

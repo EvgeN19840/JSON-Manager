@@ -12,7 +12,6 @@ import { TabsProvider } from './context/tabs/provider'
 import { ModalProvider } from './context/modal/provider'
 import { DataStateProvider } from './context/dataState/provider'
 
-
 export const Home: FC = () => {
   return (
     <DataStateProvider>
@@ -22,13 +21,12 @@ export const Home: FC = () => {
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              height: 'calc(100vh - 72px)',
-              overflow: 'hidden',
-              mt: 9
+              height: '100%',
+              pl:'1rem',
             }}
           >
             <TabsComponent />
-  
+
             <ImportExportButtons />
 
             <Box sx={{ flexGrow: 1, display: 'flex', overflow: 'hidden' }}>

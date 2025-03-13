@@ -3,7 +3,7 @@ import { FC } from 'react'
 import { Outlet } from 'react-router-dom'
 
 // ** MUI
-import { Box, Container } from '@mui/material'
+import { Box } from '@mui/material'
 
 // ** Theme
 import { useTheme } from '@mui/material/styles'
@@ -19,21 +19,19 @@ export const Layout: FC<{ title: string }> = ({ title }) => {
 
   return (
     <NotificationProvider>
-      <Box sx={{ display: 'flex', bgcolor: theme.palette.background.default }}>
+      <Box sx={{ display: 'flex', height: '100%', bgcolor: theme.palette.background.default }}>
         <Navigation />
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1, height: '100%', overflow: 'hidden' }}>
           <HeaderTitle title={title} />
           <Box
             component='main'
             sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              p: 3
+              height: 'calc(100vh - 72px)',
+              overflow: 'hidden',
+              mt: 9
             }}
           >
-            <Container disableGutters maxWidth={false}>
-              <Outlet />
-            </Container>
+            <Outlet />
           </Box>
         </Box>
       </Box>
