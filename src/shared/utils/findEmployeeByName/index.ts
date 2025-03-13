@@ -1,5 +1,5 @@
 import { listTemplate } from "@/shared/utils/listTemplate";
-import { IEmployee } from "@/constants/types";
+import { IEmployee } from "@/types/json";
 
 export const findEmployeeByName = (selectedName: string): IEmployee | null => {
   const { employees } = listTemplate();

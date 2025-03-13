@@ -10,7 +10,7 @@ import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
 import { useDefaultEmployeeBenefit } from '@/pages/home/hooks/useDefaultData'
 
 // ** Types
-import { IEmployeeBenefit } from '@/constants/types'
+import { IEmployeeBenefit } from '@/types/json'
 
 // ** Const
 import { ColumnsBenefit } from './columnsBenefit'

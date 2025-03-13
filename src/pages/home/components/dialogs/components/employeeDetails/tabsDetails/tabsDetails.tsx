@@ -18,7 +18,7 @@ import {
   Reimbursements
 } from './index'
 import { useModal } from '@/pages/home/hooks/useModal'
-import { IEmployee } from '@/constants/types'
+import { IEmployee } from '@/types/json'
 
 export const TabsDetails = () => {
   const { activeDetailTab, handleDetailTabChange } = useTabs()

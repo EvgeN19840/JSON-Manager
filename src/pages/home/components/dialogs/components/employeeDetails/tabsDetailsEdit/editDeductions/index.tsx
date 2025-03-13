@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useModal } from '@/pages/home/hooks/useModal'
 import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
 import { FormWrapper, FormInput, FormFooter } from '@/shared/formElements'
-import { IOtherDeduction } from '@/constants/types'
+import { IOtherDeduction } from '@/types/json'
 import { useDefaultOtherDeduction } from '@/pages/home/hooks/useDefaultData'
 import { schema } from './schema'
 

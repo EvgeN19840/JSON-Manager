@@ -1,4 +1,4 @@
-import { ITypeJSON, IEmployee } from "@/constants/types";
+import { ITypeJSON, IEmployee } from "@/types/json";
 
 export const assignMissingIds = (
   parsedData: ITypeJSON,

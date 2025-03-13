@@ -5,7 +5,7 @@ import { Box, Typography } from '@mui/material'
 import { useModal } from '@/pages/home/hooks/useModal'
 
 // ** Types
-import { IEmployee } from '@/constants/types'
+import { IEmployee } from '@/types/json'
 
 // ** Utils
 import { currentData } from './utils'

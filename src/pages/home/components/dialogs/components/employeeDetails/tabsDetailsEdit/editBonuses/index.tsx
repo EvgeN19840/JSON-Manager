@@ -6,7 +6,7 @@ import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
 import { FormWrapper, FormInput, FormFooter } from '@/shared/formElements'
 
 import { useDefaultBonuses } from '@/pages/home/hooks/useDefaultData'
-import { IBonuses } from '@/constants/types'
+import { IBonuses } from '@/types/json'
 import { schema } from './schema'
 
 export const EditBonuses: React.FC = () => {

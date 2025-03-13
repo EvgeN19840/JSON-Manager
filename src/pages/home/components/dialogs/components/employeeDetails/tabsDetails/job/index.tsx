@@ -9,7 +9,7 @@ import { useHandleDeleteItem } from '@/pages/home/hooks/useDelete'
 import { useHandleAddItem } from '@/pages/home/hooks/useAddItem'
 
 // ** Types
-import { IEmploymentStatus, IJobInfo, ISalary } from '@/constants/types'
+import { IEmploymentStatus, IJobInfo, ISalary } from '@/types/json'
 
 // ** Context
 import { ContextMenuItemsCallbacks } from '@/shared/components/myContextMenu/actionMenu/types'

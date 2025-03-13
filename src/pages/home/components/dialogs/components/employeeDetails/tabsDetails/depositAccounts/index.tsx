@@ -6,7 +6,7 @@ import { DataGrid } from '@mui/x-data-grid'
 import { useModal } from '@/pages/home/hooks/useModal'
 
 // ** Types and Columns
-import { IDepositAccounts } from '@/constants/types'
+import { IDepositAccounts } from '@/types/json'
 import { ColumnsAccounts } from './columnsAccounts'
 import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
 import { ContextMenuItemsCallbacks } from '@/shared/components/myContextMenu/actionMenu/types'

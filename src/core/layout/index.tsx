@@ -9,30 +9,34 @@ import { Box, Container } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 
 // ** Components
-import { HeaderTitle } from './components/headerTitle'
-import { Navigation } from './components/navigation'
+import { Navigation, HeaderTitle } from './components'
+
+// ** Context
+import { NotificationProvider } from '../context/snackBar/provider'
 
 export const Layout: FC<{ title: string }> = ({ title }) => {
   const theme = useTheme()
 
   return (
-    <Box sx={{ display: 'flex', bgcolor: theme.palette.background.default }}>
-      <Navigation />
-      <Box sx={{ flexGrow: 1 }}>
-        <HeaderTitle title={title} />
-        <Box
-          component='main'
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            p: 3
-          }}
-        >
-          <Container disableGutters maxWidth={false}>
-            <Outlet />
-          </Container>
+    <NotificationProvider>
+      <Box sx={{ display: 'flex', bgcolor: theme.palette.background.default }}>
+        <Navigation />
+        <Box sx={{ flexGrow: 1 }}>
+          <HeaderTitle title={title} />
+          <Box
+            component='main'
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              p: 3
+            }}
+          >
+            <Container disableGutters maxWidth={false}>
+              <Outlet />
+            </Container>
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </NotificationProvider>
   )
 }

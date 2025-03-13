@@ -14,7 +14,7 @@ import { useDefaultReimbursement } from '@/pages/home/hooks/useDefaultData'
 import { schema } from './schema'
 
 // ** Types
-import { IReimbursement } from '@/constants/types'
+import { IReimbursement } from '@/types/json'
 
 // ** Components
 import { FormWrapper, FormInput, FormFooter } from '@/shared/formElements'

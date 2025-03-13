@@ -1,5 +1,5 @@
 // ** Types
-import { IEmployee } from "@/const/types";
+import { IEmployee } from "@/types/json";
 
 // ** MUI
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
@@ -9,7 +9,10 @@ import { actionMenu } from "@/shared/components/myContextMenu/actionMenu";
 import { MyContextMenu } from "@/shared/components/myContextMenu";
 import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
 import { InputField } from "@/shared/inputField";
-import { useDataStateContext } from "@/hooks/useDataStateContext";
+
+// ** Hooks
+import { useDataStateContext } from "@/pages/home/hooks/useDataStateContext";
+
 
 export const ColumnsTemplate = (
   _handleEditClick: (employee: IEmployee) => void,

@@ -1,44 +1,44 @@
 // ** Types
-import { IEmployee } from "@/constants/types";
+import { IEmployee } from '@/types/json'
 
 // ** MUI
-import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 
 // ** Components
-import { actionMenu } from "@/shared/components/myContextMenu/actionMenu";
-import { MyContextMenu } from "@/shared/components/myContextMenu";
-import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
+import { actionMenu } from '@/shared/components/myContextMenu/actionMenu'
+import { MyContextMenu } from '@/shared/components/myContextMenu'
+import { ContextMenuItemsCallbacks } from '@/shared/components/myContextMenu/actionMenu/types'
 
 export const ColumnsEmployee = (
   _handleEditClick: (employee: IEmployee) => void,
   callbacks: ContextMenuItemsCallbacks<IEmployee>
 ): GridColDef<IEmployee>[] => [
   {
-    field: "firstName",
-    headerName: "First name",
+    field: 'firstName',
+    headerName: 'First name',
     flex: 1,
     editable: false,
-    minWidth: 250,
+    minWidth: 250
   },
   {
-    field: "lastName",
-    headerName: "Last name",
+    field: 'lastName',
+    headerName: 'Last name',
     flex: 1,
     editable: false,
-    minWidth: 250,
+    minWidth: 250
   },
   {
-    field: "eId",
-    headerName: "eId",
+    field: 'eId',
+    headerName: 'eId',
     flex: 1,
     editable: false,
-    minWidth: 250,
+    minWidth: 250
   },
   {
-    field: "Actions",
+    field: 'Actions',
     width: 50,
-    align: "center",
-    renderHeader: () => "",
+    align: 'center',
+    renderHeader: () => '',
     sortable: false,
     filterable: false,
     renderCell: (params: GridRenderCellParams<IEmployee>) => {
@@ -47,16 +47,16 @@ export const ColumnsEmployee = (
           items={actionMenu(
             {
               ...callbacks,
-              onDuplicate: (employee) => callbacks.onDuplicate?.(employee),
-              saveEmployee: (employee) => callbacks.saveEmployee?.(employee),
-              removeEmployee: (employee) => callbacks.removeEmployee?.(employee),
+              onDuplicate: employee => callbacks.onDuplicate?.(employee),
+              saveEmployee: employee => callbacks.saveEmployee?.(employee),
+              removeEmployee: employee => callbacks.removeEmployee?.(employee)
             },
             params,
             true
           )}
           params={params}
         />
-      );
-    },
-  },
-];
+      )
+    }
+  }
+]

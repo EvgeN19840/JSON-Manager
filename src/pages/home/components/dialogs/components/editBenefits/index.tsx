@@ -14,7 +14,7 @@ import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
 import { schema } from './schema'
 
 // ** Types
-import { ISystemBenefit } from '@/constants/types'
+import { ISystemBenefit } from '@/types/json'
 import { IFormBenefitsProps } from './types'
 
 export const EditBenefits = () => {

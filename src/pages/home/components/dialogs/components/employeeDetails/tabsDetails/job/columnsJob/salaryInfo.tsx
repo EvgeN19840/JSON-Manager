@@ -1,98 +1,95 @@
 // ** Types
-import { ISalary } from "@/constants/types";
+import { ISalary } from '@/types/json'
 
 // ** MUI
-import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 
 // ** Components
-import { MyContextMenu } from "@/shared/components/myContextMenu";
-import { actionMenu } from "@/shared/components/myContextMenu/actionMenu";
-import { HeaderDetails } from "../../../headerDetails";
-import { getDateFormat } from "@/shared/utils/getDateFormat";
-import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
+import { MyContextMenu } from '@/shared/components/myContextMenu'
+import { actionMenu } from '@/shared/components/myContextMenu/actionMenu'
+import { HeaderDetails } from '../../../headerDetails'
+import { getDateFormat } from '@/shared/utils/getDateFormat'
+import { ContextMenuItemsCallbacks } from '@/shared/components/myContextMenu/actionMenu/types'
 
 export const ColumnsSalary = (
   _handleEditClick: (data: ISalary) => void,
   callbacks: ContextMenuItemsCallbacks<ISalary>
 ): GridColDef<ISalary>[] => [
- 
   {
-    field: "salaryRate",
-    headerName: "Salary Rate",
+    field: 'salaryRate',
+    headerName: 'Salary Rate',
     minWidth: 100,
     flex: 1,
-    renderHeader: () => <HeaderDetails title="Salary Rate" />,
+    renderHeader: () => <HeaderDetails title='Salary Rate' />
   },
   {
-    field: "salaryCurrencyCode",
-    headerName: "Currency Code",
+    field: 'salaryCurrencyCode',
+    headerName: 'Currency Code',
     minWidth: 100,
     flex: 1,
-    renderHeader: () => <HeaderDetails title="Currency Code" />,
+    renderHeader: () => <HeaderDetails title='Currency Code' />
   },
   {
-    field: "salaryRatePeriod",
-    headerName: "Rate Period",
+    field: 'salaryRatePeriod',
+    headerName: 'Rate Period',
     minWidth: 120,
     flex: 1,
-    renderHeader: () => <HeaderDetails title="Rate Period" />,
+    renderHeader: () => <HeaderDetails title='Rate Period' />
   },
   {
-    field: "payPeriod",
-    headerName: "Pay Period",
+    field: 'payPeriod',
+    headerName: 'Pay Period',
     minWidth: 120,
     flex: 1,
-    renderHeader: () => <HeaderDetails title="Pay Period" />,
+    renderHeader: () => <HeaderDetails title='Pay Period' />
   },
   {
-    field: "allowOvertime",
-    headerName: "Allow Overtime",
+    field: 'allowOvertime',
+    headerName: 'Allow Overtime',
     minWidth: 100,
     flex: 1,
-    renderHeader: () => <HeaderDetails title="Allow Overtime" />,
-    renderCell: (params) => (params.row.allowOvertime ? "Yes" : "No"),
+    renderHeader: () => <HeaderDetails title='Allow Overtime' />,
+    renderCell: params => (params.row.allowOvertime ? 'Yes' : 'No')
   },
   {
-    field: "effectiveDate",
-    headerName: "Effective Date",
+    field: 'effectiveDate',
+    headerName: 'Effective Date',
     minWidth: 100,
     flex: 1,
-    renderHeader: () => <HeaderDetails title="Effective Date" />,
-    renderCell: (params) => getDateFormat(params.row.effectiveDate),
+    renderHeader: () => <HeaderDetails title='Effective Date' />,
+    renderCell: params => getDateFormat(params.row.effectiveDate)
   },
   {
-    field: "changeReason",
-    headerName: "Change Reason",
+    field: 'changeReason',
+    headerName: 'Change Reason',
     minWidth: 200,
     flex: 1,
-    renderHeader: () => <HeaderDetails title="Change Reason" />,
+    renderHeader: () => <HeaderDetails title='Change Reason' />
   },
   {
-    field: "comment",
-    headerName: "Comment",
+    field: 'comment',
+    headerName: 'Comment',
     minWidth: 200,
     flex: 1,
-    renderHeader: () => <HeaderDetails title="Comment" />,
+    renderHeader: () => <HeaderDetails title='Comment' />
   },
   {
-    field: "overtimeRate",
-    headerName: "Overtime Rate",
+    field: 'overtimeRate',
+    headerName: 'Overtime Rate',
     minWidth: 100,
     flex: 1,
-    renderHeader: () => <HeaderDetails title="Overtime Rate" />,
-    renderCell: (params) => (params.row.overtimeRate ? params.row.overtimeRate : "N/A"),
+    renderHeader: () => <HeaderDetails title='Overtime Rate' />,
+    renderCell: params => (params.row.overtimeRate ? params.row.overtimeRate : 'N/A')
   },
   {
-    field: "Actions",
+    field: 'Actions',
     width: 50,
-    align: "center",
-    renderHeader: () => "",
+    align: 'center',
+    renderHeader: () => '',
     sortable: false,
     filterable: false,
     renderCell: (params: GridRenderCellParams<ISalary>) => {
-      return (
-        <MyContextMenu items={actionMenu(callbacks, params)} params={params} />
-      );
-    },
-  },
-];
+      return <MyContextMenu items={actionMenu(callbacks, params)} params={params} />
+    }
+  }
+]

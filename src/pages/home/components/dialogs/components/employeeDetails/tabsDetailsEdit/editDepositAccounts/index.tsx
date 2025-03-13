@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useModal } from '@/pages/home/hooks/useModal'
 import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
 import { FormWrapper, FormInput, FormFooter } from '@/shared/formElements'
-import { IDepositAccounts } from '@/constants/types'
+import { IDepositAccounts } from '@/types/json'
 import { schema } from './schema'
 import { useDefaultDepositAccounts } from '@/pages/home/hooks/useDefaultData'
 

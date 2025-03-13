@@ -1,4 +1,4 @@
-import { ITypeJSON } from "@/constants/types";
+import { ITypeJSON } from "@/types/json";
 
 export const validateUniqueIds = (data: ITypeJSON): ITypeJSON => {
     let globalIndex = 1;

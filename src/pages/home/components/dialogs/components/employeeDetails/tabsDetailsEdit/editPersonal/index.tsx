@@ -14,7 +14,7 @@ import { useDefaultEmployeeBasicInfo } from '@/pages/home/hooks/useDefaultData'
 import { schema } from './schema'
 
 // ** Types
-import { IEmployeeBasicInfo } from '@/constants/types'
+import { IEmployeeBasicInfo } from '@/types/json'
 
 // ** Components
 import { FormWrapper, FormInput, FormFooter } from '@/shared/formElements'

@@ -14,7 +14,7 @@ import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
 import { schema } from './schema'
 
 // ** Types
-import { IEmployeeBenefit, ISystemBenefit } from '@/constants/types'
+import { IEmployeeBenefit, ISystemBenefit } from '@/types/json'
 import { useDefaultEmployeeBenefit } from '@/pages/home/hooks/useDefaultData'
 
 export const EditDetailsBenefits = () => {

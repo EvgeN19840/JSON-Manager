@@ -6,7 +6,7 @@ import { DataGrid } from '@mui/x-data-grid'
 import { useModal } from '@/pages/home/hooks/useModal'
 
 // ** Types
-import { IOtherDeduction } from '@/constants/types'
+import { IOtherDeduction } from '@/types/json'
 
 // ** Columns
 import { ColumnsDeductions } from './columnsDeductions'

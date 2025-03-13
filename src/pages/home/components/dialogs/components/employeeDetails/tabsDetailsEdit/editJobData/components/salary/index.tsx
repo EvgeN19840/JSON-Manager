@@ -7,7 +7,7 @@ import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
 import { FormWrapper, FormInput, FormFooter } from '@/shared/formElements'
 import payPeriodDropdown from './payPeriodDropdown'
 import salaryRateDropdown from './salaryRateDropdown'
-import { ISalary } from '@/constants/types'
+import { ISalary } from '@/types/json'
 
 import { salarySchema } from '../../schema'
 

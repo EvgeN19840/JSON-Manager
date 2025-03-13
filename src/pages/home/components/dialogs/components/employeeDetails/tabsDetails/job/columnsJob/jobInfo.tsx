@@ -1,75 +1,72 @@
 // ** Types
-import { IJobInfo } from "@/constants/types";
+import { IJobInfo } from '@/types/json'
 
 // ** MUI
-import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 
 // ** Components
-import { MyContextMenu } from "@/shared/components/myContextMenu";
-import { actionMenu } from "@/shared/components/myContextMenu/actionMenu";
-import { HeaderDetails } from "../../../headerDetails";
-import { getDateFormat } from "@/shared/utils/getDateFormat";
-import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
+import { MyContextMenu } from '@/shared/components/myContextMenu'
+import { actionMenu } from '@/shared/components/myContextMenu/actionMenu'
+import { HeaderDetails } from '../../../headerDetails'
+import { getDateFormat } from '@/shared/utils/getDateFormat'
+import { ContextMenuItemsCallbacks } from '@/shared/components/myContextMenu/actionMenu/types'
 
 export const ColumnsJobInfo = (
   _handleEditClick: (data: IJobInfo) => void,
   callbacks: ContextMenuItemsCallbacks<IJobInfo>
 ): GridColDef<IJobInfo>[] => [
- 
   {
-    field: "jobTitle",
-    headerName: "Job Title",
+    field: 'jobTitle',
+    headerName: 'Job Title',
     minWidth: 200,
     flex: 1,
-    renderHeader: () => <HeaderDetails title="Job Title" />,
+    renderHeader: () => <HeaderDetails title='Job Title' />
   },
   {
-    field: "department",
-    headerName: "Department",
+    field: 'department',
+    headerName: 'Department',
     minWidth: 150,
     flex: 1,
-    renderHeader: () => <HeaderDetails title="Department" />,
+    renderHeader: () => <HeaderDetails title='Department' />
   },
   {
-    field: "location",
-    headerName: "Location",
+    field: 'location',
+    headerName: 'Location',
     minWidth: 150,
     flex: 1,
-    renderHeader: () => <HeaderDetails title="Location" />,
+    renderHeader: () => <HeaderDetails title='Location' />
   },
   {
-    field: "division",
-    headerName: "Division",
+    field: 'division',
+    headerName: 'Division',
     minWidth: 150,
     flex: 1,
-    renderHeader: () => <HeaderDetails title="Division" />,
+    renderHeader: () => <HeaderDetails title='Division' />
   },
   {
-    field: "reportsTo",
-    headerName: "Reports To",
+    field: 'reportsTo',
+    headerName: 'Reports To',
     minWidth: 150,
     flex: 1,
-    renderHeader: () => <HeaderDetails title="Reports To" />,
+    renderHeader: () => <HeaderDetails title='Reports To' />
   },
   {
-    field: "effectiveDate",
-    headerName: "Effective Date",
+    field: 'effectiveDate',
+    headerName: 'Effective Date',
     minWidth: 115,
     flex: 1,
-    renderHeader: () => <HeaderDetails title="Effective Date" />,
-    renderCell: (params) => getDateFormat(params.row?.effectiveDate),
+    renderHeader: () => <HeaderDetails title='Effective Date' />,
+    renderCell: params => getDateFormat(params.row?.effectiveDate)
   },
   {
-    field: "Actions",
+    field: 'Actions',
     width: 50,
-    align: "center",
-    renderHeader: () => "",
+    align: 'center',
+    renderHeader: () => '',
     sortable: false,
     filterable: false,
     renderCell: (params: GridRenderCellParams<IJobInfo>) => {
-      return (
-        <MyContextMenu items={actionMenu(callbacks, params)} params={params} />
-      );
-    },
-  },
-];
+      return <MyContextMenu items={actionMenu(callbacks, params)} params={params} />
+    }
+  }
+]

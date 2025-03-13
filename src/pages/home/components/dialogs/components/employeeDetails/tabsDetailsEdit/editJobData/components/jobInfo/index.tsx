@@ -2,7 +2,7 @@ import { Box } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { FormWrapper, FormInput, FormFooter } from '@/shared/formElements'
-import { IJobInfo } from '@/constants/types'
+import { IJobInfo } from '@/types/json'
 
 import { jobInfoSchema } from '../../schema'
 import { useModal } from '@/pages/home/hooks/useModal'

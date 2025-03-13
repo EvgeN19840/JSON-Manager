@@ -6,7 +6,7 @@ import { DataGrid } from '@mui/x-data-grid'
 import { useModal } from '@/pages/home/hooks/useModal'
 
 // ** Types
-import { IReimbursement } from '@/constants/types'
+import { IReimbursement } from '@/types/json'
 
 // ** Columns
 import { ColumnsReimbursements } from './columnsReimbursements'

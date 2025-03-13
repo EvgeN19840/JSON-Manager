@@ -1,65 +1,61 @@
-import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import { HeaderDetails } from "../../../headerDetails";
-import { getDateFormat } from "@/shared/utils/getDateFormat";
-import { IBonuses } from "@/constants/types";
-import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
-import { MyContextMenu } from "@/shared/components/myContextMenu";
-import { actionMenu } from "@/shared/components/myContextMenu/actionMenu";
+import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
+import { HeaderDetails } from '../../../headerDetails'
+import { getDateFormat } from '@/shared/utils/getDateFormat'
+import { IBonuses } from '@/types/json'
+import { ContextMenuItemsCallbacks } from '@/shared/components/myContextMenu/actionMenu/types'
+import { MyContextMenu } from '@/shared/components/myContextMenu'
+import { actionMenu } from '@/shared/components/myContextMenu/actionMenu'
 
 export const ColumnsBonuses = (
   _handleEditClick: (data: IBonuses) => void,
   callbacks: ContextMenuItemsCallbacks<IBonuses>
 ): GridColDef<IBonuses>[] => [
- 
- 
   {
-    field: "effectiveDate",
-    headerName: "Effective Date",
+    field: 'effectiveDate',
+    headerName: 'Effective Date',
     minWidth: 115,
     flex: 1,
-    renderHeader: () => <HeaderDetails title="Effective Date" />,
-    renderCell: (params) => getDateFormat(params.row?.effectiveDate),
+    renderHeader: () => <HeaderDetails title='Effective Date' />,
+    renderCell: params => getDateFormat(params.row?.effectiveDate)
   },
 
   {
-    field: "amount",
-    headerName: "Amount",
+    field: 'amount',
+    headerName: 'Amount',
     minWidth: 100,
     flex: 1,
-    renderHeader: () => <HeaderDetails title="Amount" />,
+    renderHeader: () => <HeaderDetails title='Amount' />
   },
   {
-    field: "currencyCode",
-    headerName: "Currency Code",
+    field: 'currencyCode',
+    headerName: 'Currency Code',
     minWidth: 100,
     flex: 1,
-    renderHeader: () => <HeaderDetails title="Currency Code" />,
+    renderHeader: () => <HeaderDetails title='Currency Code' />
   },
   {
-    field: "reason",
-    headerName: "Reason",
+    field: 'reason',
+    headerName: 'Reason',
     minWidth: 150,
     flex: 1,
-    renderHeader: () => <HeaderDetails title="Reason" />,
+    renderHeader: () => <HeaderDetails title='Reason' />
   },
   {
-    field: "comment",
-    headerName: "Comment",
+    field: 'comment',
+    headerName: 'Comment',
     minWidth: 200,
     flex: 1,
-    renderHeader: () => <HeaderDetails title="Comment" />,
+    renderHeader: () => <HeaderDetails title='Comment' />
   },
   {
-    field: "Actions",
+    field: 'Actions',
     width: 50,
-    align: "center",
-    renderHeader: () => "",
+    align: 'center',
+    renderHeader: () => '',
     sortable: false,
     filterable: false,
     renderCell: (params: GridRenderCellParams<IBonuses>) => {
-      return (
-        <MyContextMenu items={actionMenu(callbacks, params)} params={params} />
-      );
-    },
-  },
-];
+      return <MyContextMenu items={actionMenu(callbacks, params)} params={params} />
+    }
+  }
+]
