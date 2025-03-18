@@ -9,7 +9,7 @@ echo "Copying binaries from $SRC"
 cp -R $SRC/* $DST/
 
 rm -rf $SRC/
-mv $DST/.env.prod $DST/.env
+#mv $DST/.env.prod $DST/.env
 
 cd $DST
 echo "INSTALLING node_modules"
