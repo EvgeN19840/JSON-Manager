@@ -1,11 +1,6 @@
 import { Pool } from 'pg';
+import { dbConfig } from './config';
 
-const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'metrics_db',
-  password: '3l%I8z12', 
-  port: 5432,
-});
+const pool = new Pool(dbConfig);
 
 export default pool;
