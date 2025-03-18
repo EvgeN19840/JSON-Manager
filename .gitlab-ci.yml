@@ -30,5 +30,4 @@ backend-deploy:
     - backend-build
   script:
     - echo "DEPLOY"
-    #- sudo /bin/bash ./deploy.sh $CI_COMMIT_BRANCH Admin
-    #- sudo /bin/bash ./deploy.sh $CI_COMMIT_BRANCH Customer
+    - sudo /bin/bash ./deploy.sh
