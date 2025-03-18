@@ -9,7 +9,5 @@ echo "Copying binaries from $SRC"
 cp -R $SRC/* $DST/
 
 chown -R www-data:www-data $DST/*
-
 rm -rf $SRC/
-
 echo "Finished"
