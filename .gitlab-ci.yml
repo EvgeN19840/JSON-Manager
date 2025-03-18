@@ -11,7 +11,7 @@ backend-build:
   stage: build
   artifacts:
     paths:
-    - backend/src/dist/
+    - backend/dist/
     expire_in: 7 days
   script:
     - echo "Building BACKEND"
