@@ -15,7 +15,7 @@ backend-build:
     expire_in: 7 days
   script:
     - echo "Building BACKEND"
-    - cd ./backend/src
+    - cd ./backend
     - npm i
     - npm run build    
 
