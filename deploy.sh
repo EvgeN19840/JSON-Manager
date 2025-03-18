@@ -10,4 +10,8 @@ cp -R $SRC/* $DST/
 
 chown -R www-data:www-data $DST/*
 rm -rf $SRC/
+mv $DST/.env.prod $DST/.env
+
+cd $DST
+npm install --omit=dev
 echo "Finished"
