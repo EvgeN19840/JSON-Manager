@@ -6,7 +6,7 @@ echo "Removing binaries in $DST"
 rm -rf $DST/*
 
 echo "Copying binaries from $SRC"
-rsync -av -q $SRC/ $DST/
+cp -R $SRC/* $DST/
 mv $DST/.env.prod $DST/.env
 
 cd $DST
