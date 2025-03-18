@@ -6,10 +6,8 @@ echo "Removing binaries in $DST"
 rm -rf $DST/*
 
 echo "Copying binaries from $SRC"
-cp -R $SRC/* $DST/
-
-rm -rf $SRC/
-#mv $DST/.env.prod $DST/.env
+rsync -av --progress $SRC/ $DST/
+mv $DST/.env.prod $DST/.env
 
 cd $DST
 echo "INSTALLING node_modules"
