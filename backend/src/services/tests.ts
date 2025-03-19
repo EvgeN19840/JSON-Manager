@@ -23,7 +23,7 @@ router.get(
         p.id,
         p.time,
         p.timestamp as data,
-        COALESCE(json_agg(t.*) FILTER (WHERE t.id IS NOT NULL), '[]') as tests
+        COALESCE(json_agg(t.*) FILTER (WHERE t.id IS NOT NULL), '[]') AS tests
         FROM ${dbNames[1]} p
         LEFT JOIN ${dbNames[2]} t ON t.parent = p.id
         GROUP BY p.id, p.time, p.timestamp
@@ -31,6 +31,7 @@ router.get(
 
     const unique_names = await pool.query(`SELECT array_agg(DISTINCT test_name) FROM ${dbNames[2]}`);
 
+    //КЭШ!!!!!!!!!! 
 
     res.json({
       results: resultsQuery.rows,
@@ -65,6 +66,8 @@ router.post(
         params
       );
 
+      // Транзакции на два инсерта и если все чики брики, то обе применяем 
+
       res.status(200).json({ a });
       return
     }
@@ -80,13 +83,13 @@ router.get(
     const result = await pool.query(
       `
       SELECT
-      p.id,
-      p.test_name as name,
-      p.time,
-      t.timestamp as date
-      FROM ${dbNames[2]} p 
-      LEFT JOIN ${dbNames[1]} t on t.id = p.parent
-      WHERE p.test_name = $1
+      t.id,
+      t.test_name AS name,
+      t.time,
+      p.timestamp AS date
+      FROM ${dbNames[2]} t 
+      LEFT JOIN ${dbNames[1]} p on p.id = t.parent
+      WHERE t.test_name = $1
       `, [name]
     );
 
