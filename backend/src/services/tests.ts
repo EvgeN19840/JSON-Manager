@@ -18,31 +18,22 @@ const router = express.Router();
 router.get(
   '/tests',
   asyncHandler(async (_: Request, res: Response<{ results: IAllTimeTestClient[], test_names: string[] } | string>) => {
-    const result = await pool.query(`SELECT * FROM ${dbNames[1]}`);
-    if (result.rowCount === 0) {
-      res.status(404).json({
-        results: [],
-        test_names: []
-      });
-      return;
-    }
-
-    const rows = await Promise.all(result.rows.map(async (item) => {
-      const tests = await pool.query(`SELECT * FROM ${dbNames[2]} WHERE parent = $1`, [item.id]);
-
-      return {
-        id: item.id,
-        time: item.time,
-        tests: tests.rows,
-        data: item.timestamp
-      }
-    }));
+    const resultsQuery = await pool.query(`
+      SELECT
+        p.id,
+        p.time,
+        p.timestamp as data,
+        COALESCE(json_agg(t.*) FILTER (WHERE t.id IS NOT NULL), '[]') as tests
+        FROM ${dbNames[1]} p
+        LEFT JOIN ${dbNames[2]} t ON t.parent = p.id
+        GROUP BY p.id, p.time, p.timestamp
+    `);
 
     const unique_names = await pool.query(`SELECT array_agg(DISTINCT test_name) FROM ${dbNames[2]}`);
 
 
     res.json({
-      results: rows,
+      results: resultsQuery.rows,
       test_names: unique_names.rows[0].array_agg
     });
   }),
@@ -65,13 +56,18 @@ router.post(
 
     const test_id = new_test.rows[0].id;
 
-    tests.forEach(async (test) => {
-      await pool.query(
-        `INSERT INTO ${dbNames[2]} (time, test_name, parent)
-          VALUES ($1, $2, $3)`,
-        [test.time, test.test_name, test_id],
+    if (tests.length > 0) {
+      const values = tests.map((_, i) => `($${i * 3 + 1}, $${i * 3 + 2}, $${i * 3 + 3})`)
+      const params = tests.flatMap(test => [test.time, test.test_name, test_id]);
+
+      const a = await pool.query(
+        `INSERT INTO ${dbNames[2]} (time, test_name, parent) VALUES ${values}`,
+        params
       );
-    });
+
+      res.status(200).json({ a });
+      return
+    }
 
     res.status(200).send("Тест успешно добавлен");
   })
@@ -81,20 +77,20 @@ router.get(
   '/test',
   asyncHandler(async (req: Request<{}, {}, {}, { name: string }>, res: Response) => {
     const { name } = req.query;
-    const result = await pool.query(`SELECT * FROM ${dbNames[2]} WHERE test_name = $1`, [name]);
-    const rows = await Promise.all(result.rows.map(async (item) => {
-      const tests = await pool.query(`SELECT * FROM ${dbNames[1]} WHERE id = $1`, [item.parent]);
+    const result = await pool.query(
+      `
+      SELECT
+      p.id,
+      p.test_name as name,
+      p.time,
+      t.timestamp as date
+      FROM ${dbNames[2]} p 
+      LEFT JOIN ${dbNames[1]} t on t.id = p.parent
+      WHERE p.test_name = $1
+      `, [name]
+    );
 
-      return {
-        id: item.id,
-        time: item.time,
-        test_name: item.test_name,
-        data: tests.rows[0].timestamp
-      }
-    }));
-
-
-    res.json(rows);
+    res.json(result.rows);
   })
 )
 
