@@ -12,6 +12,6 @@ mv $DST/.env.prod $DST/.env
 cd $DST
 echo "INSTALLING node_modules"
 npm install --omit=dev
-chown -R www-data:www-data $DST/*
+chown -R www-data:www-data $DST/.
 
 echo "Finished"
