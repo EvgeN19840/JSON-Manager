@@ -73,7 +73,7 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   }
   const closeDialog = () => {
     setDialogOpen(false)
-    // ** Возможно, тут нужен будет UseEffect и логика для удаления таймера )))0))0)
+
     setTimeout(() => {
       setTypeModal(null)
       setDataForDialog(null)
