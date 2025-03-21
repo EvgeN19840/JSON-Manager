@@ -21,7 +21,6 @@ import { PageKey } from './types/pages'
 function App() {
   return (
     <Routes>
-      <Route path='/' element={<Navigate to={Paths.Home} replace />} />
       <Route element={<Layout title='CayPay' />}>
         {PUBLIC_PAGES.map(({ key, route }) => {
           const Page = pagesMap[key]
