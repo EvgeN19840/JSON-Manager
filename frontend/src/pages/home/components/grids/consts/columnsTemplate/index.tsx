@@ -1,72 +1,46 @@
 // ** Types
-import { IEmployee } from "@/types/json";
+import { IEmployee } from '@/types/json'
 
 // ** MUI
-import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 
 // ** Components
-import { actionMenu } from "@/shared/components/myContextMenu/actionMenu";
-import { MyContextMenu } from "@/shared/components/myContextMenu";
-import { ContextMenuItemsCallbacks } from "@/shared/components/myContextMenu/actionMenu/types";
-import { InputField } from "@/shared/inputField";
-
-// ** Hooks
-import { useDataStateContext } from "@/pages/home/hooks/useDataStateContext";
-
+import { CommentCell } from '../../commentCell'
+import { MyContextMenu } from '@/shared/components/myContextMenu'
+import { actionMenu } from '@/shared/components/myContextMenu/actionMenu'
+import { ContextMenuItemsCallbacks } from '@/shared/components/myContextMenu/actionMenu/types'
 
 export const ColumnsTemplate = (
   _handleEditClick: (employee: IEmployee) => void,
   callbacks: ContextMenuItemsCallbacks<IEmployee>,
   isTemplateMode: boolean
 ): GridColDef<IEmployee>[] => {
-  const { data, setData } = useDataStateContext();
-
   return [
     {
-      field: "firstName",
-      headerName: "First name",
+      field: 'firstName',
+      headerName: 'First name',
       flex: 1,
       editable: false,
-      minWidth: 250,
+      minWidth: 250
     },
     {
-      field: "lastName",
-      headerName: "Last name",
+      field: 'lastName',
+      headerName: 'Last name',
       flex: 1,
       editable: false,
-      minWidth: 250,
+      minWidth: 250
     },
     {
-      field: "comment",
-      headerName: "Comment",
+      field: 'comment',
+      headerName: 'Comment',
       flex: 1,
-      renderCell: (params: GridRenderCellParams<IEmployee>) => {
-        return (
-          <InputField
-            value={params.row.comment || ""}
-            placeholder="Type your comment..."
-            noBorderRadius={true} 
-            onChange={(event) => {
-              const newComment = event.target.value;
-              if (!data?.employees) return;
-              setData((prevData) => ({
-                ...prevData,
-                employees: prevData.employees.map((emp) =>
-                  emp.eId === params.row.eId
-                    ? { ...emp, comment: newComment || "" }
-                    : emp
-                ),
-              }));
-            }}
-          />
-        );
-      },
+      renderCell: params => <CommentCell params={params} />
     },
     {
-      field: "Actions",
+      field: 'Actions',
       width: 50,
-      align: "center",
-      renderHeader: () => "",
+      align: 'center',
+      renderHeader: () => '',
       sortable: false,
       filterable: false,
       renderCell: (params: GridRenderCellParams<IEmployee>) => {
@@ -75,10 +49,9 @@ export const ColumnsTemplate = (
             items={actionMenu(
               {
                 ...callbacks,
-                onDuplicate: (employee) => callbacks.onDuplicate?.(employee),
-                saveEmployee: (employee) => callbacks.saveEmployee?.(employee),
-                removeEmployee: (employee) =>
-                  callbacks.removeEmployee?.(employee),
+                onDuplicate: employee => callbacks.onDuplicate?.(employee),
+                saveEmployee: employee => callbacks.saveEmployee?.(employee),
+                removeEmployee: employee => callbacks.removeEmployee?.(employee)
               },
               params,
               true,
@@ -86,8 +59,8 @@ export const ColumnsTemplate = (
             )}
             params={params}
           />
-        );
-      },
-    },
-  ];
-};
+        )
+      }
+    }
+  ]
+}

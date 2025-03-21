@@ -32,7 +32,6 @@ export const MyGrid = <T extends GridValidRowModel>({
         pageSizeOptions={[3, 5, 10, 20, 100]}
         sx={{
           ...StylesgridProps,
-          //  "& .MuiDataGrid-cell": { p: 0, m: 0 },
         }}
         disableRowSelectionOnClick
         onRowDoubleClick={(params) => {
