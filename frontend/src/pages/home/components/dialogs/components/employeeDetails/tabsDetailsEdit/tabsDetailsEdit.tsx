@@ -10,7 +10,8 @@ import { EmploymentStatus } from './editJobData/components/status'
 import { EditDepositAccounts } from './editDepositAccounts'
 import { EditBonuses } from './editBonuses'
 import { EditReimbursementTab } from './editReimbursements'
-import { EditDeductions } from './editDeductions'
+import { EditDeductions } from './editDeductions/otherDeductions'
+import { EditLoanSalaryAdvance } from './editDeductions/loansSalaryAdvances'
 
 export const TabsDetailsEdit: React.FC = () => {
   const { typeModalDetailsEdit, isDialogOpen, closeDialog } = useModal()
@@ -34,6 +35,8 @@ export const TabsDetailsEdit: React.FC = () => {
         return <EditReimbursementTab />
       case 'Edit deductions':
         return <EditDeductions />
+      case 'Edit loanOrAdvance':
+        return <EditLoanSalaryAdvance />
 
       default:
         return <Typography>Select a tab to view details.</Typography>

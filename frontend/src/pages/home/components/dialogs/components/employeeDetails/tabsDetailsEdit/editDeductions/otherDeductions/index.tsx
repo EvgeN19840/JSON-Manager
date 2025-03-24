@@ -6,7 +6,7 @@ import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
 import { FormWrapper, FormInput, FormFooter } from '@/shared/formElements'
 import { IOtherDeduction } from '@/types/json'
 import { useDefaultOtherDeduction } from '@/pages/home/hooks/useDefaultData'
-import { schema } from './schema'
+import { schema } from '../schema'
 
 export const EditDeductions: React.FC = () => {
   const { dataForDialog } = useModal() as {
@@ -39,7 +39,7 @@ export const EditDeductions: React.FC = () => {
 
   return (
     <Box>
-      <FormWrapper title='Custom deductions' onSubmit={handleSubmit(onSubmit)}>
+      <FormWrapper title='Other deductions' onSubmit={handleSubmit(onSubmit)}>
         {Object.keys(defaultValues)
           .filter(key => key !== 'customBambooTableRowId')
           .map(key => (
@@ -48,6 +48,7 @@ export const EditDeductions: React.FC = () => {
                 name={key as keyof IOtherDeduction}
                 label={key}
                 control={control}
+                type={typeof defaultValues[key as keyof IOtherDeduction] === 'boolean' ? 'checkbox' : 'text'}
                 errorMessage={errors[key as keyof IOtherDeduction]?.message}
               />
             </Box>

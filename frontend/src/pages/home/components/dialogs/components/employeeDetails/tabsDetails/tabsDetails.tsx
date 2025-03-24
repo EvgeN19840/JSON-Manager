@@ -13,7 +13,7 @@ import {
   BenefitsTab,
   JobInfoTab,
   DepositAccountTab,
-  OtherDeductionTab,
+  DeductionsAndLoansTab,
   BonusesTab,
   Reimbursements
 } from './index'
@@ -37,7 +37,7 @@ export const TabsDetails = () => {
       case '4':
         return <Reimbursements />
       case '5':
-        return <OtherDeductionTab />
+        return <DeductionsAndLoansTab />
       case '6':
         return <BenefitsTab />
       case '7':

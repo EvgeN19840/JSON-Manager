@@ -118,7 +118,7 @@ export const ImportDataComponent: React.FC = () => {
             />
           </FormControl>
         }
-        source={'employeeDetails'}
+        source={"general"}
       />
     </Box>
   )

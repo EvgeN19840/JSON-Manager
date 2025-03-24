@@ -53,6 +53,7 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({ children 
       | 'employmentStatus'
       | 'reimbursements'
       | 'otherDeductions'
+      | 'loansAndSalaryAdvances'
   ) => {
     setData(prevData => {
       return {
@@ -159,6 +160,11 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({ children 
               return {
                 ...employee,
                 otherDeductions: checkArray('otherDeductions', employee)
+              }
+              case'loansAndSalaryAdvances':
+              return {
+                ...employee,
+                loansAndSalaryAdvances: checkArray('loansAndSalaryAdvances', employee)
               }
             default:
               return employee

@@ -16,6 +16,7 @@ interface IUseHandleDeleteItemParams {
   | "bonuses"
   | "reimbursements"
   | "otherDeductions"
+  | "loansAndSalaryAdvances"
 }
 
 export const useHandleDeleteItem = () => {

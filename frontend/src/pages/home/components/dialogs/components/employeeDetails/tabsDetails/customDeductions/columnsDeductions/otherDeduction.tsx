@@ -56,6 +56,28 @@ export const ColumnsDeductions = (
     renderHeader: () => <HeaderDetails title='Currency Code' />
   },
   {
+    field: 'isActive',
+    headerName: 'Active',
+    minWidth: 80,
+    flex: 1,
+    renderHeader: () => <HeaderDetails title='Active' />,
+    renderCell: params => (params.row.isActive ? 'Yes' : 'No')
+  },
+  {
+    field: 'comment',
+    headerName: 'Comment',
+    minWidth: 150,
+    flex: 1,
+    renderHeader: () => <HeaderDetails title='Comment' />
+  },
+  {
+    field: 'componentType',
+    headerName: 'Component Type',
+    minWidth: 130,
+    flex: 1,
+    renderHeader: () => <HeaderDetails title='Component Type' />
+  },
+  {
     field: 'Actions',
     width: 50,
     align: 'center',

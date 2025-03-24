@@ -40,7 +40,8 @@ interface IUseHandleAddItemParams {
     | "benefits"
     | "bonuses"
     | "reimbursements"
-    | "otherDeductions";
+    | "otherDeductions"
+    | "loansAndSalaryAdvances"
 }
 
 export const useHandleAddItem = () => {

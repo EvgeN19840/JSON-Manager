@@ -2,7 +2,7 @@
 import { IBonuses, IDepositAccounts, IEmployee, IEmployeeBenefit, IEmploymentStatus, IJobInfo, IOtherDeduction, IReimbursement, ISalary, ISystemBenefit } from "@/types/json";
 
 export type IModalType = "Export data" | "Import data" | "Edit user" | "Edit benefits" | "Details" | "Edit Details" | "Duplicate" | null
-export type IModalTypeDetailsEdits = "Edit benefits details" | "Edit salary" | "Edit status" | "Edit job" | "Edit deposit accounts" | "Edit reimbursements" | "Edit Personal" | "Edit deductions" | "Edit bonuses" | null
+export type IModalTypeDetailsEdits = 'Edit loanOrAdvance'| "Edit benefits details" | "Edit salary" | "Edit status" | "Edit job" | "Edit deposit accounts" | "Edit reimbursements" | "Edit Personal" | "Edit deductions" | "Edit bonuses" | null
 export interface IModalTypeContext {
   typeModal: IModalType
   typeModalDetailsEdit: IModalTypeDetailsEdits;
