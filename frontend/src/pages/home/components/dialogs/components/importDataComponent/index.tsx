@@ -11,6 +11,7 @@ import { assignMissingIds } from '@/shared/utils'
 import { useNotification } from '@/pages/home/hooks/useNotification'
 import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
 import { useModal } from '@/pages/home/hooks/useModal'
+import { useTabs } from '@/pages/home/hooks/useTabs'
 
 const normalizeToJson = (input: string): string => {
   return input
@@ -37,7 +38,7 @@ export const ImportDataComponent: React.FC = () => {
   const { control, watch } = useForm<{ firstName: string }>({
     mode: 'onSubmit'
   })
-
+  const {  handleTabChange } = useTabs()
   const selectedName = watch('firstName')
 
   const handleImport = () => {
@@ -72,6 +73,7 @@ export const ImportDataComponent: React.FC = () => {
     setData({ employees: [selectedEmp], benefits: [...selectedEmp.benefits] })
     setDialogOpen(false)
     setInputValue('')
+    handleTabChange(null, '1')
   }
 
   const isImportDisabled = !!inputValue || !!selectedName
