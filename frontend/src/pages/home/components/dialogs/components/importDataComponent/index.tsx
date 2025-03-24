@@ -38,7 +38,7 @@ export const ImportDataComponent: React.FC = () => {
   const { control, watch } = useForm<{ firstName: string }>({
     mode: 'onSubmit'
   })
-  const {  handleTabChange } = useTabs()
+  const {  setActiveTab } = useTabs()
   const selectedName = watch('firstName')
 
   const handleImport = () => {
@@ -73,7 +73,7 @@ export const ImportDataComponent: React.FC = () => {
     setData({ employees: [selectedEmp], benefits: [...selectedEmp.benefits] })
     setDialogOpen(false)
     setInputValue('')
-    handleTabChange(null, '1')
+    setActiveTab('1')
   }
 
   const isImportDisabled = !!inputValue || !!selectedName
