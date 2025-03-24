@@ -108,7 +108,6 @@ export const Grids: FC = () => {
     handleClickOpenDialog(activeTab === '1' || activeTab === '3' ? 'Details' : 'Edit benefits', item)
   }
 
-console.log({activeTab})
   const renderGrid = () => {
     switch (activeTab) {
       case '1': {
@@ -121,7 +120,6 @@ console.log({activeTab})
           saveEmployee: saveLocalStorage,
           removeEmployee: removeLocalStore
         })
-        console.log({gridData})
         return (
           <MyGrid<IEmployee> data={gridData} columns={gridColumns} onRowDoubleClick={handleRowDoubleClickOpenDetails} />
         )
