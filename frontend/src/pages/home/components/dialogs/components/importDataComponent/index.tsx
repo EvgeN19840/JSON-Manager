@@ -73,7 +73,9 @@ export const ImportDataComponent: React.FC = () => {
     setData({ employees: [selectedEmp], benefits: [...selectedEmp.benefits] })
     setDialogOpen(false)
     setInputValue('')
+console.log(selectedName)
     setActiveTab('1')
+
   }
 
   const isImportDisabled = !!inputValue || !!selectedName
