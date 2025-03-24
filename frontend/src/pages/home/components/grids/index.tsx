@@ -120,9 +120,11 @@ export const Grids: FC = () => {
           saveEmployee: saveLocalStorage,
           removeEmployee: removeLocalStore
         })
+        console.log({gridData})
         return (
           <MyGrid<IEmployee> data={gridData} columns={gridColumns} onRowDoubleClick={handleRowDoubleClickOpenDetails} />
         )
+      
       }
       case '2': {
         const gridData = data.benefits

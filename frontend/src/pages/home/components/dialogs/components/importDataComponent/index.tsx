@@ -76,7 +76,6 @@ export const ImportDataComponent: React.FC = () => {
     setActiveTab('1')
 
   }
-console.log(selectedName)
   const isImportDisabled = !!inputValue || !!selectedName
   return (
     <Box>
