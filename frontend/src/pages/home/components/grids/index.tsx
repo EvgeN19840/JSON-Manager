@@ -48,8 +48,8 @@ export const Grids: FC = () => {
           employees: listTemplate().employees,
           benefits: prev.benefits
         }
-      } else if (activeTab === '1' && originalEmployees.current) {
-        const restoredEmployees = [...(originalEmployees.current ?? [])]
+      } else if (activeTab === '1' && originalEmployees.current?.length) {
+        const restoredEmployees = [...originalEmployees.current]
         originalEmployees.current = null
         return {
           ...prev,
@@ -120,11 +120,9 @@ export const Grids: FC = () => {
           saveEmployee: saveLocalStorage,
           removeEmployee: removeLocalStore
         })
-        console.log({gridData})
         return (
           <MyGrid<IEmployee> data={gridData} columns={gridColumns} onRowDoubleClick={handleRowDoubleClickOpenDetails} />
         )
-      
       }
       case '2': {
         const gridData = data.benefits
@@ -133,7 +131,6 @@ export const Grids: FC = () => {
           deleteItem,
           addItem
         })
-
         return <MyGrid<ISystemBenefit> data={gridData} columns={gridColumns} onRowDoubleClick={() => {}} />
       }
       case '3': {
