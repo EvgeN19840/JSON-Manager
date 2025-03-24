@@ -3,16 +3,12 @@ import { getAllLocalStorage } from "@/services/storageService";
 import { ITypeJSON, IEmployee } from "@/types/json";
 
 export const listTemplate = (): ITypeJSON => {
-  let localStorageEmployees: IEmployee[] = [];
+    const localStorageEmployees: IEmployee[] = getAllLocalStorage();
+    console.log(" localStorageEmployees", localStorageEmployees);
+    const mergedEmployees: IEmployee[] = [...localStorageEmployees, ...employeeData.employees];
 
-  if (typeof window !== "undefined") {
-    localStorageEmployees = getAllLocalStorage();
-  }
-
-  const mergedEmployees: IEmployee[] = [...localStorageEmployees, ...employeeData.employees];
-
-  return {
-    employees: mergedEmployees,
-    benefits: employeeData.benefits,
-  };
+    return {
+        employees: mergedEmployees,
+        benefits: employeeData.benefits
+    };
 };
