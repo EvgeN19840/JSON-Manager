@@ -12,6 +12,10 @@ mv $DST/.env.prod $DST/.env
 cd $DST
 echo "INSTALLING node_modules"
 npm install --omit=dev
+
+echo "APPLYING MIGRATIONS"
+npm run migrate:up
+
 chown -R www-data:www-data $DST/.
 
 echo "Finished"

@@ -42,6 +42,17 @@ router.get(
   }),
 );
 
+router.get('/table-structure/:tableName', asyncHandler(async (req, res) => {
+  const { tableName } = req.params;
+  const result = await pool.query(`
+    SELECT column_name, data_type, is_nullable, column_default 
+    FROM information_schema.columns 
+    WHERE table_name = $1
+    ORDER BY ordinal_position
+  `, [tableName]);
+  res.json(result.rows);
+}));
+
 router.post(
   '/tests/add',
   asyncHandler(async (req: Request<{}, {}, { tests: ITestClient[], all_time: number }>, res: Response<any>) => {
