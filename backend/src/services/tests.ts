@@ -18,40 +18,35 @@ const router = express.Router();
 router.get(
   '/tests',
   asyncHandler(async (_: Request, res: Response<{ results: IAllTimeTestClient[], test_names: string[] } | string>) => {
-    const resultsQuery = await pool.query(`
-      SELECT
-        p.id,
-        p.time,
-        p.timestamp as date,
-        COALESCE(json_agg(t.*) FILTER (WHERE t.id IS NOT NULL), '[]') AS tests
-        FROM ${dbNames[1]} p
-        LEFT JOIN ${dbNames[2]} t ON t.parent = p.id
-        GROUP BY p.id, p.time, p.timestamp
-        ORDER BY p.timestamp DESC
-    `);
+    const result = await pool.query(`SELECT * FROM ${dbNames[1]}`);
+    if (result.rowCount === 0) {
+      res.status(404).json({
+        results: [],
+        test_names: []
+      });
+      return;
+    }
 
-    const uniqueNamesResult = await pool.query(`SELECT unique_names FROM unique_test_names`);
-    const unique_names: string[] = uniqueNamesResult.rows[0].unique_names || [];
+    const rows = await Promise.all(result.rows.map(async (item) => {
+      const tests = await pool.query(`SELECT * FROM ${dbNames[2]} WHERE parent = $1`, [item.id]);
 
+      return {
+        id: item.id,
+        time: item.time,
+        tests: tests.rows,
+        data: item.timestamp
+      }
+    }));
+
+    const unique_names = await pool.query(`SELECT array_agg(DISTINCT test_name) FROM ${dbNames[2]}`);
 
 
     res.json({
-      results: resultsQuery.rows,
-      test_names: unique_names
+      results: rows,
+      test_names: unique_names.rows[0].array_agg
     });
   }),
 );
-
-router.get('/table-structure/:tableName', asyncHandler(async (req, res) => {
-  const { tableName } = req.params;
-  const result = await pool.query(`
-    SELECT column_name, data_type, is_nullable, column_default 
-    FROM information_schema.columns 
-    WHERE table_name = $1
-    ORDER BY ordinal_position
-  `, [tableName]);
-  res.json(result.rows);
-}));
 
 router.post(
   '/tests/add',
@@ -70,17 +65,13 @@ router.post(
 
     const test_id = new_test.rows[0].id;
 
-    if (tests.length > 0) {
-      const values = tests.map((_, i) => `($${i * 3 + 1}, $${i * 3 + 2}, $${i * 3 + 3})`)
-      const params = tests.flatMap(test => [test.time, test.test_name, test_id]);
-
-      const a = await pool.query(
-        `INSERT INTO ${dbNames[2]} (time, test_name, parent) VALUES ${values}`,
-        params
+    tests.forEach(async (test) => {
+      await pool.query(
+        `INSERT INTO ${dbNames[2]} (time, test_name, parent)
+          VALUES ($1, $2, $3)`,
+        [test.time, test.test_name, test_id],
       );
-    }
-
-    await pool.query(`REFRESH MATERIALIZED VIEW unique_test_names`);
+    });
 
     res.status(200).send("Тест успешно добавлен");
   })
@@ -90,20 +81,20 @@ router.get(
   '/test',
   asyncHandler(async (req: Request<{}, {}, {}, { name: string }>, res: Response) => {
     const { name } = req.query;
-    const result = await pool.query(
-      `
-      SELECT
-      t.id,
-      t.test_name AS name,
-      t.time,
-      p.timestamp AS date
-      FROM ${dbNames[2]} t 
-      LEFT JOIN ${dbNames[1]} p on p.id = t.parent
-      WHERE t.test_name = $1
-      `, [name]
-    );
+    const result = await pool.query(`SELECT * FROM ${dbNames[2]} WHERE test_name = $1`, [name]);
+    const rows = await Promise.all(result.rows.map(async (item) => {
+      const tests = await pool.query(`SELECT * FROM ${dbNames[1]} WHERE id = $1`, [item.parent]);
 
-    res.json(result.rows);
+      return {
+        id: item.id,
+        time: item.time,
+        test_name: item.test_name,
+        data: tests.rows[0].timestamp
+      }
+    }));
+
+
+    res.json(rows);
   })
 )
 
