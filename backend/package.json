@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node src/app.ts",
-    "build": "tsc && cp src/.env.prod dist/ && cp package.json dist/ && cp package-lock.json dist/",
+    "build": "tsc && cp src/.env.prod dist/ && cp package.json dist/ && cp package-lock.json dist/ && cp -R migrations dist/",
     "test": "echo \"Error: no test specified\" && exit 1",
     "migrate:up": "node-pg-migrate up",
     "migrate:down": "node-pg-migrate down",
