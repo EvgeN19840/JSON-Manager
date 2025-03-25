@@ -14,7 +14,7 @@ const port = process.env.APP_PORT
 
 const allowedOrigins = [
   'http://localhost:5173', 
-  'https://your-production-domain.com' 
+  'https://json-manager-gamma.vercel.app'
 ];
 
 app.use(
