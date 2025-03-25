@@ -22,20 +22,22 @@ router.get(
       SELECT
         p.id,
         p.time,
-        p.timestamp as data,
+        p.timestamp as date,
         COALESCE(json_agg(t.*) FILTER (WHERE t.id IS NOT NULL), '[]') AS tests
         FROM ${dbNames[1]} p
         LEFT JOIN ${dbNames[2]} t ON t.parent = p.id
         GROUP BY p.id, p.time, p.timestamp
+        ORDER BY p.timestamp DESC
     `);
 
-    const unique_names = await pool.query(`SELECT array_agg(DISTINCT test_name) FROM ${dbNames[2]}`);
+    const uniqueNamesResult = await pool.query(`SELECT unique_names FROM unique_test_names`);
+    const unique_names: string[] = uniqueNamesResult.rows[0].unique_names || [];
 
-    //КЭШ!!!!!!!!!! 
+
 
     res.json({
       results: resultsQuery.rows,
-      test_names: unique_names.rows[0].array_agg
+      test_names: unique_names
     });
   }),
 );
@@ -65,12 +67,9 @@ router.post(
         `INSERT INTO ${dbNames[2]} (time, test_name, parent) VALUES ${values}`,
         params
       );
-
-      // Транзакции на два инсерта и если все чики брики, то обе применяем 
-
-      res.status(200).json({ a });
-      return
     }
+
+    await pool.query(`REFRESH MATERIALIZED VIEW unique_test_names`);
 
     res.status(200).send("Тест успешно добавлен");
   })

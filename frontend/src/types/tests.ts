@@ -10,7 +10,7 @@ export interface IMetrics {
 
 export interface IAllTimeTest {
   id: number,
-  time: string,
+  time: number,
 }
 
 export interface ITestClient {
@@ -24,6 +24,11 @@ export interface ITestServer extends ITestClient {
 }
 
 export interface IAllTimeTestClient extends IAllTimeTest {
-  date:string
+  date: string
   tests: ITestClient[]
+}
+
+export interface ITest extends IAllTimeTest {
+  name: string
+  date: string
 }
