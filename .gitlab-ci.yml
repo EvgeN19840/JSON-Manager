@@ -1,0 +1,33 @@
+stages:
+  - build
+  - deploy
+
+backend-build:
+  only:
+    refs:
+    - main
+    changes:
+      - backend/src/**/*
+  stage: build
+  artifacts:
+    paths:
+    - backend/dist/
+    expire_in: 7 days
+  script:
+    - echo "Building BACKEND"
+    - cd ./backend
+    - npm i
+    - npm run build    
+
+backend-deploy:
+  stage: deploy
+  only:
+    refs:
+    - main
+    changes:
+      - backend/src/**/*
+  dependencies:
+    - backend-build
+  script:
+    - echo "DEPLOY"
+    - sudo /bin/bash ./deploy.sh
