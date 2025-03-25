@@ -10,7 +10,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
-const port = process.env.APP_PORT
+const port = process.env.DB_PORT
 
 const allowedOrigins = [
   'http://localhost:5173', 
