@@ -127,7 +127,9 @@ export const Grids: FC = () => {
   const renderGrid = () => {
     switch (activeTab) {
       case '1': {
+    
         const gridData = data.employees
+        console.log({gridData})
         const gridColumns = ColumnsEmployee(handleEditDialogOpen, {
           openForm: handleRowDoubleClickOpenDetails,
           deleteItem,
