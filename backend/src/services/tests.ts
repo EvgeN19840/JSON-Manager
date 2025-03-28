@@ -28,8 +28,16 @@ router.get(
       ORDER BY p.timestamp DESC
     `);
 
-    const uniqueNamesResult = await pool.query(`SELECT unique_names FROM unique_test_names`);
-    const unique_names: string[] = uniqueNamesResult.rows[0].unique_names || [];
+    let unique_names: string[] = [];
+    try {
+      const uniqueNamesResult = await pool.query(`SELECT unique_names FROM unique_test_names`);
+      if (uniqueNamesResult.rows.length > 0) {
+        unique_names = uniqueNamesResult.rows[0].unique_names || [];
+      }
+    } catch (error) {
+      console.warn('Материализованное представление unique_test_names не найдено, возвращаем пустой массив');
+      unique_names = [];
+    }
 
     res.status(200).json(createResponse(
       { results: resultsQuery.rows, test_names: unique_names },
