@@ -1,3 +1,4 @@
+import { newToast } from '@/shared/components/toast';
 import axios, {
   AxiosInstance,
   AxiosRequestConfig,
@@ -6,8 +7,8 @@ import axios, {
 } from 'axios';
 
 const API_HEADERS = {
-  Accept: 'application/ld+json',
-  'Content-Type': 'application/ld+json',
+  Accept: 'application/json',
+  'Content-Type': 'application/json',
 };
 
 const FILE_API_HEADERS = {
@@ -32,6 +33,32 @@ const createApiInstance = (
   instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     return config;
   });
+
+  instance.interceptors.response.use(
+    (response: AxiosResponse) => {
+      if (
+        response.config.method !== 'get' &&
+        response.data &&
+        response.data.successDescription
+      ) {
+        newToast({
+          type: 'success',
+          text: response.data.successDescription,
+          infin: false
+        });
+      }
+      return response;
+    },
+    (error) => {
+      const errorMessage =
+        error.response && error.response.data && error.response.data.errors
+          ? error.response.data.errors
+          : error.message;
+      newToast({ type: 'error', text: errorMessage, infin: false });
+      return Promise.reject(error);
+    }
+  );
+
 
   return instance;
 };

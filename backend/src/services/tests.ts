@@ -1,102 +1,183 @@
 // Desc: IMetrics service
 import express, { Request, Response } from 'express';
-
-// ** Utils
 import asyncHandler from 'express-async-handler';
-
-// ** Database
 import pool from '../db';
-
-// ** Types
 import { IAllTimeTestClient, ITestClient } from '../types';
-
-// ** Consts
 import { dbNames } from '../constants/dbNames';
+import { ApiResponse } from '../types/apiResponse';
+import { createResponse } from '../utils/createResponse';
 
 const router = express.Router();
 
 router.get(
   '/tests',
-  asyncHandler(async (_: Request, res: Response<{ results: IAllTimeTestClient[], test_names: string[] } | string>) => {
-    const result = await pool.query(`SELECT * FROM ${dbNames[1]}`);
-    if (result.rowCount === 0) {
-      res.status(404).json({
-        results: [],
-        test_names: []
-      });
-      return;
+  asyncHandler(async (_: Request, res: Response<ApiResponse<{ results: IAllTimeTestClient[]; test_names: string[] }>>) => {
+    const resultsQuery = await pool.query(`
+      SELECT
+        p.id,
+        p.time,
+        p.status,
+        p.workers,
+        p.env,
+        p.comment,
+        p.timestamp as date,
+        COALESCE(json_agg(t.*) FILTER (WHERE t.id IS NOT NULL), '[]') AS tests
+      FROM ${dbNames[1]} p
+      LEFT JOIN ${dbNames[2]} t ON t.parent = p.id
+      GROUP BY p.id, p.time, p.timestamp
+      ORDER BY p.timestamp DESC
+    `);
+
+    let unique_names: string[] = [];
+    try {
+      const uniqueNamesResult = await pool.query(`SELECT unique_names FROM unique_test_names`);
+      if (uniqueNamesResult.rows.length > 0) {
+        unique_names = uniqueNamesResult.rows[0].unique_names || [];
+      }
+    } catch (error) {
+      console.warn('Материализованное представление unique_test_names не найдено, возвращаем пустой массив');
+      unique_names = [];
     }
 
-    const rows = await Promise.all(result.rows.map(async (item) => {
-      const tests = await pool.query(`SELECT * FROM ${dbNames[2]} WHERE parent = $1`, [item.id]);
-
-      return {
-        id: item.id,
-        time: item.time,
-        tests: tests.rows,
-        data: item.timestamp
-      }
-    }));
-
-    const unique_names = await pool.query(`SELECT array_agg(DISTINCT test_name) FROM ${dbNames[2]}`);
-
-
-    res.json({
-      results: rows,
-      test_names: unique_names.rows[0].array_agg
-    });
-  }),
+    res.status(200).json(createResponse(
+      { results: resultsQuery.rows, test_names: unique_names },
+      null,
+      null,
+      true
+    ));
+  })
 );
 
 router.post(
   '/tests/add',
-  asyncHandler(async (req: Request<{}, {}, { tests: ITestClient[], all_time: number }>, res: Response<any>) => {
-    const { tests, all_time } = req.body;
+  asyncHandler(async (req: Request<{}, {}, { tests: ITestClient[]; env: string, all_time: number; status: string; workers: number }>, res: Response<ApiResponse<null>>) => {
+    const { tests, all_time, status, workers, env } = req.body;
+
     if (!tests || !all_time) {
-      res.status(400).send('Некорректные данные');
+      res.status(400).json(createResponse(null, null, 'Некорректные данные', false));
       return;
     }
 
-    const new_test = await pool.query(
-      `INSERT INTO ${dbNames[1]} (time)
-        VALUES ($1) RETURNING *`,
-      [all_time],
-    );
+    const client = await pool.connect();
 
-    const test_id = new_test.rows[0].id;
+    try {
+      await client.query('BEGIN');
 
-    tests.forEach(async (test) => {
-      await pool.query(
-        `INSERT INTO ${dbNames[2]} (time, test_name, parent)
-          VALUES ($1, $2, $3)`,
-        [test.time, test.test_name, test_id],
+      const new_test = await client.query(
+        `INSERT INTO ${dbNames[1]} (time, status, workers, env)
+         VALUES ($1, $2, $3, $4) RETURNING *`,
+        [all_time, status, workers, env]
       );
-    });
 
-    res.status(200).send("Тест успешно добавлен");
+      const test_id = new_test.rows[0].id;
+
+      if (tests.length > 0) {
+        const values = tests.map((_, i) => `($${i * 4 + 1}, $${i * 4 + 2}, $${i * 4 + 3}, $${i * 4 + 4})`);
+        const params = tests.flatMap(test => [test.time, test.test_name, test_id, test.status]);
+
+        await client.query(
+          `INSERT INTO ${dbNames[2]} (time, test_name, parent, status) VALUES ${values}`,
+          params
+        );
+      }
+
+      await client.query(`REFRESH MATERIALIZED VIEW unique_test_names`);
+
+      await client.query('COMMIT');
+      res.status(200).json(createResponse(null, 'Тест успешно добавлен', null, true));
+    } catch (error) {
+      await client.query('ROLLBACK');
+      console.error('Transaction failed:', error);
+      res.status(500).json(createResponse(null, null, 'Ошибка при добавлении теста', false));
+    } finally {
+      client.release();
+    }
   })
-)
+);
 
 router.get(
   '/test',
-  asyncHandler(async (req: Request<{}, {}, {}, { name: string }>, res: Response) => {
+  asyncHandler(async (req: Request<{}, {}, {}, { name: string }>, res: Response<ApiResponse<any>>) => {
     const { name } = req.query;
-    const result = await pool.query(`SELECT * FROM ${dbNames[2]} WHERE test_name = $1`, [name]);
-    const rows = await Promise.all(result.rows.map(async (item) => {
-      const tests = await pool.query(`SELECT * FROM ${dbNames[1]} WHERE id = $1`, [item.parent]);
+    const result = await pool.query(
+      `
+      SELECT
+        t.id,
+        t.test_name AS name,
+        t.time,
+        p.timestamp AS date
+      FROM ${dbNames[2]} t 
+      LEFT JOIN ${dbNames[1]} p on p.id = t.parent
+      WHERE t.test_name = $1
+      `, [name]
+    );
 
-      return {
-        id: item.id,
-        time: item.time,
-        test_name: item.test_name,
-        data: tests.rows[0].timestamp
-      }
-    }));
-
-
-    res.json(rows);
+    res.status(200).json(createResponse(result.rows, null, null, true));
   })
-)
+);
 
+router.delete('/tests', asyncHandler(async (req: Request, res: Response<ApiResponse<null>>) => {
+  await pool.query(
+    ` 
+    DELETE FROM ${dbNames[1]};
+    DELETE FROM ${dbNames[2]};
+    `
+  );
+  res.status(200).json(createResponse(null, 'Deleted all tests', null, true));
+}));
+
+router.put(
+  '/tests/add-comment/main',
+  asyncHandler(async (
+    req: Request<{}, {}, { id: number; comment?: string }>,
+    res: Response<ApiResponse<any>>
+  ) => {
+    const { id, comment } = req.body;
+    if (!id) {
+      res.status(400).json(createResponse(null, null, 'Некорректные данные', false));
+      return;
+    }
+    const commentToSave = comment && comment.trim() !== '' ? comment : null;
+
+    const result = await pool.query(
+      `UPDATE ${dbNames[1]} SET comment = $1 WHERE id = $2 RETURNING *`,
+      [commentToSave, id]
+    );
+
+    if (result.rowCount === 0) {
+      res.status(404).json(createResponse(null, null, 'Запись не найдена', false));
+      return;
+    }
+
+    res.status(200).json(createResponse(result.rows[0], 'Комментарий успешно добавлен к основной записи', null, true));
+  })
+);
+
+router.put(
+  '/tests/add-comment/test',
+  asyncHandler(async (
+    req: Request<{}, {}, { id: number; comment?: string }>,
+    res: Response<ApiResponse<any>>
+  ) => {
+    const { id, comment } = req.body;
+    if (!id) {
+      res.status(400).json(createResponse(null, null, 'Некорректные данные', false));
+      return;
+    }
+    const commentToSave = comment && comment.trim() !== '' ? comment : null;
+
+    const result = await pool.query(
+      `UPDATE ${dbNames[2]} SET comment = $1 WHERE id = $2 RETURNING *`,
+      [commentToSave, id]
+    );
+
+    if (result.rowCount === 0) {
+      res.status(404).json(createResponse(null, null, 'Запись не найдена', false));
+      return;
+    }
+
+    res.status(200).json(createResponse(result.rows[0], 'Комментарий успешно добавлен к тесту', null, true));
+  })
+);
 
 export default router;

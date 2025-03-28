@@ -18,7 +18,7 @@ import { GroupedBarChart, TestSelect } from './components'
 import { optionsSingleTest } from './utils/optionsSingleTest'
 
 export const CommonTests = () => {
-  const { load, data, testsNames } = useTests()
+  const { load, data, testsNames, addCommentToTest } = useTests()
 
   const [selectedTest, setSelectedTest] = useState<string>('AllTest')
   const [customChartData, setCustomChartData] = useState<ChartData<'line'> | null>(null)
@@ -30,14 +30,14 @@ export const CommonTests = () => {
         setCustomLoading(true)
         try {
           const customData = await getTest(selectedTest)
-          const newLabels = customData.map(item => DateFormat(item.date))
+          const newLabels = customData.body.map(item => DateFormat(item.date))
           const newChartData: ChartData<'line'> = {
             labels: newLabels,
             datasets: [
               createLineDataset(
                 'Custom Data',
                 colors.lineChartYellow,
-                customData.map(item => item.time),
+                customData.body.map(item => item.time),
                 4,
                 colors.whiteColor
               )
@@ -66,12 +66,12 @@ export const CommonTests = () => {
         title={`${selectedTest === 'AllTest' ? 'Commons Test Metrics' : `${selectedTest} Test Metrics`} `}
         action={<TestSelect testsNames={testsNames} selectedTest={selectedTest} onChange={handleTestSelectChange} />}
       />
-      <CardContent >
+      <CardContent>
         {selectedTest === 'AllTest' ? (
           load ? (
             <Box sx={{ height: '400px' }}>Loading</Box>
           ) : (
-            <GroupedBarChart data={data} />
+            <GroupedBarChart addCommentToTest={addCommentToTest} data={data} />
           )
         ) : customLoading || !customChartData ? (
           <Box sx={{ height: '400px' }}>Loading</Box>

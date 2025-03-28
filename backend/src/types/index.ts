@@ -16,6 +16,7 @@ export interface IAllTimeTest {
 export interface ITestClient {
   time: number;
   test_name: string;
+  status: string;
 }
 
 export interface ITestServer extends ITestClient {
