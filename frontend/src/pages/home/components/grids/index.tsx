@@ -27,21 +27,6 @@ import {
   removeEmployeesFromLocalStorage
 } from '@/services/storageService'
 
-const LOCAL_STORAGE_KEY = 'savedEmployeesTab1'
-
-const saveTab1ToLocalStorage = (employees: IEmployee[]) => {
-  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(employees))
-}
-
-const restoreTab1FromLocalStorage = (): IEmployee[] | null => {
-  const item = localStorage.getItem(LOCAL_STORAGE_KEY)
-  return item ? JSON.parse(item) : null
-}
-
-const clearTab1FromLocalStorage = () => {
-  localStorage.removeItem(LOCAL_STORAGE_KEY)
-}
-
 export const Grids: FC = () => {
   const { data, setData, seteIdSelectedEmployee } = useDataStateContext()
   const { handleClickOpenDialog, setDialogOpen } = useModal()
@@ -51,11 +36,14 @@ export const Grids: FC = () => {
   const { activeTab } = useTabs()
 
   const originalEmployeesTab3 = useRef<IEmployee[] | null>(null)
+  const savedEmployeesTab1 = useRef<IEmployee[] | null>(null)
 
   useEffect(() => {
     setData((prev: ITypeJSON) => {
       if (activeTab === '3') {
-        saveTab1ToLocalStorage(prev.employees)
+        if (savedEmployeesTab1.current === null) {
+          savedEmployeesTab1.current = [...prev.employees]
+        }
         if (originalEmployeesTab3.current === null) {
           originalEmployeesTab3.current = [...prev.employees]
         }
@@ -64,15 +52,13 @@ export const Grids: FC = () => {
           employees: listTemplate().employees,
           benefits: prev.benefits
         }
-      } else if (activeTab === '1') {
-        const restoredEmployees = restoreTab1FromLocalStorage()
-        if (restoredEmployees) {
-          clearTab1FromLocalStorage()
-          return {
-            ...prev,
-            employees: restoredEmployees,
-            benefits: prev.benefits
-          }
+      } else if (activeTab === '1' && savedEmployeesTab1.current) {
+        const restoredEmployees = [...savedEmployeesTab1.current]
+        savedEmployeesTab1.current = null
+        return {
+          ...prev,
+          employees: restoredEmployees,
+          benefits: prev.benefits
         }
       }
       return prev
@@ -89,9 +75,9 @@ export const Grids: FC = () => {
 
   const addItem = (item: IEmployee | ISystemBenefit) => {
     if ('eId' in item) {
-      handleAddItem({ item, type: 'employees' })
+      handleAddItem({ item: item, type: 'employees' })
     } else {
-      handleAddItem({ item, type: 'benefits' })
+      handleAddItem({ item: item, type: 'benefits' })
     }
   }
 
@@ -103,7 +89,9 @@ export const Grids: FC = () => {
 
   const saveLocalStorage = (employee: IEmployee) => {
     const message = saveEmployeeToLocalStorage(employee)
+
     showNotification(message.text, message.type)
+
     setDialogOpen(false)
   }
   const removeLocalStore = (employee: IEmployee) => {
@@ -127,9 +115,7 @@ export const Grids: FC = () => {
   const renderGrid = () => {
     switch (activeTab) {
       case '1': {
-    
         const gridData = data.employees
-        console.log({gridData})
         const gridColumns = ColumnsEmployee(handleEditDialogOpen, {
           openForm: handleRowDoubleClickOpenDetails,
           deleteItem,
