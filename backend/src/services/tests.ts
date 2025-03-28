@@ -18,6 +18,7 @@ router.get(
         p.time,
         p.status,
         p.workers,
+        p.env,
         p.comment,
         p.timestamp as date,
         COALESCE(json_agg(t.*) FILTER (WHERE t.id IS NOT NULL), '[]') AS tests
@@ -41,8 +42,8 @@ router.get(
 
 router.post(
   '/tests/add',
-  asyncHandler(async (req: Request<{}, {}, { tests: ITestClient[]; all_time: number; status: string; workers: number }>, res: Response<ApiResponse<null>>) => {
-    const { tests, all_time, status, workers } = req.body;
+  asyncHandler(async (req: Request<{}, {}, { tests: ITestClient[]; env: string, all_time: number; status: string; workers: number }>, res: Response<ApiResponse<null>>) => {
+    const { tests, all_time, status, workers, env } = req.body;
 
     if (!tests || !all_time) {
       res.status(400).json(createResponse(null, null, 'Некорректные данные', false));
@@ -55,9 +56,9 @@ router.post(
       await client.query('BEGIN');
 
       const new_test = await client.query(
-        `INSERT INTO ${dbNames[1]} (time, status, workers)
-         VALUES ($1, $2, $3) RETURNING *`,
-        [all_time, status, workers]
+        `INSERT INTO ${dbNames[1]} (time, status, workers, env)
+         VALUES ($1, $2, $3, $4) RETURNING *`,
+        [all_time, status, workers, env]
       );
 
       const test_id = new_test.rows[0].id;
