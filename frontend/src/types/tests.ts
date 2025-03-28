@@ -11,11 +11,15 @@ export interface IMetrics {
 export interface IAllTimeTest {
   id: number,
   time: number,
+  status: string
 }
 
 export interface ITestClient {
+  id: number;
   time: number;
   test_name: string;
+  status: string
+  comment: string | null;
 }
 
 export interface ITestServer extends ITestClient {
@@ -26,6 +30,8 @@ export interface ITestServer extends ITestClient {
 export interface IAllTimeTestClient extends IAllTimeTest {
   date: string
   tests: ITestClient[]
+  workers: number,
+  comment: string | null;
 }
 
 export interface ITest extends IAllTimeTest {

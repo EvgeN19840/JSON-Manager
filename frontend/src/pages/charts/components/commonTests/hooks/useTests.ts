@@ -3,7 +3,8 @@ import { IAllTimeTestClient } from '@/types/tests'
 import { useEffect, useState } from 'react'
 
 // ** ApiService
-import { getTests } from '@/pages/charts/service'
+import { addComment, getTests } from '@/pages/charts/service'
+import { IAddComment } from '@/pages/charts/service/types'
 
 function useTests() {
   const [load, setLoad] = useState<boolean>(true)
@@ -12,10 +13,16 @@ function useTests() {
 
   const getData = async () => {
     await getTests().then(r => {
-      setTestsNames(r.test_names)
-      setData(r.results)
+      setTestsNames(r.body.test_names)
+      setData(r.body.results)
       setLoad(false)
     });
+  }
+
+  const addCommentToTest = async (data: IAddComment) => {
+    await addComment(data).then(() => {
+      getData()
+    })
   }
 
   useEffect(() => {
@@ -26,6 +33,7 @@ function useTests() {
     data,
     load,
     testsNames,
+    addCommentToTest
   }
 }
 
