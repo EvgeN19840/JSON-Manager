@@ -17,6 +17,9 @@ import { getTest } from '../../service'
 import { GroupedBarChart, CustomSelect } from './components'
 import { optionsSingleTest } from './utils/optionsSingleTest'
 
+// Types
+import { ITest } from '@/types/tests'
+
 export const CommonTests = () => {
   const { load, data, testsNames, envs, getData, addCommentToTest } = useTests()
 
@@ -37,14 +40,15 @@ export const CommonTests = () => {
         setCustomLoading(true)
         try {
           const customData = await getTest(selectedTest, selectedEnv)
-          const newLabels = customData.body.map(item => DateFormat(item.date))
+          const body = customData.body as ITest[]
+          const newLabels = body.map(item => DateFormat(item.date))
           const newChartData: ChartData<'line'> = {
             labels: newLabels,
             datasets: [
               createLineDataset(
                 'Custom Data',
                 colors.lineChartYellow,
-                customData.body.map(item => item.time),
+                body.map(item => item.time),
                 4,
                 colors.whiteColor
               )

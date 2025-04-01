@@ -12,6 +12,7 @@ import {
   IBonuses,
   IReimbursement,
   IOtherDeduction,
+  ILoanOrSalaryAdvance,
 } from "@/types/json";
 
 export const useDefaultEmployeeBasicInfo = (): IEmployeeBasicInfo => {
@@ -135,22 +136,51 @@ export const useDefaultDepositAccounts = (): IDepositAccounts => {
   };
 };
 
-
 export const useDefaultOtherDeduction = (): IOtherDeduction => {
   const { dataForDialog } = useModal() as {
     dataForDialog: IOtherDeduction | null;
   };
 
   return {
-    name: dataForDialog?.name || "",
+    name: dataForDialog?.name || '',
     startDate: dataForDialog?.startDate || null,
     endDate: dataForDialog?.endDate || null,
-    payrollOperationFrequency: dataForDialog?.payrollOperationFrequency || "",
+    payrollOperationFrequency: dataForDialog?.payrollOperationFrequency || '',
     customBambooTableRowId: dataForDialog?.customBambooTableRowId || 0,
     value: dataForDialog?.value || 0,
-    currencyCode: dataForDialog?.currencyCode || "",
-  };
+    currencyCode: dataForDialog?.currencyCode || '', 
+    isActive: dataForDialog?.isActive || false,
+    comment: dataForDialog?.comment || null,
+    componentType: dataForDialog?.componentType || 0,
+  }
 };
+
+
+
+
+
+
+export const useDefaultLoanSalaryAdvance = (): ILoanOrSalaryAdvance => {
+  const { dataForDialog } = useModal() as {
+    dataForDialog: ILoanOrSalaryAdvance | null;
+  };
+
+  return {
+    name: dataForDialog?.name || '',
+    startDate: dataForDialog?.startDate || null,
+    endDate: dataForDialog?.endDate || null,
+    payrollOperationFrequency: dataForDialog?.payrollOperationFrequency || '',
+    customBambooTableRowId: dataForDialog?.customBambooTableRowId || 0,
+    value: dataForDialog?.value || 0,
+    currencyCode: dataForDialog?.currencyCode || '', 
+    isActive: dataForDialog?.isActive || false,
+    comment: dataForDialog?.comment || null,
+    componentType: dataForDialog?.componentType || 0,
+  }
+};
+
+
+
 
 
 export const useDefaultEmploymentStatus = (): IEmploymentStatus => {

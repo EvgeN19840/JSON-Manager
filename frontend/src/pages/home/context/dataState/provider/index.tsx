@@ -53,6 +53,7 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({ children 
       | 'employmentStatus'
       | 'reimbursements'
       | 'otherDeductions'
+      |'loansAndSalaryAdvances'
   ) => {
     setData(prevData => {
       return {
