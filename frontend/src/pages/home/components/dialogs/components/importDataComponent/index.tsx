@@ -1,17 +1,37 @@
+// ** React
 import { useState } from 'react'
-import { FormFooter } from '@/shared/formElements/formFooter'
-import { InputField } from '@/shared/inputField'
-import { findEmployeeByName } from '@/shared/utils/findEmployeeByName'
-import { ITypeJSON } from '@/types/json'
-import { Box, Typography, FormControl, MenuItem, Select } from '@mui/material'
 
+// ** MUI
+import {
+  Box,
+  Typography,
+  FormControl,
+  MenuItem,
+  Select
+} from '@mui/material'
+
+// ** External Libraries
 import { useForm, Controller } from 'react-hook-form'
-import { listTemplate } from '@/shared/utils/listTemplate'
+
+// ** Components
+import { FormFooter } from '@/shared/formElements'
+import { InputField } from '@/shared/inputField'
+
+// ** Hooks
+import {
+  useDataStateContext,
+  useModal,
+  useNotification
+} from '@/pages/home/hooks'
+
+// ** Utils
 import { assignMissingIds } from '@/shared/utils'
-import { useNotification } from '@/pages/home/hooks/useNotification'
-import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
-import { useModal } from '@/pages/home/hooks/useModal'
-import { useTabs } from '@/pages/home/hooks/useTabs'
+import { findEmployeeByName } from '@/shared/utils/findEmployeeByName'
+import { listTemplate } from '@/shared/utils/listTemplate'
+
+// ** Types
+import { ITypeJSON } from '@/types/json'
+
 
 const normalizeToJson = (input: string): string => {
   return input
@@ -38,7 +58,7 @@ export const ImportDataComponent: React.FC = () => {
   const { control, watch } = useForm<{ firstName: string }>({
     mode: 'onSubmit'
   })
-  const {  setActiveTab } = useTabs()
+
   const selectedName = watch('firstName')
 
   const handleImport = () => {
@@ -73,9 +93,8 @@ export const ImportDataComponent: React.FC = () => {
     setData({ employees: [selectedEmp], benefits: [...selectedEmp.benefits] })
     setDialogOpen(false)
     setInputValue('')
-    setActiveTab('1')
-
   }
+
   const isImportDisabled = !!inputValue || !!selectedName
   return (
     <Box>
@@ -120,7 +139,7 @@ export const ImportDataComponent: React.FC = () => {
             />
           </FormControl>
         }
-        source={"general"}
+        source={'employeeDetails'}
       />
     </Box>
   )

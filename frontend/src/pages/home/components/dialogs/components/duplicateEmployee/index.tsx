@@ -1,13 +1,19 @@
 // ** MUI
-import { FormFooter, FormWrapper } from '@/shared/formElements'
-import { InputField } from '@/shared/inputField'
 import { Box, Typography } from '@mui/material'
 
+// ** Shared Components
+import { FormFooter, FormWrapper } from '@/shared/formElements'
+import { InputField } from '@/shared/inputField'
+
 // ** Hooks
-import { useModal } from '@/pages/home/hooks/useModal'
-import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
-import { useHandleAddItem } from '@/pages/home/hooks/useAddItem'
 import { useForm } from 'react-hook-form'
+import {
+  useModal,
+  useDataStateContext,
+  useHandleAddItem
+} from '@/pages/home/hooks'
+
+
 
 export const DuplicateEmployee = () => {
   const { closeDialog } = useModal() as { closeDialog: () => void }

@@ -1,10 +1,16 @@
 // ** Components
-import { CustomDialog } from '@/shared/components/customDialog'
-import { ExportDataComponent, ImportDataComponent, EditBenefits, TabsDetails, TabsDetailsEdit } from './components'
+import { CustomDialog } from '@/shared/components'
+import {
+  ExportDataComponent,
+  ImportDataComponent,
+  EditBenefits,
+  TabsDetails,
+  TabsDetailsEdit,
+  DuplicateEmployee
+} from './components'
 
 // ** Hooks
 import { useModal } from '@/pages/home/hooks/useModal'
-import { DuplicateEmployee } from './components/duplicateEmployee'
 
 export const Dialogs: React.FC = () => {
   const { typeModal, isDialogOpen, closeDialog } = useModal()

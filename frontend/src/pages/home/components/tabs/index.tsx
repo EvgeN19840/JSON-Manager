@@ -4,7 +4,7 @@ import TabList from '@mui/lab/TabList'
 import TabContext from '@mui/lab/TabContext'
 
 // ** Hooks
-import { useTabs } from '@/pages/home/hooks/useTabs'
+import { useTabs } from '@/pages/home/hooks'
 
 export const TabsComponent = () => {
   const { activeTab, handleTabChange } = useTabs()

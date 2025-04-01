@@ -2,9 +2,11 @@
 import { Box, Button } from '@mui/material'
 
 // ** Hooks
-import { useModal } from '@/pages/home/hooks/useModal'
-import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
-import { useTabs } from '../../hooks/useTabs'
+import {
+  useModal,
+  useTabs,
+  useDataStateContext
+} from '@/pages/home/hooks'
 
 export const ImportExportButtons: React.FC = () => {
   const { handleClickOpenDialog } = useModal()

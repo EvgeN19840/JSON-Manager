@@ -1,15 +1,9 @@
-// ** React
-import { ReactNode } from 'react';
+// ** MUI
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 
-// ** MUI Components
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-
-interface HeaderDetailsProps {
-  title: string;
-  children?: ReactNode;
-  pointer?: boolean;
-}
+// ** Types
+import { HeaderDetailsProps } from './types'
 
 export const HeaderDetails = ({
   title,

@@ -14,22 +14,29 @@ import useTests from './hooks/useTests'
 
 // Components
 import { getTest } from '../../service'
-import { GroupedBarChart, TestSelect } from './components'
+import { GroupedBarChart, CustomSelect } from './components'
 import { optionsSingleTest } from './utils/optionsSingleTest'
 
 export const CommonTests = () => {
-  const { load, data, testsNames, addCommentToTest } = useTests()
+  const { load, data, testsNames, envs, getData, addCommentToTest } = useTests()
 
   const [selectedTest, setSelectedTest] = useState<string>('AllTest')
+  const [selectedEnv, setSelectedEnv] = useState<string>('AllTest')
+
   const [customChartData, setCustomChartData] = useState<ChartData<'line'> | null>(null)
   const [customLoading, setCustomLoading] = useState<boolean>(false)
+
+  useEffect(() => {
+    getData({ env: selectedEnv })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedEnv])
 
   useEffect(() => {
     const fetchCustomData = async () => {
       if (selectedTest !== 'AllTest') {
         setCustomLoading(true)
         try {
-          const customData = await getTest(selectedTest)
+          const customData = await getTest(selectedTest, selectedEnv)
           const newLabels = customData.body.map(item => DateFormat(item.date))
           const newChartData: ChartData<'line'> = {
             labels: newLabels,
@@ -53,25 +60,35 @@ export const CommonTests = () => {
         setCustomChartData(null)
       }
     }
+
     fetchCustomData()
-  }, [selectedTest])
+  }, [selectedTest, selectedEnv])
 
   const handleTestSelectChange = (value: string) => {
     setSelectedTest(value)
   }
 
+  const handleEnvChange = (value: string) => {
+    setSelectedEnv(value)
+  }
+
   return (
-    <Card sx={{ '& .MuiCardHeader-action': { alignSelf: 'center', m: 0 } }}>
+    <Card>
       <CardHeader
         title={`${selectedTest === 'AllTest' ? 'Commons Test Metrics' : `${selectedTest} Test Metrics`} `}
-        action={<TestSelect testsNames={testsNames} selectedTest={selectedTest} onChange={handleTestSelectChange} />}
+        action={
+          <Box sx={{ display: 'flex', gap: '1rem' }}>
+            <CustomSelect label='Tests' names={testsNames} selected={selectedTest} onChange={handleTestSelectChange} />
+            <CustomSelect label='Envs' names={envs} selected={selectedEnv} onChange={handleEnvChange} />
+          </Box>
+        }
       />
       <CardContent>
         {selectedTest === 'AllTest' ? (
           load ? (
             <Box sx={{ height: '400px' }}>Loading</Box>
           ) : (
-            <GroupedBarChart addCommentToTest={addCommentToTest} data={data} />
+            <GroupedBarChart addCommentToTest={commentData => addCommentToTest(commentData, selectedEnv)} data={data} />
           )
         ) : customLoading || !customChartData ? (
           <Box sx={{ height: '400px' }}>Loading</Box>

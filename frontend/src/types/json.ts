@@ -97,9 +97,6 @@ export interface ILoanOrSalaryAdvance {
   customBambooTableRowId: number;
   value: number;
   currencyCode: string;
-  isActive: boolean;
-  comment: string | null;
-  componentType: number;
 }
 
 export interface IOtherDeduction {
@@ -110,9 +107,6 @@ export interface IOtherDeduction {
   payrollOperationFrequency: string;
   value: number;
   currencyCode: string;
-  isActive: boolean;
-  comment: string | null;
-  componentType: number;
 }
 
 export interface IEmployeeBenefit {

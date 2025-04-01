@@ -1,3 +1,3 @@
-export { ColumnsBenefit } from './columnsBenefit'
-export { ColumnsEmployee } from './columnsEmployee'
-export { ColumnsTemplate } from './columnsTemplate'
+export * from './columnsBenefit'
+export * from './columnsEmployee'
+export * from './columnsTemplate'

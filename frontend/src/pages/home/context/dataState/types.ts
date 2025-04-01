@@ -16,7 +16,7 @@ export interface DataContextType {
     T extends Partial<{ id: string | number; eId: number; customBambooTableRowId: number; }>
   >(
     value: T,
-    type: "employeeBenefit" | "depositAccounts" | "bonuses" | "personal" | "jobInfo" | "salary" | "employmentStatus" | "otherDeductions" | "reimbursements" | 'loansAndSalaryAdvances'
+    type: "employeeBenefit" | "depositAccounts" | "bonuses" | "personal" | "jobInfo" | "salary" | "employmentStatus" | "otherDeductions" | "reimbursements"
   ) => void;
   hasData: boolean;
 }

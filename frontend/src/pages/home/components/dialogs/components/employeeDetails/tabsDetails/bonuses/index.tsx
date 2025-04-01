@@ -3,18 +3,15 @@ import { Box } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 
 // ** Hooks
-import { useModal } from '@/pages/home/hooks/useModal'
+import { useModal, useDataStateContext, useHandleDeleteItem, useHandleAddItem } from '@/pages/home/hooks'
 
-// ** Types Columns
+// ** Types
 import { IBonuses } from '@/types/json'
+import { ContextMenuItemsCallbacks } from '@/shared/components/actionMenu/types'
 
 // ** Columns
 import { ColumnsBonuses } from './columnsBonuses'
-import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
-import { ContextMenuItemsCallbacks } from '@/shared/components/myContextMenu/actionMenu/types'
-import { useHandleDeleteItem } from '@/pages/home/hooks/useDelete'
-import { useHandleAddItem } from '@/pages/home/hooks/useAddItem'
-import { CustomFooter } from '@/shared/components/customFooter'
+import { CustomFooter } from '@/shared/components'
 
 export const BonusesTab: React.FC = () => {
   const { handleClickOpenDialog, dataForDialog, setTypeModalDetailsEdit } = useModal()

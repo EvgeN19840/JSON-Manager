@@ -1,10 +1,9 @@
+// ** Types
 import { IEmployee } from "@/types/json";
-import { INotificationType } from "@/core/context/snackBar/types";
+import { NotificationMessage } from "./types";
 
-interface NotificationMessage {
-    text: string;
-    type: INotificationType;
-}
+
+
 export function saveEmployeeToLocalStorage(employee: IEmployee): NotificationMessage {
     if (employee.firstName === "John") {
         return { text: "This name is not allowed. Please choose a different one.", type: "error" };

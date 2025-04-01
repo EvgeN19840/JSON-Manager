@@ -9,7 +9,9 @@ import { IEmployee } from '@/types/json'
 
 // ** Utils
 import { currentData } from './utils'
-import { EditButton } from '../../../exportDataComponent/buttons'
+
+// ** Components
+import { EditButton } from '@/pages/home/components/dialogs/components/exportDataComponent/buttons/editButton'
 
 export const PersonalTab: React.FC = () => {
   const { dataForDialog, handleClickOpenDialog } = useModal() as {

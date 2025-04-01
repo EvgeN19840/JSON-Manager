@@ -5,7 +5,7 @@ import TabContext from '@mui/lab/TabContext'
 import { Box, Typography } from '@mui/material'
 
 // ** Hooks
-import { useTabs } from '@/pages/home/hooks/useTabs'
+import { useModal, useTabs } from '@/pages/home/hooks'
 
 // ** Components
 import {
@@ -13,12 +13,14 @@ import {
   BenefitsTab,
   JobInfoTab,
   DepositAccountTab,
-  DeductionsAndLoansTab,
+  OtherDeductionTab,
   BonusesTab,
   Reimbursements
 } from './index'
-import { useModal } from '@/pages/home/hooks/useModal'
+
+// ** Types
 import { IEmployee } from '@/types/json'
+
 
 export const TabsDetails = () => {
   const { activeDetailTab, handleDetailTabChange } = useTabs()
@@ -37,7 +39,7 @@ export const TabsDetails = () => {
       case '4':
         return <Reimbursements />
       case '5':
-        return <DeductionsAndLoansTab />
+        return <OtherDeductionTab />
       case '6':
         return <BenefitsTab />
       case '7':

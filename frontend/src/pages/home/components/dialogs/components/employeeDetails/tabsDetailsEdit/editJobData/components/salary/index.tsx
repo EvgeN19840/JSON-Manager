@@ -1,15 +1,30 @@
+// ** MUI
 import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
+
+// ** External Libraries
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useModal } from '@/pages/home/hooks/useModal'
-import { useDefaultSalary } from '@/pages/home/hooks/useDefaultData'
-import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
+
+// ** Components
 import { FormWrapper, FormInput, FormFooter } from '@/shared/formElements'
+
+// ** Hooks
+import {
+  useDataStateContext,
+  useDefaultSalary,
+  useModal
+} from '@/pages/home/hooks'
+
+// ** Dropdowns
 import payPeriodDropdown from './payPeriodDropdown'
 import salaryRateDropdown from './salaryRateDropdown'
+
+// ** Schema
+import { salarySchema } from '../../schema'
+
+// ** Types
 import { ISalary } from '@/types/json'
 
-import { salarySchema } from '../../schema'
 
 export const Salary: React.FC = () => {
   const { dataForDialog } = useModal() as {

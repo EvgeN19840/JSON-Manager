@@ -1,13 +1,13 @@
-// ** Types
-import { IEmployee } from '@/types/json'
-
 // ** MUI
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 
 // ** Components
-import { actionMenu } from '@/shared/components/myContextMenu/actionMenu'
-import { MyContextMenu } from '@/shared/components/myContextMenu'
-import { ContextMenuItemsCallbacks } from '@/shared/components/myContextMenu/actionMenu/types'
+import { MyContextMenu, actionMenu } from '@/shared/components'
+
+// ** Types
+import { IEmployee } from '@/types/json'
+import { ContextMenuItemsCallbacks } from '@/shared/components/actionMenu/types'
+
 
 export const ColumnsEmployee = (
   _handleEditClick: (employee: IEmployee) => void,

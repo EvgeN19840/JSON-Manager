@@ -1,5 +1,9 @@
-import { IEmployee } from "@/types/json";
-import { getDateFormat } from "@/shared/utils/getDateFormat";
+// ** Utils
+import { getDateFormat } from '@/shared/utils/getDateFormat'
+
+// ** Types
+import { IEmployee } from '@/types/json'
+
 
 export const currentData = (data: IEmployee) => {
   return [

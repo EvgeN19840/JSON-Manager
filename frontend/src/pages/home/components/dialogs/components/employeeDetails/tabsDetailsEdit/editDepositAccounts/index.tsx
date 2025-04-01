@@ -1,12 +1,25 @@
+// ** MUI
 import { Box } from '@mui/material'
+
+// ** External Libraries
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useModal } from '@/pages/home/hooks/useModal'
-import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
+
+// ** Components
 import { FormWrapper, FormInput, FormFooter } from '@/shared/formElements'
-import { IDepositAccounts } from '@/types/json'
+
+// ** Hooks
+import {
+  useDataStateContext,
+  useDefaultDepositAccounts,
+  useModal
+} from '@/pages/home/hooks'
+
+// ** Schema
 import { schema } from './schema'
-import { useDefaultDepositAccounts } from '@/pages/home/hooks/useDefaultData'
+
+// ** Types
+import { IDepositAccounts } from '@/types/json'
 
 export const EditDepositAccounts: React.FC = () => {
   const { dataForDialog } = useModal() as {

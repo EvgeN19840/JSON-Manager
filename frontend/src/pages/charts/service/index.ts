@@ -5,13 +5,34 @@ import { IAllTimeTestClient, ITest } from '@/types/tests';
 import { IAddComment } from './types';
 import { ApiResponse } from '@/types/axios';
 
-export const getTests = async (): Promise<ApiResponse<{ results: IAllTimeTestClient[]; test_names: string[] }>> => {
-  const { data } = await api.get<ApiResponse<{ results: IAllTimeTestClient[]; test_names: string[] }>>(`/tests`);
+export const getTests = async ({ env }: { env?: string }) => {
+  const query = env === 'AllTest' ? '' : env ? `?env=${env}` : '';
+  const { data } = await api.get<ApiResponse<{
+    results: IAllTimeTestClient[];
+    test_names: string[],
+    envs: string[]
+  }>>(`/tests${query}`);
   return data;
 };
 
-export const getTest = async (name: string): Promise<ApiResponse<ITest[]>> => {
-  const { data } = await api.get<ApiResponse<ITest[]>>(`/test/?name=${name}`);
+export const getTest = async (name: string, env?: string): Promise<ApiResponse<ITest[] | {
+  results: IAllTimeTestClient[];
+  test_names: string[];
+  envs: string[];
+}>> => {
+  if (name === 'AllTest') {
+    const query = env === 'AllTest' ? '' : env ? `?env=${env}` : '';
+    const { data } = await api.get<ApiResponse<{
+      results: IAllTimeTestClient[];
+      test_names: string[],
+      envs: string[]
+    }>>(`/tests${query}`);
+    return data;
+  }
+
+  // Если конкретный тест, собираем query как раньше
+  const query = `?name=${name}${env && env !== 'AllTest' ? `&env=${env}` : ''}`;
+  const { data } = await api.get<ApiResponse<ITest[]>>(`/test/${query}`);
   return data;
 };
 

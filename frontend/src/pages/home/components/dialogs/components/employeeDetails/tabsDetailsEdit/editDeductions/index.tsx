@@ -1,12 +1,26 @@
+// ** MUI
 import { Box } from '@mui/material'
+
+// ** External Libraries
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useModal } from '@/pages/home/hooks/useModal'
-import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
+
+// ** Components
 import { FormWrapper, FormInput, FormFooter } from '@/shared/formElements'
-import { IOtherDeduction } from '@/types/json'
-import { useDefaultOtherDeduction } from '@/pages/home/hooks/useDefaultData'
+
+// ** Hooks
+import {
+  useDataStateContext,
+  useDefaultOtherDeduction,
+  useModal
+} from '@/pages/home/hooks'
+
+// ** Schema
 import { schema } from './schema'
+
+// ** Types
+import { IOtherDeduction } from '@/types/json'
+
 
 export const EditDeductions: React.FC = () => {
   const { dataForDialog } = useModal() as {

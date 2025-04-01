@@ -2,21 +2,27 @@
 import { Box, Typography } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 
+// ** Components
+import { CustomFooter } from '@/shared/components'
+
 // ** Hooks
-import { useModal } from '@/pages/home/hooks/useModal'
-import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
-import { useHandleDeleteItem } from '@/pages/home/hooks/useDelete'
-import { useHandleAddItem } from '@/pages/home/hooks/useAddItem'
+import {
+  useDataStateContext,
+  useHandleAddItem,
+  useHandleDeleteItem,
+  useModal
+} from '@/pages/home/hooks'
+
+// ** Columns
+import { ColumnsJobInfo } from './columnsJob/jobInfo'
+import { ColumnsEmploymentStatus } from './columnsJob/statusInfo'
+import { ColumnsSalary } from './columnsJob/salaryInfo'
 
 // ** Types
 import { IEmploymentStatus, IJobInfo, ISalary } from '@/types/json'
+import { ContextMenuItemsCallbacks } from '@/shared/components/actionMenu/types'
 
-// ** Context
-import { ContextMenuItemsCallbacks } from '@/shared/components/myContextMenu/actionMenu/types'
-import { ColumnsJobInfo } from './columnsJob/jobInfo'
-import { ColumnsSalary } from './columnsJob/salaryInfo'
-import { ColumnsEmploymentStatus } from './columnsJob/statusInfo'
-import { CustomFooter } from '@/shared/components/customFooter'
+
 
 export const JobInfoTab: React.FC = () => {
   const { handleClickOpenDialog, dataForDialog, setTypeModalDetailsEdit } = useModal()

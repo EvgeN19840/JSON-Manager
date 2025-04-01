@@ -1,17 +1,23 @@
+// ** MUI
 import { Typography } from '@mui/material'
 
-import { useModal } from '@/pages/home/hooks/useModal'
-import { EditDetailsBenefits } from './editDetailsBenefits'
+// ** Components
 import { CustomDialog } from '@/shared/components/customDialog'
-import { EditPersonalTab } from './editPersonal'
-import { JobInfo } from './editJobData/components/jobInfo'
-import { Salary } from './editJobData/components/salary'
-import { EmploymentStatus } from './editJobData/components/status'
-import { EditDepositAccounts } from './editDepositAccounts'
-import { EditBonuses } from './editBonuses'
-import { EditReimbursementTab } from './editReimbursements'
-import { EditDeductions } from './editDeductions/otherDeductions'
-import { EditLoanSalaryAdvance } from './editDeductions/loansSalaryAdvances'
+import {
+  EditBonuses,
+  EditDepositAccounts,
+  EditDetailsBenefits,
+  EditDeductions,
+  EditPersonalTab,
+  EditReimbursementTab,
+  EmploymentStatus,
+  JobInfo,
+  Salary
+} from '.'
+
+// ** Hooks
+import { useModal } from '@/pages/home/hooks'
+
 
 export const TabsDetailsEdit: React.FC = () => {
   const { typeModalDetailsEdit, isDialogOpen, closeDialog } = useModal()
@@ -35,8 +41,6 @@ export const TabsDetailsEdit: React.FC = () => {
         return <EditReimbursementTab />
       case 'Edit deductions':
         return <EditDeductions />
-      case 'Edit loanOrAdvance':
-        return <EditLoanSalaryAdvance />
 
       default:
         return <Typography>Select a tab to view details.</Typography>

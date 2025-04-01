@@ -3,18 +3,17 @@ import { Box } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 
 // ** Hooks
-import { useModal } from '@/pages/home/hooks/useModal'
+import { useModal, useDataStateContext, useHandleDeleteItem, useHandleAddItem } from '@/pages/home/hooks'
 
 // ** Types
 import { IReimbursement } from '@/types/json'
+import { ContextMenuItemsCallbacks } from '@/shared/components/actionMenu/types'
 
 // ** Columns
 import { ColumnsReimbursements } from './columnsReimbursements'
-import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
-import { useHandleDeleteItem } from '@/pages/home/hooks/useDelete'
-import { useHandleAddItem } from '@/pages/home/hooks/useAddItem'
-import { ContextMenuItemsCallbacks } from '@/shared/components/myContextMenu/actionMenu/types'
-import { CustomFooter } from '@/shared/components/customFooter'
+
+// ** Components
+import { CustomFooter } from '@/shared/components'
 
 export const Reimbursements: React.FC = () => {
   const { handleClickOpenDialog, dataForDialog, setTypeModalDetailsEdit } = useModal()

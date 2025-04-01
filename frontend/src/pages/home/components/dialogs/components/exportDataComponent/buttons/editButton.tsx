@@ -1,25 +1,20 @@
 // ** React
-import React from "react";
-
-
+import React from 'react'
 
 // ** MUI
-import EditIcon from '@mui/icons-material/Edit';
+import EditIcon from '@mui/icons-material/Edit'
 
-
-interface IEditButtonProps {
-  onClick: () => void;
-}
+// ** Types
+import { IEditButtonProps } from './types'
 
 export const EditButton: React.FC<IEditButtonProps> = ({ onClick }) => {
- 
   return (
-    <EditIcon fontSize="small"
+    <EditIcon
+      fontSize='small'
       onClick={onClick}
       sx={{
-        cursor: "pointer",
-      
+        cursor: 'pointer'
       }}
     />
-  );
-};
+  )
+}

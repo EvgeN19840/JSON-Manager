@@ -7,25 +7,22 @@ import { IEmployee, ISystemBenefit, ITypeJSON } from '@/types/json'
 // ** Columns
 import { ColumnsEmployee, ColumnsBenefit, ColumnsTemplate } from './consts'
 
-// ** Context
-import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
-
 // ** Hooks
-import { useTabs } from '@/pages/home/hooks/useTabs'
-import { useModal } from '@/pages/home/hooks/useModal'
-import { useHandleAddItem } from '@/pages/home/hooks/useAddItem'
-import { useHandleDeleteItem } from '@/pages/home/hooks/useDelete'
-import { useNotification } from '@/pages/home/hooks/useNotification'
+import {
+  useModal,
+  useTabs,
+  useNotification,
+  useHandleDeleteItem,
+  useHandleAddItem,
+  useDataStateContext
+} from '@/pages/home/hooks'
 
 // ** Components
-import { MyGrid } from '@/shared/components/grid'
+import { MyGrid } from '@/shared/components'
+import { saveEmployeeToLocalStorage, removeEmployeesFromLocalStorage } from '@/services/storageService'
 
 // ** Utils
 import { listTemplate } from '@/shared/utils/listTemplate'
-import {
-  saveEmployeeToLocalStorage,
-  removeEmployeesFromLocalStorage
-} from '@/services/storageService'
 
 export const Grids: FC = () => {
   const { data, setData, seteIdSelectedEmployee } = useDataStateContext()
@@ -35,26 +32,25 @@ export const Grids: FC = () => {
   const { showNotification } = useNotification()
   const { activeTab } = useTabs()
 
-  const originalEmployeesTab3 = useRef<IEmployee[] | null>(null)
-  const savedEmployeesTab1 = useRef<IEmployee[] | null>(null)
+  const originalEmployees = useRef<IEmployee[] | null>(null)
+
+  useEffect(() => {
+    if (activeTab === '3' && originalEmployees.current === null) {
+      originalEmployees.current = [...data.employees]
+    }
+  }, [activeTab, data.employees])
 
   useEffect(() => {
     setData((prev: ITypeJSON) => {
       if (activeTab === '3') {
-        if (savedEmployeesTab1.current === null) {
-          savedEmployeesTab1.current = [...prev.employees]
-        }
-        if (originalEmployeesTab3.current === null) {
-          originalEmployeesTab3.current = [...prev.employees]
-        }
         return {
           ...prev,
           employees: listTemplate().employees,
           benefits: prev.benefits
         }
-      } else if (activeTab === '1' && savedEmployeesTab1.current) {
-        const restoredEmployees = [...savedEmployeesTab1.current]
-        savedEmployeesTab1.current = null
+      } else if (activeTab === '1' && originalEmployees.current) {
+        const restoredEmployees = [...(originalEmployees.current ?? [])]
+        originalEmployees.current = null
         return {
           ...prev,
           employees: restoredEmployees,
@@ -124,12 +120,9 @@ export const Grids: FC = () => {
           saveEmployee: saveLocalStorage,
           removeEmployee: removeLocalStore
         })
+
         return (
-          <MyGrid<IEmployee>
-            data={gridData}
-            columns={gridColumns}
-            onRowDoubleClick={handleRowDoubleClickOpenDetails}
-          />
+          <MyGrid<IEmployee> data={gridData} columns={gridColumns} onRowDoubleClick={handleRowDoubleClickOpenDetails} />
         )
       }
       case '2': {
@@ -139,13 +132,8 @@ export const Grids: FC = () => {
           deleteItem,
           addItem
         })
-        return (
-          <MyGrid<ISystemBenefit>
-            data={gridData}
-            columns={gridColumns}
-            onRowDoubleClick={() => {}}
-          />
-        )
+
+        return <MyGrid<ISystemBenefit> data={gridData} columns={gridColumns} onRowDoubleClick={() => {}} />
       }
       case '3': {
         const gridData = data.employees
@@ -161,11 +149,7 @@ export const Grids: FC = () => {
           true
         )
         return (
-          <MyGrid<IEmployee>
-            data={gridData}
-            columns={gridColumns}
-            onRowDoubleClick={handleRowDoubleClickOpenDetails}
-          />
+          <MyGrid<IEmployee> data={gridData} columns={gridColumns} onRowDoubleClick={handleRowDoubleClickOpenDetails} />
         )
       }
       default:

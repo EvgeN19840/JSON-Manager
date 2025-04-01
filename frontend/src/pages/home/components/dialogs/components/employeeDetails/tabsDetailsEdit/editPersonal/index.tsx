@@ -6,9 +6,7 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 // ** Hooks
-import { useModal } from '@/pages/home/hooks/useModal'
-import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
-import { useDefaultEmployeeBasicInfo } from '@/pages/home/hooks/useDefaultData'
+import { useModal, useDataStateContext, useDefaultEmployeeBasicInfo } from '@/pages/home/hooks'
 
 // ** Schema
 import { schema } from './schema'

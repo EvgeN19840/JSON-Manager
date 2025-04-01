@@ -1,13 +1,21 @@
+// ** MUI
 import { Box } from '@mui/material'
+
+// ** External Libraries
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { FormWrapper, FormInput, FormFooter } from '@/shared/formElements'
-import { IJobInfo } from '@/types/json'
 
+// ** Components
+import { FormWrapper, FormInput, FormFooter } from '@/shared/formElements'
+
+// ** Hooks
+import { useDataStateContext, useDefaultJobInfo, useModal } from '@/pages/home/hooks'
+
+// ** Schema
 import { jobInfoSchema } from '../../schema'
-import { useModal } from '@/pages/home/hooks/useModal'
-import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
-import { useDefaultJobInfo } from '@/pages/home/hooks/useDefaultData'
+
+// ** Types
+import { IJobInfo } from '@/types/json'
 
 export const JobInfo: React.FC = () => {
   const { dataForDialog } = useModal() as {

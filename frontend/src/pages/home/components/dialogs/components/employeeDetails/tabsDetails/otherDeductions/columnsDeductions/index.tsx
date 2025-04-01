@@ -1,11 +1,17 @@
-// ** Types
+// ** MUI
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
-import { getDateFormat } from '@/shared/utils/getDateFormat'
-import { MyContextMenu } from '@/shared/components/myContextMenu'
+
+// ** Components
+import { MyContextMenu, actionMenu } from '@/shared/components'
 import { HeaderDetails } from '../../../headerDetails'
+
+// ** Utils
+import { getDateFormat } from '@/shared/utils/getDateFormat'
+
+// ** Types
 import { IOtherDeduction } from '@/types/json'
-import { actionMenu } from '@/shared/components/myContextMenu/actionMenu'
-import { ContextMenuItemsCallbacks } from '@/shared/components/myContextMenu/actionMenu/types'
+import { ContextMenuItemsCallbacks } from '@/shared/components/actionMenu/types'
+
 
 export const ColumnsDeductions = (
   _handleEditClick: (data: IOtherDeduction) => void,

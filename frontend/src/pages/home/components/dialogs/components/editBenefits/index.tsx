@@ -1,14 +1,15 @@
-// ** Components
-import { FormWrapper, FormInput, FormFooter } from '@/shared/formElements'
+// ** MUI
 import { Box } from '@mui/material'
 
-// ** Forms Imports
-import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
+// ** Components
+import { FormWrapper, FormInput, FormFooter } from '@/shared/formElements'
 
 // ** Hooks
-import { useModal } from '@/pages/home/hooks/useModal'
-import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
+import { useModal, useDataStateContext } from '@/pages/home/hooks'
+
+// ** Form 
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
 
 // ** Schema
 import { schema } from './schema'
@@ -16,6 +17,7 @@ import { schema } from './schema'
 // ** Types
 import { ISystemBenefit } from '@/types/json'
 import { IFormBenefitsProps } from './types'
+
 
 export const EditBenefits = () => {
   const { dataForDialog, closeDialog } = useModal() as {

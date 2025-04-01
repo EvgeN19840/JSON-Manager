@@ -1,15 +1,19 @@
-// ** Types
-import { IEmployeeBenefit } from '@/types/json'
-
 // ** MUI
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 
-// ** Components
-import { MyContextMenu } from '@/shared/components/myContextMenu'
-import { actionMenu } from '@/shared/components/myContextMenu/actionMenu'
-import { HeaderDetails } from '../../../headerDetails'
+// ** Types
+import { IEmployeeBenefit } from '@/types/json'
+import { ContextMenuItemsCallbacks } from '@/shared/components/actionMenu/types'
+
+// ** Utils
 import { getDateFormat } from '@/shared/utils/getDateFormat'
-import { ContextMenuItemsCallbacks } from '@/shared/components/myContextMenu/actionMenu/types'
+
+// ** Components
+import { MyContextMenu, actionMenu } from '@/shared/components'
+import { HeaderDetails } from '@/pages/home/components/dialogs/components/employeeDetails/headerDetails'
+
+
+
 
 export const ColumnsBenefit = (
   _handleEditClick: (data: IEmployeeBenefit) => void,

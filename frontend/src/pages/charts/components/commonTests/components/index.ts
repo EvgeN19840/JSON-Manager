@@ -1,2 +1,2 @@
 export * from './barChart'
-export * from './testSelect'
+export * from './select'

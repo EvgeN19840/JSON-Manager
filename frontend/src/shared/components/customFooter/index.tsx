@@ -1,4 +1,7 @@
+// ** MUI
 import { Box, Button } from "@mui/material";
+
+// ** Components
 import { CustomPagination } from "./pagination";
 
 interface CustomFooterProps {

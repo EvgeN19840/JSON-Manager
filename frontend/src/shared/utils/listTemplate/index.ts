@@ -1,6 +1,12 @@
-import { employeeData } from "@/constants/jsonBase/index";
-import { getAllLocalStorage } from "@/services/storageService";
-import { ITypeJSON, IEmployee } from "@/types/json";
+// ** Constants
+import { employeeData } from '@/constants/jsonBase'
+
+// ** Utils
+import { getAllLocalStorage } from '@/services/storageService'
+
+// ** Types
+import { IEmployee, ITypeJSON } from '@/types/json'
+
 
 export const listTemplate = (): ITypeJSON => {
     const localStorageEmployees: IEmployee[] = getAllLocalStorage();

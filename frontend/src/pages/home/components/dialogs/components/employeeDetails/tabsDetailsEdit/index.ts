@@ -1,0 +1,9 @@
+export { EditDetailsBenefits } from './editDetailsBenefits';
+export { EditPersonalTab } from './editPersonal';
+export { JobInfo } from './editJobData/components/jobInfo';
+export { Salary } from './editJobData/components/salary';
+export { EmploymentStatus } from './editJobData/components/status';
+export { EditDepositAccounts } from './editDepositAccounts';
+export { EditBonuses } from './editBonuses';
+export { EditReimbursementTab } from './editReimbursements';
+export { EditDeductions } from './editDeductions';

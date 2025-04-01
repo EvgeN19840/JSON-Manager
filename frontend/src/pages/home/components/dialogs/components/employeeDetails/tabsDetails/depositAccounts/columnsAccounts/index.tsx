@@ -1,10 +1,14 @@
-// ** Types
+// ** MUI
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
+
+// ** Components
 import { HeaderDetails } from '../../../headerDetails'
-import { MyContextMenu } from '@/shared/components/myContextMenu'
-import { actionMenu } from '@/shared/components/myContextMenu/actionMenu'
+import { MyContextMenu, actionMenu } from '@/shared/components'
+
+// ** Types
 import { IDepositAccounts } from '@/types/json'
-import { ContextMenuItemsCallbacks } from '@/shared/components/myContextMenu/actionMenu/types'
+import { ContextMenuItemsCallbacks } from '@/shared/components/actionMenu/types'
+
 
 export const ColumnsAccounts = (
   _handleEditClick: (data: IDepositAccounts) => void,

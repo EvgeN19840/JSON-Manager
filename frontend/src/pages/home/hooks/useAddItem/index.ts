@@ -1,48 +1,26 @@
-import {
-    IBonuses,
-    IDepositAccounts,
-    IEmployee,
-    IEmployeeBenefit,
-    IEmploymentStatus,
-    IJobInfo,
-    IOtherDeduction,
-    IReimbursement,
-    ISalary,
-    ISystemBenefit,
-    ITypeJSON,
-} from "@/types/json";
-import { assignMissingIds } from "@/shared/utils";
-import names from "@/constants/names";
-import { useDataStateContext } from "../useDataStateContext";
-import { useModal } from "../useModal";
-import { saveEmployeeToLocalStorage } from "@/services/storageService";
-import { useTabs } from "../useTabs";
+// ** Constants
+import names from '@/constants/names'
 
-interface IUseHandleAddItemParams {
-    item:
-    | IEmployee
-    | ISystemBenefit
-    | ISalary
-    | IJobInfo
-    | IDepositAccounts
-    | IEmploymentStatus
-    | IEmployeeBenefit
-    | IBonuses
-    | IOtherDeduction
-    | IReimbursement;
-    type: "employees" | "benefits" | "item";
-    eId?: string | number;
-    nestedType?:
-    | "salary"
-    | "employmentStatus"
-    | "jobInfo"
-    | "depositAccounts"
-    | "benefits"
-    | "bonuses"
-    | "reimbursements"
-    | "otherDeductions"
-    | "loansAndSalaryAdvances"
-}
+// ** Utils
+import { assignMissingIds } from '@/shared/utils'
+import { saveEmployeeToLocalStorage } from '@/services/storageService'
+
+// ** Hooks
+import {
+    useDataStateContext,
+    useModal,
+    useTabs
+} from '@/pages/home/hooks'
+
+// ** Types
+import {
+    IEmployee,
+    ISystemBenefit,
+    ITypeJSON
+} from '@/types/json'
+import { IUseHandleAddItemParams } from './types'
+
+
 
 export const useHandleAddItem = () => {
     const { setData, data, countDuplicates } = useDataStateContext();

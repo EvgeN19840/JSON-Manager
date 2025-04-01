@@ -1,10 +1,12 @@
-import { Box, Pagination, Typography } from "@mui/material";
+// ** MUI
+import { Box, Pagination, Typography } from '@mui/material'
 import {
   gridPageCountSelector,
   gridPaginationModelSelector,
   useGridApiContext,
-  useGridSelector,
-} from "@mui/x-data-grid";
+  useGridSelector
+} from '@mui/x-data-grid'
+
 
 export const CustomPagination = () => {
   const apiRef = useGridApiContext();

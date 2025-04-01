@@ -1,15 +1,17 @@
-// ** Types
-import { IJobInfo } from '@/types/json'
-
 // ** MUI
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 
 // ** Components
-import { MyContextMenu } from '@/shared/components/myContextMenu'
-import { actionMenu } from '@/shared/components/myContextMenu/actionMenu'
+import { MyContextMenu, actionMenu } from '@/shared/components'
 import { HeaderDetails } from '../../../headerDetails'
+
+// ** Utils
 import { getDateFormat } from '@/shared/utils/getDateFormat'
-import { ContextMenuItemsCallbacks } from '@/shared/components/myContextMenu/actionMenu/types'
+
+// ** Types
+import { IJobInfo } from '@/types/json'
+import { ContextMenuItemsCallbacks } from '@/shared/components/actionMenu/types'
+
 
 export const ColumnsJobInfo = (
   _handleEditClick: (data: IJobInfo) => void,

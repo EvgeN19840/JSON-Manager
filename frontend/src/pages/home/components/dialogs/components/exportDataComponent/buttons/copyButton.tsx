@@ -1,16 +1,16 @@
 // ** React
 import React from 'react'
 
+// ** MUI
+import ContentCopyIcon from '@mui/icons-material/ContentCopy'
+
 // ** Hooks
 import { useNotification } from '@/pages/home/hooks/useNotification'
 
-// ** MUI
-import ContentCopyIcon from '@mui/icons-material/ContentCopy'
-import { IModalType } from '@/pages/home/context/modal/types'
+// ** Types
+import { ICopyButtonProps } from './types'
 
-interface ICopyButtonProps {
-  textToCopy: IModalType | null
-}
+
 
 export const CopyButton: React.FC<ICopyButtonProps> = ({ textToCopy }) => {
   const { showNotification } = useNotification()

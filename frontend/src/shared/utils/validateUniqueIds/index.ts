@@ -1,3 +1,4 @@
+// ** Types
 import { ITypeJSON } from "@/types/json";
 
 export const validateUniqueIds = (data: ITypeJSON): ITypeJSON => {

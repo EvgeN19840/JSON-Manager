@@ -2,17 +2,24 @@
 import { Box } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 
-// ** Hooks
-import { useModal } from '@/pages/home/hooks/useModal'
+// ** Components
+import { CustomFooter } from '@/shared/components'
 
-// ** Types and Columns
+// ** Hooks
+import {
+  useDataStateContext,
+  useHandleAddItem,
+  useHandleDeleteItem,
+  useModal
+} from '@/pages/home/hooks'
+
+// ** Types
 import { IDepositAccounts } from '@/types/json'
+import { ContextMenuItemsCallbacks } from '@/shared/components/actionMenu/types'
+
+// ** Columns
 import { ColumnsAccounts } from './columnsAccounts'
-import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
-import { ContextMenuItemsCallbacks } from '@/shared/components/myContextMenu/actionMenu/types'
-import { useHandleAddItem } from '@/pages/home/hooks/useAddItem'
-import { useHandleDeleteItem } from '@/pages/home/hooks/useDelete'
-import { CustomFooter } from '@/shared/components/customFooter'
+
 
 export const DepositAccountTab: React.FC = () => {
   const { handleClickOpenDialog, dataForDialog, setTypeModalDetailsEdit } = useModal()

@@ -5,10 +5,18 @@ import { ReactNode, useState } from 'react'
 import { ModalContext } from '../modalContext'
 
 // ** Hooks
-import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
+import { useDataStateContext } from '@/pages/home/hooks'
+
+// ** Utils
+import { validateUniqueIds } from '@/shared/utils/validateUniqueIds'
 
 // ** Types
-import { IDataForDialog, IModalType, IModalTypeDetailsEdits } from '../types'
+import {
+  IDataForDialog,
+  IModalType,
+  IModalTypeDetailsEdits
+} from '../types'
+
 import {
   IBonuses,
   IDepositAccounts,
@@ -20,7 +28,7 @@ import {
   ISalary,
   ISystemBenefit
 } from '@/types/json'
-import { validateUniqueIds } from '@/shared/utils/validateUniqueIds'
+
 
 export const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const { data } = useDataStateContext()
@@ -73,7 +81,7 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   }
   const closeDialog = () => {
     setDialogOpen(false)
-
+    // ** Возможно, тут нужен будет UseEffect и логика для удаления таймера )))0))0)
     setTimeout(() => {
       setTypeModal(null)
       setDataForDialog(null)

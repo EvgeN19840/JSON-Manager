@@ -1,12 +1,12 @@
 // ** Forms Imports
 import { Controller, FieldValues } from "react-hook-form";
 
-// ** MUI Components
+// ** MUI
 import TextField from "@mui/material/TextField";
+import { Checkbox, FormControlLabel } from "@mui/material";
 
 // ** Types
 import { FormInputProps } from "./types";
-import { Checkbox, FormControlLabel } from "@mui/material";
 
 export const FormInput = <T extends FieldValues>({
   name,

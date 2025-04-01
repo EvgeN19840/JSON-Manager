@@ -1,5 +1,10 @@
-import { useDataStateContext } from "@/pages/home/hooks/useDataStateContext";
-import { useModal } from "@/pages/home/hooks/useModal";
+// ** Hooks
+import {
+  useModal,
+  useDataStateContext
+} from '@/pages/home/hooks'
+
+// ** Types
 import { ITypeJSON } from "@/types/json";
 
 
@@ -16,7 +21,6 @@ interface IUseHandleDeleteItemParams {
   | "bonuses"
   | "reimbursements"
   | "otherDeductions"
-  | "loansAndSalaryAdvances"
 }
 
 export const useHandleDeleteItem = () => {

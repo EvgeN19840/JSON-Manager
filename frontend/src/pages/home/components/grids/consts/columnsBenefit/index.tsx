@@ -1,13 +1,12 @@
-// ** Types
-import { ISystemBenefit } from '@/types/json'
-
 // ** MUI
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 
 // ** Components
-import { MyContextMenu } from '@/shared/components/myContextMenu'
-import { actionMenu } from '@/shared/components/myContextMenu/actionMenu'
-import { ContextMenuItemsCallbacks } from '@/shared/components/myContextMenu/actionMenu/types'
+import { MyContextMenu, actionMenu } from '@/shared/components'
+
+// ** Types
+import { ISystemBenefit } from '@/types/json'
+import { ContextMenuItemsCallbacks } from '@/shared/components/actionMenu/types'
 
 export const ColumnsBenefit = (
   _handleEditClick: (employee: ISystemBenefit) => void,

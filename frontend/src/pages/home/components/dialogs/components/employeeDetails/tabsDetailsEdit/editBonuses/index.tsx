@@ -1,13 +1,26 @@
+// ** MUI
 import { Box } from '@mui/material'
+
+// ** External Libraries
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useModal } from '@/pages/home/hooks/useModal'
-import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
+
+// ** Components
 import { FormWrapper, FormInput, FormFooter } from '@/shared/formElements'
 
-import { useDefaultBonuses } from '@/pages/home/hooks/useDefaultData'
-import { IBonuses } from '@/types/json'
+// ** Hooks
+import {
+  useDataStateContext,
+  useDefaultBonuses,
+  useModal
+} from '@/pages/home/hooks'
+
+// ** Schema
 import { schema } from './schema'
+
+// ** Types
+import { IBonuses } from '@/types/json'
+
 
 export const EditBonuses: React.FC = () => {
   const { dataForDialog } = useModal() as {

@@ -2,19 +2,24 @@
 import { Box } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 
-// ** Hooks
-import { useModal } from '@/pages/home/hooks/useModal'
+// ** Components
+import { CustomFooter } from '@/shared/components'
 
-// ** Types
-import { IOtherDeduction } from '@/types/json'
+// ** Hooks
+import {
+  useDataStateContext,
+  useHandleAddItem,
+  useHandleDeleteItem,
+  useModal
+} from '@/pages/home/hooks'
 
 // ** Columns
 import { ColumnsDeductions } from './columnsDeductions'
-import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
-import { useHandleDeleteItem } from '@/pages/home/hooks/useDelete'
-import { useHandleAddItem } from '@/pages/home/hooks/useAddItem'
-import { ContextMenuItemsCallbacks } from '@/shared/components/myContextMenu/actionMenu/types'
-import { CustomFooter } from '@/shared/components/customFooter'
+
+// ** Types
+import { IOtherDeduction } from '@/types/json'
+import { ContextMenuItemsCallbacks } from '@/shared/components/actionMenu/types'
+
 
 export const OtherDeductionTab: React.FC = () => {
   const { handleClickOpenDialog, dataForDialog, setTypeModalDetailsEdit } = useModal()

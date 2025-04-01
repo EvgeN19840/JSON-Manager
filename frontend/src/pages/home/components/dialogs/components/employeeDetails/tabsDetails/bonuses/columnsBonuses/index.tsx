@@ -1,10 +1,18 @@
+// ** MUI
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
-import { HeaderDetails } from '../../../headerDetails'
+
+// ** Components
+import { MyContextMenu, actionMenu } from '@/shared/components'
+import { HeaderDetails } from '@/pages/home/components/dialogs/components/employeeDetails/headerDetails'
+
+// ** Utils
 import { getDateFormat } from '@/shared/utils/getDateFormat'
+
+// ** Types
 import { IBonuses } from '@/types/json'
-import { ContextMenuItemsCallbacks } from '@/shared/components/myContextMenu/actionMenu/types'
-import { MyContextMenu } from '@/shared/components/myContextMenu'
-import { actionMenu } from '@/shared/components/myContextMenu/actionMenu'
+import { ContextMenuItemsCallbacks } from '@/shared/components/actionMenu/types'
+
+
 
 export const ColumnsBonuses = (
   _handleEditClick: (data: IBonuses) => void,

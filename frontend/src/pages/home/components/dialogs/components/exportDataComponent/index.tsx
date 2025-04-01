@@ -10,8 +10,7 @@ import { FormFooter } from '@/shared/formElements/formFooter'
 import { InputField } from '@/shared/inputField'
 
 // ** Hooks
-import { useNotification } from '@/pages/home/hooks/useNotification'
-import { useModal } from '@/pages/home/hooks/useModal'
+import { useModal, useNotification } from '@/pages/home/hooks'
 
 // ** Utils
 import { downloadJSONFileAsTXT } from '@/shared/utils'

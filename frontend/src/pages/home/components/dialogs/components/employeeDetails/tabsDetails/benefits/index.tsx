@@ -2,25 +2,28 @@
 import { Box } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 
-// ** Hooks
-import { useModal } from '@/pages/home/hooks/useModal'
-import { useHandleAddItem } from '@/pages/home/hooks/useAddItem'
-import { useHandleDeleteItem } from '@/pages/home/hooks/useDelete'
-import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
-import { useDefaultEmployeeBenefit } from '@/pages/home/hooks/useDefaultData'
-
-// ** Types
-import { IEmployeeBenefit } from '@/types/json'
+// ** Components
+import { CustomFooter } from '@/shared/components'
 
 // ** Const
 import { ColumnsBenefit } from './columnsBenefit'
 
-// ** Components
-import { CustomFooter } from '@/shared/components/customFooter'
-
 // ** Context
 import { IEmployeeDataForDialog } from '@/pages/home/context/modal/types'
-import { ContextMenuItemsCallbacks } from '@/shared/components/myContextMenu/actionMenu/types'
+
+// ** Hooks
+import {
+  useDataStateContext,
+  useDefaultEmployeeBenefit,
+  useHandleAddItem,
+  useHandleDeleteItem,
+  useModal
+} from '@/pages/home/hooks'
+
+// ** Types
+import { IEmployeeBenefit } from '@/types/json'
+import { ContextMenuItemsCallbacks } from '@/shared/components/actionMenu/types'
+
 
 export const BenefitsTab: React.FC = () => {
   const { handleClickOpenDialog, setTypeModalDetailsEdit, dataForDialog } = useModal()
