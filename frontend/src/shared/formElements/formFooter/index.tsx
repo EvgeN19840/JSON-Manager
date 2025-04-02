@@ -1,22 +1,33 @@
-// ** MUI
 import { Box, Button } from '@mui/material'
 
 // ** Hooks
-import { useModal } from '@/pages/home/hooks'
+import { useModal, useDataStateContext } from '@/pages/home/hooks'
 
 // ** Types
 import { FormFooterProps } from './types'
-
 
 export const FormFooter: React.FC<FormFooterProps> = ({
   cancelButtonText,
   actionButtonText,
   showSecondButton,
   buttonAction,
-  middleContent
+  middleContent,
+  source
 }) => {
-  const { setDialogOpen } = useModal()
+  const { setDialogOpen, handleClickOpenDialog } = useModal()
+  const { eIdSelectedEmployee, data } = useDataStateContext()
 
+  const handleCancelClick = () => {
+    setDialogOpen(false)
+
+    if (source === 'employeeDetails' && eIdSelectedEmployee) {
+      const employee = data.employees.find(emp => emp.eId === eIdSelectedEmployee)
+
+      if (employee) {
+        handleClickOpenDialog('Details', employee)
+      }
+    }
+  }
   return (
     <Box
       sx={{
@@ -29,7 +40,7 @@ export const FormFooter: React.FC<FormFooterProps> = ({
         justifyContent: 'space-between'
       }}
     >
-      <Button variant='outlined' onClick={() => setDialogOpen(false)}>
+      <Button variant='outlined' onClick={handleCancelClick}>
         {cancelButtonText}
       </Button>
       {middleContent}

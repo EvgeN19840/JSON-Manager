@@ -79,7 +79,7 @@ export const CommonTests = () => {
   return (
     <Card>
       <CardHeader
-        title={`${selectedTest === 'AllTest' ? 'Commons Test Metrics' : `${selectedTest} Test Metrics`} `}
+        title={`${selectedTest === 'AllTest' ? 'Common Test Metrics' : `${selectedTest} Test Metrics`} `}
         action={
           <Box sx={{ display: 'flex', gap: '1rem' }}>
             <CustomSelect label='Tests' names={testsNames} selected={selectedTest} onChange={handleTestSelectChange} />

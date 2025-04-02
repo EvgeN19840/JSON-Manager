@@ -13,10 +13,10 @@ export const CustomSelect = ({ names, selected, onChange, label }: ISelectProps)
   }
 
   return (
-    <FormControl sx={{ width: '100px' }}>
+    <FormControl sx={{ width: '120px' }}>
       <InputLabel>{label}</InputLabel>
       <Select value={selected} label='Test' onChange={handleChange}>
-        <MenuItem value='AllTest'>All Test</MenuItem>
+        <MenuItem value='AllTest'>All Tests</MenuItem>
         {names
           .sort((a, b) => {
             const aNumber = Number(a)

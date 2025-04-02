@@ -2,23 +2,17 @@
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 
 // ** Components
-import { actionMenu, MyContextMenu } from '@/shared/components'
-import { InputField } from '@/shared/inputField'
-
+import { CommentCell } from '../../commentCell'
+import { MyContextMenu, actionMenu } from '@/shared/components/'
 // ** Types
 import { IEmployee } from '@/types/json'
-import { ContextMenuItemsCallbacks } from '@/shared/components/actionMenu/types'
-
-// ** Hooks
-import { useDataStateContext } from '@/pages/home/hooks'
+import { ContextMenuItemsCallbacks } from '@/shared/components/myContextMenu/actionMenu/types'
 
 export const ColumnsTemplate = (
   _handleEditClick: (employee: IEmployee) => void,
   callbacks: ContextMenuItemsCallbacks<IEmployee>,
   isTemplateMode: boolean
 ): GridColDef<IEmployee>[] => {
-  const { data, setData } = useDataStateContext()
-
   return [
     {
       field: 'firstName',
@@ -38,25 +32,7 @@ export const ColumnsTemplate = (
       field: 'comment',
       headerName: 'Comment',
       flex: 1,
-      renderCell: (params: GridRenderCellParams<IEmployee>) => {
-        return (
-          <InputField
-            value={params.row.comment || ''}
-            placeholder='Type your comment...'
-            noBorderRadius={true}
-            onChange={event => {
-              const newComment = event.target.value
-              if (!data?.employees) return
-              setData(prevData => ({
-                ...prevData,
-                employees: prevData.employees.map(emp =>
-                  emp.eId === params.row.eId ? { ...emp, comment: newComment || '' } : emp
-                )
-              }))
-            }}
-          />
-        )
-      }
+      renderCell: params => <CommentCell params={params} />
     },
     {
       field: 'Actions',

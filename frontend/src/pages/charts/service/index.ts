@@ -15,22 +15,13 @@ export const getTests = async ({ env }: { env?: string }) => {
   return data;
 };
 
-export const getTest = async (name: string, env?: string): Promise<ApiResponse<ITest[] | {
-  results: IAllTimeTestClient[];
-  test_names: string[];
-  envs: string[];
-}>> => {
+export const getTest = async (name: string, env?: string): Promise<ApiResponse<ITest[]>> => {
   if (name === 'AllTest') {
     const query = env === 'AllTest' ? '' : env ? `?env=${env}` : '';
-    const { data } = await api.get<ApiResponse<{
-      results: IAllTimeTestClient[];
-      test_names: string[],
-      envs: string[]
-    }>>(`/tests${query}`);
+    const { data } = await api.get<ApiResponse<ITest[]>>(`/tests${query}`);
     return data;
   }
 
-  // Если конкретный тест, собираем query как раньше
   const query = `?name=${name}${env && env !== 'AllTest' ? `&env=${env}` : ''}`;
   const { data } = await api.get<ApiResponse<ITest[]>>(`/test/${query}`);
   return data;
