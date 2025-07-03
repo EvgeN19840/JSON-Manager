@@ -15,7 +15,7 @@ import {
   DepositAccountTab,
   DeductionsAndLoansTab,
   BonusesTab,
-  Reimbursements
+  Customincomes
 } from './index'
 
 // ** Types
@@ -37,7 +37,7 @@ export const TabsDetails = () => {
       case '3':
         return <DepositAccountTab />
       case '4':
-        return <Reimbursements />
+        return <Customincomes />
       case '5':
         return <DeductionsAndLoansTab />
       case '6':

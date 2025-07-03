@@ -13,6 +13,7 @@ import {
   IReimbursement,
   IOtherDeduction,
   ILoanOrSalaryAdvance,
+  IFees,
 } from "@/types/json";
 
 export const useDefaultEmployeeBasicInfo = (): IEmployeeBasicInfo => {
@@ -54,12 +55,13 @@ export const useDefaultEmployeeBenefit = (): IEmployeeBenefit => {
 
   return {
     name: dataForDialog?.name || "",
+    effectiveDate: dataForDialog?.effectiveDate || "2024-01-01",
     value: dataForDialog?.value || 0,
     currencyCode: dataForDialog?.currencyCode || "",
     companyValue: dataForDialog?.companyValue || 0,
     companyCurrencyCode: dataForDialog?.companyCurrencyCode || "",
     isPerentValue: dataForDialog?.isPerentValue || false,
-    effectiveDate: dataForDialog?.effectiveDate || "2024-01-01",
+
     id: dataForDialog?.id || "",
   };
 };
@@ -71,7 +73,7 @@ export const useDefaultReimbursement = (): IReimbursement => {
 
   return {
     name: dataForDialog?.name || "",
-    startDate: dataForDialog?.startDate || null,
+    startDate: dataForDialog?.startDate || "2024-01-01",
     endDate: dataForDialog?.endDate || null,
     payrollOperationFrequency: dataForDialog?.payrollOperationFrequency || "",
     customBambooTableRowId: dataForDialog?.customBambooTableRowId || 0,
@@ -81,6 +83,22 @@ export const useDefaultReimbursement = (): IReimbursement => {
 };
 
 
+export const useDefaultFees = (): IFees => {
+  const { dataForDialog } = useModal() as {
+    dataForDialog: IFees | null;
+  };
+
+  return {
+    name: dataForDialog?.name || "",
+    startDate: dataForDialog?.startDate || "2024-01-01",
+    endDate: dataForDialog?.endDate || null,
+    payrollOperationFrequency: dataForDialog?.payrollOperationFrequency || "",
+    customBambooTableRowId: dataForDialog?.customBambooTableRowId || 0,
+    value: dataForDialog?.value || null,
+    currencyCode: dataForDialog?.currencyCode || null,
+  };
+};
+
 export const useDefaultJobInfo = (): IJobInfo => {
   const { dataForDialog } = useModal() as {
     dataForDialog: IJobInfo | null;
@@ -88,8 +106,8 @@ export const useDefaultJobInfo = (): IJobInfo => {
 
   return {
     customBambooTableRowId: dataForDialog?.customBambooTableRowId || 0,
-    effectiveDate: dataForDialog?.effectiveDate || "",
     jobTitle: dataForDialog?.jobTitle || "",
+    effectiveDate: dataForDialog?.effectiveDate || "2024-01-01",
     department: dataForDialog?.department || null,
     location: dataForDialog?.location || null,
     division: dataForDialog?.division || null,
@@ -105,8 +123,8 @@ export const useDefaultBonuses = (): IBonuses => {
 
   return {
     customBambooTableRowId: dataForDialog?.customBambooTableRowId || 0,
-    effectiveDate: dataForDialog?.effectiveDate || "",
     amount: dataForDialog?.amount || 0,
+    effectiveDate: dataForDialog?.effectiveDate || "2024-01-01",
     currencyCode: dataForDialog?.currencyCode || "",
     reason: dataForDialog?.reason || null,
     comment: dataForDialog?.comment || null,
@@ -143,12 +161,12 @@ export const useDefaultOtherDeduction = (): IOtherDeduction => {
 
   return {
     name: dataForDialog?.name || '',
-    startDate: dataForDialog?.startDate || null,
+    startDate: dataForDialog?.startDate || "2024-01-01",
     endDate: dataForDialog?.endDate || null,
     payrollOperationFrequency: dataForDialog?.payrollOperationFrequency || '',
     customBambooTableRowId: dataForDialog?.customBambooTableRowId || 0,
     value: dataForDialog?.value || 0,
-    currencyCode: dataForDialog?.currencyCode || '', 
+    currencyCode: dataForDialog?.currencyCode || '',
     isActive: dataForDialog?.isActive || false,
     comment: dataForDialog?.comment || null,
     componentType: dataForDialog?.componentType || 0,
@@ -167,12 +185,12 @@ export const useDefaultLoanSalaryAdvance = (): ILoanOrSalaryAdvance => {
 
   return {
     name: dataForDialog?.name || '',
-    startDate: dataForDialog?.startDate || null,
+    startDate: dataForDialog?.startDate || "2024-01-01",
     endDate: dataForDialog?.endDate || null,
     payrollOperationFrequency: dataForDialog?.payrollOperationFrequency || '',
     customBambooTableRowId: dataForDialog?.customBambooTableRowId || 0,
     value: dataForDialog?.value || 0,
-    currencyCode: dataForDialog?.currencyCode || '', 
+    currencyCode: dataForDialog?.currencyCode || '',
     isActive: dataForDialog?.isActive || false,
     comment: dataForDialog?.comment || null,
     componentType: dataForDialog?.componentType || 0,
@@ -190,8 +208,8 @@ export const useDefaultEmploymentStatus = (): IEmploymentStatus => {
 
   return {
     customBambooTableRowId: dataForDialog?.customBambooTableRowId || 0,
-    effectiveDate: dataForDialog?.effectiveDate || "",
     employmentStatus: dataForDialog?.employmentStatus || "",
+    effectiveDate: dataForDialog?.effectiveDate || "2024-01-01",
     comment: dataForDialog?.comment || null,
   };
 };
@@ -204,11 +222,11 @@ export const useDefaultSalary = (): ISalary => {
   return {
     customBambooTableRowId: dataForDialog?.customBambooTableRowId || 0,
     salaryRate: dataForDialog?.salaryRate || 0,
+    effectiveDate: dataForDialog?.effectiveDate || "2024-01-01",
     salaryCurrencyCode: dataForDialog?.salaryCurrencyCode || "",
     salaryRatePeriod: dataForDialog?.salaryRatePeriod || "PerMonth",
     payPeriod: dataForDialog?.payPeriod || "Monthly",
     allowOvertime: dataForDialog?.allowOvertime || false,
-    effectiveDate: dataForDialog?.effectiveDate || "",
     changeReason: dataForDialog?.changeReason || null,
     comment: dataForDialog?.comment || null,
     overtimeRate: dataForDialog?.overtimeRate || null,

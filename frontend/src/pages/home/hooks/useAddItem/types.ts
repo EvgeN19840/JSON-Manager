@@ -10,6 +10,7 @@ import {
     IReimbursement,
     ISalary,
     ISystemBenefit,
+    IFees
 } from "@/types/json";
 export interface IUseHandleAddItemParams {
     item:
@@ -22,7 +23,8 @@ export interface IUseHandleAddItemParams {
     | IEmployeeBenefit
     | IBonuses
     | IOtherDeduction
-    | IReimbursement;
+    | IReimbursement
+    | IFees;
     type: "employees" | "benefits" | "item";
     eId?: string | number;
     nestedType?:
@@ -34,5 +36,6 @@ export interface IUseHandleAddItemParams {
     | "bonuses"
     | "reimbursements"
     | "otherDeductions"
-    |"loansAndSalaryAdvances"
+    | "loansAndSalaryAdvances"
+    | "fees"
 }

@@ -11,11 +11,7 @@ import { useDataStateContext } from '@/pages/home/hooks'
 import { validateUniqueIds } from '@/shared/utils/validateUniqueIds'
 
 // ** Types
-import {
-  IDataForDialog,
-  IModalType,
-  IModalTypeDetailsEdits
-} from '../types'
+import { IDataForDialog, IModalType, IModalTypeDetailsEdits } from '../types'
 
 import {
   IBonuses,
@@ -23,12 +19,12 @@ import {
   IEmployee,
   IEmployeeBenefit,
   IEmploymentStatus,
+  IFees,
   IJobInfo,
   IReimbursement,
   ISalary,
   ISystemBenefit
 } from '@/types/json'
-
 
 export const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const { data } = useDataStateContext()
@@ -48,6 +44,7 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) =
       | IDepositAccounts
       | IBonuses
       | IReimbursement
+      | IFees
   ) => {
     switch (typeModal) {
       case 'Export data':
@@ -81,7 +78,6 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   }
   const closeDialog = () => {
     setDialogOpen(false)
-    // ** Возможно, тут нужен будет UseEffect и логика для удаления таймера )))0))0)
     setTimeout(() => {
       setTypeModal(null)
       setDataForDialog(null)

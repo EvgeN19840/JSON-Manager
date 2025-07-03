@@ -14,7 +14,7 @@ export const employeeData = {
       "addressState": null,
       "addressZip": null,
       "addressCountry": null,
-      "hireDate": "2023-01-01T00:00:00Z",
+      "hireDate": "2024-01-01T00:00:00Z",
       "endDate": null,
       "enabledForCayPay": true,
       "pensionMemberNumber": "1",
@@ -40,6 +40,7 @@ export const employeeData = {
       "reimbursements": [],
       "loansAndSalaryAdvances": [],
       "otherDeductions": [],
+      "fees":[],
       "benefits": [
         {
           "name": "Britcay Provident Health Plan",
@@ -48,7 +49,7 @@ export const employeeData = {
           "companyValue": 750,
           "companyCurrencyCode": "KYD",
           "isPerentValue": false,
-          "effectiveDate": "2023-01-01",
+          "effectiveDate": "2024-01-01",
           "id": "1"
         },
         {
@@ -58,7 +59,7 @@ export const employeeData = {
           "companyValue": 5,
           "companyCurrencyCode": "%",
           "isPerentValue": true,
-          "effectiveDate": "2023-01-01",
+          "effectiveDate": "2024-01-01",
           "id": "2"
         },
         {
@@ -68,7 +69,7 @@ export const employeeData = {
           "companyValue": 60,
           "companyCurrencyCode": "KYD",
           "isPerentValue": false,
-          "effectiveDate": "2023-01-01",
+          "effectiveDate": "2024-01-01",
           "id": "3"
         }
       ],
@@ -80,7 +81,7 @@ export const employeeData = {
           "salaryRatePeriod": "PerMonth",
           "payPeriod": "Monthly",
           "allowOvertime": true,
-          "effectiveDate": "2023-01-01T00:00:00Z",
+          "effectiveDate": "2024-01-01T00:00:00Z",
           "changeReason": null,
           "comment": null,
           "overtimeRate": null
@@ -89,7 +90,7 @@ export const employeeData = {
       "jobInfo": [
         {
           "customBambooTableRowId": 38784,
-          "effectiveDate": "2023-01-01T00:00:00Z",
+          "effectiveDate": "2024-01-01T00:00:00Z",
           "jobTitle": "Director",
           "department": null,
           "location": null,
@@ -100,7 +101,7 @@ export const employeeData = {
       "employmentStatus": [
         {
           "customBambooTableRowId": 27415,
-          "effectiveDate": "2023-01-01T00:00:00Z",
+          "effectiveDate": "2024-01-01T00:00:00Z",
           "employmentStatus": "Full-Time",
           "comment": "Start date"
         }

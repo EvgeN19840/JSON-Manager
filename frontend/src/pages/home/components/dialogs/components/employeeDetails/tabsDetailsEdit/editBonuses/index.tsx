@@ -1,26 +1,24 @@
 // ** MUI
-import { Box } from '@mui/material'
+import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 
 // ** External Libraries
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 // ** Components
 import { FormWrapper, FormInput, FormFooter } from '@/shared/formElements'
 
 // ** Hooks
-import {
-  useDataStateContext,
-  useDefaultBonuses,
-  useModal
-} from '@/pages/home/hooks'
+import { useDataStateContext, useDefaultBonuses, useModal } from '@/pages/home/hooks'
 
 // ** Schema
 import { schema } from './schema'
 
+// ** Dropdowns
+import currencyCode from '@/constants/dropdownLists/currencyCode'
+
 // ** Types
 import { IBonuses } from '@/types/json'
-
 
 export const EditBonuses: React.FC = () => {
   const { dataForDialog } = useModal() as {
@@ -58,12 +56,37 @@ export const EditBonuses: React.FC = () => {
           .filter(key => key !== 'customBambooTableRowId')
           .map(key => (
             <Box key={key} mb={2}>
-              <FormInput
-                name={key as keyof IBonuses}
-                label={key}
-                control={control}
-                errorMessage={errors[key as keyof IBonuses]?.message}
-              />
+              {key === 'currencyCode' ? (
+                <FormControl fullWidth variant='outlined'>
+                  <InputLabel>Currency code</InputLabel>
+                  <Controller
+                    name='currencyCode'
+                    control={control}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        label='Currency code'
+                        value={field.value}
+                        onChange={e => field.onChange(e.target.value)}
+                      >
+                        {currencyCode.map(option => (
+                          <MenuItem key={option} value={option}>
+                            {option}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    )}
+                  />
+                </FormControl>
+              ) : (
+                <FormInput
+                  name={key as keyof IBonuses}
+                  label={key}
+                  control={control}
+                  type={typeof defaultValues[key as keyof IBonuses] === 'boolean' ? 'checkbox' : 'text'}
+                  errorMessage={errors[key as keyof IBonuses]?.message}
+                />
+              )}
             </Box>
           ))}
       </FormWrapper>

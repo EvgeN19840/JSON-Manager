@@ -1,25 +1,25 @@
 // ** MUI
-import { Box } from '@mui/material'
+import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 
 // ** External Libraries
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 // ** Components
 import { FormWrapper, FormInput, FormFooter } from '@/shared/formElements'
 
 // ** Hooks
-import {
-  useDataStateContext,
-  useDefaultDepositAccounts,
-  useModal
-} from '@/pages/home/hooks'
+import { useDataStateContext, useDefaultDepositAccounts, useModal } from '@/pages/home/hooks'
 
 // ** Schema
 import { schema } from './schema'
 
 // ** Types
 import { IDepositAccounts } from '@/types/json'
+
+// ** Dropdowns
+import bankNames from '@/constants/dropdownLists/bankNames'
+import currencyCode from '@/constants/dropdownLists/currencyCode'
 
 export const EditDepositAccounts: React.FC = () => {
   const { dataForDialog } = useModal() as {
@@ -57,13 +57,59 @@ export const EditDepositAccounts: React.FC = () => {
           .filter(key => key !== 'customBambooTableRowId')
           .map(key => (
             <Box key={key} mb={2}>
-              <FormInput
-                name={key as keyof IDepositAccounts}
-                label={key}
-                control={control}
-                type={typeof defaultValues[key as keyof IDepositAccounts] === 'boolean' ? 'checkbox' : 'text'}
-                errorMessage={errors[key as keyof IDepositAccounts]?.message}
-              />
+              {key === 'bank' ? (
+                <FormControl fullWidth variant='outlined'>
+                  <InputLabel>Bank name</InputLabel>
+                  <Controller
+                    name='bank'
+                    control={control}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        label='Bank name'
+                        value={field.value}
+                        onChange={e => field.onChange(e.target.value)}
+                      >
+                        {bankNames.map(option => (
+                          <MenuItem key={option} value={option}>
+                            {option}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    )}
+                  />
+                </FormControl>
+              ) : key === 'currencyCode' ? (
+                <FormControl fullWidth variant='outlined'>
+                  <InputLabel>Currency code</InputLabel>
+                  <Controller
+                    name='currencyCode'
+                    control={control}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        label='Currency code'
+                        value={field.value}
+                        onChange={e => field.onChange(e.target.value)}
+                      >
+                        {currencyCode.map(option => (
+                          <MenuItem key={option} value={option}>
+                            {option}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    )}
+                  />
+                </FormControl>
+              ) : (
+                <FormInput
+                  name={key as keyof IDepositAccounts}
+                  label={key}
+                  control={control}
+                  type={typeof defaultValues[key as keyof IDepositAccounts] === 'boolean' ? 'checkbox' : 'text'}
+                  errorMessage={errors[key as keyof IDepositAccounts]?.message}
+                />
+              )}
             </Box>
           ))}
       </FormWrapper>

@@ -1,5 +1,5 @@
-import { Box } from '@mui/material'
-import { useForm } from 'react-hook-form'
+import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
+import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useModal } from '@/pages/home/hooks/useModal'
 import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
@@ -7,6 +7,10 @@ import { FormWrapper, FormInput, FormFooter } from '@/shared/formElements'
 import { IOtherDeduction } from '@/types/json'
 import { useDefaultOtherDeduction } from '@/pages/home/hooks/useDefaultData'
 import { schema } from '../schema'
+
+// ** Dropdowns
+import currencyCode from '@/constants/dropdownLists/currencyCode'
+import payrollOperationFrequency from '@/constants/dropdownLists/payrollOperationFrequency'
 
 export const EditDeductions: React.FC = () => {
   const { dataForDialog } = useModal() as {
@@ -44,13 +48,59 @@ export const EditDeductions: React.FC = () => {
           .filter(key => key !== 'customBambooTableRowId')
           .map(key => (
             <Box key={key} mb={2}>
-              <FormInput
-                name={key as keyof IOtherDeduction}
-                label={key}
-                control={control}
-                type={typeof defaultValues[key as keyof IOtherDeduction] === 'boolean' ? 'checkbox' : 'text'}
-                errorMessage={errors[key as keyof IOtherDeduction]?.message}
-              />
+              {key === 'payrollOperationFrequency' ? (
+                <FormControl fullWidth variant='outlined'>
+                  <InputLabel>Payroll operation frequency</InputLabel>
+                  <Controller
+                    name='payrollOperationFrequency'
+                    control={control}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        label='Payroll operation frequency'
+                        value={field.value}
+                        onChange={e => field.onChange(e.target.value)}
+                      >
+                        {payrollOperationFrequency.map(option => (
+                          <MenuItem key={option} value={option}>
+                            {option}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    )}
+                  />
+                </FormControl>
+              ) : key === 'currencyCode' ? (
+                <FormControl fullWidth variant='outlined'>
+                  <InputLabel>Currency code</InputLabel>
+                  <Controller
+                    name='currencyCode'
+                    control={control}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        label='Currency code'
+                        value={field.value}
+                        onChange={e => field.onChange(e.target.value)}
+                      >
+                        {currencyCode.map(option => (
+                          <MenuItem key={option} value={option}>
+                            {option}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    )}
+                  />
+                </FormControl>
+              ) : (
+                <FormInput
+                  name={key as keyof IOtherDeduction}
+                  label={key}
+                  control={control}
+                  type={typeof defaultValues[key as keyof IOtherDeduction] === 'boolean' ? 'checkbox' : 'text'}
+                  errorMessage={errors[key as keyof IOtherDeduction]?.message}
+                />
+              )}
             </Box>
           ))}
       </FormWrapper>

@@ -62,7 +62,17 @@ export interface IEmployee {
   jobInfo: IJobInfo[];
   employmentStatus: IEmploymentStatus[];
   bonuses: IBonuses[];
+  fees: IFees[];
   comment?: string;
+}
+export interface IFees {
+  name: string;
+  startDate: string | null;
+  endDate: string | null;
+  payrollOperationFrequency: string;
+  customBambooTableRowId: number;
+  value: number | null;
+  currencyCode: string | null;
 }
 
 export interface IDepositAccounts {
@@ -153,8 +163,8 @@ export interface IJobInfo {
 
 export interface IEmploymentStatus {
   customBambooTableRowId: number;
-  effectiveDate: string | null;
   employmentStatus: string | null;
+  effectiveDate: string | null;
   comment: string | null;
 }
 

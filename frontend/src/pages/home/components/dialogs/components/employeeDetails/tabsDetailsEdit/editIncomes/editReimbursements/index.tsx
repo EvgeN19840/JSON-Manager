@@ -1,48 +1,48 @@
 // ** MUI
 import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 
-// ** External Libraries
-import { useForm, Controller } from 'react-hook-form'
+// ** Forms Imports
+import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+
+// ** Hooks
+import { useModal, useDataStateContext, useDefaultReimbursement } from '@/pages/home/hooks'
+
+// ** Schema
+import { schema } from '../schema'
+
+// ** Types
+import { IReimbursement } from '@/types/json'
 
 // ** Components
 import { FormWrapper, FormInput, FormFooter } from '@/shared/formElements'
 
-// ** Hooks
-import { useDataStateContext, useDefaultSalary, useModal } from '@/pages/home/hooks'
-
 // ** Dropdowns
-import payPeriodDropdown from '@/constants/dropdownLists/payPeriod'
-import salaryRateDropdown from '@/constants/dropdownLists/salaryRate'
 import currencyCode from '@/constants/dropdownLists/currencyCode'
+import payrollOperationFrequency from '@/constants/dropdownLists/payrollOperationFrequency'
 
-// ** Schema
-import { salarySchema } from '../../schema'
-
-// ** Types
-import { ISalary } from '@/types/json'
-
-export const Salary: React.FC = () => {
+export const EditReimbursementTab: React.FC = () => {
   const { dataForDialog } = useModal() as {
-    dataForDialog: ISalary | null
+    dataForDialog: IReimbursement | null
   }
-  const defaultValues = useDefaultSalary()
 
   const { handleClickOpenDialog } = useModal()
   const { handleSaveData, data, eIdSelectedEmployee } = useDataStateContext()
+
+  const defaultValues = useDefaultReimbursement()
 
   const {
     control,
     handleSubmit,
     formState: { errors, isDirty }
-  } = useForm<ISalary>({
+  } = useForm<IReimbursement>({
     defaultValues,
     mode: 'onSubmit',
-    resolver: yupResolver(salarySchema)
+    resolver: yupResolver(schema)
   })
 
-  const onSubmit = (formData: ISalary) => {
-    handleSaveData({ ...dataForDialog, ...formData } as ISalary, 'salary')
+  const onSubmit = (formData: IReimbursement) => {
+    handleSaveData({ ...dataForDialog, ...formData } as IReimbursement, 'reimbursements')
     const updatedEmployees = data.employees.map(employee =>
       employee.eId === eIdSelectedEmployee ? { ...employee, ...formData } : employee
     )
@@ -50,28 +50,27 @@ export const Salary: React.FC = () => {
     const updatedEmployee = updatedEmployees.find(employee => employee.eId === eIdSelectedEmployee)
     handleClickOpenDialog('Details', updatedEmployee)
   }
-
   return (
     <Box>
-      <FormWrapper title='Salary' onSubmit={handleSubmit(onSubmit)}>
+      <FormWrapper title='Custom incomes' onSubmit={handleSubmit(onSubmit)}>
         {Object.keys(defaultValues)
           .filter(key => key !== 'customBambooTableRowId')
           .map(key => (
             <Box key={key} mb={2}>
-              {key === 'payPeriod' ? (
+              {key === 'payrollOperationFrequency' ? (
                 <FormControl fullWidth variant='outlined'>
-                  <InputLabel>Pay Period</InputLabel>
+                  <InputLabel>Payroll operation frequency</InputLabel>
                   <Controller
-                    name='payPeriod'
+                    name='payrollOperationFrequency'
                     control={control}
                     render={({ field }) => (
                       <Select
                         {...field}
-                        label='Pay Period'
+                        label='Payroll operation frequency'
                         value={field.value}
                         onChange={e => field.onChange(e.target.value)}
                       >
-                        {payPeriodDropdown.map(option => (
+                        {payrollOperationFrequency.map(option => (
                           <MenuItem key={option} value={option}>
                             {option}
                           </MenuItem>
@@ -80,38 +79,16 @@ export const Salary: React.FC = () => {
                     )}
                   />
                 </FormControl>
-              ) : key === 'salaryRatePeriod' ? (
+              ) : key === 'currencyCode' ? (
                 <FormControl fullWidth variant='outlined'>
-                  <InputLabel>Rate Period</InputLabel>
+                  <InputLabel>Currency code</InputLabel>
                   <Controller
-                    name='salaryRatePeriod'
+                    name='currencyCode'
                     control={control}
                     render={({ field }) => (
                       <Select
                         {...field}
-                        label='Rate Period'
-                        value={field.value}
-                        onChange={e => field.onChange(e.target.value)}
-                      >
-                        {salaryRateDropdown.map(option => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    )}
-                  />
-                </FormControl>
-              ) : key === 'salaryCurrencyCode' ? (
-                <FormControl fullWidth variant='outlined'>
-                  <InputLabel>Salary currency code</InputLabel>
-                  <Controller
-                    name='salaryCurrencyCode'
-                    control={control}
-                    render={({ field }) => (
-                      <Select
-                        {...field}
-                        label='Salary currency code'
+                        label='Currency code'
                         value={field.value}
                         onChange={e => field.onChange(e.target.value)}
                       >
@@ -126,11 +103,11 @@ export const Salary: React.FC = () => {
                 </FormControl>
               ) : (
                 <FormInput
-                  name={key as keyof ISalary}
+                  name={key as keyof IReimbursement}
                   label={key}
                   control={control}
-                  type={typeof defaultValues[key as keyof ISalary] === 'boolean' ? 'checkbox' : 'text'}
-                  errorMessage={errors[key as keyof ISalary]?.message}
+                  type={typeof defaultValues[key as keyof IReimbursement] === 'boolean' ? 'checkbox' : 'text'}
+                  errorMessage={errors[key as keyof IReimbursement]?.message}
                 />
               )}
             </Box>
