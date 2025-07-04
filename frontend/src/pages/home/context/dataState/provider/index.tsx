@@ -54,7 +54,7 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({ children 
       | 'reimbursements'
       | 'otherDeductions'
       | 'loansAndSalaryAdvances'
-      |'fees'
+      | 'fees'
   ) => {
     setData(prevData => {
       return {
@@ -75,7 +75,6 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({ children 
             employee: IEmployee
           ): IEmployee[Field] => {
             const fieldArray = employee[arrayField] as IEmployee[Field]
-
             if (!Array.isArray(fieldArray)) {
               throw new Error(`Expected an array for field: ${String(arrayField)}`)
             }
@@ -135,7 +134,7 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({ children 
                 bonuses: employee.bonuses,
                 depositAccounts: employee.depositAccounts,
                 reimbursements: employee.reimbursements,
-                fees:employee.fees,
+                fees: employee.fees,
                 otherDeductions: employee.otherDeductions,
                 loansAndSalaryAdvances: employee.loansAndSalaryAdvances
               }
@@ -159,7 +158,7 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({ children 
                 ...employee,
                 reimbursements: checkArray('reimbursements', employee)
               }
-                          case 'fees':
+            case 'fees':
               return {
                 ...employee,
                 fees: checkArray('fees', employee)

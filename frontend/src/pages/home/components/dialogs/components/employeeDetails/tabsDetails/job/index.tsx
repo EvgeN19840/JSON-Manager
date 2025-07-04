@@ -162,7 +162,7 @@ export const JobInfoTab: React.FC = () => {
   return (
     <Box>
       <Box>
-        <Typography sx={{ textAlign: 'center', mt: 1 }}>Employment Status</Typography>
+        <Typography sx={{ textAlign: 'center', mb: 1, mt:2,  fontSize: '1.1rem', fontWeight: 500, color: 'text.secondary' }}>Employment Status</Typography>
         <DataGrid<IEmploymentStatus>
           onRowDoubleClick={params => employmentStatusCallbacks.openForm(params.row)}
           rows={getEmploymentStatusRows()}
@@ -182,7 +182,7 @@ export const JobInfoTab: React.FC = () => {
       </Box>
 
       <Box>
-        <Typography sx={{ textAlign: 'center', mt: 1 }}>Salary Information</Typography>
+        <Typography sx={{ textAlign: 'center', mb: 1, mt:2,  fontSize: '1.1rem', fontWeight: 500, color: 'text.secondary' }}>Salary Information</Typography>
         <DataGrid<ISalary>
           onRowDoubleClick={params => salaryCallbacks.openForm(params.row)}
           rows={getSalaryRows()}
@@ -202,7 +202,7 @@ export const JobInfoTab: React.FC = () => {
       </Box>
 
       <Box>
-        <Typography sx={{ textAlign: 'center', mt: 1 }}>Job Information</Typography>
+        <Typography sx={{ textAlign: 'center', mb: 1, mt:2,  fontSize: '1.1rem', fontWeight: 500, color: 'text.secondary' }}>Job Information</Typography>
         <DataGrid<IJobInfo>
           onRowDoubleClick={params => jobInfoCallbacks.openForm(params.row)}
           rows={getJobInfoRows()}

@@ -8,3 +8,4 @@ export { EditBonuses } from './editBonuses';
 export { EditReimbursementTab } from './editIncomes/editReimbursements';
 export { EditDeductions } from './editDeductions/otherDeductions';
 export { EditLoanSalaryAdvance } from './editDeductions/loansSalaryAdvances';
+export { EditFeesTab } from './editIncomes/editFees';

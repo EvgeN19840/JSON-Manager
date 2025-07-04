@@ -13,12 +13,12 @@ import {
   EditReimbursementTab,
   EmploymentStatus,
   JobInfo,
-  Salary
+  Salary,
+  EditFeesTab
 } from '.'
 
 // ** Hooks
 import { useModal } from '@/pages/home/hooks'
-import { EditFeesTab } from './editIncomes/editFees'
 
 export const TabsDetailsEdit: React.FC = () => {
   const { typeModalDetailsEdit, isDialogOpen, closeDialog } = useModal()

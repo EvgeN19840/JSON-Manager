@@ -95,7 +95,7 @@ export const DeductionsAndLoansTab: React.FC = () => {
   return (
     <Box>
       <Box>
-        <Typography sx={{ textAlign: 'center', mt: 1 }}>Loans or Salary Advances</Typography>
+        <Typography sx={{ textAlign: 'center', mb: 1, mt:2,  fontSize: '1.1rem', fontWeight: 500, color: 'text.secondary' }}>Loans or Salary Advances</Typography>
         <DataGrid<ILoanOrSalaryAdvance>
           onRowDoubleClick={params => loanCallbacks.openForm(params.row)}
           rows={getLoanRows()}
@@ -108,7 +108,7 @@ export const DeductionsAndLoansTab: React.FC = () => {
         />
       </Box>
       <Box>
-        <Typography sx={{ textAlign: 'center', mt: 1 }}>Other Deductions</Typography>
+        <Typography sx={{ textAlign: 'center', mb: 1, mt:2,  fontSize: '1.1rem', fontWeight: 500, color: 'text.secondary' }}>Other Deductions</Typography>
         <DataGrid<IOtherDeduction>
           onRowDoubleClick={params => deductionCallbacks.openForm(params.row)}
           rows={getDeductionRows()}
