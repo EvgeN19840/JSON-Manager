@@ -12,16 +12,16 @@ import { FormWrapper, FormInput, FormFooter } from '@/shared/formElements'
 import { useDataStateContext, useDefaultEmployeeBenefit, useModal } from '@/pages/home/hooks'
 
 // ** Dropdowns
-import benifitNamesDropdown from '@/constants/dropdownLists/benifitNames'
+import pension from '@/constants/dropdownLists/benifitNames/pension'
 import currencyCode from '@/constants/dropdownLists/currencyCode'
 
 // ** Schema
-import { schema } from './schema'
+import { schema } from '../../schema'
 
 // ** Types
 import { IEmployeeBenefit, ISystemBenefit } from '@/types/json'
 
-export const EditDetailsBenefits = () => {
+export const EditDetailsPensionBenefits = () => {
   const { dataForDialog } = useModal() as {
     dataForDialog: IEmployeeBenefit | null
   }
@@ -29,7 +29,10 @@ export const EditDetailsBenefits = () => {
   const { handleClickOpenDialog } = useModal()
   const { handleSaveData, handleSaveBenefit, data, eIdSelectedEmployee } = useDataStateContext()
 
-  const defaultValues = useDefaultEmployeeBenefit()
+  const defaultValues = {
+    ...useDefaultEmployeeBenefit(),
+    name: useDefaultEmployeeBenefit().name || 'Pension'
+  }
 
   const {
     control,
@@ -47,10 +50,10 @@ export const EditDetailsBenefits = () => {
       ...formData
     } as IEmployeeBenefit
 
-    const updatedBenefit = {
+    const updatedBenefit: ISystemBenefit = {
       id: formData.id,
       name: formData.name
-    } as ISystemBenefit
+    }
 
     handleSaveData(updatedDataForDialog, 'employeeBenefit')
     handleSaveBenefit(updatedBenefit)
@@ -71,7 +74,7 @@ export const EditDetailsBenefits = () => {
 
   return (
     <Box>
-      <FormWrapper title='Benefit' onSubmit={handleSubmit(onSubmit)}>
+      <FormWrapper title='Pension' onSubmit={handleSubmit(onSubmit)}>
         {Object.keys(defaultValues)
           .filter(key => key !== 'customBambooTableRowId')
           .map(key => (
@@ -80,34 +83,36 @@ export const EditDetailsBenefits = () => {
                 <Controller
                   name={key as keyof IEmployeeBenefit}
                   control={control}
-                  render={({ field }) => (
-                    <Autocomplete
-                      freeSolo
-                      options={
-                        key === 'name'
-                          ? benifitNamesDropdown
-                          : currencyCode
-                      }
-                      value={field.value != null ? String(field.value) : ''}
-                      onChange={(_, newValue) => field.onChange(newValue)}
-                      onInputChange={(_, newInputValue) => field.onChange(newInputValue)}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          label={
-                            key === 'name'
-                              ? 'Benefit name'
-                              : key === 'currencyCode'
+                  render={({ field }) => {
+                    const isNameField = key === 'name'
+                    const value = field.value != null ? String(field.value) : ''
+
+                    return (
+                      <Autocomplete
+                        freeSolo
+                        options={isNameField ? pension : currencyCode}
+                        value={value}
+                        inputValue={isNameField && value === '' ? 'Pension' : value}
+                        onInputChange={(_, newInputValue) => field.onChange(newInputValue)}
+                        onChange={(_, newValue) => field.onChange(newValue)}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label={
+                              key === 'name'
+                                ? 'Benefit name'
+                                : key === 'currencyCode'
                                 ? 'Currency code'
                                 : 'Company currency code'
-                          }
-                          error={!!errors[key as keyof IEmployeeBenefit]}
-                          helperText={errors[key as keyof IEmployeeBenefit]?.message}
-                          fullWidth
-                        />
-                      )}
-                    />
-                  )}
+                            }
+                            error={!!errors[key as keyof IEmployeeBenefit]}
+                            helperText={errors[key as keyof IEmployeeBenefit]?.message}
+                            fullWidth
+                          />
+                        )}
+                      />
+                    )
+                  }}
                 />
               ) : (
                 <FormInput

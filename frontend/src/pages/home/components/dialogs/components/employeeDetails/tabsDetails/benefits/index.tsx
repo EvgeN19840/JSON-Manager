@@ -1,17 +1,13 @@
-// ** MUI
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 
-// ** Components
+// Components
 import { CustomFooter } from '@/shared/components'
 
-// ** Const
+// Const
 import { ColumnsBenefit } from './columnsBenefit'
 
-// ** Context
-import { IEmployeeDataForDialog } from '@/pages/home/context/modal/types'
-
-// ** Hooks
+// Hooks
 import {
   useDataStateContext,
   useDefaultEmployeeBenefit,
@@ -20,10 +16,9 @@ import {
   useModal
 } from '@/pages/home/hooks'
 
-// ** Types
+// Types
 import { IEmployeeBenefit } from '@/types/json'
 import { ContextMenuItemsCallbacks } from '@/shared/components/actionMenu/types'
-
 
 export const BenefitsTab: React.FC = () => {
   const { handleClickOpenDialog, setTypeModalDetailsEdit, dataForDialog } = useModal()
@@ -33,7 +28,7 @@ export const BenefitsTab: React.FC = () => {
   const handleDeleteItem = useHandleDeleteItem()
   const handleAddItem = useHandleAddItem()
 
-  const getBenefitRows = (): IEmployeeBenefit[] => {
+  const getBenefits = (): IEmployeeBenefit[] => {
     if (dataForDialog && dialogData?.eId) {
       const employee = data.employees.find(emp => emp.eId === dialogData.eId)
       return employee?.benefits || []
@@ -41,60 +36,89 @@ export const BenefitsTab: React.FC = () => {
     return []
   }
 
-  const handleEditClick = (data: IEmployeeBenefit) => {
+  const renderSection = (
+    label: string,
+    keyword: string,
+    editType: 'Edit pension benefits details' | 'Edit life benefits details' | 'Edit health benefits details',
+    handleEdit: (data: IEmployeeBenefit) => void
+  ) => {
+    const benefits = getBenefits().filter(b => b.name?.toLowerCase().includes(keyword.toLowerCase()))
+
+    const callbacks: ContextMenuItemsCallbacks<IEmployeeBenefit> = {
+      openForm: data => handleEdit(data),
+      addItem: data =>
+        dialogData &&
+        handleAddItem({
+          item: data,
+          type: 'item',
+          eId: dialogData.eId,
+          nestedType: 'benefits'
+        }),
+      deleteItem: data =>
+        dialogData &&
+        handleDeleteItem({
+          id: data.id,
+          type: 'item',
+          eId: dialogData.eId,
+          nestedType: 'benefits'
+        })
+    }
+
+    const columns = ColumnsBenefit(handleEdit, callbacks)
+
+    return (
+      <Box>
+        <Typography
+          sx={{ textAlign: 'center', mb: 1, mt: 2, fontSize: '1.1rem', fontWeight: 500, color: 'text.secondary' }}
+        >
+          {label}
+        </Typography>
+        <DataGrid<IEmployeeBenefit>
+          onRowDoubleClick={params => handleEdit(params.row)}
+          rows={benefits}
+          columns={columns}
+          pagination
+          slots={{
+            footer: () => (
+              <CustomFooter
+                onAddEmptyRow={() => {
+                  handleClickOpenDialog('Edit Details', defaultValues)
+                  setTypeModalDetailsEdit(editType)
+                }}
+              />
+            )
+          }}
+          pageSizeOptions={[5, 10, 20]}
+          initialState={{
+            pagination: {
+              paginationModel: { pageSize: 5, page: 0 }
+            }
+          }}
+        />
+      </Box>
+    )
+  }
+
+  const handleEditPension = (data: IEmployeeBenefit) => {
     handleClickOpenDialog('Edit Details', data)
-    setTypeModalDetailsEdit('Edit benefits details')
+    setTypeModalDetailsEdit('Edit pension benefits details')
   }
 
-  const addItem = (benefit: IEmployeeBenefit) => {
-    if (dataForDialog && dialogData) {
-      handleAddItem({
-        item: benefit,
-        type: 'item',
-        eId: dialogData.eId,
-        nestedType: 'benefits'
-      })
-    }
-  }
-  const deleteItem = (item: IEmployeeBenefit) => {
-    if (dataForDialog && dialogData) {
-      handleDeleteItem({
-        id: item.id,
-        type: 'item',
-        eId: (dataForDialog as IEmployeeDataForDialog).eId,
-        nestedType: 'benefits'
-      })
-    }
+  const handleEditLife = (data: IEmployeeBenefit) => {
+    handleClickOpenDialog('Edit Details', data)
+    setTypeModalDetailsEdit('Edit life benefits details')
   }
 
-  const callbacks: ContextMenuItemsCallbacks<IEmployeeBenefit> = {
-    openForm: data => handleEditClick(data),
-    addItem: data => addItem(data),
-    deleteItem: data => deleteItem(data)
+  const handleEditHealth = (data: IEmployeeBenefit) => {
+    handleClickOpenDialog('Edit Details', data)
+    setTypeModalDetailsEdit('Edit health benefits details')
   }
 
-  const columns = ColumnsBenefit(benefit => handleEditClick(benefit), callbacks)
-  const addNewRow = () => {
-    handleClickOpenDialog('Edit Details', defaultValues)
-    setTypeModalDetailsEdit('Edit benefits details')
-  }
   return (
     <Box>
-      <DataGrid<IEmployeeBenefit>
-        onRowDoubleClick={params => handleEditClick(params.row)}
-        rows={getBenefitRows()}
-        columns={columns}
-        pagination
-        slots={{
-          footer: () => <CustomFooter onAddEmptyRow={addNewRow} />
-        }}
-        pageSizeOptions={[5, 10, 20]}
-        initialState={{
-          pagination: {
-            paginationModel: { pageSize: 5, page: 0 }
-          }
-        }}
-      />
+      {renderSection('Pension', 'pension', 'Edit pension benefits details', handleEditPension)}
+      {renderSection('Life Insurance', 'life', 'Edit life benefits details', handleEditLife)}
+      {renderSection('Health Insurance', 'health', 'Edit health benefits details', handleEditHealth)}
     </Box>
   )
 }

@@ -7,7 +7,9 @@ import {
   EditLoanSalaryAdvance,
   EditBonuses,
   EditDepositAccounts,
-  EditDetailsBenefits,
+  EditDetailsPensionBenefits,
+  EditDetailsLifeBenefits,
+  EditDetailsHealthBenefits,
   EditDeductions,
   EditPersonalTab,
   EditReimbursementTab,
@@ -24,8 +26,6 @@ export const TabsDetailsEdit: React.FC = () => {
   const { typeModalDetailsEdit, isDialogOpen, closeDialog } = useModal()
   const renderTabContent = () => {
     switch (typeModalDetailsEdit) {
-      case 'Edit benefits details':
-        return <EditDetailsBenefits />
       case 'Edit Personal':
         return <EditPersonalTab />
       case 'Edit job':
@@ -46,6 +46,12 @@ export const TabsDetailsEdit: React.FC = () => {
         return <EditDeductions />
       case 'Edit loanOrAdvance':
         return <EditLoanSalaryAdvance />
+      case 'Edit pension benefits details':
+        return <EditDetailsPensionBenefits />
+      case 'Edit health benefits details':
+        return <EditDetailsHealthBenefits />
+      case 'Edit life benefits details':
+        return <EditDetailsLifeBenefits />
 
       default:
         return <Typography>Select a tab to view details.</Typography>

@@ -19,7 +19,7 @@ import { ISystemBenefit } from '@/types/json'
 import { IFormBenefitsProps } from './types'
 
 // ** Dropdowns
-import benifitNamesDropdown from '@/constants/dropdownLists/benifitNames'
+import benifitNamesDropdown from '@/constants/dropdownLists/benifitNames/pension'
 
 export const EditBenefits = () => {
   const { dataForDialog, closeDialog } = useModal() as {

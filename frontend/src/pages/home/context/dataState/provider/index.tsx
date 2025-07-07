@@ -78,7 +78,6 @@ export const DataStateProvider: React.FC<{ children: ReactNode }> = ({ children 
             if (!Array.isArray(fieldArray)) {
               throw new Error(`Expected an array for field: ${String(arrayField)}`)
             }
-
             const normalizedValueId = Number(value.customBambooTableRowId)
 
             const updatedArray = fieldArray.map(item => {

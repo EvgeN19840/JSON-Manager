@@ -20,13 +20,14 @@ import { IDepositAccounts } from '@/types/json'
 // ** Dropdowns
 import bankNames from '@/constants/dropdownLists/bankNames'
 import currencyCode from '@/constants/dropdownLists/currencyCode'
+import accountType from '@/constants/dropdownLists/accountType'
 
 export const EditDepositAccounts: React.FC = () => {
   const { dataForDialog } = useModal() as {
     dataForDialog: IDepositAccounts | null
   }
-  const defaultValues = useDefaultDepositAccounts()
 
+  const defaultValues = useDefaultDepositAccounts()
   const { handleClickOpenDialog } = useModal()
   const { handleSaveData, data, eIdSelectedEmployee } = useDataStateContext()
 
@@ -56,28 +57,44 @@ export const EditDepositAccounts: React.FC = () => {
           .filter(key => key !== 'customBambooTableRowId')
           .map(key => (
             <Box key={key} mb={2}>
-              {key === 'bank' || key === 'currencyCode' ? (
+              {key === 'bank' || key === 'currencyCode' || key === 'accountType' ? (
                 <Controller
                   name={key}
                   control={control}
-                  render={({ field }) => (
-                    <Autocomplete
-                      freeSolo
-                      options={key === 'bank' ? bankNames : currencyCode}
-                      value={field.value || ''}
-                      onChange={(_, newValue) => field.onChange(newValue)}
-                      onInputChange={(_, newInputValue) => field.onChange(newInputValue)}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          label={key === 'bank' ? 'Bank name' : 'Currency code'}
-                          error={!!errors[key as keyof IDepositAccounts]}
-                          helperText={errors[key as keyof IDepositAccounts]?.message}
-                          fullWidth
-                        />
-                      )}
-                    />
-                  )}
+                  render={({ field }) => {
+                    const options =
+                      key === 'bank'
+                        ? bankNames
+                        : key === 'currencyCode'
+                        ? currencyCode
+                        : accountType
+
+                    const label =
+                      key === 'bank'
+                        ? 'Bank name'
+                        : key === 'currencyCode'
+                        ? 'Currency code'
+                        : 'Account type'
+
+                    return (
+                      <Autocomplete
+                        freeSolo
+                        options={options}
+                        value={field.value || ''}
+                        onChange={(_, newValue) => field.onChange(newValue)}
+                        onInputChange={(_, newInputValue) => field.onChange(newInputValue)}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label={label}
+                            error={!!errors[key as keyof IDepositAccounts]}
+                            helperText={errors[key as keyof IDepositAccounts]?.message}
+                            fullWidth
+                          />
+                        )}
+                      />
+                    )
+                  }}
                 />
               ) : (
                 <FormInput
