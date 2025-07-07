@@ -1,5 +1,5 @@
 // ** MUI
-import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
+import { Autocomplete, Box, TextField } from '@mui/material'
 
 // ** External Libraries
 import { Controller, useForm } from 'react-hook-form'
@@ -41,11 +41,10 @@ export const EditDepositAccounts: React.FC = () => {
   })
 
   const onSubmit = (formData: IDepositAccounts) => {
-    handleSaveData({ ...dataForDialog, ...formData } as IDepositAccounts, 'depositAccounts')
+    handleSaveData({ ...dataForDialog, ...formData }, 'depositAccounts')
     const updatedEmployees = data.employees.map(employee =>
       employee.eId === eIdSelectedEmployee ? { ...employee, ...formData } : employee
     )
-
     const updatedEmployee = updatedEmployees.find(employee => employee.eId === eIdSelectedEmployee)
     handleClickOpenDialog('Details', updatedEmployee)
   }
@@ -57,50 +56,29 @@ export const EditDepositAccounts: React.FC = () => {
           .filter(key => key !== 'customBambooTableRowId')
           .map(key => (
             <Box key={key} mb={2}>
-              {key === 'bank' ? (
-                <FormControl fullWidth variant='outlined'>
-                  <InputLabel>Bank name</InputLabel>
-                  <Controller
-                    name='bank'
-                    control={control}
-                    render={({ field }) => (
-                      <Select
-                        {...field}
-                        label='Bank name'
-                        value={field.value}
-                        onChange={e => field.onChange(e.target.value)}
-                      >
-                        {bankNames.map(option => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    )}
-                  />
-                </FormControl>
-              ) : key === 'currencyCode' ? (
-                <FormControl fullWidth variant='outlined'>
-                  <InputLabel>Currency code</InputLabel>
-                  <Controller
-                    name='currencyCode'
-                    control={control}
-                    render={({ field }) => (
-                      <Select
-                        {...field}
-                        label='Currency code'
-                        value={field.value}
-                        onChange={e => field.onChange(e.target.value)}
-                      >
-                        {currencyCode.map(option => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    )}
-                  />
-                </FormControl>
+              {key === 'bank' || key === 'currencyCode' ? (
+                <Controller
+                  name={key}
+                  control={control}
+                  render={({ field }) => (
+                    <Autocomplete
+                      freeSolo
+                      options={key === 'bank' ? bankNames : currencyCode}
+                      value={field.value || ''}
+                      onChange={(_, newValue) => field.onChange(newValue)}
+                      onInputChange={(_, newInputValue) => field.onChange(newInputValue)}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label={key === 'bank' ? 'Bank name' : 'Currency code'}
+                          error={!!errors[key as keyof IDepositAccounts]}
+                          helperText={errors[key as keyof IDepositAccounts]?.message}
+                          fullWidth
+                        />
+                      )}
+                    />
+                  )}
+                />
               ) : (
                 <FormInput
                   name={key as keyof IDepositAccounts}

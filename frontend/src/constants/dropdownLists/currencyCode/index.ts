@@ -1,1 +1,1 @@
-export default ['KYD', 'USD', "Test"]
+export default ['KYD', 'USD']

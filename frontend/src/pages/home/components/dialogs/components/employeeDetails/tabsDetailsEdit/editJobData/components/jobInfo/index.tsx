@@ -1,5 +1,5 @@
 // ** MUI
-import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
+import { Autocomplete, Box, TextField } from '@mui/material'
 
 // ** External Libraries
 import { Controller, useForm } from 'react-hook-form'
@@ -26,6 +26,7 @@ export const JobInfo: React.FC = () => {
   const { dataForDialog } = useModal() as {
     dataForDialog: IJobInfo | null
   }
+
   const { handleClickOpenDialog } = useModal()
   const defaultValues = useDefaultJobInfo()
   const { handleSaveData, data, eIdSelectedEmployee } = useDataStateContext()
@@ -50,6 +51,25 @@ export const JobInfo: React.FC = () => {
     handleClickOpenDialog('Details', updatedEmployee)
   }
 
+  const renderAutocomplete = (name: keyof IJobInfo, label: string, options: string[]) => (
+    <Controller
+      name={name}
+      control={control}
+      render={({ field }) => (
+        <Autocomplete
+          freeSolo
+          options={options}
+          value={field.value != null ? String(field.value) : ''}
+          onChange={(_, newValue) => field.onChange(newValue)}
+          onInputChange={(_, newInputValue) => field.onChange(newInputValue)}
+          renderInput={params => (
+            <TextField {...params} label={label} error={!!errors[name]} helperText={errors[name]?.message} fullWidth />
+          )}
+        />
+      )}
+    />
+  )
+
   return (
     <Box>
       <FormWrapper title='Job Info' onSubmit={handleSubmit(onSubmit)}>
@@ -58,71 +78,11 @@ export const JobInfo: React.FC = () => {
           .map(key => (
             <Box key={key} mb={2}>
               {key === 'jobTitle' ? (
-                <FormControl fullWidth variant='outlined'>
-                  <InputLabel>Job title</InputLabel>
-                  <Controller
-                    name='jobTitle'
-                    control={control}
-                    render={({ field }) => (
-                      <Select
-                        {...field}
-                        label='Job title'
-                        value={field.value}
-                        onChange={e => field.onChange(e.target.value)}
-                      >
-                        {jobTitles.map(option => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    )}
-                  />
-                </FormControl>
+                renderAutocomplete('jobTitle', 'Job title', jobTitles)
               ) : key === 'department' ? (
-                <FormControl fullWidth variant='outlined'>
-                  <InputLabel>Department</InputLabel>
-                  <Controller
-                    name='department'
-                    control={control}
-                    render={({ field }) => (
-                      <Select
-                        {...field}
-                        label='Department'
-                        value={field.value}
-                        onChange={e => field.onChange(e.target.value)}
-                      >
-                        {departments.map(option => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    )}
-                  />
-                </FormControl>
+                renderAutocomplete('department', 'Department', departments)
               ) : key === 'division' ? (
-                <FormControl fullWidth variant='outlined'>
-                  <InputLabel>Division</InputLabel>
-                  <Controller
-                    name='division'
-                    control={control}
-                    render={({ field }) => (
-                      <Select
-                        {...field}
-                        label='Division'
-                        value={field.value}
-                        onChange={e => field.onChange(e.target.value)}
-                      >
-                        {divisions.map(option => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    )}
-                  />
-                </FormControl>
+                renderAutocomplete('division', 'Division', divisions)
               ) : (
                 <FormInput
                   name={key as keyof IJobInfo}

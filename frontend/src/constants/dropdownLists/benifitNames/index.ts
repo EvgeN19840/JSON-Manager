@@ -8,6 +8,5 @@ export default [
     "Silver Thatch Pension - 1% AVC",
     "Silver Thatch Pension",
     "Silver Thatch Pension Property Plan",
-    "Test"
 ]
 

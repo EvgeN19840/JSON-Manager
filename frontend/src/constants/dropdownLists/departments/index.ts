@@ -12,6 +12,4 @@ export default [
     'Logistics',
     'Compliance',
     'Research and Development',
-    'Security',
-    "Test"
 ]

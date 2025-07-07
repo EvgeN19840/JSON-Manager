@@ -1,5 +1,5 @@
 // ** MUI
-import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
+import { Autocomplete, Box, FormControl, TextField } from '@mui/material'
 
 // ** External Libraries
 import { Controller, useForm } from 'react-hook-form'
@@ -58,23 +58,26 @@ export const EditBonuses: React.FC = () => {
             <Box key={key} mb={2}>
               {key === 'currencyCode' ? (
                 <FormControl fullWidth variant='outlined'>
-                  <InputLabel>Currency code</InputLabel>
                   <Controller
                     name='currencyCode'
                     control={control}
                     render={({ field }) => (
-                      <Select
-                        {...field}
-                        label='Currency code'
+                      <Autocomplete
+                        freeSolo
+                        options={currencyCode}
                         value={field.value}
-                        onChange={e => field.onChange(e.target.value)}
-                      >
-                        {currencyCode.map(option => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </Select>
+                        onChange={(_, newValue) => field.onChange(newValue)}
+                        onInputChange={(_, newInputValue) => field.onChange(newInputValue)}
+                        renderInput={params => (
+                          <TextField
+                            {...params}
+                            label='Currency code'
+                            error={!!errors.currencyCode}
+                            helperText={errors.currencyCode?.message}
+                            fullWidth
+                          />
+                        )}
+                      />
                     )}
                   />
                 </FormControl>

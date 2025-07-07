@@ -1,6 +1,12 @@
-import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
+import {
+  Autocomplete,
+  Box,
+
+  TextField
+} from '@mui/material'
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+
 import { useModal } from '@/pages/home/hooks/useModal'
 import { useDataStateContext } from '@/pages/home/hooks/useDataStateContext'
 import { FormWrapper, FormInput, FormFooter } from '@/shared/formElements'
@@ -32,11 +38,10 @@ export const EditLoanSalaryAdvance: React.FC = () => {
   })
 
   const onSubmit = (formData: ILoanOrSalaryAdvance) => {
-    handleSaveData({ ...dataForDialog, ...formData } as ILoanOrSalaryAdvance, 'loansAndSalaryAdvances')
+    handleSaveData({ ...dataForDialog, ...formData }, 'loansAndSalaryAdvances')
     const updatedEmployees = data.employees.map(employee =>
       employee.eId === eIdSelectedEmployee ? { ...employee, ...formData } : employee
     )
-
     const updatedEmployee = updatedEmployees.find(employee => employee.eId === eIdSelectedEmployee)
     handleClickOpenDialog('Details', updatedEmployee)
   }
@@ -48,50 +53,29 @@ export const EditLoanSalaryAdvance: React.FC = () => {
           .filter(key => key !== 'customBambooTableRowId')
           .map(key => (
             <Box key={key} mb={2}>
-              {key === 'payrollOperationFrequency' ? (
-                <FormControl fullWidth variant='outlined'>
-                  <InputLabel>Payroll operation frequency</InputLabel>
-                  <Controller
-                    name='payrollOperationFrequency'
-                    control={control}
-                    render={({ field }) => (
-                      <Select
-                        {...field}
-                        label='Payroll operation frequency'
-                        value={field.value}
-                        onChange={e => field.onChange(e.target.value)}
-                      >
-                        {payrollOperationFrequency.map(option => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    )}
-                  />
-                </FormControl>
-              ) : key === 'currencyCode' ? (
-                <FormControl fullWidth variant='outlined'>
-                  <InputLabel>Currency code</InputLabel>
-                  <Controller
-                    name='currencyCode'
-                    control={control}
-                    render={({ field }) => (
-                      <Select
-                        {...field}
-                        label='Currency code'
-                        value={field.value}
-                        onChange={e => field.onChange(e.target.value)}
-                      >
-                        {currencyCode.map(option => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    )}
-                  />
-                </FormControl>
+              {key === 'payrollOperationFrequency' || key === 'currencyCode' ? (
+                <Controller
+                  name={key}
+                  control={control}
+                  render={({ field }) => (
+                    <Autocomplete
+                      freeSolo
+                      options={key === 'currencyCode' ? currencyCode : payrollOperationFrequency}
+                      value={field.value || ''}
+                      onChange={(_, newValue) => field.onChange(newValue)}
+                      onInputChange={(_, newInputValue) => field.onChange(newInputValue)}
+                      renderInput={params => (
+                        <TextField
+                          {...params}
+                          label={key === 'currencyCode' ? 'Currency code' : 'Payroll operation frequency'}
+                          error={!!errors[key as keyof ILoanOrSalaryAdvance]}
+                          helperText={errors[key as keyof ILoanOrSalaryAdvance]?.message}
+                          fullWidth
+                        />
+                      )}
+                    />
+                  )}
+                />
               ) : (
                 <FormInput
                   name={key as keyof ILoanOrSalaryAdvance}

@@ -1,5 +1,5 @@
 // ** MUI
-import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
+import { Autocomplete, Box, TextField } from '@mui/material'
 
 // ** External Libraries
 import { Controller, useForm } from 'react-hook-form'
@@ -57,27 +57,28 @@ export const EmploymentStatus: React.FC = () => {
           .map(key => (
             <Box key={key} mb={2}>
               {key === 'employmentStatus' ? (
-                <FormControl fullWidth variant='outlined'>
-                  <InputLabel>Employment Status</InputLabel>
-                  <Controller
-                    name='employmentStatus'
-                    control={control}
-                    render={({ field }) => (
-                      <Select
-                        {...field}
-                        label='Employment Status'
-                        value={field.value}
-                        onChange={e => field.onChange(e.target.value)}
-                      >
-                        {employmentStatus.map(option => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    )}
-                  />
-                </FormControl>
+                <Controller
+                  name='employmentStatus'
+                  control={control}
+                  render={({ field }) => (
+                    <Autocomplete
+                      freeSolo
+                      options={employmentStatus}
+                      value={field.value ?? ''}
+                      onChange={(_, newValue) => field.onChange(newValue)}
+                      onInputChange={(_, newInputValue) => field.onChange(newInputValue)}
+                      renderInput={params => (
+                        <TextField
+                          {...params}
+                          label='Employment Status'
+                          error={!!errors.employmentStatus}
+                          helperText={errors.employmentStatus?.message}
+                          fullWidth
+                        />
+                      )}
+                    />
+                  )}
+                />
               ) : (
                 <FormInput
                   name={key as keyof IEmploymentStatus}

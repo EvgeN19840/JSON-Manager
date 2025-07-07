@@ -1,5 +1,5 @@
 // ** MUI
-import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
+import { Autocomplete, Box, TextField } from '@mui/material'
 
 // ** External Libraries
 import { useForm, Controller } from 'react-hook-form'
@@ -76,72 +76,39 @@ export const EditDetailsBenefits = () => {
           .filter(key => key !== 'customBambooTableRowId')
           .map(key => (
             <Box key={key} mb={2}>
-              {key === 'name' ? (
-                <FormControl fullWidth variant='outlined'>
-                  <InputLabel>Bank name</InputLabel>
-                  <Controller
-                    name='name'
-                    control={control}
-                    render={({ field }) => (
-                      <Select
-                        {...field}
-                        label='Bank name'
-                        value={field.value}
-                        onChange={e => field.onChange(e.target.value)}
-                      >
-                        {benifitNamesDropdown.map(option => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    )}
-                  />
-                </FormControl>
-              ) : key === 'currencyCode' ? (
-                <FormControl fullWidth variant='outlined'>
-                  <InputLabel>Currency code</InputLabel>
-                  <Controller
-                    name='currencyCode'
-                    control={control}
-                    render={({ field }) => (
-                      <Select
-                        {...field}
-                        label='Currency code'
-                        value={field.value}
-                        onChange={e => field.onChange(e.target.value)}
-                      >
-                        {currencyCode.map(option => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    )}
-                  />
-                </FormControl>
-              ) : key === 'companyCurrencyCode' ? (
-                <FormControl fullWidth variant='outlined'>
-                  <InputLabel>Company currency code</InputLabel>
-                  <Controller
-                    name='companyCurrencyCode'
-                    control={control}
-                    render={({ field }) => (
-                      <Select
-                        {...field}
-                        label='Company currency code'
-                        value={field.value}
-                        onChange={e => field.onChange(e.target.value)}
-                      >
-                        {currencyCode.map(option => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    )}
-                  />
-                </FormControl>
+              {(key === 'name' || key === 'currencyCode' || key === 'companyCurrencyCode') ? (
+                <Controller
+                  name={key as keyof IEmployeeBenefit}
+                  control={control}
+                  render={({ field }) => (
+                    <Autocomplete
+                      freeSolo
+                      options={
+                        key === 'name'
+                          ? benifitNamesDropdown
+                          : currencyCode
+                      }
+                      value={field.value != null ? String(field.value) : ''}
+                      onChange={(_, newValue) => field.onChange(newValue)}
+                      onInputChange={(_, newInputValue) => field.onChange(newInputValue)}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label={
+                            key === 'name'
+                              ? 'Benefit name'
+                              : key === 'currencyCode'
+                                ? 'Currency code'
+                                : 'Company currency code'
+                          }
+                          error={!!errors[key as keyof IEmployeeBenefit]}
+                          helperText={errors[key as keyof IEmployeeBenefit]?.message}
+                          fullWidth
+                        />
+                      )}
+                    />
+                  )}
+                />
               ) : (
                 <FormInput
                   name={key as keyof IEmployeeBenefit}

@@ -1,5 +1,5 @@
 // ** MUI
-import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
+import { Autocomplete, Box, TextField } from '@mui/material'
 
 // ** External Libraries
 import { useForm, Controller } from 'react-hook-form'
@@ -51,6 +51,25 @@ export const Salary: React.FC = () => {
     handleClickOpenDialog('Details', updatedEmployee)
   }
 
+  const renderAutocomplete = (name: keyof ISalary, label: string, options: string[]) => (
+    <Controller
+      name={name}
+      control={control}
+      render={({ field }) => (
+        <Autocomplete
+          freeSolo
+          options={options}
+          value={field.value != null ? String(field.value) : ''}
+          onChange={(_, newValue) => field.onChange(newValue)}
+          onInputChange={(_, newInputValue) => field.onChange(newInputValue)}
+          renderInput={params => (
+            <TextField {...params} label={label} error={!!errors[name]} helperText={errors[name]?.message} fullWidth />
+          )}
+        />
+      )}
+    />
+  )
+
   return (
     <Box>
       <FormWrapper title='Salary' onSubmit={handleSubmit(onSubmit)}>
@@ -59,71 +78,11 @@ export const Salary: React.FC = () => {
           .map(key => (
             <Box key={key} mb={2}>
               {key === 'payPeriod' ? (
-                <FormControl fullWidth variant='outlined'>
-                  <InputLabel>Pay Period</InputLabel>
-                  <Controller
-                    name='payPeriod'
-                    control={control}
-                    render={({ field }) => (
-                      <Select
-                        {...field}
-                        label='Pay Period'
-                        value={field.value}
-                        onChange={e => field.onChange(e.target.value)}
-                      >
-                        {payPeriodDropdown.map(option => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    )}
-                  />
-                </FormControl>
+                renderAutocomplete('payPeriod', 'Pay Period', payPeriodDropdown)
               ) : key === 'salaryRatePeriod' ? (
-                <FormControl fullWidth variant='outlined'>
-                  <InputLabel>Rate Period</InputLabel>
-                  <Controller
-                    name='salaryRatePeriod'
-                    control={control}
-                    render={({ field }) => (
-                      <Select
-                        {...field}
-                        label='Rate Period'
-                        value={field.value}
-                        onChange={e => field.onChange(e.target.value)}
-                      >
-                        {salaryRateDropdown.map(option => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    )}
-                  />
-                </FormControl>
+                renderAutocomplete('salaryRatePeriod', 'Rate Period', salaryRateDropdown)
               ) : key === 'salaryCurrencyCode' ? (
-                <FormControl fullWidth variant='outlined'>
-                  <InputLabel>Salary currency code</InputLabel>
-                  <Controller
-                    name='salaryCurrencyCode'
-                    control={control}
-                    render={({ field }) => (
-                      <Select
-                        {...field}
-                        label='Salary currency code'
-                        value={field.value}
-                        onChange={e => field.onChange(e.target.value)}
-                      >
-                        {currencyCode.map(option => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    )}
-                  />
-                </FormControl>
+                renderAutocomplete('salaryCurrencyCode', 'Salary currency code', currencyCode)
               ) : (
                 <FormInput
                   name={key as keyof ISalary}

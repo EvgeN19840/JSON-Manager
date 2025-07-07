@@ -5,7 +5,5 @@ export default [
     'Cayman National Bank',
     'Butterfield Bank',
     'Royal Bank of Canada',
-    'TestBank',
-    'Test12345',
 ]
 

@@ -15,6 +15,5 @@ export default [
     'Business Development Division',
     'International Division',
     'Domestic Division',
-    "Test"
 ]
 

@@ -15,5 +15,4 @@ export default [
     'Experience Designer',
     'Strategic Growth Manager',
     'Chief Vision Officer',
-    "Test"
 ]

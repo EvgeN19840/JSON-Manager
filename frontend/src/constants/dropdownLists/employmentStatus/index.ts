@@ -10,5 +10,4 @@ export default [
     'Full-Time',
     'Freelancer',
     'Consultant',
-    "Test"
 ]
