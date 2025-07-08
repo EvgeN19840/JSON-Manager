@@ -1,4 +1,3 @@
-// ** MUI
 import { Box, Typography } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 
@@ -25,19 +24,31 @@ export const DeductionsAndLoansTab: React.FC = () => {
   const handleAddItem = useHandleAddItem()
 
   const getDeductionRows = (): IOtherDeduction[] => {
-    if (dataForDialog && dialogData?.eId) {
-      const employee = data.employees.find(emp => emp.eId === dialogData.eId)
-      return employee?.otherDeductions || []
+    if (dialogData?.eId) {
+      return data.employees.find(emp => emp.eId === dialogData.eId)?.otherDeductions || []
     }
     return []
   }
 
-  const getLoanRows = (): ILoanOrSalaryAdvance[] => {
-    if (dataForDialog && dialogData?.eId) {
-      const employee = data.employees.find(emp => emp.eId === dialogData.eId)
-      return employee?.loansAndSalaryAdvances || []
+  const getLoanAndAdvanceRows = (): ILoanOrSalaryAdvance[] => {
+    if (dialogData?.eId) {
+      return data.employees.find(emp => emp.eId === dialogData.eId)?.loansAndSalaryAdvances || []
     }
     return []
+  }
+
+  // Loans: only Reoccurring
+  const getFilteredLoanRows = (): ILoanOrSalaryAdvance[] => {
+    return getLoanAndAdvanceRows().filter(item =>
+      item.payrollOperationFrequency === 'Reoccurring'
+    )
+  }
+
+  // Salary Advances: only OneTime
+  const getFilteredAdvanceRows = (): ILoanOrSalaryAdvance[] => {
+    return getLoanAndAdvanceRows().filter(item =>
+      item.payrollOperationFrequency === 'OneTime'
+    )
   }
 
   const deductionCallbacks: ContextMenuItemsCallbacks<IOtherDeduction> = {
@@ -46,12 +57,12 @@ export const DeductionsAndLoansTab: React.FC = () => {
       setTypeModalDetailsEdit('Edit deductions')
     },
     addItem: data => {
-      if (dataForDialog && dialogData?.eId) {
+      if (dialogData?.eId) {
         handleAddItem({ item: data, type: 'item', eId: dialogData.eId, nestedType: 'otherDeductions' })
       }
     },
     deleteItem: data => {
-      if (dataForDialog && dialogData?.eId) {
+      if (dialogData?.eId) {
         handleDeleteItem({
           id: data.customBambooTableRowId,
           type: 'item',
@@ -66,14 +77,15 @@ export const DeductionsAndLoansTab: React.FC = () => {
     openForm: data => {
       handleClickOpenDialog('Edit Details', data)
       setTypeModalDetailsEdit('Edit loanOrAdvance')
+    
     },
     addItem: data => {
-      if (dataForDialog && dialogData?.eId) {
+      if (dialogData?.eId) {
         handleAddItem({ item: data, type: 'item', eId: dialogData.eId, nestedType: 'loansAndSalaryAdvances' })
       }
     },
     deleteItem: data => {
-      if (dataForDialog && dialogData?.eId) {
+      if (dialogData?.eId) {
         handleDeleteItem({
           id: data.customBambooTableRowId,
           type: 'item',
@@ -87,18 +99,21 @@ export const DeductionsAndLoansTab: React.FC = () => {
   const deductionsColumns = ColumnsDeductions(deductionCallbacks.openForm, deductionCallbacks)
   const loansColumns = ColumnsLoansOrAdvances(loanCallbacks.openForm, loanCallbacks)
 
-  const addNewRow = (type: 'deductions' | 'loans') => {
+  const addNewRow = (type: 'deductions' | 'loans' | 'advances') => {
     handleClickOpenDialog('Edit Details')
-    setTypeModalDetailsEdit(type === 'deductions' ? 'Edit deductions' : 'Edit loanOrAdvance')
+    if (type === 'deductions') setTypeModalDetailsEdit('Edit deductions')
+    else setTypeModalDetailsEdit('Edit loanOrAdvance')
   }
 
   return (
     <Box>
       <Box>
-        <Typography sx={{ textAlign: 'center', mb: 1, mt:2,  fontSize: '1.1rem', fontWeight: 500, color: 'text.secondary' }}>Loans or Salary Advances</Typography>
+        <Typography sx={{ textAlign: 'center', mb: 1, mt: 2, fontSize: '1.1rem', fontWeight: 500, color: 'text.secondary' }}>
+          Loans
+        </Typography>
         <DataGrid<ILoanOrSalaryAdvance>
           onRowDoubleClick={params => loanCallbacks.openForm(params.row)}
-          rows={getLoanRows()}
+          rows={getFilteredLoanRows()}
           getRowId={row => row.customBambooTableRowId}
           columns={loansColumns}
           pagination
@@ -107,8 +122,27 @@ export const DeductionsAndLoansTab: React.FC = () => {
           initialState={{ pagination: { paginationModel: { pageSize: 5, page: 0 } } }}
         />
       </Box>
+
       <Box>
-        <Typography sx={{ textAlign: 'center', mb: 1, mt:2,  fontSize: '1.1rem', fontWeight: 500, color: 'text.secondary' }}>Other Deductions</Typography>
+        <Typography sx={{ textAlign: 'center', mb: 1, mt: 2, fontSize: '1.1rem', fontWeight: 500, color: 'text.secondary' }}>
+          Salary Advances
+        </Typography>
+        <DataGrid<ILoanOrSalaryAdvance>
+          onRowDoubleClick={params => loanCallbacks.openForm(params.row)}
+          rows={getFilteredAdvanceRows()}
+          getRowId={row => row.customBambooTableRowId}
+          columns={loansColumns}
+          pagination
+          slots={{ footer: () => <CustomFooter onAddEmptyRow={() => addNewRow('advances')} /> }}
+          pageSizeOptions={[5, 10, 20]}
+          initialState={{ pagination: { paginationModel: { pageSize: 5, page: 0 } } }}
+        />
+      </Box>
+
+      <Box>
+        <Typography sx={{ textAlign: 'center', mb: 1, mt: 2, fontSize: '1.1rem', fontWeight: 500, color: 'text.secondary' }}>
+          Other Deductions
+        </Typography>
         <DataGrid<IOtherDeduction>
           onRowDoubleClick={params => deductionCallbacks.openForm(params.row)}
           rows={getDeductionRows()}

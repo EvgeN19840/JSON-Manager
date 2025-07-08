@@ -2,8 +2,8 @@ import * as yup from "yup";
 
 export const schema = yup.object().shape({
   name: yup.string().required("Name is required"),
-  startDate: yup.string().nullable().default(null),
-  endDate: yup.string().nullable().default(null),
+  startDate: yup.string().nullable() .required("Component date is required").default(null),
+  endDate: yup.string().nullable() .required("Component date is required").default(null),
   payrollOperationFrequency: yup
     .string()
     .required("Payroll Operation Frequency is required"),

@@ -101,8 +101,8 @@ export interface IReimbursement {
 
 export interface ILoanOrSalaryAdvance {
   name: string;
-  startDate: string | null;
-  endDate: string | null;
+  startDate: string ;
+  endDate: string ;
   payrollOperationFrequency: string;
   customBambooTableRowId: number;
   value: number;

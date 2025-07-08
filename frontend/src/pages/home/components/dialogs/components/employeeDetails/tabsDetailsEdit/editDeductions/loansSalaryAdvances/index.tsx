@@ -1,9 +1,4 @@
-import {
-  Autocomplete,
-  Box,
-
-  TextField
-} from '@mui/material'
+import { Autocomplete, Box, TextField } from '@mui/material'
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
@@ -48,7 +43,16 @@ export const EditLoanSalaryAdvance: React.FC = () => {
 
   return (
     <Box>
-      <FormWrapper title='Loans or Salary Advances' onSubmit={handleSubmit(onSubmit)}>
+      <FormWrapper
+        title={
+          (dataForDialog?.payrollOperationFrequency || defaultValues.payrollOperationFrequency) === 'OneTime'
+            ? 'Salary Advance'
+            : (dataForDialog?.payrollOperationFrequency || defaultValues.payrollOperationFrequency) === 'Reoccurring'
+              ? 'Loan'
+              : 'Loan or Salary Advance'
+        }
+        onSubmit={handleSubmit(onSubmit)}
+      >
         {Object.keys(defaultValues)
           .filter(key => key !== 'customBambooTableRowId')
           .map(key => (
