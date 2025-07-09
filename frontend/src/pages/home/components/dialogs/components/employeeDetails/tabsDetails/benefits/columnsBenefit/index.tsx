@@ -12,9 +12,6 @@ import { getDateFormat } from '@/shared/utils/getDateFormat'
 import { MyContextMenu, actionMenu } from '@/shared/components'
 import { HeaderDetails } from '@/pages/home/components/dialogs/components/employeeDetails/headerDetails'
 
-
-
-
 export const ColumnsBenefit = (
   _handleEditClick: (data: IEmployeeBenefit) => void,
   callbacks: ContextMenuItemsCallbacks<IEmployeeBenefit>
@@ -29,10 +26,10 @@ export const ColumnsBenefit = (
 
   {
     field: 'value',
-    headerName: 'Value',
+    headerName: 'Employee',
     minWidth: 100,
     flex: 1,
-    renderHeader: () => <HeaderDetails title='Value' />
+    renderHeader: () => <HeaderDetails title='Employee' />
   },
   {
     field: 'currencyCode',
@@ -43,10 +40,10 @@ export const ColumnsBenefit = (
   },
   {
     field: 'companyValue',
-    headerName: 'Company Value',
+    headerName: 'Employer',
     minWidth: 100,
     flex: 1,
-    renderHeader: () => <HeaderDetails title='Company Value' />
+    renderHeader: () => <HeaderDetails title='Employer' />
   },
   {
     field: 'companyCurrencyCode',

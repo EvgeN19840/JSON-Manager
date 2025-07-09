@@ -1,6 +1,4 @@
-export { EditDetailsPensionBenefits } from './editDetailsBenefits/components/pension';
-export { EditDetailsLifeBenefits } from './editDetailsBenefits/components/life';
-export { EditDetailsHealthBenefits } from './editDetailsBenefits/components/health';
+export { EditDetailsBenefits } from './editDetailsBenefits'
 export { EditPersonalTab } from './editPersonal';
 export { JobInfo } from './editJobData/components/jobInfo';
 export { Salary } from './editJobData/components/salary';

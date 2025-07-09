@@ -7,9 +7,7 @@ import {
   EditLoanSalaryAdvance,
   EditBonuses,
   EditDepositAccounts,
-  EditDetailsPensionBenefits,
-  EditDetailsLifeBenefits,
-  EditDetailsHealthBenefits,
+  EditDetailsBenefits,
   EditDeductions,
   EditPersonalTab,
   EditReimbursementTab,
@@ -47,11 +45,11 @@ export const TabsDetailsEdit: React.FC = () => {
       case 'Edit loanOrAdvance':
         return <EditLoanSalaryAdvance />
       case 'Edit pension benefits details':
-        return <EditDetailsPensionBenefits />
+        return <EditDetailsBenefits title='Pension details' />
       case 'Edit health benefits details':
-        return <EditDetailsHealthBenefits />
+        return <EditDetailsBenefits title='Health details' />
       case 'Edit life benefits details':
-        return <EditDetailsLifeBenefits />
+        return <EditDetailsBenefits title='Life details' />
 
       default:
         return <Typography>Select a tab to view details.</Typography>
