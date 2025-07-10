@@ -1,5 +1,5 @@
 export default [
-    "Savings",
-    "Chequing"
+    "Chequing",
+    "Savings"
 ]
 

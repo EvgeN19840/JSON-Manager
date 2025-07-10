@@ -52,7 +52,7 @@ export const EditReimbursementTab: React.FC = () => {
   }
   return (
     <Box>
-      <FormWrapper title='Custom incomes' onSubmit={handleSubmit(onSubmit)}>
+      <FormWrapper title='Reimbursement' onSubmit={handleSubmit(onSubmit)}>
         {Object.keys(defaultValues)
           .filter(key => key !== 'customBambooTableRowId')
           .map(key => (

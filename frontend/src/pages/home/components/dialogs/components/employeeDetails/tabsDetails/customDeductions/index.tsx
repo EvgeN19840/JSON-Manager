@@ -39,16 +39,12 @@ export const DeductionsAndLoansTab: React.FC = () => {
 
   // Loans: only Reoccurring
   const getFilteredLoanRows = (): ILoanOrSalaryAdvance[] => {
-    return getLoanAndAdvanceRows().filter(item =>
-      item.payrollOperationFrequency === 'Reoccurring'
-    )
+    return getLoanAndAdvanceRows().filter(item => item.payrollOperationFrequency === 'Reoccurring')
   }
 
   // Salary Advances: only OneTime
   const getFilteredAdvanceRows = (): ILoanOrSalaryAdvance[] => {
-    return getLoanAndAdvanceRows().filter(item =>
-      item.payrollOperationFrequency === 'OneTime'
-    )
+    return getLoanAndAdvanceRows().filter(item => item.payrollOperationFrequency === 'OneTime')
   }
 
   const deductionCallbacks: ContextMenuItemsCallbacks<IOtherDeduction> = {
@@ -77,7 +73,6 @@ export const DeductionsAndLoansTab: React.FC = () => {
     openForm: data => {
       handleClickOpenDialog('Edit Details', data)
       setTypeModalDetailsEdit('Edit loanOrAdvance')
-    
     },
     addItem: data => {
       if (dialogData?.eId) {
@@ -108,7 +103,9 @@ export const DeductionsAndLoansTab: React.FC = () => {
   return (
     <Box>
       <Box>
-        <Typography sx={{ textAlign: 'center', mb: 1, mt: 2, fontSize: '1.1rem', fontWeight: 500, color: 'text.secondary' }}>
+        <Typography
+          sx={{ textAlign: 'center', mb: 1, mt: 2, fontSize: '1.1rem', fontWeight: 500, color: 'text.secondary' }}
+        >
           Loans
         </Typography>
         <DataGrid<ILoanOrSalaryAdvance>
@@ -124,7 +121,9 @@ export const DeductionsAndLoansTab: React.FC = () => {
       </Box>
 
       <Box>
-        <Typography sx={{ textAlign: 'center', mb: 1, mt: 2, fontSize: '1.1rem', fontWeight: 500, color: 'text.secondary' }}>
+        <Typography
+          sx={{ textAlign: 'center', mb: 1, mt: 2, fontSize: '1.1rem', fontWeight: 500, color: 'text.secondary' }}
+        >
           Salary Advances
         </Typography>
         <DataGrid<ILoanOrSalaryAdvance>
@@ -140,8 +139,10 @@ export const DeductionsAndLoansTab: React.FC = () => {
       </Box>
 
       <Box>
-        <Typography sx={{ textAlign: 'center', mb: 1, mt: 2, fontSize: '1.1rem', fontWeight: 500, color: 'text.secondary' }}>
-          Other Deductions
+        <Typography
+          sx={{ textAlign: 'center', mb: 1, mt: 2, fontSize: '1.1rem', fontWeight: 500, color: 'text.secondary' }}
+        >
+          Other Non-Pensionable Deduction
         </Typography>
         <DataGrid<IOtherDeduction>
           onRowDoubleClick={params => deductionCallbacks.openForm(params.row)}

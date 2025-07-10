@@ -64,7 +64,7 @@ export const EditDepositAccounts: React.FC = () => {
                   render={({ field }) => {
                     const options =
                       key === 'bank'
-                        ? bankNames
+                        ? bankNames.sort()
                         : key === 'currencyCode'
                         ? currencyCode
                         : accountType

@@ -78,11 +78,11 @@ export const JobInfo: React.FC = () => {
           .map(key => (
             <Box key={key} mb={2}>
               {key === 'jobTitle' ? (
-                renderAutocomplete('jobTitle', 'Job title', jobTitles)
+                renderAutocomplete('jobTitle', 'Job title', jobTitles.sort())
               ) : key === 'department' ? (
-                renderAutocomplete('department', 'Department', departments)
+                renderAutocomplete('department', 'Department', departments.sort())
               ) : key === 'division' ? (
-                renderAutocomplete('division', 'Division', divisions)
+                renderAutocomplete('division', 'Division', divisions.sort())
               ) : (
                 <FormInput
                   name={key as keyof IJobInfo}

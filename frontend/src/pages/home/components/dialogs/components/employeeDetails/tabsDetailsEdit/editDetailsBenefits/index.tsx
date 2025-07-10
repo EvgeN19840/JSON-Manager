@@ -43,11 +43,11 @@ const defaultValues = {
   let dropdownOptions: string[] = []
 
   if (title === 'Edit pension benefits details') {
-    dropdownOptions = pension
+    dropdownOptions = pension.sort()
   } else if (title === 'Edit health benefits details') {
-    dropdownOptions = health
+    dropdownOptions = health.sort()
   } else if (title === 'Edit life benefits details') {
-    dropdownOptions = life
+    dropdownOptions = life.sort()
   }
 
   const formattedTitle = title

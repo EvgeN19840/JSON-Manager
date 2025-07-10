@@ -63,7 +63,7 @@ export const EmploymentStatus: React.FC = () => {
                   render={({ field }) => (
                     <Autocomplete
                       freeSolo
-                      options={employmentStatus}
+                      options={employmentStatus.sort()}
                       value={field.value ?? ''}
                       onChange={(_, newValue) => field.onChange(newValue)}
                       onInputChange={(_, newInputValue) => field.onChange(newInputValue)}

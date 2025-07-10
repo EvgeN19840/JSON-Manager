@@ -90,7 +90,7 @@ export const Customincomes: React.FC = () => {
   return (
     <Box>
       <Box>
-         <Typography sx={{ textAlign: 'center', mb: 1, mt:2,  fontSize: '1.1rem', fontWeight: 500, color: 'text.secondary' }}>Other Income</Typography>
+         <Typography sx={{ textAlign: 'center', mb: 1, mt:2,  fontSize: '1.1rem', fontWeight: 500, color: 'text.secondary' }}>Reimbursement</Typography>
         <DataGrid<IReimbursement>
           onRowDoubleClick={params => reimbursementsCallbacks.openForm(params.row)}
           rows={getReimbursementsRows()}
