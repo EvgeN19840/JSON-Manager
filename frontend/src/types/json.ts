@@ -115,8 +115,8 @@ export interface ILoanOrSalaryAdvance {
 export interface IOtherDeduction {
   customBambooTableRowId: number;
   name: string;
-  startDate: string | null;
-  endDate: string | null;
+  startDate: string ;
+  endDate: string ;
   payrollOperationFrequency: string;
   value: number;
   currencyCode: string;

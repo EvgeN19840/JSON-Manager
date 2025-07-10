@@ -162,7 +162,7 @@ export const useDefaultOtherDeduction = (): IOtherDeduction => {
   return {
     name: dataForDialog?.name || '',
     startDate: dataForDialog?.startDate || "2024-01-01",
-    endDate: dataForDialog?.endDate || null,
+    endDate: dataForDialog?.endDate || '',
     payrollOperationFrequency: dataForDialog?.payrollOperationFrequency || '',
     customBambooTableRowId: dataForDialog?.customBambooTableRowId || 0,
     value: dataForDialog?.value || 0,

@@ -31,20 +31,30 @@ export const EditDetailsBenefits = ({ title }: Props) => {
   const { handleClickOpenDialog } = useModal()
   const { handleSaveData, handleSaveBenefit, data, eIdSelectedEmployee } = useDataStateContext()
 
-  const defaultBenefit = useDefaultEmployeeBenefit()
-  const defaultValues = {
-    ...defaultBenefit,
-    name: defaultBenefit.name || title.split(' ')[0]
-  }
+const defaultBenefit = useDefaultEmployeeBenefit()
+const secondWord = title.split(' ')[1] || ''
+const capitalized = secondWord.charAt(0).toUpperCase() + secondWord.slice(1)
+
+const defaultValues = {
+  ...defaultBenefit,
+  name: defaultBenefit.name || capitalized
+}
+
   let dropdownOptions: string[] = []
 
-  if (title === 'Pension details') {
+  if (title === 'Edit pension benefits details') {
     dropdownOptions = pension
-  } else if (title === 'Health details') {
+  } else if (title === 'Edit health benefits details') {
     dropdownOptions = health
-  } else if (title === 'Life details') {
+  } else if (title === 'Edit life benefits details') {
     dropdownOptions = life
   }
+
+  const formattedTitle = title
+    .split(' ')
+    .slice(1)
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')
 
   const fieldLabels: Partial<Record<keyof IEmployeeBenefit, string>> = {
     name: 'Benefit Name',
@@ -89,7 +99,7 @@ export const EditDetailsBenefits = ({ title }: Props) => {
 
   return (
     <Box>
-      <FormWrapper title={title} onSubmit={handleSubmit(onSubmit)}>
+      <FormWrapper title={formattedTitle} onSubmit={handleSubmit(onSubmit)}>
         {Object.keys(defaultValues)
           .filter(key => key !== 'customBambooTableRowId')
           .map(key => (

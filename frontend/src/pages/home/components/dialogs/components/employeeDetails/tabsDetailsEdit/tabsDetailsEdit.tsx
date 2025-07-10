@@ -45,11 +45,9 @@ export const TabsDetailsEdit: React.FC = () => {
       case 'Edit loanOrAdvance':
         return <EditLoanSalaryAdvance />
       case 'Edit pension benefits details':
-        return <EditDetailsBenefits title='Pension details' />
       case 'Edit health benefits details':
-        return <EditDetailsBenefits title='Health details' />
       case 'Edit life benefits details':
-        return <EditDetailsBenefits title='Life details' />
+        return <EditDetailsBenefits title={typeModalDetailsEdit} />
 
       default:
         return <Typography>Select a tab to view details.</Typography>
