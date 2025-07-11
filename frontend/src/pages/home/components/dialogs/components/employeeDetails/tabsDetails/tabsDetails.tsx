@@ -49,7 +49,7 @@ export const TabsDetails = () => {
 
   return (
     <Box>
-      <Typography variant='h6' sx={{ textAlign: 'center' }}>
+      <Typography variant='h6' sx={{mt:3, textAlign: 'center' }}>
         {`Details of Employee: ${dataForDialog?.firstName || ''} ${dataForDialog?.lastName || ''}`}
       </Typography>
       <TabContext value={activeDetailTab}>
@@ -67,13 +67,13 @@ export const TabsDetails = () => {
           variant='fullWidth'
           aria-label='details-tabs'
         >
-          <Tab label='Personal' value='1' />
+        <Tab label='Personal' value='1' sx={{ ml: 1 }} />
           <Tab label='Job' value='2' />
           <Tab label='Deposit accounts' value='3' />
           <Tab label='Custom incomes' value='4' />
           <Tab label='Custom deductions' value='5' />
           <Tab label='Benefits' value='6' />
-          <Tab label='Bonus' value='7' />
+          <Tab label='Bonus' value='7' sx={{ mr: 1 }}/>
         </TabList>
       </TabContext>
       <Box m={1}>{renderTabContent()}</Box>

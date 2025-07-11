@@ -6,12 +6,7 @@ import { DataGrid } from '@mui/x-data-grid'
 import { CustomFooter } from '@/shared/components'
 
 // ** Hooks
-import {
-  useDataStateContext,
-  useHandleAddItem,
-  useHandleDeleteItem,
-  useModal
-} from '@/pages/home/hooks'
+import { useDataStateContext, useHandleAddItem, useHandleDeleteItem, useModal } from '@/pages/home/hooks'
 
 // ** Columns
 import { ColumnsJobInfo } from './columnsJob/jobInfo'
@@ -142,27 +137,17 @@ export const JobInfoTab: React.FC = () => {
   const employmentStatusColumns = ColumnsEmploymentStatus(employmentStatusCallbacks.openForm, employmentStatusCallbacks)
   const salaryColumns = ColumnsSalary(salaryCallbacks.openForm, salaryCallbacks)
   const addNewRow = (type: 'job' | 'status' | 'salary') => {
-    // let defaults;
-    // switch (type) {
-    //   case "job":
-    //     defaults = defaultJobInfo;
-    //     break;
-    //   case "status":
-    //     defaults = defaultEmploymentStatus;
-    //     break;
-    //   case "salary":
-    //     defaults = defaultSalary;
-    //     break;
-    //   default:
-    //     return;
-    // }
     handleClickOpenDialog('Edit Details')
     setTypeModalDetailsEdit(`Edit ${type}`)
   }
   return (
     <Box>
       <Box>
-        <Typography sx={{ textAlign: 'center', mb: 1, mt:2,  fontSize: '1.1rem', fontWeight: 500, color: 'text.secondary' }}>Employment Status</Typography>
+        <Typography
+          sx={{ textAlign: 'center', mb: 1, mt: 2, fontSize: '1.1rem', fontWeight: 500, color: 'text.secondary' }}
+        >
+          Employment Status
+        </Typography>
         <DataGrid<IEmploymentStatus>
           onRowDoubleClick={params => employmentStatusCallbacks.openForm(params.row)}
           rows={getEmploymentStatusRows()}
@@ -182,7 +167,11 @@ export const JobInfoTab: React.FC = () => {
       </Box>
 
       <Box>
-        <Typography sx={{ textAlign: 'center', mb: 1, mt:2,  fontSize: '1.1rem', fontWeight: 500, color: 'text.secondary' }}>Salary Information</Typography>
+        <Typography
+          sx={{ textAlign: 'center', mb: 1, mt: 2, fontSize: '1.1rem', fontWeight: 500, color: 'text.secondary' }}
+        >
+          Salary Information
+        </Typography>
         <DataGrid<ISalary>
           onRowDoubleClick={params => salaryCallbacks.openForm(params.row)}
           rows={getSalaryRows()}
@@ -202,7 +191,11 @@ export const JobInfoTab: React.FC = () => {
       </Box>
 
       <Box>
-        <Typography sx={{ textAlign: 'center', mb: 1, mt:2,  fontSize: '1.1rem', fontWeight: 500, color: 'text.secondary' }}>Job Information</Typography>
+        <Typography
+          sx={{ textAlign: 'center', mb: 1, mt: 2, fontSize: '1.1rem', fontWeight: 500, color: 'text.secondary' }}
+        >
+          Job Information
+        </Typography>
         <DataGrid<IJobInfo>
           onRowDoubleClick={params => jobInfoCallbacks.openForm(params.row)}
           rows={getJobInfoRows()}
