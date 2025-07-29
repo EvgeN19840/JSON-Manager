@@ -7,9 +7,6 @@ import { ModalContext } from '../modalContext'
 // ** Hooks
 import { useDataStateContext } from '@/pages/home/hooks'
 
-// ** Utils
-import { validateUniqueIds } from '@/shared/utils/validateUniqueIds'
-
 // ** Types
 import { IDataForDialog, IModalType, IModalTypeDetailsEdits } from '../types'
 
@@ -48,11 +45,7 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   ) => {
     switch (typeModal) {
       case 'Export data':
-        {
-          const updatedData = validateUniqueIds(data)
-
-          setDataForDialog(JSON.stringify(updatedData, null, 2))
-        }
+        setDataForDialog(JSON.stringify(data, null, 2))
         break
       case 'Import data':
         setDataForDialog(null)

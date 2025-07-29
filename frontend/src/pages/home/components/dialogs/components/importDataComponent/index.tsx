@@ -25,7 +25,6 @@ import {
 } from '@/pages/home/hooks'
 
 // ** Utils
-import { assignMissingIds } from '@/shared/utils'
 import { findEmployeeByName } from '@/shared/utils/findEmployeeByName'
 import { listTemplate } from '@/shared/utils/listTemplate'
 
@@ -71,7 +70,6 @@ export const ImportDataComponent: React.FC = () => {
 
     try {
       const parsedData = JSON.parse(normalizedInput) as ITypeJSON
-      assignMissingIds(parsedData, 'benefits')
       setData({
         employees: parsedData.employees,
         benefits: parsedData.benefits
