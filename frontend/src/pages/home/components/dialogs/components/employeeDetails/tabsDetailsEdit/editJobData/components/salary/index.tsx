@@ -7,6 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 
 // ** Components
 import { FormWrapper, FormInput, FormFooter } from '@/shared/formElements'
+import { sessionPayPeriodExtras, addPayPeriodExtra } from '../sessionPayPeriodExtras'
 
 // ** Hooks
 import { useDataStateContext, useDefaultSalary, useModal } from '@/pages/home/hooks'
@@ -23,9 +24,7 @@ import { salarySchema } from '../../schema'
 import { ISalary } from '@/types/json'
 
 export const Salary: React.FC = () => {
-  const { dataForDialog } = useModal() as {
-    dataForDialog: ISalary | null
-  }
+  const { dataForDialog } = useModal() as { dataForDialog: ISalary | null }
   const defaultValues = useDefaultSalary()
 
   const { handleClickOpenDialog } = useModal()
@@ -41,13 +40,15 @@ export const Salary: React.FC = () => {
     resolver: yupResolver(salarySchema)
   })
 
+  const payPeriodOptions = Array.from(new Set([...payPeriodDropdown, ...sessionPayPeriodExtras])).sort()
   const onSubmit = (formData: ISalary) => {
-    handleSaveData({ ...dataForDialog, ...formData } as ISalary, 'salary')
-    const updatedEmployees = data.employees.map(employee =>
-      employee.eId === eIdSelectedEmployee ? { ...employee, ...formData } : employee
-    )
+    if (formData.payPeriod) addPayPeriodExtra(String(formData.payPeriod))
 
-    const updatedEmployee = updatedEmployees.find(employee => employee.eId === eIdSelectedEmployee)
+    handleSaveData({ ...dataForDialog, ...formData } as ISalary, 'salary')
+    const updatedEmployees = data.employees.map(emp =>
+      emp.eId === eIdSelectedEmployee ? { ...emp, ...formData } : emp
+    )
+    const updatedEmployee = updatedEmployees.find(emp => emp.eId === eIdSelectedEmployee)
     handleClickOpenDialog('Details', updatedEmployee)
   }
 
@@ -58,7 +59,7 @@ export const Salary: React.FC = () => {
       render={({ field }) => (
         <Autocomplete
           freeSolo
-          options={options}
+          options={[...options]}
           value={field.value != null ? String(field.value) : ''}
           onChange={(_, newValue) => field.onChange(newValue)}
           onInputChange={(_, newInputValue) => field.onChange(newInputValue)}
@@ -84,10 +85,10 @@ export const Salary: React.FC = () => {
                   render={({ field }) => (
                     <Autocomplete
                       freeSolo
-                      options={payPeriodDropdown.sort()}
+                      options={payPeriodOptions}
                       value={field.value ?? ''}
-                      onChange={(_, newValue) => field.onChange(newValue)}
-                      onInputChange={(_, newInputValue) => field.onChange(newInputValue)}
+                      onChange={(_, v) => field.onChange(v)}
+                      onInputChange={(_, v) => field.onChange(v)}
                       renderInput={params => (
                         <TextField
                           {...params}

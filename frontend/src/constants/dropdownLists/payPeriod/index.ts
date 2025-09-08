@@ -1,1 +1,1 @@
-export default ["Monthly", "Weekly", "Fortnightly", "Twice A Month", "mapping1"];
+export default ["Monthly", "Weekly", "Fortnightly", "Twice A Month"];
