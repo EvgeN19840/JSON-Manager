@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 export const schema = yup.object().shape({
-  eId: yup.number().default(0), 
+  eId: yup.number().default(0),
   number: yup.mixed<string | number>().nullable().default(0),
   firstName: yup.string().default(""),
   middleName: yup.string().nullable().default(""),
@@ -22,4 +22,6 @@ export const schema = yup.object().shape({
   lifeInsuranceMemberNumber: yup.string().nullable().default(""),
   transferEmployeeStatutoryToVoluntaryOnCap: yup.boolean().default(false),
   transferCompanyStatutoryToVoluntaryOnCap: yup.boolean().default(false),
+  baseCurrencyCode: yup.string().max(3, "Currency code must be at most 3 characters").default(""),
+  excludeFromBankFile: yup.boolean().default(false),
 });

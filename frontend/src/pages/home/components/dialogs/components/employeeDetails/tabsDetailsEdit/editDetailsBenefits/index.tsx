@@ -31,14 +31,14 @@ export const EditDetailsBenefits = ({ title }: Props) => {
   const { handleClickOpenDialog } = useModal()
   const { handleSaveData, handleSaveBenefit, data, eIdSelectedEmployee } = useDataStateContext()
 
-const defaultBenefit = useDefaultEmployeeBenefit()
-const secondWord = title.split(' ')[1] || ''
-const capitalized = secondWord.charAt(0).toUpperCase() + secondWord.slice(1)
+  const defaultBenefit = useDefaultEmployeeBenefit()
+  const secondWord = title.split(' ')[1] || ''
+  const capitalized = secondWord.charAt(0).toUpperCase() + secondWord.slice(1)
 
-const defaultValues = {
-  ...defaultBenefit,
-  name: defaultBenefit.name || capitalized
-}
+  const defaultValues = {
+    ...defaultBenefit,
+    name: defaultBenefit.name || capitalized
+  }
 
   let dropdownOptions: string[] = []
 
@@ -109,14 +109,15 @@ const defaultValues = {
                   name={key as keyof IEmployeeBenefit}
                   control={control}
                   render={({ field }) => {
-                    const value = field.value != null ? String(field.value) : ''
+                    const options = key === 'name' ? dropdownOptions.sort() : currencyCode
+
                     return (
                       <Autocomplete
                         freeSolo
-                        options={key === 'name' ? dropdownOptions : currencyCode}
-                        inputValue={value}
-                        onInputChange={(_, newInputValue) => field.onChange(newInputValue)}
+                        options={options}
+                        value={(field.value as string) || ''}
                         onChange={(_, newValue) => field.onChange(newValue)}
+                        onInputChange={(_, newInputValue) => field.onChange(newInputValue)}
                         renderInput={params => (
                           <TextField
                             {...params}

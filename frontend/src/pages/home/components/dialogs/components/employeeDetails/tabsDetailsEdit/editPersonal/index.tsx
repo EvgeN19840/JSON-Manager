@@ -1,8 +1,8 @@
 // ** MUI
-import { Box } from '@mui/material'
+import { Autocomplete, Box, TextField } from '@mui/material'
 
 // ** Forms Imports
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 // ** Hooks
@@ -17,10 +17,11 @@ import { IEmployeeBasicInfo } from '@/types/json'
 // ** Components
 import { FormWrapper, FormInput, FormFooter } from '@/shared/formElements'
 
+// ** Dropdowns
+import currencyCode from '@/constants/dropdownLists/currencyCode'
+
 export const EditPersonalTab: React.FC = () => {
-  const { dataForDialog } = useModal() as {
-    dataForDialog: IEmployeeBasicInfo | null
-  }
+  const { dataForDialog } = useModal() as { dataForDialog: IEmployeeBasicInfo | null }
 
   const { handleClickOpenDialog } = useModal()
   const { handleSaveData, data, eIdSelectedEmployee } = useDataStateContext()
@@ -42,7 +43,6 @@ export const EditPersonalTab: React.FC = () => {
     const updatedEmployees = data.employees.map(employee =>
       employee.eId === eIdSelectedEmployee ? { ...employee, ...formData } : employee
     )
-
     const updatedEmployee = updatedEmployees.find(employee => employee.eId === eIdSelectedEmployee)
     handleClickOpenDialog('Details', updatedEmployee)
   }
@@ -50,17 +50,45 @@ export const EditPersonalTab: React.FC = () => {
   return (
     <Box>
       <Box>
-        <FormWrapper title='Personal' onSubmit={handleSubmit(onSubmit)}>
-          {Object.keys(defaultValues).map(key => (
+        <FormWrapper title="Personal" onSubmit={handleSubmit(onSubmit)}>
+          {(Object.keys(defaultValues) as Array<keyof IEmployeeBasicInfo>).map(key => (
             <Box mt={2} key={key}>
-              <FormInput
-                name={key as keyof IEmployeeBasicInfo}
-                label={key}
-                control={control}
-                type={typeof defaultValues[key as keyof IEmployeeBasicInfo] === 'boolean' ? 'checkbox' : 'text'}
-                errorMessage={errors[key as keyof IEmployeeBasicInfo]?.message}
-                disabled={key === 'eId'}
-              />
+              {key === 'baseCurrencyCode' ? (
+                <Controller
+                  name="baseCurrencyCode"
+                  control={control}
+                  render={({ field }) => (
+                    <Autocomplete
+                      freeSolo
+                      options={[...currencyCode]} 
+                      value={field.value ?? ''}
+                      onChange={(_, newValue) => field.onChange((newValue ?? '').toString().toUpperCase().slice(0, 3))}
+                      onInputChange={(_, newInputValue) =>
+                        field.onChange((newInputValue ?? '').toString().toUpperCase().slice(0, 3))
+                      }
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label="Base currency code"
+                          inputProps={{ ...params.inputProps, maxLength: 3 }}
+                          error={!!errors.baseCurrencyCode}
+                          helperText={errors.baseCurrencyCode?.message}
+                          fullWidth
+                        />
+                      )}
+                    />
+                  )}
+                />
+              ) : (
+                <FormInput
+                  name={key}
+                  label={key}
+                  control={control}
+                  type={typeof defaultValues[key] === 'boolean' ? 'checkbox' : 'text'}
+                  errorMessage={errors[key]?.message}
+                  disabled={key === 'eId'}
+                />
+              )}
             </Box>
           ))}
         </FormWrapper>
@@ -75,11 +103,11 @@ export const EditPersonalTab: React.FC = () => {
         }}
       >
         <FormFooter
-          cancelButtonText='Cancel'
-          actionButtonText='Save'
+          cancelButtonText="Cancel"
+          actionButtonText="Save"
           showSecondButton={isDirty}
           buttonAction={handleSubmit(onSubmit)}
-          source='employeeDetails'
+          source="employeeDetails"
         />
       </Box>
     </Box>

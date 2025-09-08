@@ -78,7 +78,28 @@ export const Salary: React.FC = () => {
           .map(key => (
             <Box key={key} mb={2}>
               {key === 'payPeriod' ? (
-                renderAutocomplete('payPeriod', 'Pay Period', payPeriodDropdown)
+                <Controller
+                  name='payPeriod'
+                  control={control}
+                  render={({ field }) => (
+                    <Autocomplete
+                      freeSolo
+                      options={payPeriodDropdown.sort()}
+                      value={field.value ?? ''}
+                      onChange={(_, newValue) => field.onChange(newValue)}
+                      onInputChange={(_, newInputValue) => field.onChange(newInputValue)}
+                      renderInput={params => (
+                        <TextField
+                          {...params}
+                          label='payPeriod'
+                          error={!!errors.payPeriod}
+                          helperText={errors.payPeriod?.message}
+                          fullWidth
+                        />
+                      )}
+                    />
+                  )}
+                />
               ) : key === 'salaryRatePeriod' ? (
                 renderAutocomplete('salaryRatePeriod', 'Rate Period', salaryRateDropdown)
               ) : key === 'salaryCurrencyCode' ? (

@@ -26,6 +26,8 @@ export interface IEmployeeBasicInfo {
   lifeInsuranceMemberNumber: string | null;
   transferEmployeeStatutoryToVoluntaryOnCap: boolean;
   transferCompanyStatutoryToVoluntaryOnCap: boolean;
+  baseCurrencyCode: string;
+  excludeFromBankFile: boolean;
 }
 
 
@@ -53,6 +55,8 @@ export interface IEmployee {
   lifeInsuranceMemberNumber: string | null;
   transferEmployeeStatutoryToVoluntaryOnCap: boolean;
   transferCompanyStatutoryToVoluntaryOnCap: boolean;
+  baseCurrencyCode: string;
+  excludeFromBankFile: boolean;
   depositAccounts: IDepositAccounts[];
   reimbursements: IReimbursement[];
   loansAndSalaryAdvances: ILoanOrSalaryAdvance[];
@@ -89,6 +93,17 @@ export interface IDepositAccounts {
   isPercentValue: boolean;
 }
 
+export interface IEmployeeBenefit {
+  name: string;
+  value: number;
+  currencyCode: string | null;
+  companyValue: number;
+  companyCurrencyCode: string | null;
+  isPerentValue: boolean;
+  effectiveDate: string | null;
+  id: string;
+}
+
 export interface IReimbursement {
   name: string;
   startDate: string | null;
@@ -101,8 +116,8 @@ export interface IReimbursement {
 
 export interface ILoanOrSalaryAdvance {
   name: string;
-  startDate: string ;
-  endDate: string ;
+  startDate: string;
+  endDate: string;
   payrollOperationFrequency: string;
   customBambooTableRowId: number;
   value: number;
@@ -115,8 +130,8 @@ export interface ILoanOrSalaryAdvance {
 export interface IOtherDeduction {
   customBambooTableRowId: number;
   name: string;
-  startDate: string ;
-  endDate: string ;
+  startDate: string;
+  endDate: string;
   payrollOperationFrequency: string;
   value: number;
   currencyCode: string;
@@ -126,16 +141,6 @@ export interface IOtherDeduction {
 }
 
 
-export interface IEmployeeBenefit {
-  name: string;
-  value: number;
-  currencyCode: string | null;
-  companyValue: number;
-  companyCurrencyCode: string | null;
-  isPerentValue: boolean;
-  effectiveDate: string | null;
-  id: string;
-}
 
 export interface ISalary {
   customBambooTableRowId: number;

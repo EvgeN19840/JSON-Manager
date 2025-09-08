@@ -10,7 +10,6 @@ export const schema = yup.object().shape({
     .typeError('Value must be a number'),
 
   currencyCode: yup
-
     .string()
     .nullable()
     .default(null),
@@ -21,7 +20,6 @@ export const schema = yup.object().shape({
     .typeError('Company Value must be a number'),
 
   companyCurrencyCode: yup
-
     .string()
     .nullable()
     .default(null),

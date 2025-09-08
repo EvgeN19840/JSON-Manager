@@ -118,6 +118,18 @@ export const currentData = (data: IEmployee) => {
       position: "left",
       type: "text",
     },
+    {
+      title: "Exclude from Bank File",
+      value: data.excludeFromBankFile ? "Yes" : "No",
+      position: "left",
+      type: "text",
+    },
+    {
+      title: "Base Currency",
+      value: data.baseCurrencyCode,
+      position: "left",
+      type: "text",
+    },
   ];
 };
 

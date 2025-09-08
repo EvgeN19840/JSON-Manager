@@ -22,6 +22,8 @@ export const employeeData = {
       "lifeInsuranceMemberNumber": "3",
       "transferEmployeeStatutoryToVoluntaryOnCap": true,
       "transferCompanyStatutoryToVoluntaryOnCap": true,
+      "baseCurrencyCode": "KYD",
+      "excludeFromBankFile": false,
       "depositAccounts": [
         {
           "orderNumber": 1,

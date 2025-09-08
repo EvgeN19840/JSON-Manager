@@ -45,6 +45,10 @@ export const useDefaultEmployeeBasicInfo = (): IEmployeeBasicInfo => {
       dataForDialog?.transferEmployeeStatutoryToVoluntaryOnCap || false,
     transferCompanyStatutoryToVoluntaryOnCap:
       dataForDialog?.transferCompanyStatutoryToVoluntaryOnCap || false,
+
+    baseCurrencyCode: dataForDialog?.baseCurrencyCode || "",
+    excludeFromBankFile: dataForDialog?.excludeFromBankFile || false,
+
   };
 };
 
@@ -57,9 +61,9 @@ export const useDefaultEmployeeBenefit = (): IEmployeeBenefit => {
     name: dataForDialog?.name || "",
     effectiveDate: dataForDialog?.effectiveDate || "2024-01-01",
     value: dataForDialog?.value || 0,
-    currencyCode: dataForDialog?.currencyCode || "",
+   currencyCode: dataForDialog?.currencyCode || null,
     companyValue: dataForDialog?.companyValue || 0,
-    companyCurrencyCode: dataForDialog?.companyCurrencyCode || "",
+    companyCurrencyCode: dataForDialog?.companyCurrencyCode || null,
     isPerentValue: dataForDialog?.isPerentValue || false,
 
     id: dataForDialog?.id || "",
