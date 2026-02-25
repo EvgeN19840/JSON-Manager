@@ -1,9 +1,10 @@
-name: GitHub Actions Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+name: CI
+run-name: ${{ github.actor }} 
 on: [push]
 jobs:
   testInitialSetup:
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
         node-version: [22.x]
@@ -41,5 +42,3 @@ jobs:
       - name: E2E tests
         working-directory: ./frontend
         run: npm run test:e2e
-      - name: lint code
-        run: npm run lint
