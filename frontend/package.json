@@ -3,13 +3,16 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "build:prod": "tsc -b && vite build --mode prod",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
+"scripts": {
+  "dev": "vite",
+  "build": "tsc -b && vite build",
+  "build:prod": "tsc -b && vite build --mode prod",
+  "lint": "eslint .",
+  "preview": "vite preview",
+  "build-storybook": "storybook build",
+  "test:unit": "vitest run",
+  "test:e2e": "node ./script/e2e.test.js"
+},
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
@@ -33,7 +36,7 @@
     "recharts": "2.1.16",
     "yup": "^1.4.0"
   },
-  "resolutions": {
+  "overrides": {
     "recharts/react-smooth/prop-types": "15.6.0"
   },
   "devDependencies": {
