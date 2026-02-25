@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "build-storybook": "storybook build",
-    "test:unit": "vitest run",
+    "test:unit": "vitest run --passWithNoTests",
     "test:e2e": "node ./script/e2e.test.js"
   },
   "dependencies": {
