@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "build:prod": "tsc -b && vite build --mode prod",
-    "lint": "eslint .",
+   "lint": "eslint src",
     "preview": "vite preview",
     "build-storybook": "storybook build",
     "test:unit": "vitest run --passWithNoTests",
