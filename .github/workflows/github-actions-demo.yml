@@ -13,6 +13,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Debug pwd
+        run: pwd
+      - name: Debug list root
+        run: ls -la
+      - name: Debug find lockfiles
+        run: |
+          echo "Root lock:"
+          ls -la package-lock.json || true
+          echo "Frontend lock:"
+          ls -la frontend/package-lock.json || true
       - name: Install modules
         run: npm ci
       - name: build project
