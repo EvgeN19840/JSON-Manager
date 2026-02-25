@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "build-storybook": "storybook build",
     "test:unit": "vitest run --passWithNoTests",
-    "test:e2e": "node ./script/e2e.test.js"
+    "test:e2e": "node ./script/e2e.js"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
