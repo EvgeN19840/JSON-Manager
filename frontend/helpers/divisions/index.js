@@ -1,0 +1,1 @@
+export const divisions = (a, b) => a/b
