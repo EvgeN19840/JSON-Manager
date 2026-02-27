@@ -12,7 +12,7 @@
     "build-storybook": "storybook build",
     "test:unit": "vitest run --passWithNoTests",
     "test:e2e": "playwright test",
-    "test": "npm run test:unit && npm run test:e2e"
+    "test": "test:e2e && test:unit"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
