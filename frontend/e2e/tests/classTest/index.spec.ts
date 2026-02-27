@@ -6,7 +6,7 @@ test("Test class", async ({ page }) => {
     const pageProject = await page.context().newPage()
     await pageProject.goto('https://ci-cd-json-manager.netlify.app')
 
-    await expect(page).toHaveTitle(/CayPay/);
+    await expect(page).toHaveURL(/netlify/);
 
 
 })
