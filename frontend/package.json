@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "build:prod": "tsc -b && vite build --mode prod",
-   "lint": "eslint src",
+    "lint": "eslint src",
     "preview": "vite preview",
     "build-storybook": "storybook build",
     "test:unit": "vitest run --passWithNoTests",
@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "@eslint/js": "9.9.0",
+    "@playwright/test": "^1.58.2",
     "@storybook/react-vite": "^10.2.12",
     "@types/node": "^25.3.0",
     "@types/react": "18.3.3",
