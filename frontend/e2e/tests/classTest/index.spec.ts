@@ -8,6 +8,7 @@ test("Test class", async ({ page }) => {
 
     //  await expect(page).toHaveURL(/netlify/);
     const allButtons = await page.getByRole('button').count()
+    console.log('allButtons:', allButtons)
     expect(allButtons).toEqual(5)
 
 
