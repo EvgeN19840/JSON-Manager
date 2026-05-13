@@ -1,1 +1,1 @@
-# JSON-Manager
+# QA Automation Engineer | Playwright | JavaScript | TypeScript | E2E Testing | SPA Testing
