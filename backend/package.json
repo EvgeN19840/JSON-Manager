@@ -18,13 +18,13 @@
     "cors": "^2.8.5",
     "dotenv": "16.4.7",
     "express": "4.21.2",
-    "node-pg-migrate": "7.9.1",
     "express-async-handler": "1.2.0",
+    "node-pg-migrate": "7.9.1",
     "pg": "8.14.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
-    "@types/express": "5.0.0",
+    "@types/express": "^4.17.21",
     "@types/node": "22.13.10",
     "@types/pg": "8.11.11",
     "prettier": "3.5.3",

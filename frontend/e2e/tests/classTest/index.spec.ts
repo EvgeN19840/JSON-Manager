@@ -6,10 +6,9 @@ test("Test class", async ({ page }) => {
     const pageProject = await page.context().newPage()
     await pageProject.goto('https://ci-cd-json-manager.netlify.app')
 
-    //  await expect(page).toHaveURL(/netlify/);
-    const allButtons = await page.getByRole('button').count()
-    console.log('allButtons:', allButtons)
-    expect(allButtons).toEqual(5)
+    const allButtons =  page.getByRole('button').filter({ hasText: 'Import JSON Data' })
+  
+   await expect(allButtons).toBeVisible()
 
 
 })

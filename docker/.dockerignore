@@ -1,0 +1,10 @@
+.git
+**/node_modules
+**/bin
+**/obj
+**/.next
+**/out
+.gitlab-ci.yml
+automationQA
+server_config
+docker/certs
