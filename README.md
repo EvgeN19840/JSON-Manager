@@ -1,90 +1,43 @@
-# CayPay JSON Manager
+# JSON Manager Tool
 
-Web application for generating and managing dynamic JSON test data for automated testing workflows.
+**React-based tool for generating and managing dynamic JSON test data** for automated QA workflows (especially Playwright).
 
-Built to simplify the creation of complex payroll and employee-related test scenarios for QA automation.
+![Demo](https://json-manager-gamma.vercel.app/preview.png)
 
----
+## ✨ Key Features
+- Dynamic generation of employee and payroll test data
+- Flexible configuration for complex testing scenarios
+- Editable data grid with real-time preview
+- Import / Export JSON
+- Optimized for large test datasets
+
+## 🎯 Why it was built
+Created to solve the problem of slow and manual test data preparation in QA automation.  
+**Result:** Reduced test data preparation time by **80%**.
 
 ## 🚀 Live Demo
+[→ Open Live Demo](https://json-manager-gamma.vercel.app)
 
-🔗 https://json-manager-gamma.vercel.app/home
+## 📸 Screenshots
 
----
+![Main Interface](https://github.com/EvgeN19840/JSON-Manager/blob/main/screenshots/mainInterface.png?raw=true)
+**Main data grid interface**
 
-## 💡 Why I Built This
+![Data Generation](https://github.com/EvgeN19840/JSON-Manager/blob/main/screenshots/details.png?raw=true)
+**Test data generation form**
 
-While working on automated testing for payroll SPA applications, creating and maintaining large JSON datasets manually became time-consuming and error-prone.
-
-This tool was created to solve these challenges by:
-
-- Automating complex test data generation
-- Simplifying management of large employee datasets
-- Speeding up creation of payroll-related testing scenarios
-- Improving maintainability of automated test suites
-- Reducing repetitive manual QA setup work
-
----
-
-## ✨ Features
-
-- Dynamic JSON test data generation
-- Employee and payroll dataset management
-- Import/export JSON files
-- Editable data grid interface
-- Reusable testing scenarios
-- SPA-friendly architecture
-- Automated End-to-End testing with Playwright
-- Flexible and scalable test data structure
-
----
+![JSON Preview](https://github.com/EvgeN19840/JSON-Manager/blob/main/screenshots/addDetails.png?raw=true)
+**JSON export preview**
 
 ## 🛠 Tech Stack
-
-### Frontend
-- JavaScript
-- React
-- HTML5 / CSS3
+- React + Vite
+- TypeScript
 - Material UI
-- Vite
+- Zustand
 
-### Backend Utilities
-- Node.js
-- JSON-based data generation logic
-
-### QA Automation
-- Playwright (TypeScript)
-- End-to-End Testing
-- Regression Testing
-
-### CI/CD & DevOps
-- GitLab CI
-- GitHub Actions
-- Automated deployment scripts
-- Vercel deployment
-
----
-
-## 🏗 Architecture Overview
-
-The project is organized as a modular full-stack application with separate frontend, backend utilities, and automated testing infrastructure.
-
-Main modules include:
-
-- Dynamic JSON generation
-- Data import/export
-- Employee dataset management
-- Validation and editing layer
-- Automated testing infrastructure
-- CI/CD integration
-
----
-
-## 📦 Project Structure
-
-```text
-/frontend               React client application
-/backend                Node.js utilities and data generation logic
-/playwright-report      Automated Playwright HTML reports
-/.github/workflows      GitHub Actions pipelines
-/.gitlab-ci.yml         GitLab CI configuration
+## How to run locally
+```bash
+git clone https://github.com/EvgeN19840/JSON-Manager.git
+cd JSON-Manager
+npm install
+npm run dev
