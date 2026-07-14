@@ -13,7 +13,7 @@ export const PAGES_CONFIG: { [key in PageKey]: Page } = {
     key: 'home',
     route: Paths.Home,
     type: 'public',
-    name: 'JSON Menager',
+    name: 'JSON Manager',
     icon: <HomeIcon />
   },
   charts: {
